@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_item" resource="default" engine="innodb" comment="Sales Flat Quote Item">
+        <column xsi:type="int" name="timer_expire_at" padding="10" unsigned="true" nullable="true" identity="false"
+                comment="Cart Expire At"/>
+        <column xsi:type="int" name="original_cart_expire_at" padding="10" unsigned="true" nullable="true"
+                identity="false" comment="Original Cart Expire At"/>
+        <column xsi:type="int" name="original_checkout_expire_at" padding="10" unsigned="true" nullable="true"
+                identity="false" comment="Original Checkout Expire At"/>
+        <column xsi:type="int" name="cart_time" padding="10" unsigned="true" nullable="true" identity="false"
+                comment="Cart Time"/>
+        <column xsi:type="int" name="checkout_time" padding="10" unsigned="true" nullable="true" identity="false"
+                comment="Checkout Time"/>
+    </table>
+</schema>

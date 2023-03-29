@@ -1,0 +1,21 @@
+{
+    "name": "ecomm/module-gcpintegration",
+    "description": "DRL GCP Integration",
+    "type": "magento2-module",
+    "license": " GNU General Public License",
+    "authors": [
+        {
+            "name": "PwC India"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Ecomm\\GcpIntegration\\": ""
+        }
+    }
+}

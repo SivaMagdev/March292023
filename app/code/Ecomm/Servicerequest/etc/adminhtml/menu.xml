@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+        <add id="Ecomm_Servicerequest::servicerequest" title="Service Request" module="Ecomm_Servicerequest" sortOrder="5" parent="Ecomm_Voiceofcustomer::main_menu" action="ecomm_servicerequest/servicerequest/index" resource="Ecomm_Servicerequest::servicerequest" />
+    </menu>
+</config>

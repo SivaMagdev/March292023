@@ -1,0 +1,2690 @@
+.account .box-actions.drl-ret-can-spa {
+    margin: 0 0 20px;
+}
+
+.account .stock.stock-unavilable {
+    min-height: 161px;
+}
+
+.account.customer-account-edit.page-layout-2columns-left input#firstname,
+.account.customer-account-edit.page-layout-2columns-left input#lastname {
+    margin: 0 0 45px;
+}
+
+.account .block-dashboard-info .box {
+    margin-bottom: 0;
+}
+
+.account .order-actions-toolbar .action.print:after {
+    content: '|';
+    color: #434861;
+    opacity: 0.45;
+    position: relative;
+    left: 3px;
+    display: none;
+}
+
+.account .quote-status,
+.account .return-status,
+.account .order-status {
+    border: 2px solid #5225B5;
+    float: right;
+    color: #434861;
+    font-family: 'DRL Circular Bold';
+    margin-top: 0;
+    line-height: 1.3;
+    padding: 6px 10px 6px 10px;
+}
+
+.account .order-actions-toolbar .action.order,
+.account .order-details-items .action.print,
+.account a.action.track,
+.account .order-details-items .action.print {
+    float: right;
+    margin: 0;
+}
+
+.account .order-actions-toolbar .action.return {
+    display: none;
+}
+
+.account .box.box-billing-address .box-content {
+    font-family: 'DRL Circular Book';
+}
+
+.account .sales-order-view .page-main .page-title-wrapper .negotiable-quote-order-information .order-date strong {
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    font-weight: unset;
+}
+
+.sales-order-view .page-main .page-title-wrapper .negotiable-quote-order-information .order-date {
+    font-family: "DRL Circular Book";
+    color: #434861;
+}
+
+.account.sales-order-shipment.page-layout-2columns-left ul.items.order-links li.nav.item a,
+.account.sales-order-invoice.page-layout-2columns-left ul.items.order-links li.nav.item a,
+.account.sales-order-view.page-layout-2columns-left ul.items.order-links li.nav.item a {
+    border: unset;
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 0.8;
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+    font-weight: unset;
+}
+
+.account.sales-order-shipment.page-layout-2columns-left ul.items.order-links li.nav.item.current strong,
+.account.sales-order-invoice.page-layout-2columns-left ul.items.order-links li.nav.item.current strong,
+.account.sales-order-view.page-layout-2columns-left ul.items.order-links li.nav.item.current strong {
+    color: #434861;
+    letter-spacing: 0px;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+    border: unset;
+    border-bottom: 2px solid #5225B5;
+    font-weight: unset;
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    font-weight: unset;
+}
+
+.account .order-date span {
+    color: #00A26D;
+    font-family: 'DRL Circular Light';
+}
+
+
+/*removing the border for contact information: starts */
+
+.account .column.main .block:not(.widget) .block-content .box.box-information {
+    border: none;
+}
+
+
+/* ends */
+
+.account form.form-wishlist-items button.action.update,
+.account form.form-wishlist-items button.action.tocart {
+    height: 39px;
+}
+
+.account .drl-sku-cashback-attribute,
+.account .drl-sku-cashback-attribute-second {
+    padding: 0 9px 0;
+}
+
+.account .drl-sku-cashback-attribute-second span.product-available-stock.drl-cashback-stock {
+    background: #5DF1C1 0% 0% no-repeat padding-box;
+    border-radius: 14px;
+    padding: 5px 45px;
+    letter-spacing: 0px;
+    color: #00A26D;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Light';
+}
+
+.account .drl-sku-cashback-attribute-second {
+    padding-top: 10px;
+    margin: 10px 0;
+}
+
+.account .drl-sku-cashback-attribute span.drl-sku-product {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Light';
+}
+
+.account .order-details-items .item-options,
+.account .column.main .order-details-items .table-wrapper .data.table>tbody>tr>td dl.item.options {
+    display: inline-flex;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 0.8;
+    font-size: 14px;
+    font-family: 'DRL Circular Light';
+}
+
+.account .order-details-items .item-options dd,
+.account .column.main .order-details-items .table-wrapper .data.table>tbody>tr>td dd {
+    margin: 0px 5px 0px;
+}
+
+.account table.data.table.table-order-items tr td.col.sku,
+.account table.data.table.table-order-items tr td.col.qty {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Book';
+    font-size: 18px;
+}
+
+.account table.data.table.table-order-items tr td.col.qty span.qty.summary,
+{
+    display: block;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Book';
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    vertical-align: unset;
+    border: unset;
+}
+
+.account .modal-popup .modal-content div {
+    font-family: 'DRL Circular Bold';
+    font-size: 15px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+}
+
+.account .modal-popup.modal-slide .modal-footer button.drl-term-condition {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    opacity: 1;
+    width: 187px;
+    height: 46px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-family: 'DRL Circular Book';
+    font-size: 14px;
+    box-shadow: none;
+    float: right;
+}
+
+.account .terms-conditon-drl p.drl-terms-word {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+}
+
+.account .sucess-over-popup {
+    display: flex;
+}
+
+.account .modal-popup.modal-slide .modal-footer {
+    border-top: unset;
+    margin: 10px;
+    padding: 1rem 3rem 1rem 1rem;
+    text-align: center;
+}
+
+.account .sucess-over-popup .icon-popup-reject {
+    font-size: 35px;
+    color: #FF7069;
+    margin: 2% 2%;
+}
+
+.account footer.modal-footer button.success-notifications {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    opacity: 1;
+    width: 187px;
+    height: 46px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-family: 'DRL Circular Book';
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.account div#register-success .sucess-popup {
+    font-family: 'DRL Circular Bold';
+    font-size: 18px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    flex: 1 1 auto;
+    margin: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.account .modals-wrapper .modal-popup .modal-inner-wrap {
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+    width: 600px;
+}
+
+.account .block.block-dashboard-orders .block-title.order a.action.view {
+    float: right;
+}
+
+.account .actions-toolbar.drl-add-new-addres {
+    float: right;
+    margin-top: 20px;
+}
+
+.account .product.name a {
+    font: normal normal bold 18px/22px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Bold';
+    text-align: left;
+}
+
+.account .product-item-name {
+    font-weight: 400;
+    font: normal normal bold 18px/22px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Bold';
+    text-align: left;
+}
+
+.account .product-item-info .product-item-name a.product-item-link {
+    min-height: 0px;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.account form.form-wishlist-items button.action.share {
+    display: none;
+}
+
+.account .product-item-name>a:visited,
+.product.name a>a:visited {
+    color: #4F4F4F;
+    text-decoration: underline;
+}
+
+.account .product-item-info .swatch-option.text {
+    background: #fff;
+    color: #686868;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-right: 7px;
+    min-width: 22px;
+    padding: 4px 8px;
+    width: 78px;
+    text-align: center;
+    font: normal normal 300 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #5225B5;
+    font-family: 'DRL Circular Light';
+    border: 1px solid #5225B5;
+    border-radius: 20px;
+    opacity: 1;
+}
+
+.account .product-item-info .swatch-option.text.selected {
+    /* background-color: #ffffff !important; */
+    background: #5225B5 0% 0% no-repeat padding-box !important;
+    border-radius: 20px;
+    outline: 0px;
+    color: #fff;
+}
+
+.account .product-item-info .product-image-container {
+    display: inline-block;
+    max-width: 100%;
+    z-index: 0;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 5px 5px 0px 0px;
+    padding: 20px 20px;
+}
+
+.account .product-item-info {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 40px #54575817;
+    border-radius: 5px;
+    opacity: 1;
+    padding: 10px;
+    position: relative;
+    width: 300px;
+}
+
+.account .products-grid .product-item-info:hover,
+.account .products-grid .product-item-info.active {
+    background: #ffffff;
+    box-shadow: 0px 10px 40px #54575817;
+    border: unset;
+    margin: 0px;
+    padding: 10px;
+    position: relative;
+    z-index: 9;
+}
+
+.account .products-grid.wishlist .product-item .box-tocart .tocart {
+    padding: 2px 15px;
+}
+
+.account .product-item-info .product-item-inner {
+    display: block;
+}
+
+.account .products-grid .product-item-info:not(:hover):not(.active) .product-item-inner {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: unset;
+    margin: 10px 0 0 0px;
+    overflow: hidden;
+    padding: 0 9px 9px;
+    position: unset;
+    width: unset;
+}
+
+.account .products-grid .product-item-inner {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: unset;
+    border: 0px solid #bbbbbb;
+    border-top: none;
+    left: 0;
+    margin: 10px 0 0 0px;
+    padding: 0 9px 9px;
+    position: unset;
+    right: 0px;
+    z-index: 0;
+}
+
+.account .products-grid .product-item-actions {
+    margin: 0px;
+}
+
+.account .product-item-info select.swatch-select.pack_size {
+    border: 1px solid #5225B533;
+    border-radius: 4px;
+    background: #FAF9FA url(../images/select-bg.svg) no-repeat 100% 45%;
+}
+
+.account .product-item-info .swatch-attribute {
+    padding: 0 9px 9px;
+}
+
+.account .product-item-info .product-item-name {
+    padding: 0 9px 9px;
+}
+
+.account .product-item .price-box {
+    margin: 10px 0 25px;
+    padding: 0 9px 0;
+    min-height: 25px;
+}
+
+.account .product-item .box-tocart {
+    min-height: 55px;
+}
+
+.account .product-item .price-box .price {
+    font-weight: bold;
+    white-space: nowrap;
+    font: normal normal bold 30px/44px DRL Circular;
+    letter-spacing: 0px;
+    font-family: 'DRL Circular Bold';
+    color: #4F4F4F;
+}
+
+.account .product-item-info .product-item-actions .actions-primary+.actions-secondary>.action {
+    line-height: 23px;
+    text-align: center;
+    width: 23px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.account .product-item-info .product-item-actions .actions-secondary>.action:before,
+.account .product-item-info .product-item .action.towishlist:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 13px;
+    line-height: 13px;
+    color: inherit;
+    font-family: 'luma-icons';
+    margin: -2px 5px 0 0;
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+    color: #fff;
+}
+
+.account .product-item .action.towishlist:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.account .product-item-info .action.primary {
+    color: #FFFFFF;
+    background: #5225b500 0% 0% no-repeat padding-box;
+    border: 0;
+    border-radius: 25px;
+    -webkit-border-radius: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    font-size: 18px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 25px;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    letter-spacing: 0;
+    line-height: 1.5;
+    bottom: 28px;
+    position: absolute;
+    right: 0px;
+}
+
+.account .product-item-info .action.primary>span {
+    display: none;
+}
+
+.account .product-item-info .action.primary:after {
+    content: "";
+    visibility: visible;
+    display: block;
+    background-image: url(../images/feature-cart.png);
+    width: 50px;
+    height: 51px;
+    padding: 1px;
+    top: 2px;
+    background-repeat: no-repeat;
+}
+
+.account .product-item-info .product-price {
+    width: 48%;
+}
+
+.account .products-grid.wishlist .product-item-actions .action.edit:before {
+    content: url("../img/drl-edit.png");
+}
+
+.account fieldset.fieldset.genral-info {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.account a.action.create.primary.drl-createcompany {
+    border-radius: 25px;
+}
+
+.account .drl-badge {
+    float: right;
+    content: attr(data-label);
+    padding: 5px;
+    width: auto;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 5px 0px 0px 0px;
+    opacity: 1;
+    color: white;
+    text-align: center;
+    box-shadow: 0px 10px 40px #522E912E;
+}
+
+.account .products-grid.wishlist .product-item-actions .action.delete:before {
+    content: url("../img/drl-trash.png");
+}
+
+
+/* .account .products-grid.wishlist .product-item .box-tocart .tocart {
+    bottom: 0;
+} */
+
+.account .products-grid.wishlist .product-item-comment {
+    display: none;
+}
+
+.account .products-grid.wishlist .product-item-comment,
+.account .box-tocart .input-text.qty {
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+}
+
+.account .products-grid.wishlist .product-item .fieldset .field.qty label.label span {
+    font-family: 'DRL Circular Bold';
+    font-weight: unset
+}
+
+.account .drl-checkbox-y-n .checkbox-tools {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    box-sizing: border-box;
+    padding: 0;
+    overflow: visible;
+}
+
+.account .drl-checkbox-y-n .checkbox-tools:checked+label {
+    background-color: #6B45C0;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.account .checkbox-tools:not(:checked)+label {
+    color: #9D9AA2;
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    width: 110px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'DRL Circular Book';
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    border-radius: 25px;
+    border: 1px solid #9D9AA2;
+    opacity: 1;
+}
+
+.account .drl-checkbox-y-n .checkbox-tools:checked+label {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    width: 110px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    font-family: 'DRL Circular Book';
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    border-radius: 25px;
+    border: 1px solid #9D9AA2;
+    opacity: 1;
+}
+
+.account .drl-checkbox-y-n .checkbox-tools:checked+label::after,
+.checkbox-tools:not(:checked)+label::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #ffffff;
+    z-index: -1;
+    color: #9D9AA2;
+}
+
+.account .modal-popup._inner-scroll .modal-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+
+/* .account .products-grid .product-item-info:not(:hover):not(.active) .product-item-inner {
+    margin: -1px;
+} */
+
+.account.wishlist-index-index .product-item-inner .comment-box,
+.account .page-main .page-title-wrapper .order-date {
+    margin: 0;
+}
+
+.account .order-details-items .order-title>strong {
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    font-weight: unset;
+    font-size: 24px;
+}
+
+.account .modal-slide._inner-scroll .modal-footer {
+    margin-bottom: 0;
+}
+
+.account .order-links .item a,
+.order-links .item strong {
+    font-family: "DRL Circular Book";
+}
+
+.account span.drl-need-mod-white {
+    font-size: 18px;
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    opacity: 1;
+}
+
+.account a.drl-need-mod-hyp-white {
+    font-size: 18px;
+    font-family: "DRL Circular Bold";
+    color: #5225B5;
+    opacity: 1;
+}
+
+.account span.drl-need-mod {
+    font-size: 18px;
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    opacity: 1;
+}
+
+.account a.drl-need-mod-hyp {
+    font-size: 18px;
+    font-family: "DRL Circular Bold";
+    color: #5225B5;
+    opacity: 1;
+}
+
+.account .order-details-items.invoice .actions-toolbar {
+    float: right;
+}
+
+.account .modals-wrapper .modal-popup .modal-inner-wrap {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.account .modal-popup .modal-header,
+.account .modal-popup .modal-content,
+.account .modal-popup .modal-footer {
+    padding-left: 2rem;
+    font-family: "DRL Circular Book";
+}
+
+.account .modal-popup._inner-scroll .modal-content::-webkit-scrollbar-thumb {
+    background: #9D9AA2 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 0.5;
+}
+
+.account .block-dashboard-company .jstree .jstree-clicked {
+    height: auto;
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+.account .modal-popup .modal-title {
+    border-bottom: 1px dashed #dfe1e8;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 24px;
+    font-family: "DRL Circular Bold";
+}
+
+.account form.form.form-add-user fieldset.fieldset.info .field label.label span,
+.account .additional-fields label.label span,
+.account form.form.form-add-team fieldset.fieldset.info .field label.label span {
+    color: #434861;
+    font-size: 15px;
+    font-family: "DRL Circular Book";
+    font-weight: unset;
+}
+
+.account form.form.form-add-user fieldset.fieldset.info .drl-register {
+    display: block;
+}
+
+.account form.form.form-add-user fieldset.fieldset.info .field .control input.input-text,
+.account form.form.form-add-user fieldset.fieldset.info .field .control select.drl-select,
+.account .additional-fields input.input-text,
+.account form.form.form-add-team fieldset.fieldset.info .field .control input.input-text,
+.account form.form.form-add-team fieldset.fieldset.info .field .control .textarea {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.account .block-dashboard-company .jstree .jstree-clicked>.jstree-icon:before {
+    color: #FF5046;
+    opacity: 1;
+}
+
+.account .jstree.jstree-draggable a,
+.account .field-tooltip .field-tooltip-content,
+.account .jstree-checkbox-selection .jstree-anchor {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-family: "DRL Circular Book";
+}
+
+.block-dashboard-company .jstree .jstree-clicked.account .jstree.jstree-draggable a:hover,
+.account .field-tooltip .field-tooltip-content:hover,
+.account .jstree-checkbox-selection .jstree-anchor:hover {
+    color: #434861;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+}
+
+.account .field-tooltip .field-tooltip-content {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+    border: 1px dashed #dfe1e8;
+}
+
+.jstree li.jstree-open>.jstree-icon:before,
+.jstree>ul ul li>.jstree-icon.jstree-ocl:after {
+    color: #4F4F4F;
+    opacity: 1;
+}
+
+.account form.form.form-edit-company.drl-cmpy-prfile fieldset.fieldset.info.drl-cmpy-prifle-width {
+    width: 100%;
+    margin: 0;
+}
+
+.account .jstree>ul>li>a.company-admin>.jstree-icon:before,
+.account .jstree.jstree-draggable a:before,
+.account .jstree a>.jstree-icon:before {
+    color: #5225B5;
+}
+
+.account .block-dashboard-company .box-actions button.action,
+.account .data-grid-filters-wrap .action,
+.account .form-edit-role .box-actions button.action,
+.account .data-grid-filters-wrap .action {
+    color: #5225B5;
+    font-family: "DRL Circular Bold";
+}
+
+.company-profile-edit .column.main .form-edit-company .actions-toolbar {
+    width: 100%;
+}
+
+.account .drl-image-edit span,
+.account .drl-image-trash span {
+    display: none;
+}
+
+.account .company-profile-payment-methods .payment-methods-label {
+    font-family: "DRL Circular Bold";
+    font-weight: unset;
+}
+
+.account .company-profile-payment-methods .payment-methods-list li {
+    font-family: "DRL Circular Book";
+}
+
+.account .box.box-account-information .box-content {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: "DRL Circular Book";
+}
+
+.account form.form-address-edit.drl-myaccount-edit .primary {
+    float: right;
+    height: 39px;
+    line-height: 0.8;
+}
+
+.account .drl-register .drl-width-input-half {
+    flex-basis: 50%;
+    /* margin: 0 0 20px; */
+}
+
+.account .order-actions-toolbar .action.print,
+.account .order-actions-toolbar .action.order,
+.account .order-details-items .action.print,
+.account .order-details-items .order-title .action.track,
+.account .order-actions-toolbar .action,
+.account a.action.track {
+    opacity: 1;
+    color: #5225B5;
+    padding: 5px;
+    height: 30px;
+    font-family: 'DRL Circular Book';
+}
+
+.account table.data.table.table-order-items thead tr,
+.account table.data-grid.data.table thead tr,
+.account .order-details-items .table-order-items tbody+tbody {
+    border-top: 1px dashed #dfe1e8;
+}
+
+.account .order-details-items .table-order-items .product-item-name {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: "DRL Circular Book";
+}
+
+.account table.data.table.table-order-items tfoot th.mark {
+    font-size: 20px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+}
+
+.account table.data.table.table-order-items tfoot td.amount span.price {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: "DRL Circular Book";
+}
+
+.account table.data.table.table-order-items tfoot td.amount {
+    border-left: 1px dashed #dfe1e8 !important;
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    border-radius: 0px 0px 4px 4px;
+    opacity: 1;
+}
+
+.account .order-details-items .col.price .price-excluding-tax .price,
+.account .order-details-items .items-qty .item,
+.order-details-items .col.subtotal .price-excluding-tax .price {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: "DRL Circular Book";
+    line-height: 1;
+}
+
+.account table.data.table.table-order-items tfoot {
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    border-radius: 0px 0px 4px 4px;
+    opacity: 1;
+}
+
+.account table.data.table.table-order-items tr td.col.sku {
+    font-family: 'DRL Circular Book';
+}
+
+.account .column.main .order-details-items .table-wrapper .data.table>thead>tr>th {
+    border-bottom: 1px dashed #dfe1e8;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 0.5;
+    font-size: 12px;
+    font-family: "DRL Circular Book";
+}
+
+.account .order-items.table-wrapper .col.discount,
+.account .order-items.table-wrapper .col.total,
+.account .order-details-items .col.discount,
+.account .order-details-items .col.total {
+    text-align: right;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: "DRL Circular Book";
+    line-height: 1;
+    font-weight: 700;
+}
+
+.account .order-details-items {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+    border: unset;
+}
+
+.account fieldset.fieldset.info.extra-order-search .field label.label {
+    color: #434861;
+    font-size: 15px;
+    font-family: "DRL Circular Book";
+}
+
+.account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+.account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.account .my-orders-search-advanced .field .secondary,
+.account .my-orders-search-advanced .actions-toolbar,
+.account .my-orders-search-advanced .filters-collapse {
+    float: right;
+    text-align: center !important;
+    box-shadow: none;
+}
+
+.account .search-sku input::placeholder {
+    letter-spacing: 0px;
+    color: #9D9AA2;
+    opacity: 1;
+    font-family: 'DRL Circular Light';
+}
+
+.account .search-sku input {
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.account .search-sku button[type='submit']:after,
+.search-sku .quote-details-items .actions-toolbar>.action[type='submit']:after {
+    line-height: 42px;
+}
+
+.account .my-orders-search-advanced+.filter-divider hr {
+    border-top: 1px dashed #dfe1e8;
+}
+
+.account table.data.table.table-order-items.history tbody tr {
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.account form.form.form-newsletter-manage fieldset.fieldset {
+    margin: 0;
+}
+
+.account .drl-addres-list-block {
+    margin-bottom: 0;
+}
+
+.account .drl-addres-list-block .actions-toolbar {
+    float: right;
+}
+
+.account .drl-image-edit {
+    background-image: url("../img/drl-edit.png");
+    padding-left: 5%;
+    background-repeat: no-repeat;
+    padding: 3px 10px;
+}
+
+.account .drl-image-trash {
+    background-image: url("../img/drl-trash.png");
+    padding-left: 5%;
+    background-repeat: no-repeat;
+    padding: 3px 10px;
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd .drl-register {
+    display: block;
+    margin: 0;
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd .drl-right,
+.account form.form.form-newsletter-manage .primary,
+.account form.form.form-edit-company.drl-cmpy-prfile .primary {
+    float: right;
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd .drl-btn-frgt-paswd,
+.account form.form.form-newsletter-manage .primary button.action.save.primary,
+.account .my-orders-search-advanced .field .secondary,
+.account .my-orders-search-advanced .filters-collapse,
+.account form.form.form-edit-company.drl-cmpy-prfile button.action.save.primary,
+.account .popup-tree .modal-footer .primary,
+.account .popup-tree .modal-footer .secondary,
+.popup-tree .modal-footer .action-primary {
+    width: 137px;
+    height: 40px;
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    opacity: 1;
+    color: #ffffff;
+    border: 1px solid #532fb7;
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd .drl-btn-frgt-paswd:hover,
+.account form.form.form-newsletter-manage .primary button.action.save.primary:hover,
+.account .my-orders-search-advanced .field .secondary:hover,
+.account .my-orders-search-advanced .filters-collapse:hover,
+.account form.form.form-edit-company.drl-cmpy-prfile button.action.save.primary:hover,
+.account .popup-tree .modal-footer .primary:hover,
+.account .popup-tree .modal-footer .secondary:hover,
+.popup-tree .modal-footer .action-primary:hover {
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd fieldset.fieldset.password.drl-change-email-password .drl-change-he label.label {
+    color: #434861;
+    font-size: 15px;
+    font-family: "DRL Circular Book";
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd fieldset.fieldset.password.drl-change-email-password .drl-change-he .drl-register-input {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.account form.form.form-edit-account.drl-frgt-chng-pawd label.label.drl-change span,
+.account form.form.form-newsletter-manage .field.choice label.label span,
+.account form.form-address-edit.drl-myaccount-edit .field.choice.set.billing label.label span,
+.account form.form-address-edit.drl-myaccount-edit .field.choice.set.shipping label.label span {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Bold';
+}
+
+.account .box-actions a.action.edit span {
+    display: none;
+}
+
+.account .data.table .col.actions .action:after {
+    border-left: unset;
+    margin: 0;
+}
+
+.account table.data.table.table-order-items.recent tbody tr:nth-child(odd) {
+    background: #FAF9FC 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+    height: 50px;
+}
+
+.account table.data.table.table-order-items.recent tbody tr:nth-child(even) {
+    border-radius: 2px;
+    opacity: 1;
+    height: 50px;
+}
+
+.account .table-wrapper {
+    border-bottom: 2px dashed #dfe1e8;
+}
+
+.account .order-details-items .order-title {
+    border-bottom: unset;
+}
+
+.account .block-collapsible-nav .item .delimiter {
+    border-top: 1px dashed #dfe1e8;
+}
+
+.account .order-title+.order-tracking,
+.account .order-details-items .order-title {
+    border-bottom: 1px dashed #dfe1e8;
+}
+
+.account .order-tracking .tracking-title {
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    font-weight: unset;
+}
+
+.account .order-tracking .tracking-content {
+    color: #4F4F4F;
+    font-family: 'DRL Circular Book';
+}
+
+.account .table>tbody>tr>th,
+.account .table>tbody>tr>td,
+.additional-addresses table>thead>tr>th,
+.account.page-layout-2columns-left table>thead>tr>th,
+.account .page-main .data-grid td {
+    border-top: 1px dashed #dfe1e8 !important;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 12px;
+    font-family: 'DRL Circular Light';
+}
+
+.account table.data.table.table-order-items.recent>thead>tr>th {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 0.5;
+    font-size: 12px;
+    font-family: 'DRL Circular Book';
+}
+
+.box.box-information.drl-information p.drl-username {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+    margin: 0;
+}
+
+.box.box-information.drl-information p.drl-useremail {
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    margin-bottom: 15px;
+}
+
+.account .box-newsletter .box-content p,
+.box.box-billing-address .box-content address,
+.box.box-shipping-address .box-content address {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Light';
+    font-size: 16px;
+}
+
+.account .box-actions a.action.change-password,
+.account .block.block-dashboard-addresses .block-title a.action.edit,
+.block.block-dashboard-orders .block-title.order a.action.view,
+.account .data.table .col.actions a.action.view,
+.account .data.table .col.actions a.action.order {
+    border: 1px solid #5225B5;
+    border-radius: 25px;
+    color: #5225B5;
+    opacity: 1;
+    font-family: 'DRL Circular Book';
+    padding: 8px 10px;
+    vertical-align: text-bottom;
+    font-size: 14px;
+}
+
+.account .data.table .col.actions a.action.disable.view {
+    background: #dddddd;
+    cursor: not-allowed;
+    pointer-events: all;
+    border: 1px solid #dddddd;
+}
+
+.account .box-actions a.action.edit {
+    background-image: url("../img/drl-edit.png");
+    padding-left: 5%;
+    background-repeat: no-repeat;
+}
+
+.account.page-layout-2columns-left .column.main {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+    padding: 25px 0px;
+}
+
+.account .block.block-addresses-list .block-content p.empty {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'Circular Pro Book';
+}
+
+.account .my-orders-search-advanced .filter-summary li .label,
+.account .sales-order-view .page-main .page-title-wrapper .negotiable-quote-order-information .order-date strong {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Bold';
+    font-weight: unset;
+    font-size: 14px;
+}
+
+.account .my-orders-search-advanced .action-clear-all {
+    color: #5225B5;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+}
+
+.account .my-orders-search-advanced .action-remove:not(.action-clear-all):before {
+    content: url("../images/drl-close.svg");
+}
+
+.account .sales-order-view .page-main .page-title-wrapper .negotiable-quote-order-information .order-date,
+.account .my-orders-search-advanced .filter-summary li span {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Book';
+    font-weight: unset;
+    font-size: 14px;
+}
+
+.account .column.main .block:not(.widget) .box-title>span {
+    font-size: 16px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Bold';
+}
+
+.account .block.block-order-details-view .block-content {
+    background: #f6fbff 0% 0% no-repeat padding-box;
+    border-radius: 0px 0px 4px 4px;
+    opacity: 1;
+    margin: 0;
+}
+
+.account.sales-order-shipment.page-layout-2columns-left .column.main .block:not(.widget) .block-content .box,
+.account.sales-order-invoice.page-layout-2columns-left .column.main .block:not(.widget) .block-content .box,
+.account.sales-order-view.page-layout-2columns-left .column.main .block:not(.widget) .block-content .box {
+    min-height: 15em;
+}
+
+.account .column.main .block:not(.widget) .block-content .box {
+    padding: 20px;
+    /*   min-height: 15em; */
+    border-right: 1px dashed #dfe1e8;
+}
+
+.account .column.main .block:not(.widget) .block-content .box:after {
+    content: '';
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    /* border-right: 2px dashed #FFFFFF; */
+    opacity: 0.3;
+}
+
+.account .column.main .block:not(.widget) .block-title>strong {
+    font: normal normal bold 24px/35px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Bold';
+}
+
+.account .page-title-wrapper .page-title,
+.account .page-title-wrapper span.order-sap-id {
+    font-size: 24px;
+    font-weight: unset;
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+    margin-bottom: 10px;
+}
+
+.account .page-title-wrapper .page-title {
+    font-size: 30px;
+}
+
+.account.page-layout-2columns-left .page-wrapper {
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.account .drl-info-account legend.drl-legend {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+.account-drl-heading .drl-heading-space legend.drl-legends-second {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+.account-drl-heading .drl-heading-space legend.drl-legends-third {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-family: 'DRL Circular Light';
+}
+
+.account .drl-info-account .drl-heading-space {
+    margin: 0 0 20px;
+}
+
+.account .block-collapsible-nav .content {
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.account .block-collapsible-nav .item a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    padding: 10px 18px 10px 18px;
+}
+
+.account .block-collapsible-nav .item.current>strong,
+.account .block-collapsible-nav .item.current a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    border-radius: 45px;
+    background: #c0d7f5;
+    border-left: unset;
+    font-size: 14px;
+    font-family: 'DRL Circular Bold';
+    height: 37px;
+    padding: 10px 18px 10px 18px;
+}
+
+.account .block-collapsible-nav .item a:hover {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    border-radius: 45px;
+    background: #c0d7f5;
+    border-left: unset;
+    font-size: 14px;
+    font-family: 'DRL Circular Bold';
+    height: 37px;
+    padding: 10px 18px 10px 18px;
+}
+
+.account .block-collapsible-nav .content ul.nav.items {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.account form.account-drl-heading {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    padding: 20px;
+}
+
+.account form.account-drl-heading legend.legend.drl-page-title {
+    margin-bottom: 0;
+    color: #4F4F4F;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+    border-bottom: unset;
+}
+
+.account form.account-drl-heading .drl-register {
+    display: flex;
+    margin: 0 0 40px;
+    width: 100%;
+}
+
+.account form.account-drl-heading .drl-width-input {
+    flex-basis: 100%;
+    /* margin: 0 0 20px; */
+}
+
+.account form.account-drl-heading .drl-register .drl-width-input-half {
+    flex-basis: 50%;
+    /* margin: 0 0 20px; */
+}
+
+.account form.account-drl-heading .drl-width-input .drl-register-input,
+.account form.account-drl-heading .drl-register .drl-width-input-half .drl-register-input,
+form.form-address-edit.drl-myaccount-edit fieldset.fieldset.drl-address-field .field.country.required.drl-width-input-half select#country {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.account form.account-drl-heading .drl-width-input .drl-register-input-numbers {
+    width: 68%;
+    padding: 0.5rem 5rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.account form.account-drl-heading .drl-width-input .drl-register-input-number {
+    width: 100%;
+    padding: 0.5rem 5rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.drl-register-input::placeholder,
+.drl-register-input-word::placeholder {
+    color: #9D9AA2;
+    opacity: 1;
+    letter-spacing: 0px;
+    font-family: "DRL Circular Light";
+}
+
+.account form.account-drl-heading .drl-width-input label.label span,
+.account form.account-drl-heading .drl-register .drl-width-input-half label.label span {
+    color: #434861;
+    font-size: 15px;
+    font-family: "DRL Circular Book";
+}
+
+.account form.account-drl-heading .drl-info-account {
+    width: 100%;
+    margin: 0;
+}
+
+.account form.account-drl-heading .drl-hr-line {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border: 1px dashed #434861;
+    margin: 18px 0;
+    opacity: 0.2;
+}
+
+.drl-billing-add-form {
+    display: flex;
+}
+
+.drl-billing-add-form .drl-bill-head {
+    width: 100%;
+}
+
+.account form.account-drl-heading .drl-billing-add-form .drl-bill-head legend.drl-legends-second {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+.account form.account-drl-heading .drl-billing-add-form .drl-bill-head .drl-main-middle-head {
+    vertical-align: -webkit-baseline-middle;
+}
+
+.account form.account-drl-heading .drl-switch-add-bill {
+    display: flex;
+    float: right;
+}
+
+.account form.account-drl-heading .drl-switch-add-bill span.drl-legends-third.drl-title-middle-toogle {
+    vertical-align: -webkit-baseline-middle;
+    white-space: nowrap;
+    margin: 5px;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'DRL Circular Light';
+}
+
+.account form.account-drl-heading .drl-switch-field .switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+.account form.account-drl-heading .drl-switch-field .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.account form.account-drl-heading .drl-switch-field .toogle-check:checked+.slider {
+    background-color: #5225B5;
+}
+
+.account .drl-switch-field .slider.round {
+    border-radius: 34px;
+}
+
+.account .drl-switch-field .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.account form.account-drl-heading .drl-switch-field .toogle-check:checked+.slider::before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.account form.account-drl-heading .drl-switch-field .slider.round::before {
+    border-radius: 50%;
+}
+
+.account form.account-drl-heading .drl-switch-field .slider::before {
+    position: absolute;
+    content: "";
+    right: 28px;
+    bottom: 6px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    width: 13px;
+    height: 13px;
+}
+
+.account form.account-drl-heading .actions-toolbar {
+    float: right;
+}
+
+.account form.account-drl-heading button.action.save.primary:hover {
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+.account a.edit-company-profile {
+    float: right;
+}
+
+.account form.account-drl-heading button.action.save.primary,
+.account a.edit-company-profile {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    color: #FFFFFF;
+    letter-spacing: 0px;
+    padding: 0.9em 2em 0.7em 2em;
+    display: block;
+    text-decoration: none;
+}
+
+.account form.account-drl-heading button.action.save.primary:hover,
+.account a.edit-company-profile:hover {
+    color: #FFFFFF;
+    border: 1px solid #532fb7;
+    background: #532fb7;
+}
+
+.account form.account-drl-heading .drl-billing-add-form span.drl-title-middle-toogle {
+    vertical-align: -webkit-baseline-middle;
+    white-space: nowrap;
+    margin: 5px;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'DRL Circular Light';
+}
+
+.account form.account-drl-heading .drl-register .drl-width-input .iti.iti--allow-dropdown {
+    width: 67%;
+}
+
+.account .table>tbody>tr>td.col.license>a {
+    display: block;
+}
+
+.account .data.table .col.actions a.action.view {
+    margin: 0px 5px;
+}
+
+.account .table>tbody>tr>td {
+    padding: 11px 5px;
+}
+
+.account .data.table .col.actions>a.action.edit.primary {
+    border: 1px solid #5225B5;
+    border-radius: 25px;
+    /* color: #5225B5; */
+    /* opacity: 1; */
+    font-family: 'DRL Circular Book';
+    padding: 3px 10px;
+    vertical-align: text-bottom;
+    font-size: 14px;
+    /* background: #5225b500 0% 0% no-repeat padding-box; */
+}
+
+.validate-state-license {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.account .state-id-n {
+    float: left;
+    margin-left: 15px;
+    color: grey;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.account .file-type-id-n {
+    color: grey;
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+.account .action.print:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 16px;
+    color: inherit;
+    content: '\e624';
+    font-family: 'luma-icons';
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}
+
+.account .column.main .order-details-items .table-wrapper .data.table>tbody>tr>td.col.name {
+    width: 35%;
+}
+
+.account .form-add-user #jobtitle-error {
+    position: static;
+    color: #ff7069;
+}
+
+.form-add-user .field.email .exist-notification-message {
+    color: #ff7069;
+    font-size: 12px;
+    padding-top: 14px;
+}
+
+.account #add-user-form .mage-error[generated] {
+    position: static;
+}
+
+@media (min-width: 1024px) {
+    .account .products-grid .product-item:nth-child(3n+1) {
+        margin-left: 0%;
+    }
+    .account .products-grid .product-item {
+        margin-left: 3% !important;
+        padding: 0px;
+        width: calc((100% - 9%)/3);
+    }
+    .account .products-grid .product-item:nth-child(3n+1) {
+        margin-left: 0% !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .account .column.main .order-details-items .table-wrapper .data.table>tbody>tr>td.col.name {
+        width: 100%;
+    }
+    .account .state-id-n {
+        float: left;
+        margin-left: 15px;
+        color: grey;
+        font-size: 12px;
+        margin-top: 0px;
+    }
+    .account .products-grid .product-item-inner {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: unset;
+        border: 0px solid #bbbbbb;
+        border-top: none;
+        left: 0;
+        margin: 10px 0 0 0px;
+        padding: 0 9px 9px;
+        position: unset;
+        right: 0px;
+        z-index: 0;
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        height: unset;
+        margin: 10px 0 0 0px;
+        overflow: hidden;
+        padding: 0 9px 9px;
+        position: unset;
+        width: unset;
+    }
+    .account .drl-register .drl-width-input {
+        flex-basis: 100%;
+        margin: 0 0 20px;
+    }
+    .account form.form-wishlist-items button.action.update,
+    .account form.form-wishlist-items button.action.tocart {
+        height: 54px;
+    }
+    .account .product-item-info .product-item-name {
+        padding: 0 9px 9px;
+        display: inline-block;
+    }
+    .wishlist-index-index .product-item-info {
+        width: auto !important;
+    }
+    .products-grid.wishlist .product-item-name,
+    .products-grid.wishlist .product-item-description,
+    .products-grid.wishlist .product-item .price-box,
+    .products-grid.wishlist .product-item-tooltip {
+        margin-left: 5px;
+        min-height: 54px;
+    }
+    .products-grid.wishlist .product-item-actions>*:last-child {
+        margin-right: 82px;
+    }
+    .account .box-tocart>.fieldset>div {
+        -webkit-box-flex: unset;
+        flex: unset;
+        width: unset;
+    }
+    .account .order-details-items .order-title strong {
+        font-size: 14px;
+    }
+    .account .order-details-items .action.print {
+        height: 20px;
+    }
+    .order-details-items .order-title {
+        padding: 0 0 30px;
+    }
+    .account .order-actions-toolbar .action.print:before {
+        content: '|';
+        color: #434861;
+        opacity: 0.45;
+        position: relative;
+        left: -1px;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+    .account .order-details-items .order-title .action.track {
+        display: none;
+    }
+    .table-wrapper .table:not(.totals):not(.cart):not(.table-comparison)>tbody>tr td[data-th]:before,
+    .table-wrapper .table:not(.totals):not(.cart):not(.table-comparison)>tbody>tr th[data-th]:before {
+        color: #4F4F4F;
+        font-family: "DRL Circular Book";
+    }
+    .account table.data.table.table-order-items tfoot th.mark {
+        font-size: 16px;
+    }
+    .account .order-details-items .col.price .price-excluding-tax .price,
+    .account .order-details-items .items-qty .item,
+    .order-details-items .col.subtotal .price-excluding-tax .price,
+    .account table.data.table.table-order-items tfoot td.amount span.price {
+        font-size: 14px;
+    }
+    .account .jstree.jstree-draggable a,
+    .account .field-tooltip .field-tooltip-content,
+    .account .jstree-checkbox-selection .jstree-anchor {
+        white-space: break-spaces;
+        margin: 10px 10px 10px 10px;
+    }
+    .account .block-dashboard-company .box-actions button.action,
+    .account .data-grid-filters-wrap .action,
+    .account .form-edit-role .box-actions button.action,
+    .account .data-grid-filters-wrap .action {
+        margin-right: 0;
+    }
+    .account .drl-coulmns-width {
+        width: 100%;
+    }
+    .account .drl-info-account legend.drl-legend {
+        font-size: 20px;
+    }
+    .account .drl-badge {
+        padding: 0;
+        margin: 10px 0 10px 0;
+        float: unset;
+        height: 39px;
+        display: table;
+    }
+    .account span.drl-need-mod-white {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 0 10px;
+    }
+    .account form.account-drl-heading {
+        padding: 0;
+    }
+    .account .block-collapsible-nav {
+        left: 3px;
+        top: -12px;
+    }
+    .account .my-orders-search-advanced .actions-toolbar button,
+    .account .my-orders-search-advanced .actions-toolbar button.primary {
+        width: 122px !important;
+        height: 42px;
+    }
+    .account .my-orders-search-advanced .actions-toolbar div.primary {
+        text-align: center !important;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 7px 0 0 0px;
+    }
+    .account .search-sku button[type='submit'] {
+        /* right: 15%;
+        top: 14%; */
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #FAF9FA;
+        background-clip: padding-box;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        overflow: visible;
+        margin: 0;
+        font-family: 'DRL Circular Bold';
+        box-sizing: unset;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field,
+    .account .fieldset>.fields>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account .block-collapsible-nav .title.block-collapsible-nav-title strong {
+        font-family: 'DRL Circular Bold';
+        font-weight: unset;
+        letter-spacing: 0px;
+        color: #4F4F4F;
+        opacity: 1;
+        font-size: 16px;
+    }
+    .abs-toggling-title-mobile,
+    .block-wishlist-management .wishlist-select .wishlist-name,
+    .block-collapsible-nav .title {
+        border-bottom: 1px dashed #dfe1e8;
+        border-top: 1px dashed #dfe1e8;
+    }
+    .account .table>tbody>tr>th,
+    .account .table>tbody>tr>td,
+    .account .additional-addresses table>thead>tr>th,
+    .account.page-layout-2columns-left table>thead>tr>th,
+    .account .page-main .data-grid td {
+        border-top: unset;
+    }
+    .account .my-orders-search-advanced .filters-collapse {
+        width: 100%;
+        margin-top: 60px;
+    }
+    .account .my-orders-search-advanced .field .secondary {
+        width: 100%;
+    }
+    .account .my-orders-search-advanced .search-sku {
+        width: 90% !important;
+    }
+    .account .search-sku input {
+        float: left;
+    }
+    .account .my-orders-search-advanced .filters-collapse,
+    .account .my-orders-search-advanced .actions-toolbar {
+        float: unset;
+    }
+    .account .search-sku button[type='submit']:after,
+    .search-sku .quote-details-items .actions-toolbar>.action[type='submit']:after {
+        line-height: 32px;
+    }
+    .account .column.main .block:not(.widget) .block-content .box {
+        border-right: unset;
+        border-bottom: 1px dashed #dfe1e8;
+        min-height: auto;
+    }
+    .account span.drl-need-mod {
+        font-size: 16px;
+    }
+    .account .block.block-dashboard-orders .block-title.order a.action.view {
+        margin-top: 0;
+    }
+    .account table.data.table.table-order-items.recent tbody tr:nth-child(even),
+    .account table.data.table.table-order-items.recent tbody tr:nth-child(odd) {
+        height: auto;
+    }
+    .account .modal-popup.modal-slide {
+        left: 0;
+        top: 8%;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    .account .modal-popup .modal-content {
+        padding: 0 3rem 0 1rem;
+    }
+    .account .modals-wrapper .modal-popup .modal-inner-wrap {
+        width: auto;
+        height: auto;
+        background-color: #ffffff;
+        min-height: auto;
+    }
+    .account .modal-popup.modal-slide {
+        left: 0;
+    }
+    .account .popup-tree .modal-footer .primary,
+    .account .popup-tree .modal-footer .secondary {
+        width: 100%
+    }
+    .account form.account-drl-heading .drl-info-account {
+        width: auto;
+        margin: 0;
+    }
+    .account form.account-drl-heading .drl-register {
+        display: block;
+        margin: 0;
+    }
+    .account form.account-drl-heading .drl-register .drl-width-input-half .drl-register-input {
+        width: 95%;
+        margin: 0 0 45px;
+    }
+    .account form.account-drl-heading .drl-width-input .drl-register-input-number {
+        width: 83%;
+        margin: 0 0 45px;
+    }
+    .account form.account-drl-heading .drl-billing-add-form .drl-bill-head legend.drl-legends-second {
+        font-size: 14px;
+    }
+    .account form.account-drl-heading .drl-switch-add-bill {
+        display: block;
+    }
+    .account form.account-drl-heading .drl-billing-add-form span.drl-title-middle-toogle {
+        font-size: 12px;
+    }
+    .account form.account-drl-heading .drl-switch-add-bill .drl-switch-field {
+        float: right;
+    }
+    .account form.account-drl-heading .drl-register .drl-width-input .iti.iti--allow-dropdown {
+        width: 85%;
+    }
+    .account .page-title-wrapper .page-title,
+    .account .page-title-wrapper span.order-sap-id {
+        font-size: 20px;
+    }
+    .account .page-main .page-title-wrapper .order-status {
+        margin: 0;
+        margin-top: 10px;
+    }
+    .account .negotiable-quote-order-information {
+        margin-top: 10px;
+    }
+    .account .sales-order-view .page-main .page-title-wrapper .negotiable-quote-order-information .order-date {
+        font-size: 12px;
+    }
+    .account .order-actions-toolbar {
+        margin: 0;
+    }
+    .account.page-layout-2columns-left .column.main {
+        padding: 0;
+    }
+    body.account.customer-bank-edit.page-layout-2columns-left {
+        padding: 25px;
+    }
+    .account ul.items.order-links {
+        margin-top: 40px;
+    }
+    .account.customer-account-edit.page-layout-2columns-left.form-edit-account .fieldset.info {
+        margin-right: 0;
+    }
+    .account.customer-account-edit.page-layout-2columns-left input#firstname,
+    .account.customer-account-edit.page-layout-2columns-left input#lastname {
+        width: 100%;
+    }
+    .account.customer-account-edit.page-layout-2columns-left .drl-width-input .drl-register-input,
+    .account.customer-account-edit.page-layout-2columns-left .drl-width-input-half .drl-register-input,
+    .account form.account-drl-heading .drl-width-input .drl-register-input {
+        width: 95%;
+        margin: 0 0 45px;
+    }
+    .drl-width-input .drl-register-input,
+    .drl-width-input-half .drl-register-input,
+    .account .field.field-trade_phone.drl-width-input,
+    .account .field.field-corporate_contact_phone_number.drl-width-input,
+    .account .field.field-purchasing_contact_phone_number.drl-width-input,
+    .account .field.field-ap_contact_phone_number.drl-width-input,
+    .account .field.field-edi_contact_phone.drl-width-input,
+    .account .field.field-ship_contact_phone.drl-width-input,
+    .account .field.field-bank_phone.drl-width-input {
+        margin: 0 0 45px;
+    }
+    .account .manage-company-accounts {
+        margin: 20px 0 20px;
+    }
+    .account form.form.form-edit-account.drl-frgt-chng-pawd fieldset.fieldset.password.drl-change-email-password .drl-change-he .drl-register-input {
+        width: 95%;
+        padding: 0.5rem 1rem;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #FAF9FA;
+        background-clip: padding-box;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        overflow: visible;
+        margin: 0;
+        font-family: 'DRL Circular Bold';
+        box-sizing: unset;
+    }
+    .account .products-grid.wishlist .product-item .box-tocart {
+        float: left;
+        margin-right: 93px;
+    }
+    .account .products-grid.wishlist .product-item .box-tocart .tocart {
+        width: 72px;
+        left: 0px;
+    }
+    .account .table>tbody>tr>td.col.license>a {
+        display: inline-block;
+    }
+    .account .data.table .col.actions a.action.view {
+        margin: 6px 5px;
+        padding: 6px 10px;
+        font-size: 14px;
+        display: block;
+        width: 115px;
+        height: 30px;
+        margin-bottom: 13px;
+        text-align: center;
+    }
+    .account .data.table .col.actions a.action.order {
+        margin: 6px 5px;
+        padding: 6px 10px;
+        font-size: 14px;
+        display: block;
+        width: 115px;
+        height: 30px;
+        margin-bottom: 13px;
+        text-align: center;
+    }
+}
+
+
+/* ipad css portrait */
+
+@media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a,
+    .account .block-collapsible-nav .item a:hover {
+        border-radius: 0;
+        height: auto;
+    }
+    .account .my-orders-search-advanced .search-sku {
+        width: 48% !important;
+    }
+    .account .my-orders-search-advanced .field .secondary {
+        width: 137px;
+    }
+    .account .my-orders-search-advanced .filters-collapse {
+        width: unset;
+        margin-top: unset;
+    }
+    .account.page-layout-2columns-left .column.main {
+        padding: 10px 0px;
+    }
+    .account .search-sku input {
+        padding: 0.5rem 0rem;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #FAF9FA;
+        background-clip: padding-box;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        overflow: visible;
+        margin: 0;
+        font-family: 'DRL Circular Bold';
+        box-sizing: unset;
+    }
+    .account .search-sku button[type='submit'] {
+        right: 5%;
+        top: 14%;
+    }
+    .account .search-sku input,
+    .account .my-orders-search-advanced .filters-collapse,
+    .account .my-orders-search-advanced .actions-toolbar {
+        float: right;
+    }
+    .account form.account-drl-heading .drl-info-account {
+        width: 100%;
+    }
+    .account form.account-drl-heading .drl-register .drl-width-input .iti.iti--allow-dropdown {
+        width: 97%;
+    }
+    .account form.account-drl-heading .drl-switch-add-bill {
+        display: flex;
+    }
+    .account .block-collapsible-nav .content ul.nav.items {
+        padding: 0;
+    }
+    .account .drl-sku-cashback-attribute-second span.product-available-stock.drl-cashback-stock {
+        padding: 5px 30px;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 3px 0 0 5px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0rem 0rem;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #FAF9FA;
+        background-clip: padding-box;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        overflow: visible;
+        margin: 0;
+        font-family: 'DRL Circular Bold';
+        box-sizing: unset;
+        text-indent: 5px;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+}
+
+
+/* Ipad Pro css portrait */
+
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a,
+    .account .block-collapsible-nav .item a:hover {
+        border-radius: 0;
+        height: auto;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+}
+
+
+/* ipad  css landscape */
+
+@media all and (width: 1024px) and (height: 768px) and (orientation:landscape) {
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a,
+    .account .block-collapsible-nav .item a:hover {
+        border-radius: 0;
+        height: auto;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+}
+
+
+/* Ipad Pro Landscape */
+
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a,
+    .account .block-collapsible-nav .item a:hover {
+        border-radius: 0;
+        height: auto;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+}
+
+
+/*Mobile Landscape */
+
+@media screen and (max-device-width: 767px) and (orientation: landscape) {
+    .products-grid.wishlist .product-item-photo {
+        float: unset;
+        margin-right: 0px;
+    }
+    .account .drl-sku-cashback-attribute-second span.product-available-stock.drl-cashback-stock {
+        background: #5DF1C1 0% 0% no-repeat padding-box;
+        border-radius: 14px;
+        padding: 5px 34px;
+        letter-spacing: 0px;
+        color: #00A26D;
+        opacity: 1;
+        font-size: 14px;
+        font-family: 'DRL Circular Light';
+    }
+    .products-grid.wishlist .product-item .box-tocart .tocart {
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+        padding: 7px 15px;
+        margin-top: 0px;
+        margin-bottom: 14px;
+    }
+    .account .data.table .col.actions a.action.view,
+    .account .data.table .col.actions a.action.order {
+        /* line-height: 33px; */
+        padding: 6px 10px;
+        font-size: 14px;
+        display: block;
+        width: 115px;
+        height: 30px;
+        margin: 6px 0px;
+        text-align: center;
+    }
+    .account .data.table .col.actions a.action.view {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .account .table>tbody>tr>td {
+        padding: 11px 7px;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 9px 4px 0 4px;
+    }
+}
+
+
+/* target google pixel */
+
+@media (width: 823px) and (height: 411px) and (orientation: landscape) {
+    .account .drl-sku-cashback-attribute-second span.product-available-stock.drl-cashback-stock {
+        background: #5DF1C1 0% 0% no-repeat padding-box;
+        border-radius: 14px;
+        padding: 5px 28px;
+        letter-spacing: 0px;
+        color: #00A26D;
+        opacity: 1;
+        font-size: 14px;
+        font-family: 'DRL Circular Light';
+    }
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        border-radius: 45px;
+        background: #c0d7f5;
+        border-left: unset;
+        font-size: 14px;
+        font-family: 'DRL Circular Bold';
+        height: 45px;
+        padding: 3px 9px 10px 18px;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 9px 4px 0 4px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+}
+
+
+/* target iphone x */
+
+@media (width: 812px) and (height: 375px) and (orientation: landscape) {
+    .account .drl-sku-cashback-attribute-second span.product-available-stock.drl-cashback-stock {
+        background: #5DF1C1 0% 0% no-repeat padding-box;
+        border-radius: 14px;
+        padding: 5px 28px;
+        letter-spacing: 0px;
+        color: #00A26D;
+        opacity: 1;
+        font-size: 14px;
+        font-family: 'DRL Circular Light';
+    }
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        border-radius: 45px;
+        background: #c0d7f5;
+        border-left: unset;
+        font-size: 14px;
+        font-family: 'DRL Circular Bold';
+        height: 45px;
+        padding: 3px 9px 10px 18px;
+    }
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 9px 4px 0 4px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+}
+
+
+/* target Nokia N9 */
+
+@media (width: 854px) and (height: 480px) and (orientation: landscape) {
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 9px 4px 0 4px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+}
+
+
+/* target Nexus 7 */
+
+@media (width: 960px) and (height: 600px) and (orientation: landscape) {
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 9px 4px 0 4px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+}
+
+
+/* target nexus phone */
+
+@media only screen and (device-width: 800px) and (orientation: portrait) {
+    .account .fieldset>.field .fields.group.group-2 .field {
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+    .account fieldset.fieldset.info.extra-order-search .field .control .input-text,
+    .account fieldset.fieldset.info.extra-order-search .field .control .multiselect {
+        padding: 0.5rem 0.5rem;
+    }
+    .account .field-date .control button.ui-datepicker-trigger {
+        margin: 9px 4px 0 4px;
+    }
+    .account .order-actions-toolbar .action.print {
+        float: left;
+    }
+    .account .order-actions-toolbar .action.order {
+        float: left;
+    }
+}
+
+
+/* target from 768-1134*/
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .account .drl-sku-cashback-attribute-second span.product-available-stock.drl-cashback-stock {
+        padding: 5px 20px;
+    }
+    .account .block-collapsible-nav .item.current>strong,
+    .account .block-collapsible-nav .item.current a,
+    .account .block-collapsible-nav .item a:hover {
+        border-radius: 0;
+        height: auto;
+    }
+}
+
+.product-item-info p.wish-price {
+    font-size: 14px;
+    color: #5755b5;
+    background-color: #efeeff;
+    border-radius: 40px;
+    padding: 10px 14px;
+    margin-left: 0px;
+    text-align: center;
+    margin-right: 86px;
+    font-weight: bold;
+}
+
+.product-item-info a.wish-view-dtl {
+    font-size: 14px;
+    border: 1px solid #5755b5;
+    padding: 10px 24px;
+    color: #5755b5;
+    border-radius: 22px;
+    margin-left: 0px;
+}
+
+.product-item-info a.wish-view-dtl:hover {
+    background-color: #5755b5;
+    color: #fff;
+}
+
+.product-item-info p.wish-view-para {
+    margin-top: 24px;
+    margin-bottom: 30px;
+}
+
+.order-details-items dt.pod-date-title {
+    width: 14%;
+    display: inline-block;
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    font-weight: unset;
+}
+
+.order-details-items dd.pod-date-content {
+    width: 86%;
+    display: inline-block;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Book';
+}
+
+.order-details-items dt.pod-time-title {
+    width: 14%;
+    display: inline-block;
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    font-weight: unset;
+}
+
+.order-details-items dd.pod-time-content {
+    width: 86%;
+    display: inline-block;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Book';
+}
+
+.order-details-items dt.pod-track-link-title {
+    width: 14%;
+    display: inline-block;
+    font-family: "DRL Circular Bold";
+    color: #4F4F4F;
+    font-weight: unset;
+}
+
+.order-details-items dd.pod-track-link-content {
+    width: 86%;
+    display: inline-block;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Book';
+}
+
+
+fieldset.fieldset.drl-contact-info, fieldset.fieldset.drl-address-field {
+    width: 100%;
+}
+
+.drl-register {
+    display: flex;
+    margin: 0 0 45px;
+    width: 100%;
+}
+
+.field.field-name-firstname.required.drl-width-input, .drl-width-input.field.field-name-lastname.required, .drl-width-input.field.company, .drl-width-input.field.telephone.required {
+    flex-basis: 100%;
+}
+
+input#firstname, input#lastname, input#company, input#telephone {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+    border: 1px solid #ccc;
+}
+
+.field.field-state_license_id.drl-width-input, .field.field-dea_license_id.drl-width-input, .field.field-legal_business_name.drl-width-input, .field.field-dea_license_expiry.drl-width-input, .field.street.required.drl-width-input, .field.city.required.drl-width-input, .field.region.required.drl-width-input, .field.zip.required.drl-width-input, .field.field-state_license_upload.drl-width-input, .field.field-dea_license_upload.drl-width-input {
+    flex-basis: 100%;
+}
+
+input#state_license_id, input#dea_license_id, input#state_license_expiry, input#dea_license_expiry, input#street_1, input#city, select#region_id_front, input#zip, input#dea_license_upload, input#state_license_upload {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+    border: 1px solid #ccc;
+}

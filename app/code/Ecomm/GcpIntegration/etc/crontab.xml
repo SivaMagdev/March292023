@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_GcpIntegration
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="gcp_default">
+        <job name="ecomm_gcpintegration_cron_vistexprice" instance="Ecomm\GcpIntegration\Cron\ImportVistexPrice" method="execute">
+            <config_path>crontab/gcp_default/jobs/ecomm_gcpintegration_cron_vistexprice/schedule/cron_expr</config_path>
+        </job>
+     </group>
+</config>

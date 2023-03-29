@@ -1,0 +1,58 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_CartReservation
+ * @copyright   Copyright (c) 2020 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+?>
+<?php
+/** @var \Plumrocket\CartReservation\Block\Timer $block */
+$block->useBlockData();
+?>
+
+<?php if (! $block->isExpired()): ?>
+    <span
+        <?php echo ! $block->getCountdownTime() ? 'style="display: none;"' : '' ?>
+        class="prcr-timer <?php echo $block->escapeHtml($block->getClasses()) ?>"
+        <?php foreach ($block->getDataAttr() as $name => $value): ?>
+            data-<?php echo $block->escapeHtml($name) ?>="<?php echo $block->escapeHtml($value) ?>"
+        <?php endforeach ?>
+        <?php if ($block->getShowSelectors()): ?>
+            data-show="<?= $block->escapeHtml($block->getShowSelectors()) ?>"
+        <?php endif ?>
+        <?php if ($block->getHideSelectors()): ?>
+            data-hide="<?= $block->escapeHtml($block->getHideSelectors()) ?>"
+        <?php endif ?>
+    >
+        <span class="prcrTimerInit">
+            <?= /* @noEscape */ $block->getText() ?>
+        </span>
+    </span>
+
+    <?php if ($block->getProductIdsToRequest()): ?>
+    <script type="text/javascript">
+    require([
+        'jquery',
+        'prcr',
+        'domReady!'
+    ], function($, timers) {
+        'use strict';
+        <?php if ($ids = $block->getProductIdsToRequest()): ?>
+        $.each(<?= /* @noEscape */ json_encode($ids) ?>, function(key, id) {
+            timers.addProductIdToRequest(id);
+        });
+        <?php endif ?>
+    });
+    </script>
+    <?php endif ?>
+<?php endif ?>

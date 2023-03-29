@@ -1,0 +1,9 @@
+<!--@subject {{trans "Product Price Expiry Notification"}} @-->
+<!--@vars {
+"var itemsHtml":"Items data"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<p class="greeting">{{trans " Dear "}}{{var name|raw}},</p>
+{{layout handle="price_decrease_notifyemail_product_list" products=$products area="frontend"}}
+{{template config_path="design/email/footer_template"}}

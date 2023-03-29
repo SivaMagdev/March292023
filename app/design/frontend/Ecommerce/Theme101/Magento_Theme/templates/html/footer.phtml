@@ -1,0 +1,67 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+echo $this->getLayout()
+          ->createBlock('Magento\Cms\Block\Block')
+          ->setBlockId('drl_footer')
+          ->toHtml();
+
+?>
+<div id="social-popup" class="drl-social-popup" style="display:none;">
+   <p>You are about to leave Dr.Reddy’s and affiliates website. Dr. Reddy's assumes no responsibility for the information presented on the external website or any further links from such sites. These links are presented to you only as a convenience, and the inclusion of any link does not imply endorsement by Dr. Reddy's.</p>
+   <p>If you wish to continue to this external website, click Proceed.</p>
+</div>
+<input type="hidden" id="social-proceed-url" name="social-proceed-url" value="">
+<script>
+require(
+[
+    'jquery',
+    'Magento_Ui/js/modal/modal'
+],
+function($, modal) {
+
+	$(document).ready(function() {
+
+        var options = {
+            type: 'popup',
+            responsive: true,
+            innerScroll: true,
+            title: false,
+            buttons: [
+            	{
+	                text: $.mage.__('Back'),
+	                class: 'social-back-btn',
+	                click: function () {
+	                    this.closeModal();
+	                }
+            	},
+            	{
+	                text: $.mage.__('Proceed'),
+	                class: 'social-proceed-btn',
+	                click: function () {
+	                	window.open($("#social-proceed-url").val(), '_blank');
+                       this.closeModal();
+	                }
+            	}
+            ]
+        };
+
+        var popup = modal(options, $('#social-popup'));
+
+        $('.external-link-click').live( "click", function() {
+            /*alert(""+$(this).data('exthref'));*/
+
+            $("#social-proceed-url").val($(this).data('exthref'));
+            $("#social-popup").modal("openModal");
+        });
+    });
+});
+</script>
+
+
+
+

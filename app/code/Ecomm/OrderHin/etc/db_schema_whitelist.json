@@ -1,0 +1,20 @@
+{
+    "ecomm_sales_order_hin": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "hin_id": true,
+            "hin_status": true,
+            "hin_Start": true,
+            "hin_end": true,
+            "member_id": true,
+            "three_four_b_id": true,
+            "three_four_b_start": true,
+            "three_four_b_end": true,
+            "hin_start": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

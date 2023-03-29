@@ -1,0 +1,128 @@
+<div class="drl-active-req">
+    <span class="base drl-head-serivce">Active requests</span>
+    <a href="<?php echo $block->getBaseUrl() . 'servicerequest/index/index'; ?>" class="drl-raise-ticket">Raise new request</a>
+</div>
+<?php
+    $mediaUrl = $block->getMediaURL();
+    $collection = $block->getCollection();
+    if ($collection->count() > 0) {
+        $filtered_type = $block->getFilteredRequestType();
+        $request_types = $block->getRequestTypes();
+?>
+<div class="block block-dashboard-info">
+    <div class="block-content">
+            <span class="drl-service-sub drl-left">
+            <?php /* @escapeNotVerified */ echo __('You have ') ?><?php echo $collection->count(); ?><?php if ($collection->count() > 1) echo ' active requests on this page'; else { echo ' active request on this page'; }?></span>
+            <span class="drl-service-sub drl-right drl-fliter-first">
+                <form action="<?= $block->escapeUrl($block->getUrl('servicerequest/index/activerequest')) ?>" method="get">
+                <select name="requesttype" id="requesttype" class="drl-register-input" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                    <option value="" disabled="disabled" selected="selected">Filter by</option>
+                    <option value="0">All</option>
+                    <?php foreach($block->getRequestType() as $request_type){ ?>
+                        <option value="<?php echo $request_type['value']; ?>" <?php if($filtered_type == $request_type['value']){ ?> selected="selected" <?php } ?>><?php echo $request_type['label']; ?></option>
+                    <?php } ?>
+                </select>
+                </form>
+            </span>
+    </div>
+    <p class="drl-service-head drl-left">Click on reference to view the request details</p>
+    <div class="table-wrapper raise-details">
+        <table class="data-raise-request">
+            <thead>
+                <tr>
+                    <th scope="col" class="drl-col">
+                        <?php echo __('Service request no.') ?>
+                    </th>
+                    <th scope="col" class="drl-col">
+                        <?php echo __('Service Request') ?>
+                    </th>
+                    <th scope="col" class="drl-col">
+                        <?php echo __('Intiated on') ?>
+                    </th>
+                    <th scope="col" class="drl-col">
+                        <?php echo __('Reference') ?>
+                    </th>
+                    <th scope="col" class="drl-col">
+                        <?php echo __('Status') ?>
+                    </th>
+                    <th scope="col" class="drl-col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $row_count = 1; ?>
+                <?php foreach ($collection as $item): ?>
+                <?php $ddition_cls = 'odd'; ?>
+                <?php if($row_count % 2 == 0){ $ddition_cls = 'even'; } ?>
+                <tr class="view <?= $ddition_cls ?>">
+                    <td data-th="<?= $block->escapeHtml(__('Service request no')) ?>" class="drl-col-detail">
+                        <?php echo $item->getId() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Service Request')) ?>" class="drl-col-detail">
+                        <?php echo $request_types[$item->getRequestType()]; ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Intiated on')) ?>" class="drl-col-detail">
+                        <?php echo date('Y-m-d', strtotime($item->getCreatedAt())); ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Reference')) ?>" class="drl-col-order">
+                        <?php echo $item->getReferenceNumber() ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="drl-col-detail">
+                        <?php if($item->getStatus() == 0) { ?>
+                            <?php echo "Pending"; ?>
+                        <?php } ?>
+                    </td>
+                    <!-- <td data-th="Order 1/2" class="drl-col-detail"></td> -->
+                    <td class="drl-image-accordian-down"><img src='<?php echo $this->getViewFileUrl('images/drl-faq-down.svg'); ?>'/></td>
+                    <td class="drl-image-accordian-up"><img src='<?php echo $this->getViewFileUrl('images/drl-faq-up.svg'); ?>'/></td>
+                </tr>
+                <tr class="fold drl-serv-des-cus">
+                    <td class="drl-descr-cust" colspan="10">
+                        <p class="drl-ser-heading">Description</p>
+                        <p class="drl-desc-cus-febck">
+                            <?php echo $item->getRequestDescription() ?>
+                        </p>
+                        <?php if($item->getAttachment()) { ?>
+                            <a target="_blank" href="<?php echo $mediaUrl.'servicerequest/tmp/attachment/'.$item->getAttachment(); ?>" class="drl-pdf-download"><?php echo $item->getAttachment() ?></a>
+                        <?php } ?>
+                        <?php if($item->getSolutionDescription()) { ?>
+                        <p class="seperate-slash-drl"></p>
+                        <p class="drl-ser-heading">Response from Dr. Reddy’s team</p>
+                        <p class="drl-descr-drl-febck">
+                            <?php echo $item->getSolutionDescription(); ?>
+                        </p>
+                        <?php } ?>
+                        <?php if($item->getSolutionAttachment()) { ?>
+                            <a target="_blank" href="<?php echo $mediaUrl.'servicerequest/tmp/attachment/'.$item->getSolutionAttachment(); ?>" class="drl-pdf-download"><?php echo $item->getSolutionAttachment() ?></a>
+                        <?php } ?>
+                    </td>
+                </tr>
+                <?php $row_count++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php if ($block->getPagerHtml()): ?>
+    <div class="toolbar bottom custom-pager"><?php echo $block->getPagerHtml(); ?></div>
+<?php endif ?>
+<?php } else { ?>
+<span>
+    <?php echo '<h4 class="drl-active-req-error">There is no record in your active requests.</h4>'?>
+</span>
+<?php } ?>
+<script type="text/javascript">
+require(['servicejs'], function() {});
+</script>
+
+<script>
+   require([
+       'jquery',
+       'mage/url'
+   ], function($, url) {
+
+    $('#requesttype').change(function() {
+        this.form.submit();
+    });
+
+   });
+</script>

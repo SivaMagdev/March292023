@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="exporttocsv">
+                <settings>
+                    <url path="ecomm_priceengine/customer/export"/>
+                    <type>exporttocsv</type>
+                    <label translate="true">Export to CSV</label>
+                </settings>
+            </action>
+            <action name="exportanniversary">
+                <settings>
+                    <url path="ecomm_priceengine/customer/exportanniversary"/>
+                    <type>exportanniversary</type>
+                    <label translate="true">Export First Login</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

@@ -1,0 +1,491 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /* @var $block \Magento\Sales\Block\Order\PrintOrder\Shipment */ ?>
+
+<?php if($block->getSapShippment()){ ?>
+    <?php $shippment_data_array = $block->getSapShippment(); ?>
+
+    <div class="sap-order-details sap-shippment">
+        <div class="block-title">Shippment Document</div>
+        <?php foreach($shippment_data_array as $shippment_informations) { ?>
+            <?php $asn_info = str_replace('ns0:c','',$shippment_informations['asn_info']); ?>
+            <?php $Jshippment = json_decode($asn_info); ?>
+            <?php //echo '<pre>'.print_r($Jshippment, true).'</pre>';  ?>
+                <?php foreach($Jshippment as $PedigreeXML){ ?>
+                    <?php if(is_array($PedigreeXML->Pedigree)){ ?>
+                        <?php $shipmentPrintArray = []; ?>
+                        <?php foreach($PedigreeXML->Pedigree as $Pedigree){ ?>
+                            <?php //echo '<pre>'.print_r($PedigreeXML->Pedigree->InitialPedigree, true).'</pre>';  ?>
+                            <?php $product_info = $Pedigree->InitialPedigree; ?>
+                            <?php $TransactionInfo = $Pedigree->TransactionInfo; ?>
+                            <?php $SenderInfo = $TransactionInfo->SenderInfo; ?>
+                            <?php $RecipientInfo = $TransactionInfo->RecipientInfo; ?>
+                            <?php $ndc_number = (array)$product_info->ProductInfo->ProductCode; ?>
+                            <?php $dea_address = (array)$SenderInfo->BusinessAddress->AddressId; ?>
+                            <?php $state_address = (array)$SenderInfo->ShippingAddress->AddressId; ?>
+                            <?php $shipp_state_address = (array)$RecipientInfo->ShippingAddress->AddressId; ?>
+                            <?php $AdditionalReferences = $Pedigree->AdditionalReferences->Ref1; ?>
+                            <?php //echo '<pre>test:'.print_r($ndc_number['$'], true).'</pre>';  ?>
+
+                            <?php $formated_sku = $block->getProductInfo($ndc_number['$']); ?>
+
+                            <?php
+                                $products[] = [
+                                    'product_mgf' => $product_info->ProductInfo->Manufacturer,
+                                    'product_name' => $product_info->ProductInfo->DrugName,
+                                    'product_sku' => $formated_sku,
+                                    'product_lot' => $product_info->ItemInfo->Lot,
+                                    'product_qty' => $product_info->ItemInfo->Quantity,
+                                    'product_expiry' => $product_info->ItemInfo->ExpirationDate
+                                ];
+
+                                $billing_address = [
+                                    'BusinessName' => $SenderInfo->BusinessAddress->BusinessName,
+                                    'Street' => $SenderInfo->BusinessAddress->Street1,
+                                    'City' => $SenderInfo->BusinessAddress->City,
+                                    'StateOrRegion' => $SenderInfo->BusinessAddress->StateOrRegion,
+                                    'PostalCode' => $SenderInfo->BusinessAddress->PostalCode,
+                                    'Country' => $SenderInfo->BusinessAddress->Country
+                                ];
+                                $shipping_address = [
+                                    'BusinessName' => $SenderInfo->ShippingAddress->BusinessName,
+                                    'Street' => $SenderInfo->ShippingAddress->Street1,
+                                    'City' => $SenderInfo->ShippingAddress->City,
+                                    'StateOrRegion' => $SenderInfo->ShippingAddress->StateOrRegion,
+                                    'PostalCode' => $SenderInfo->ShippingAddress->PostalCode,
+                                    'Country' => $SenderInfo->ShippingAddress->Country
+                                ];
+
+                                $rbilling_address = [
+                                    'BusinessName' => $RecipientInfo->BusinessAddress->BusinessName,
+                                    'Street' => $RecipientInfo->BusinessAddress->Street1,
+                                    'City' => $RecipientInfo->BusinessAddress->City,
+                                    'StateOrRegion' => $RecipientInfo->BusinessAddress->StateOrRegion,
+                                    'PostalCode' => $RecipientInfo->BusinessAddress->PostalCode,
+                                    'Country' => $RecipientInfo->BusinessAddress->Country,
+                                ];
+                                $rshipping_address = [
+                                    'BusinessName' => $RecipientInfo->ShippingAddress->BusinessName,
+                                    'Street' => $RecipientInfo->ShippingAddress->Street1,
+                                    'City' => $RecipientInfo->ShippingAddress->City,
+                                    'StateOrRegion' => $RecipientInfo->ShippingAddress->StateOrRegion,
+                                    'PostalCode' => $RecipientInfo->ShippingAddress->PostalCode,
+                                    'Country' => $RecipientInfo->ShippingAddress->Country,
+                                ];
+
+                                $shipmentPrintArray = [
+                                    'reference_number' => $TransactionInfo->TransactionIdentifier->Identifier,
+                                    'reference_date' => $TransactionInfo->TransactionDate,
+                                    'po_number' => $TransactionInfo->AltTransactionIdentifier->Identifier,
+                                    'products' => $products,
+                                    'seller_info' => [
+                                        'BusinessAddress' => $billing_address,
+                                        'ShippingAddress' => $shipping_address,
+                                        'dea_licence' => $dea_address['$'],
+                                        'state_licence' => $state_address['$'],
+                                        'shipping_number' => $TransactionInfo->TransactionIdentifier->Identifier,
+                                        'shipping_date' => $TransactionInfo->TransactionDate
+                                    ],
+                                    'recipient_info' => [
+                                        'BusinessAddress' => $rbilling_address,
+                                        'ShippingAddress' => $rshipping_address,
+                                        'state_licence' => $shipp_state_address['$']
+                                    ],
+                                    'AdditionalReferences' => $AdditionalReferences
+                                ];
+                            ?>
+                    <?php } ?>
+                    <?php //echo '<pre>'.print_r($shipmentPrintArray, true).'</pre>'; exit(); ?>
+                    <table class="item-ref-information">
+                        <tr>
+                            <th class="drl-ship-he-se">Reference No.</th>
+                            <th class="drl-ship-he-se">Reference date</th>
+                            <td class="drl-ship-na-se">Purchase Order Number</td>
+                        </tr>
+                        <tr>
+                            <td class="drl-ship-na-se"><?php echo $shipmentPrintArray['reference_number']; ?></td>
+                            <td class="drl-ship-na-se"><?php echo $shipmentPrintArray['reference_date']; ?></td>
+                            <td class="drl-ship-na-se"><?php echo $shipmentPrintArray['po_number']; ?></td>
+                        </tr>
+                    </table>
+                    <?php $SenderInfo = $shipmentPrintArray['seller_info']; ?>
+                    <?php $RecipientInfo = $shipmentPrintArray['recipient_info']; ?>
+                    <p class="drl-ship-name">  <?php echo $SenderInfo['BusinessAddress']['BusinessName']; ?> sold the following items to <?php echo $RecipientInfo['BusinessAddress']['BusinessName']; ?></p>
+                    <table class="item-information">
+                        <tr>
+                            <th colspan="6" class="drl-ship-head">Product Information</th>
+                        </tr>
+                        <tr>
+                            <td class="drl-ship-he-se">Manufacture name</td>
+                            <td class="drl-ship-he-se">Drug name</td>
+                            <td class="drl-ship-he-se">NDC</td>
+                            <td class="drl-ship-he-se">Lot number</td>
+                            <td class="drl-ship-he-se">Quantity</td>
+                            <td class="drl-ship-he-se">Expiration date</td>
+                        </tr>
+                    <?php foreach($shipmentPrintArray['products'] as $product) { ?>
+                        <tr>
+                            <td class="drl-ship-he-se"><?php echo $product['product_mgf']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_name']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_sku']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_lot']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_qty']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_expiry']; ?></td>
+                        </tr>
+                    <?php } ?>
+                    </table>
+                    <p></p>
+                    <table>
+                        <tr>
+                            <th colspan="2" class="drl-ship-head">History of drug sales and distribution</th>
+                        </tr>
+                        <tr>
+                            <td width="60%">
+                                <table class="seller-address-info">
+                                    <tr>
+                                        <th colspan="2">Seller Information</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Seller<br />Business address</td>
+                                        <td>
+                                            <?php echo $SenderInfo['BusinessAddress']['BusinessName']; ?><br />
+                                            <?php echo $SenderInfo['BusinessAddress']['Street']; ?><br />
+                                            <?php echo $SenderInfo['BusinessAddress']['City']; ?>, <?php echo $SenderInfo['BusinessAddress']['StateOrRegion']; ?>, <?php echo $SenderInfo['BusinessAddress']['PostalCode']; ?>, <?php echo $SenderInfo['BusinessAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping address</td>
+                                        <td>
+                                            <?php echo $SenderInfo['ShippingAddress']['BusinessName']; ?><br />
+                                            <?php echo $SenderInfo['ShippingAddress']['Street']; ?><br />
+                                            <?php echo $SenderInfo['ShippingAddress']['City']; ?>, <?php echo $SenderInfo['ShippingAddress']['StateOrRegion']; ?>, <?php echo $SenderInfo['ShippingAddress']['PostalCode']; ?>, <?php echo $SenderInfo['ShippingAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>License number</td>
+                                        <td>Seller DEA License - <?php echo $SenderInfo['dea_licence']; ?>, Ship From <br />State License - <?php echo $SenderInfo['state_licence']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ShippingNumber & Date</td>
+                                        <td><?php echo $SenderInfo['shipping_number']; ?> <?php echo $SenderInfo['shipping_date']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transaction</td>
+                                        <td>Sale</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="seller-address-info">
+                                    <tr>
+                                        <th colspan="2">Recipient Information</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Recipient<br />Business address</td>
+                                        <td>
+                                            <?php echo $RecipientInfo['BusinessAddress']['BusinessName']; ?><br />
+                                            <?php echo $RecipientInfo['BusinessAddress']['Street']; ?><br />
+                                            <?php echo $RecipientInfo['BusinessAddress']['City']; ?>, <?php echo $RecipientInfo['BusinessAddress']['StateOrRegion']; ?>, <?php echo $RecipientInfo['BusinessAddress']['PostalCode']; ?>, <?php echo $RecipientInfo['BusinessAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping address</td>
+                                        <td>
+                                            <?php echo $RecipientInfo['ShippingAddress']['BusinessName']; ?><br />
+                                            <?php echo $RecipientInfo['ShippingAddress']['Street']; ?><br />
+                                            <?php echo $RecipientInfo['ShippingAddress']['City']; ?>, <?php echo $RecipientInfo['ShippingAddress']['StateOrRegion']; ?>, <?php echo $RecipientInfo['ShippingAddress']['PostalCode']; ?>, <?php echo $RecipientInfo['ShippingAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>License number</td>
+                                        <td>Ship To State License - <?php echo $RecipientInfo['state_licence']; ?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="drl-ship-footer"><?php echo $shipmentPrintArray['AdditionalReferences']; ?></td>
+                        </tr>
+                    </table>
+                <?php } else { ?>
+                    <?php //echo '<pre>'.print_r($PedigreeXML->Pedigree->InitialPedigree, true).'</pre>';  ?>
+                    <?php $product_info = $PedigreeXML->Pedigree->InitialPedigree; ?>
+                    <?php $TransactionInfo = $PedigreeXML->Pedigree->TransactionInfo; ?>
+                    <?php $SenderInfo = $TransactionInfo->SenderInfo; ?>
+                    <?php $RecipientInfo = $TransactionInfo->RecipientInfo; ?>
+                    <?php $ndc_number = (array)$product_info->ProductInfo->ProductCode; ?>
+                    <?php $dea_address = (array)$SenderInfo->BusinessAddress->AddressId; ?>
+                    <?php $state_address = (array)$SenderInfo->ShippingAddress->AddressId; ?>
+                    <?php $shipp_state_address = (array)$RecipientInfo->ShippingAddress->AddressId; ?>
+                    <?php $AdditionalReferences = $PedigreeXML->Pedigree->AdditionalReferences->Ref1; ?>
+                    <?php //echo '<pre>'.print_r($dea_address['$'], true).'</pre>';  ?>
+                    <?php //$product_infos = $block->getProductInfo($ndc_number['$']); ?>
+                    <?php $formated_sku = $block->getProductInfo($ndc_number['$']); ?>
+
+                    <?php
+                        $products[] = [
+                            'product_mgf' => $product_info->ProductInfo->Manufacturer,
+                            'product_name' => $product_info->ProductInfo->DrugName,
+                            'product_sku' => $formated_sku,
+                            'product_lot' => $product_info->ItemInfo->Lot,
+                            'product_qty' => $product_info->ItemInfo->Quantity,
+                            'product_expiry' => $product_info->ItemInfo->ExpirationDate
+                        ];
+
+                        $billing_address = [
+                            'BusinessName' => $SenderInfo->BusinessAddress->BusinessName,
+                            'Street' => $SenderInfo->BusinessAddress->Street1,
+                            'City' => $SenderInfo->BusinessAddress->City,
+                            'StateOrRegion' => $SenderInfo->BusinessAddress->StateOrRegion,
+                            'PostalCode' => $SenderInfo->BusinessAddress->PostalCode,
+                            'Country' => $SenderInfo->BusinessAddress->Country
+                        ];
+                        $shipping_address = [
+                            'BusinessName' => $SenderInfo->ShippingAddress->BusinessName,
+                            'Street' => $SenderInfo->ShippingAddress->Street1,
+                            'City' => $SenderInfo->ShippingAddress->City,
+                            'StateOrRegion' => $SenderInfo->ShippingAddress->StateOrRegion,
+                            'PostalCode' => $SenderInfo->ShippingAddress->PostalCode,
+                            'Country' => $SenderInfo->ShippingAddress->Country
+                        ];
+
+                        $rbilling_address = [
+                            'BusinessName' => $RecipientInfo->BusinessAddress->BusinessName,
+                            'Street' => $RecipientInfo->BusinessAddress->Street1,
+                            'City' => $RecipientInfo->BusinessAddress->City,
+                            'StateOrRegion' => $RecipientInfo->BusinessAddress->StateOrRegion,
+                            'PostalCode' => $RecipientInfo->BusinessAddress->PostalCode,
+                            'Country' => $RecipientInfo->BusinessAddress->Country,
+                        ];
+                        $rshipping_address = [
+                            'BusinessName' => $RecipientInfo->ShippingAddress->BusinessName,
+                            'Street' => $RecipientInfo->ShippingAddress->Street1,
+                            'City' => $RecipientInfo->ShippingAddress->City,
+                            'StateOrRegion' => $RecipientInfo->ShippingAddress->StateOrRegion,
+                            'PostalCode' => $RecipientInfo->ShippingAddress->PostalCode,
+                            'Country' => $RecipientInfo->ShippingAddress->Country,
+                        ];
+
+                        $shipmentPrintArray = [
+                            'reference_number' => $TransactionInfo->TransactionIdentifier->Identifier,
+                            'reference_date' => $TransactionInfo->TransactionDate,
+                            'po_number' => $TransactionInfo->AltTransactionIdentifier->Identifier,
+                            'products' => $products,
+                            'seller_info' => [
+                                'BusinessAddress' => $billing_address,
+                                'ShippingAddress' => $shipping_address,
+                                'dea_licence' => $dea_address['$'],
+                                'state_licence' => $state_address['$'],
+                                'shipping_number' => $TransactionInfo->TransactionIdentifier->Identifier,
+                                'shipping_date' => $TransactionInfo->TransactionDate
+                            ],
+                            'recipient_info' => [
+                                'BusinessAddress' => $rbilling_address,
+                                'ShippingAddress' => $rshipping_address,
+                                'state_licence' => $shipp_state_address['$']
+                            ],
+                            'AdditionalReferences' => $AdditionalReferences
+                        ];
+                    ?>
+                    <table class="item-ref-information">
+                        <tr>
+                            <th class="drl-ship-he-se">Reference No.</th>
+                            <th class="drl-ship-he-se">Reference date</th>
+                            <td class="drl-ship-na-se">Purchas eOrder Number</td>
+                        </tr>
+                        <tr>
+                            <td class="drl-ship-na-se"><?php echo $shipmentPrintArray['reference_number']; ?></td>
+                            <td class="drl-ship-na-se"><?php echo $shipmentPrintArray['reference_date']; ?></td>
+                            <td class="drl-ship-na-se"><?php echo $shipmentPrintArray['po_number']; ?></td>
+                        </tr>
+                    </table>
+                    <?php $SenderInfo = $shipmentPrintArray['seller_info']; ?>
+                    <?php $RecipientInfo = $shipmentPrintArray['recipient_info']; ?>
+                    <p class="drl-ship-name">  <?php echo $SenderInfo['BusinessAddress']['BusinessName']; ?> sold the following items to <?php echo $RecipientInfo['BusinessAddress']['BusinessName']; ?></p>
+                    <table class="item-information">
+                        <tr>
+                            <th colspan="6" class="drl-ship-head">Product Information</th>
+                        </tr>
+                        <tr>
+                            <td class="drl-ship-he-se">Manufacture name</td>
+                            <td class="drl-ship-he-se">Drug name</td>
+                            <td class="drl-ship-he-se">NDC</td>
+                            <td class="drl-ship-he-se">Lot number</td>
+                            <td class="drl-ship-he-se">Quantity</td>
+                            <td class="drl-ship-he-se">Expiration date</td>
+                        </tr>
+                    <?php foreach($shipmentPrintArray['products'] as $product) { ?>
+                        <tr>
+                            <td class="drl-ship-he-se"><?php echo $product['product_mgf']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_name']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_sku']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_lot']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_qty']; ?></td>
+                            <td class="drl-ship-he-se"><?php echo $product['product_expiry']; ?></td>
+                        </tr>
+                    <?php } ?>
+                    </table>
+                    <p></p>
+                    <table>
+                        <tr>
+                            <th colspan="2" class="drl-ship-head">History of drug sales and distribution</th>
+                        </tr>
+                        <tr>
+                            <td width="60%">
+                                <table class="seller-address-info">
+                                    <tr>
+                                        <th colspan="2">Seller Information</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Seller<br />Business address</td>
+                                        <td>
+                                            <?php echo $SenderInfo['BusinessAddress']['BusinessName']; ?><br />
+                                            <?php echo $SenderInfo['BusinessAddress']['Street']; ?><br />
+                                            <?php echo $SenderInfo['BusinessAddress']['City']; ?>, <?php echo $SenderInfo['BusinessAddress']['StateOrRegion']; ?>, <?php echo $SenderInfo['BusinessAddress']['PostalCode']; ?>, <?php echo $SenderInfo['BusinessAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping address</td>
+                                        <td>
+                                            <?php echo $SenderInfo['ShippingAddress']['BusinessName']; ?><br />
+                                            <?php echo $SenderInfo['ShippingAddress']['Street']; ?><br />
+                                            <?php echo $SenderInfo['ShippingAddress']['City']; ?>, <?php echo $SenderInfo['ShippingAddress']['StateOrRegion']; ?>, <?php echo $SenderInfo['ShippingAddress']['PostalCode']; ?>, <?php echo $SenderInfo['ShippingAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>License number</td>
+                                        <td>Seller DEA License - <?php echo $SenderInfo['dea_licence']; ?>, Ship From <br />State License - <?php echo $SenderInfo['state_licence']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ShippingNumber & Date</td>
+                                        <td><?php echo $SenderInfo['shipping_number']; ?> <?php echo $SenderInfo['shipping_date']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transaction</td>
+                                        <td>Sale</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="seller-address-info">
+                                    <tr>
+                                        <th colspan="2">Recipient Information</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Recipient<br />Business address</td>
+                                        <td>
+                                            <?php echo $RecipientInfo['BusinessAddress']['BusinessName']; ?><br />
+                                            <?php echo $RecipientInfo['BusinessAddress']['Street']; ?><br />
+                                            <?php echo $RecipientInfo['BusinessAddress']['City']; ?>, <?php echo $RecipientInfo['BusinessAddress']['StateOrRegion']; ?>, <?php echo $RecipientInfo['BusinessAddress']['PostalCode']; ?>, <?php echo $RecipientInfo['BusinessAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping address</td>
+                                        <td>
+                                            <?php echo $RecipientInfo['ShippingAddress']['BusinessName']; ?><br />
+                                            <?php echo $RecipientInfo['ShippingAddress']['Street']; ?><br />
+                                            <?php echo $RecipientInfo['ShippingAddress']['City']; ?>, <?php echo $RecipientInfo['ShippingAddress']['StateOrRegion']; ?>, <?php echo $RecipientInfo['ShippingAddress']['PostalCode']; ?>, <?php echo $RecipientInfo['ShippingAddress']['Country']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>License number</td>
+                                        <td>Ship To State License - <?php echo $RecipientInfo['state_licence']; ?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="drl-ship-footer"><?php echo $shipmentPrintArray['AdditionalReferences']; ?></td>
+                        </tr>
+                    </table>
+                <?php } ?>
+
+            <?php } ?>
+
+        <?php } ?>
+    </div>
+
+<?php } else { ?>
+    <?php $order = $block->getOrder(); ?>
+    <?php if (!$block->getObjectData($order, 'is_virtual')) : ?>
+        <?php foreach ($block->getShipmentsCollection() as $shipment) : ?>
+            <div class="order-details-items shipments">
+                <div class="order-title">
+                    <strong><?= $block->escapeHtml(__('Shipment #%1', $block->getObjectData($shipment, 'increment_id'))) ?></strong>
+                </div>
+                <div class="table-wrapper order-items-shipment">
+                    <table class="data table table-order-items shipment" id="my-shipment-table-<?= (int) $block->getObjectData($shipment, 'id') ?>">
+                        <caption class="table-caption"><?= $block->escapeHtml(__('Items Invoiced')) ?></caption>
+                        <thead>
+                        <tr>
+                            <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
+                            <th class="col sku"><?= $block->escapeHtml(__('NDC')) ?></th>
+                            <th class="col price"><?= $block->escapeHtml(__('Qty Shipped')) ?></th>
+                        </tr>
+                        </thead>
+                        <?php foreach ($block->getShipmentItems($shipment) as $item) : ?>
+                            <tbody>
+                                <?= $block->getItemHtml($item) ?>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div class="block block-order-details-view">
+                    <div class="block-title">
+                        <strong><?= $block->escapeHtml(__('Order Information')) ?></strong>
+                    </div>
+                    <div class="block-content">
+                        <div class="box box-order-shipping-address">
+                            <div class="box-title">
+                                <strong><?= $block->escapeHtml(__('Shipping Address')) ?></strong>
+                            </div>
+                            <div class="box-content">
+                                <address><?= $block->getShipmentAddressFormattedHtml($shipment) ?></address>
+                            </div>
+                        </div>
+
+                        <div class="box box-order-shipping-method">
+                            <div class="box-title">
+                                <strong><?= $block->escapeHtml(__('Shipping Method')) ?></strong>
+                            </div>
+                            <div class="box-content">
+                            <?= $block->escapeHtml($block->getObjectData($order, 'shipping_description')) ?>
+                            <?php $tracks = $block->getShipmentTracks($shipment);
+                            if ($tracks) : ?>
+                                <dl class="order-tracking">
+                                <?php foreach ($tracks as $track) : ?>
+                                    <dt class="tracking-title"><?= $block->escapeHtml($block->getObjectData($track, 'title')) ?></dt>
+                                    <dd class="tracking-content"><?= $block->escapeHtml($block->getObjectData($track, 'number')) ?></dd>
+                                <?php endforeach; ?>
+                                </dl>
+                            <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="box box-order-billing-method">
+                            <div class="box-title">
+                                <strong><?= $block->escapeHtml(__('Billing Address')) ?></strong>
+                            </div>
+                            <div class="box-content">
+                                <address><?= $block->getBillingAddressFormattedHtml($order) ?></address>
+                            </div>
+                        </div>
+
+                        <div class="box box-order-billing-method">
+                            <div class="box-title">
+                                <strong><?= $block->escapeHtml(__('Payment Method')) ?></strong>
+                            </div>
+                            <div class="box-content">
+                                <?= $block->getPaymentInfoHtml() ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+<?php } ?>

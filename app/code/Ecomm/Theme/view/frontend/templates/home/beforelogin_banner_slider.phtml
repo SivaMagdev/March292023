@@ -1,0 +1,37 @@
+<?php //echo 'Before slider_id: '.$block->getData('slider_id'); ?>
+<?php //echo '<pre>'.print_r($block->getBannerList($block->getData('slider_id'))[0], true).'</pre>'; ?>
+<div class="home-banner-outer">
+    <div class="home-banner-carousel">
+        <?php 
+        if(isset($block->getBannerList($block->getData('slider_id'))[0]['data'])){
+            foreach ($block->getBannerList($block->getData('slider_id'))[0]['data'] as $banner) {
+            ?>
+                <div class="item">    
+                    <div class="overlay">
+                        <?= $banner['caption']; ?>
+            	        <div class="over-btn">
+                            <a href="<?= $block->getURL('about-us'); ?>" class="over-btn-explore"><?= $banner['image_alt']; ?></a>
+                        </div>
+                    </div>   
+        	        <div class="imageContainer">
+                    <a href="<?= $banner['click_url']; ?>" class="over-btn-explore" target="_blank"><img src="<?= $block->getMediaURL().$banner['image']; ?>" /></a>
+                    </div>
+            </div> 
+            <?php 
+            }
+        }
+        ?>  
+    </div>
+    <div class="register-with-us-outer">
+        <div class="register-with-inner">
+            <div class="register-head">Sign Up Here</div>
+            <div class="register-body-below">
+            </div>
+            <div class="company-email-outer">
+                <div class="company-get-btn">
+                    <a href="<?php echo $this->getBaseUrl()."register-landing-page"; ?>" class="company-get-started" target="_blank">Get Started</a>
+                </div>		  
+            </div>	 
+        </div>
+    </div>
+</div>

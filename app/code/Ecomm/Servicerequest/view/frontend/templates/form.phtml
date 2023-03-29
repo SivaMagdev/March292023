@@ -1,0 +1,143 @@
+<span class="base drl-head-serivce">Service Request</span>
+<div class="block block-dashboard-info">
+    <div class="block-content">
+        <form class="form drl-service-request-form" id="form-validate" action="<?php echo $this->getFormAction(); ?>" method="POST" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"  enctype="multipart/form-data" data-mage-init='{"validation":{}}' autocomplete="off">
+            <fieldset class="fieldset">
+                <span class="drl-service-sub">
+                    <?php /* @escapeNotVerified */ echo __('Submit a Request') ?></span><br>
+                <p class="drl-service-head">We will respond within 1 business day.</p>
+                <div class="drl-register">
+                    <div class="field required drl-width-input">
+                        <label for="typeofrequest" class="request_type drl-required-astr">
+                            <span>
+                                <?php /* @escapeNotVerified */ echo __('Type of Request') ?></span>
+                        </label>
+                        <div class="control"><?php //echo '<pre>'.print_r($block->getRequestType(), true).'</pre>'; ?>
+                            <select name="request_type" id="request_type" class="drl-register-input required" onChange="changeLabel(this);">
+                                <option value="" disabled="disabled" selected="selected">Please choose a request type</option>
+                                <?php foreach($block->getRequestType() as $request_type){ ?>
+                                    <option value="<?php echo $request_type['value']; ?>"><?php echo $request_type['label']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field required drl-width-input">
+                        <label for="reference_number" id="request_label" class="reference_number drl-required-astr">
+                            <span>
+                                <?php /* @escapeNotVerified */ echo __('Subject') ?></span>
+                        </label>
+                        <div class="control">
+                            <input type="text" id="reference_number" name="reference_number" class="input-text drl-register-input required-entry" placeholder="Enter the subject">
+                        </div>
+                    </div>
+                </div>
+                <div class="drl-register">
+                    <div class="field required drl-width-input">
+                        <label for="request_description" class="request_description drl-required-astr">
+                            <span>
+                                <?php /* @escapeNotVerified */ echo __('Describe') ?></span>
+                        </label>
+                        <div class="control">
+                            <textarea name="request_description" class="drl-textarea required required-entry" placeholder="Describe in detail"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="drl-register">
+                    <div class="field required drl-width-input">
+                        <label for="attachment" class="attachment">
+                            <span>
+                                <?php /* @escapeNotVerified */ echo __('Attach file') ?></span>
+                        </label>
+                        <div class="control">
+                            <input type="file" id="attachment_upload" name="attachment_upload" class="attachment" style="display: none;">
+                            <input type="hidden" id="attachment" name="attachment" />
+                            <button type="button" class="scalable action-show-hide required" id="uploadAttachment">
+                                <span><span><span>Select Attachment</span></span></span></button>
+                                <div id="attachmentFiles"></div>
+                                <span class="file-type">Allowed file types (Max Size: 2MB): PDF, JPG, JPEG and PNG</span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="seperate-slash-drl"></div>
+            <div class="actions-toolbar drl-submit-btn">
+                <div class="primary">
+                    <button type="submit" class="action submit primary" title="<?php /* @escapeNotVerified */ echo __('Submit request') ?>">
+                        <span>
+                            <?php /* @escapeNotVerified */ echo __('Submit request') ?></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+require(['servicelabel'], function() {});
+</script>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(document).ready(function ($) {
+
+            $(document).on('click', '#attachmentFiles .action-remove', function(){
+               if (window.confirm("Are you sure you want to delete?")) {
+                   var attachmentPath = $(this).attr("data-image");
+                   var divID = $(this).parents(".base-image").attr("id");
+                   var imageID = $(this).parents(".base-image").find(".hiddneattachID").val();
+
+                   jQuery.ajax({
+                        url: "<?php echo $block->getBaseUrl() . 'servicerequest/index/delete?isAjax=true' ?>",
+                        type: "POST",
+                        data: {filename: attachmentPath, form_key: window.FORM_KEY, imageID:imageID},
+                        showLoader: true,
+                        success: function (response) {
+                            if(response.success == true){
+                                $(".base-image#"+divID).remove();
+                            }
+                            alert(response.message);
+                        },
+                       error: function (response) {
+                            alert(response.message);
+                       }
+                    });
+               }
+            });
+
+            $('#uploadAttachment').click(function(){ $('#attachment_upload').trigger('click'); });
+
+            $("#attachment_upload").change(function(){
+                var data = $("#form-validate").get(0);
+
+                $.ajax({
+                    url: "<?php echo $block->getBaseUrl() . 'servicerequest/index/upload?isAjax=true' ?>",
+                    type: "POST",
+                    data: new FormData(data),
+                    processData: false,
+                    contentType: false,
+                    showLoader: true,
+                    beforeSend: function() {
+                        $("#ajax-upload-error").remove();
+                    },
+                    success: function (response) {
+                        /*alert(response.message);*/
+                        if(response.error == true){
+
+                            $('#uploadAttachment').after('<div id="ajax-upload-error" class="mage-error">'+response.message+'</div>');
+                            // $('#form-validate')[0].reset();
+
+                        } else {
+                            $("#attachmentFiles").html(response.data.html);
+                            $('#attachment').val(response.data.filename);
+                            // $('#form-validate')[0].reset();
+                        }
+                    },
+                    error: function (response) {
+                        //alert(response.message);
+                        $('#uploadAttachment').after('<div id="ajax-upload-error" class="mage-error">'+response.message+'</div>');
+                        // $('#form-validate')[0].reset();
+                    }
+                 });
+            });
+        });
+    });
+</script>

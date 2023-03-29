@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Newsletter\Controller\Subscriber\NewAction" type="Ecomm\AjaxNewsletter\Controller\Subscriber\NewAction" />
+    
+    <preference for="\Magento\Newsletter\Controller\Manage\Index" type="Ecomm\AjaxNewsletter\Controller\Manage\Index" />
+    
+    <preference for="\Magento\Newsletter\Model\Subscriber" type="Ecomm\AjaxNewsletter\Model\Subscriber" />
+
+    
+</config>

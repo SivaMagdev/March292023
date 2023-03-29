@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright info.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <head>
+        <css src="Ecomm_CustomMenu::css/drl_megamenu.css" rel="stylesheet" type="text/css" />
+        <css src="Ecomm_CustomMenu::css/drl_header.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <referenceBlock name="catalog.topnav">
+            <block class="Ecomm\CustomMenu\Block\Menu" name="custom.menu.links" template="Ecomm_CustomMenu::Menu.phtml" />
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,166 @@
+.sales-order-printinvoice .header-info {
+    display: flex;
+}
+
+.sales-order-printinvoice .header-info .col-left,
+.sales-order-printinvoice .header-info .col-right {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+.sales-order-printinvoice p.drl-invocie-document{
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-weight: unset;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+.sales-order-printinvoice .remit-to-address h5,
+.sales-order-printinvoice .header-info .col-right h5,
+.sales-order-printinvoice .shipp-to-address h5 {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-weight: unset;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+.sales-order-printinvoice .page-wrapper {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.sales-order-printinvoice .remit-to-address .strong {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+.sales-order-printinvoice .info-msg {
+    border: 1px solid;
+}
+
+.info-msg p {
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'Circular Pro Book Italic';
+}
+
+.sales-order-printinvoice table>thead {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+
+}
+
+.sales-order-printinvoice .remit-to-address p,
+.sales-order-printinvoice .sold-to-address p,
+.sales-order-printinvoice .shipp-to-address p {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Book';
+}
+
+.sales-order-printinvoice .drl-top {
+    border-top: 1px solid;
+}
+
+.sales-order-printinvoice .drl-bottom-border {
+    border-bottom: 1px solid;
+}
+
+.sales-order-printinvoice .items-info tbody tr.drl-line,
+.sales-order-printinvoice .items-info table>tfoot,
+.sales-order-printinvoice .items-info table>tfoot>tr
+{
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.sales-order-printinvoice hr.hr-drl-bold {
+    border-top: 1px solid #333;
+    width: 85%;
+    position: relative;
+    right: 8%;
+}
+
+.sales-order-printinvoice .header-info .col-right h5.invoice-drl-head {
+    border: 1px solid;
+    padding: 5px;
+    background: lightgrey;
+    margin-bottom: 0;
+
+}
+
+.sales-order-printinvoice .header-info .col-right .invoice-info {
+    padding: 20px 10px 20px 10px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.sales-order-printinvoice .header-info .col-right .invoice-info dl dt {
+    font-weight: unset;
+    letter-spacing: 0px;
+    color: #9A9A9A;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+.sales-order-printinvoice .header-info .col-right .invoice-info dl dd {
+    font-weight: unset;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Book';
+}
+
+.sales-order-printinvoice .items-info table>tbody>tr>td {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    border-bottom: none;
+}
+.sales-order-printinvoice .items-info table>thead>tr>th{
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    border-bottom: none;
+}
+
+.sales-order-printinvoice .terms-and-conditions h2 {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-weight: unset;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+    margin-top: 2.5rem !important;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.sales-order-printinvoice .terms-and-conditions p {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+}
+
+.sales-order-printinvoice .border-none {
+    border-bottom: unset;
+}

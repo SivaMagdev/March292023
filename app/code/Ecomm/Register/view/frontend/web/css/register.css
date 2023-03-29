@@ -1,0 +1,509 @@
+.tacbox.field.required label.term-hyper span#termcon a {
+    letter-spacing: 0px;
+    color: #5225B5;
+}
+
+div#custom-terms-error {
+    text-align: left;
+}
+
+/* Terms and conditon popup start */
+
+.customer-account-create .modal-popup .modal-title {
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    border-bottom: 1px dashed #dfe1e8;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+.customer-account-create .terms-conditon-drl p.drl-terms-word {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+
+}
+
+.customer-account-create .modal-popup.modal-slide .modal-footer button.drl-term-condition {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    opacity: 1;
+    width: 187px;
+    height: 46px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-family: 'DRL Circular Book';
+    font-size: 14px;
+    box-shadow: none;
+}
+
+/* Terms and conditon popup End */
+/* Popup Organization Confirm Start */
+.customer-account-create #register-popup .register-alert-org-mail {
+    font-size: 24px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Black';
+}
+
+.customer-account-create button.success-notifications {
+    width: 138px;
+    height: 46px;
+}
+
+.customer-account-create .modal-popup .modal-content {
+    padding: 0 4% 0 4%;
+}
+
+.customer-account-create button.discard-notifications {
+    width: 128px;
+    height: 46px;
+}
+
+.customer-account-create #register-popup .drl-alert-assist {
+    display: inline-flex;
+    padding: 10px;
+}
+
+.customer-account-create #register-popup .drl-alert-assist .drl-multi-line a.oval-tel-drl {
+    letter-spacing: 0px;
+    color: #FF5046;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+.customer-account-create #register-popup .drl-alert-popup-msg {
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Light';
+    margin: 2% 5px 0 0;
+}
+
+.customer-account-create #register-popup .drl-multi-line .fa-round-drl {
+    border-radius: 60px;
+    box-shadow: 0px 0px 2px #888;
+    padding: 0.5em 0.6em;
+    background: #FF7069 0% 0% no-repeat padding-box;
+    opacity: 1;
+    color: #FFFFFF;
+}
+
+.customer-account-create #register-popup .drl-multi-line .popup-tel-drl {
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    letter-spacing: 0px;
+    color: #FF5046;
+    opacity: 1;
+}
+
+.customer-account-create .modals-wrapper .modal-popup .modal-inner-wrap {
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+    width: 586px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    margin-bottom: 0;
+}
+
+.customer-account-create .modal-popup.modal-slide .modal-footer {
+    border-top: 1px dashed #d5d6da;
+    padding: 20px;
+}
+
+.customer-account-create .drl-hr-line {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border: 1px dashed #434861;
+    opacity: 0.2;
+}
+
+/* Popup Organization Confirm End */
+/* I agree start */
+fieldset.fieldset.create-acct-btn .tacbox {
+    float: left;
+    margin: 2.5% 0% 1.5% 4%;
+    font-size: 16px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Light';
+}
+
+fieldset.fieldset.create-acct-btn .primary.check-submit-drl .tacbox a.term-hyper {
+    color: #5225B5;
+    text-decoration: underline;
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+}
+
+form.form.create.account.form-create-account.drl-register-account fieldset.fieldset.create-acct-btn .actions-toolbar .primary.check-submit-drl {
+    display: contents;
+}
+
+fieldset.fieldset.create-acct-btn .tacbox #agree-term-cond {
+    height: 2em;
+    width: 1.3em;
+    vertical-align: text-bottom;
+}
+
+/* I agree End */
+fieldset.fieldset.create.account.drl-account div#message-drl .drl-flex p.invalid.msg-width-drl {
+    letter-spacing: 0px;
+    color: #9D9AA2;
+    opacity: 1;
+    font-size: 12px;
+    font-family: 'DRL Circular Light';
+}
+
+fieldset.fieldset.create.account.drl-account div#message-drl .invalid.msg-width-drl1 {
+    letter-spacing: 0px;
+    color: #9D9AA2;
+    opacity: 1;
+    font-size: 12px;
+    font-family: 'DRL Circular Light';
+}
+
+.customer-account-create .form.create.account.form-create-account.drl-register-account fieldset.fieldset.create-acct-btn button.action.submit.primary {
+    float: right;
+    margin: 1.5% 3% 1.5% 1%;
+}
+
+.customer-account-create .page-wrapper {
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.customer-account-create .form.create.account.form-create-account.drl-register-account .drl-page-title-wrapper h1.drl-page-title {
+    margin: 3% 0% 50px 4%;
+    color: #4F4F4F;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+fieldset.fieldset.create.account.drl-account .field.required.password label.label {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 12px;
+    font-family: "DRL Circular Light";
+}
+
+.drl-register .field.field-name-firstname.required label.label,
+.drl-register .field.field-name-lastname.required label.label,
+fieldset.fieldset.create.account.drl-account .field.required.email label.label,
+fieldset.fieldset.create.account.drl-account .field.confirmation.required label.label,
+fieldset.fieldset.create.account.drl-account .field.field-organization_name.required label.label,
+fieldset.fieldset.create.account.drl-account .field.field-organization_email.required label.label,
+fieldset.create.account.drl-account .field.field-job_title.required label.label {
+    color: #434861;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+}
+
+form.form.create.account.form-create-account.drl-register-account fieldset.fieldset.create-acct-btn {
+    border-top: 1px dashed #dfe1e8;
+    margin-bottom: 0;
+}
+
+.customer-account-create header.page-header,
+.customer-account-create .page-title-wrapper {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+/* Oval Css Start */
+.customer-account-create .register-panel-drl {
+    display: flex;
+}
+
+div#oval-assit .dotted-slash-drl {
+    border: 1px dashed #707070;
+    opacity: 0.5;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    margin: 18px 18px;
+    width: 85%;
+}
+
+div#oval-assit .oval-sub label.oval-one {
+    color: #4F4F4F;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+div#oval-assit .oval-sub label.oval-two {
+    color: #5225B5;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    padding: 10px 0 0 0;
+}
+
+#oval-assit {
+    width: 22%;
+    height: 100%;
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    /* border-bottom-left-radius: 50px 100px;
+    border-top-left-radius: 50px 100px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 50%; */
+    float: right;
+    margin: 0px 0px 0px 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+div#oval-assit .oval-sub .oval-multi-line {
+    display: flex;
+    align-items: center;
+}
+
+div#oval-assit .oval-sub {
+    display: inline-grid;
+    padding: 8px 30px;
+    font-size: 13px;
+}
+
+div#oval-assit .oval-multi-line .fa-round-drl {
+    border-radius: 60px;
+    box-shadow: 0px 0px 2px #888;
+    padding: 0.5em 0.6em;
+    background: #FF7069 0% 0% no-repeat padding-box;
+    opacity: 1;
+    color: #FFFFFF;
+}
+
+div#oval-assit .oval-multi-line .oval-three {
+    color: #4F4F4F;
+    font-size: 12px;
+    font-family: 'DRL Circular Book';
+    margin-bottom: 0;
+}
+
+div#oval-assit .oval-multi-line .oval-tel-drl {
+    color: #5225B5;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+div#oval-assit .oval-multi-line .oval-drl-help {
+    margin-left: 6%;
+    white-space: nowrap;
+}
+
+/* Oval Css End */
+.customer-account-create .form.create.account.form-create-account.drl-register-account {
+    width: 75%;
+    background: #fff;
+
+}
+
+.drl-register .field.field-name-firstname.required {
+    flex-basis: 100%;
+}
+
+.drl-register .field.field-name-lastname.required {
+    flex-basis: 100%;
+}
+
+.customer-account-create .drl-register-account .drl-register {
+    display: flex;
+    margin: 0 0 45px;
+}
+
+fieldset.fieldset.create.account.drl-account .field.required.email,
+fieldset.fieldset.create.account.drl-account .field.password.required,
+fieldset.fieldset.create.account.drl-account .field.confirmation.required,
+fieldset.fieldset.create.account.drl-account .field.field-organization_name.required,
+fieldset.fieldset.create.account.drl-account .field.field-organization_email.required,
+fieldset.fieldset.create.account.drl-account .field.field-job_title.required {
+    flex-basis: 50%;
+}
+
+.customer-account-create .drl-register-account fieldset.fieldset.create.info.drl-info,
+.customer-account-create .drl-register-account fieldset.fieldset.create.account.drl-account {
+    width: 100%;
+    padding-left: 4%;
+    margin: 0;
+}
+
+.customer-account-create .drl-register-account .drl-register-input {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: #495057;
+    background: #FAF9FA 0% 0% no-repeat padding-box;
+    background-clip: padding-box;
+    /* border: 1px solid #5225B533; */
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: inherit;
+    box-sizing: unset;
+    font-family: 'DRL Circular Bold';
+}
+
+.customer-account-create .drl-register-account .drl-register-input::placeholder {
+    color: #9D9AA2;
+    opacity: 1;
+    letter-spacing: 0px;
+    font-family: "DRL Circular Light";
+}
+
+.customer-account-create .drl-register-account input#password {
+    letter-spacing: 5px;
+}
+
+.drl-flex {
+    display: flex;
+}
+
+/* Password Validation Start*/
+
+#message-drl {
+    color: #434861;
+    position: relative;
+    margin-top: 10px;
+    width: 70%;
+}
+
+.msg-width-drl {
+    width: 50%;
+}
+
+#message-drl p {
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+fieldset.fieldset.create.account.drl-account div#message-drl .drl-flex .valid {
+    color: green;
+}
+
+fieldset.fieldset.create.account.drl-account div#message-drl .drl-flex .valid:before {
+    position: relative;
+    padding-right: 3px;
+    content: "✔";
+}
+
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    padding-right: 3px;
+    content: "✖";
+}
+
+/* Password Validation End */
+
+fieldset.fieldset.create.account.drl-account .drl-paswd-sh-hid {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+
+.show-hide {
+    font-size: 18px;
+    color: #5225B5;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-left: -7%;
+    z-index: 2;
+    margin-bottom: 0rem;
+    z-index: 2;
+}
+
+@media (min-width: 768px) {
+    .drl-page-title-wrapper .drl-page-title {
+        display: inline-block;
+    }
+}
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+    .customer-account-create #register-popup .drl-alert-popup-msg {
+        font-size: 11px;
+    }
+
+    .customer-account-create .modal-popup.modal-slide {
+        left: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        top: 24%;
+    }
+
+    .customer-account-create .modal-popup.modal-slide .modal-footer {
+        text-align: center;
+    }
+
+    .customer-account-create .modals-wrapper .modal-popup .modal-inner-wrap {
+        width: auto;
+        height: auto;
+    }
+
+    .customer-account-create .register-panel-drl {
+        display: block;
+    }
+
+    .customer-account-create .drl-register-account fieldset.fieldset.create.info.drl-info,
+    .customer-account-create .drl-register-account fieldset.fieldset.create.account.drl-account {
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+
+    .register-panel-drl div#oval-assit {
+        width: 100%;
+    }
+
+    .register-panel-drl form.form.create.account.form-create-account.drl-register-account {
+        width: 100%;
+    }
+
+    .customer-account-create .drl-register-account .drl-register {
+        display: block;
+    }
+
+    .customer-account-create .drl-register-account fieldset.fieldset.create.info.drl-info,
+    .customer-account-create .drl-register-account fieldset.fieldset.create.account.drl-account {
+        width: 100%;
+    }
+
+    .customer-account-create .drl-register-account .drl-register-input {
+        width: -webkit-fill-available;
+    }
+
+    #message {
+        width: -webkit-fill-available;
+    }
+}
+
+/* Mobile Screen
+ End */

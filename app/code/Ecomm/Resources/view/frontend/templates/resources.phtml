@@ -1,0 +1,87 @@
+<div data-content-type="row" data-appearance="contained" data-element="main">
+    <div class="drl-resources-page" data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-background-type="image" data-video-loop="true" data-video-play-only-visible="true" data-video-lazy-load="true" data-video-fallback-src="" data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px;">
+        <div class="pagebuilder-column-group" style="display: flex;" data-content-type="column-group" data-grid-size="12" data-element="main">
+            <div class="pagebuilder-column" data-content-type="column" data-appearance="full-height" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; width: 25%; margin: 0px; padding: 10px; align-self: stretch;">
+                <div data-content-type="html" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;" data-decoded="true">
+                    <div class="content block-collapsible-nav-content" id="block-collapsible-nav">
+                        <ul class="nav items">
+                            <li class="nav item active"><a href="<?= $block->getURL('resources'); ?>">Documents &amp; Links</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pagebuilder-column" data-content-type="column" data-appearance="full-height" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; width: 75%; margin: 0px; padding: 10px; align-self: stretch;">
+                <div data-content-type="html" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;" data-decoded="true">
+                    <span class="base drl-head-serivce">Documents &amp; Links</span>
+                </div>
+                <div class="tab-align-left ui-tabs ui-widget ui-widget-content ui-corner-all" data-content-type="tabs" data-appearance="default" data-active-tab="0" data-element="main" style="margin: 0px; padding: 0px;">
+                    <ul role="tablist" class="tabs-navigation ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" data-element="navigation" style="text-align: left; margin-bottom: 0px;">
+                        <?php 
+                        foreach ($block->getCategoryList()->getItems() as $key => $category) {
+                        ?>
+                            <li role="tab" class="tab-header ui-state-default ui-corner-top <?= $key == 0 ? 'ui-tabs-active ui-state-active' : '' ; ?>" data-element="headers" style="border-radius: 5px; border-width: 1px;" tabindex="0" aria-controls="<?= $block->clean($category['category']); ?>" aria-labelledby="ui-id-5" aria-selected="true">
+                                <a href="#<?= $block->clean($category['category']); ?>" class="tab-title ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-5">
+                                    <span class="tab-title"><?= $category['category'] ?></span>
+                                </a>
+                            </li>
+                        <?php 
+                        }
+                        ?>
+                    </ul>
+                    <div class="tabs-content" data-element="content" style="border-width: 1px; border-radius: 5px; min-height: 300px;">
+                        <?php 
+                        foreach ($block->getCategoryList()->getItems() as $category) {
+                                ?>
+                            <div data-content-type="tab-item" data-appearance="default" data-tab-name="<?= $block->clean($category['category']); ?>" data-background-images="{}" data-element="main" id="<?= $block->clean($category['category']); ?>" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-width: 1px; border-radius: 0px; margin: 0px; padding: 40px;" aria-labelledby="ui-id-5" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="true">
+                                <div data-content-type="html" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;" data-decoded="true">
+                                    <!-- documents -->
+                                    <?php foreach ($block->getList($category['id'])->getItems() as $documents) { ?>
+                                        <?php if($documents['status'] && $documents['attachment_url']){ ?>
+                                                <div class="drl-card-shadow">
+                                                    <p class="drl-title-link"><?= $documents['title']; ?>
+                                                        <a href="<?= $documents['attachment_url']; ?>" download="1.pdf" class="drl-right drl-icon-space" title="Download"><img src="<?= $block->getMediaURL().'wysiwyg/downld.png' ?>" alt=""></a>
+                                                        <a href="<?= $documents['attachment_url']; ?>" target="_blank" class="drl-right drl-icon-space" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </p>
+                                                    <p class="drl-link-destr"><?= $documents['description']; ?></p>
+                                                </div>
+                                        <?php } ?>
+                                        <!-- documents -->
+                                        <!-- Links -->
+                                        <?php if($documents['status'] && $documents['link']){ ?>
+                                            <?php if($documents['hide_leave_popup'] == 1) { ?>
+                                                <a href="<?= $documents['link'] ?>" class="link-click" target="_blank">
+                                                    <div class="drl-card-shadow">
+                                                        <p class="drl-title-link"><?= $documents['title'] ?></p>
+                                                        <p class="drl-link-destr"><?= $documents['description'] ?></p>
+                                                    </div>
+                                                </a>
+                                            <?php } else { ?>
+                                                <a data-exthref="<?= $documents['link'] ?>" class="external-link-click" target="_blank">
+                                                    <div class="drl-card-shadow">
+                                                        <p class="drl-title-link"><?= $documents['title'] ?></p>
+                                                        <p class="drl-link-destr"><?= $documents['description'] ?></p>
+                                                    </div>
+                                                </a>
+                                            <?php } ?>
+                                        <?php } ?>
+                                        <!-- Links -->
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="social-popup" class="drl-social-popup" style="display:none;">
+   <p>You are about to leave Dr.Reddy’s and affiliates website. Dr. Reddy's assumes no responsibility for the information presented on the external website or any further links from such sites. These links are presented to you only as a convenience, and the inclusion of any link does not imply endorsement by Dr. Reddy's.</p>
+   <p>If you wish to continue to this external website, click Proceed.</p>
+</div>
+<input type="hidden" id="social-proceed-url" name="social-proceed-url" value="">
+<script type="text/javascript">
+   require(['resource'], function () {
+   });
+</script>

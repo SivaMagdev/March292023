@@ -1,0 +1,89 @@
+<div class="import-export-product-master">
+    <div class="import-product-master">
+        <form id="import-form" action="<?= $block->escapeUrl($block->getUrl('ecomm_priceengine/product/process/'))?>" method="post" enctype="multipart/form-data">
+            <?=$block->getBlockHtml('formkey')?>
+            <fieldset class="admin__fieldset admin__fieldset-import-service">
+                <div class="fieldset admin__field">
+                    <label for="import_csv_file" class="admin__field-label"><span><?= $block->escapeHtml(__('Import Product Master'))?></span></label>
+                    <div class="admin__field-control">
+                        <input type="file" id="import_csv_file" name="import_csv_file" class="input-file required-entry"/>
+                        <button title="<?= $block->escapeHtmlAttr(__('Import CSV File'))?>" type="button" class="action-default scalable import-submit" data-ui-id="widget-button-0">
+                            <span><?= $block->escapeHtml(__('Import CSV File'))?></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="notes">
+        <h3><?= $block->escapeHtml(__('Recommendation')); ?></h3>
+        <fieldset class="admin__fieldset">
+            <div class="fieldset admin__field">
+                <label class="admin__field-label"><span><?= $block->escapeHtml(__('File Type'))?></span></label>
+                <div class="admin__field-control">
+                    <input class="admin__control-text" readonly="readonly" value="<?= $block->escapeHtmlAttr(__("Works best with CSV files saved in UTF-8 encoding")); ?>" />
+                </div>
+            </div>
+            <div class="fieldset admin__field">
+                <label class="admin__field-label"><span><?= $block->escapeHtml(__('Download Sample'))?></span></label>
+                <div class="admin__field-control control">
+                    <a id="link" name="sample_download_link" title="Download Sample CSV" href="<?= $block->escapeUrl($block->getUrl('ecomm_priceengine/product/download/'))?>" >Download Sample CSV</a>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="export-product-master">
+        <h3><?= $block->escapeHtml(__('Export')); ?></h3>
+        <form action="<?= $block->escapeUrl($block->getUrl('ecomm_priceengine/product/export/'))?>" method="post" enctype="multipart/form-data">
+            <?=$block->getBlockHtml('formkey')?>
+            <fieldset class="admin__fieldset admin__fieldset-export-service">
+                <div class="fieldset admin__field">
+                    <label for="export_csv_file" class="admin__field-label"><span><?= $block->escapeHtml(__('Export Product Master'))?></span></label>
+                    <div class="admin__field-control">
+                        <button title="<?= $block->escapeHtmlAttr(__('Export Product Master'))?>" type="submit" class="action-default scalable export-submit" data-ui-id="widget-button-0">
+                            <span><?= $block->escapeHtml(__('Export Product Master'))?></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="export-product-master">
+        <form action="<?= $block->escapeUrl($block->getUrl('ecomm_priceengine/product/relatedproduct/'))?>" method="post" enctype="multipart/form-data">
+            <?=$block->getBlockHtml('formkey')?>
+            <fieldset class="admin__fieldset admin__fieldset-export-service">
+                <div class="fieldset admin__field">
+                    <label for="export_csv_file" class="admin__field-label"><span></span></label>
+                    <div class="admin__field-control">
+                        <button title="<?= $block->escapeHtmlAttr(__('Update Related Product'))?>" type="submit" class="action-default scalable export-submit" data-ui-id="widget-button-0">
+                            <span><?= $block->escapeHtml(__('Update Related Product'))?></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+<script>
+require(['jquery', 'Magento_Ui/js/modal/alert', "mage/mage", "loadingPopup", 'mage/translate'],
+    function(jQuery, uiAlert){
+        jQuery('#import-form').mage('form').mage('validation');
+        (function ($) {
+            $('.import-submit').click(function(){
+                if($(':input[name="import_csv_file"]').val()) {
+                    $('body').loadingPopup({
+                        timeout: false
+                    });
+                    $(this.form).submit();
+                } else {
+                    uiAlert({
+                        content: $.mage.__('Please select a file to import!')
+                    });
+                }
+            });
+        })(jQuery);
+    });
+</script>

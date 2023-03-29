@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="ecomm_notification_general_price_expiry_email_template"
+              label="Price Expiry Notification" file="price_expiry_notification.html"
+              type="html" module="Ecomm_Notification" area="frontend"/>
+
+    <template id="ecomm_notification_general_licence_expiry_email_template"
+              label="Licence Expiry Notification" file="licence_expiry_notification.html"
+              type="html" module="Ecomm_Notification" area="frontend"/>
+
+    <template id="ecomm_notification_general_licence_expiry_customer_email_template"
+              label="Licence Expiry Customer Notification" file="licence_expiry_customer_notification.html"
+              type="html" module="Ecomm_Notification" area="frontend"/>
+
+    <template id="ecomm_notification_general_order_processing_failed_email_template"
+              label="Order Bactch Not Processed Notification" file="order_processing_failed_notification.html"
+              type="html" module="Ecomm_Notification" area="frontend"/>
+
+    <template id="ecomm_notification_general_ack_failed_email_template"
+              label="Ack Not Recived Notification" file="ack_failed_notification.html"
+              type="html" module="Ecomm_Notification" area="frontend"/>
+
+    <template id="ecomm_notification_general_ack_duplicate_email_template"
+              label="Ack Duplicate Notification" file="ack_duplicate_notification.html"
+              type="html" module="Ecomm_Notification" area="frontend"/>
+</config>

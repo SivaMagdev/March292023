@@ -1,0 +1,549 @@
+.minicart-wrapper .action.showcart.active:before,
+.minicart-wrapper .action.showcart.active:hover:before {
+    color: #532fb7;
+}
+
+.navigation .level0 .submenu .active>a {
+    border-color: #532fb7;
+}
+
+.drl-bell-notify.notifications {
+    display: block;
+}
+
+ul.header.links li.link.wishlist.mobile-view-drl,
+ul.header.links li.link.notification.mobile-view-drl {
+    display: none;
+}
+
+.section-item-content.nav-sections-item-content {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: 0px 0px 30px #0000000d;
+    width: 100%;
+}
+
+.drl-megamenu-image {
+    vertical-align: middle;
+}
+
+.page-wrapper .sections.nav-sections {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    margin-bottom: 5px;
+}
+
+.nav-sections-item-content>.navigation {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.navigation .level0>.level-top:hover,
+.navigation .level0>.level-top.ui-state-focus.drl-sub-menu {
+    color: #434861;
+    opacity: 1;
+    font-size: 13px;
+    font-family: "DRL Circular Book";
+}
+
+.navigation li.level0 a.drl-main-menu.level-top.ui-corner-all {
+    border-style: unset;
+    border-bottom: none;
+}
+
+a.drl-sub-menu.level-top.ui-corner-all span {
+    color: #434861;
+    opacity: 1;
+    font-size: 13px;
+    font-family: "DRL Circular Book";
+    font-weight: unset;
+}
+
+.navigation .level0>.level-top {
+    color: #434861;
+    font-weight: 400;
+}
+
+.navigation .level0.parent>.level-top>.ui-menu-icon:before {
+    content: url("../img/megamenu.png");
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 12px;
+    line-height: 15px;
+    color: inherit;
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}
+
+.navigation .level0.parent>.level-top>.ui-menu-icon:after {
+    content: unset;
+}
+
+.navigation .level0.parent>.level-top>.drl-icon-left {
+    left: 0;
+}
+
+.drl-main-menu .drl-head-main {
+    padding-left: 15px;
+    color: #5225b5;
+    opacity: 1;
+    font-size: 13px;
+    font-family: "DRL Circular Book";
+}
+
+ul.level0.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all .drl-main-cat.level-top.ui-corner-all {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 0px 0px 5px 5px;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    padding: 18px 20px;
+    display: block;
+    line-height: inherit;
+}
+
+ul.level0.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all .drl-main-cat.level-top.ui-corner-all:hover {
+    background: #f6f4f9 0% 0% no-repeat padding-box;
+}
+
+.navigation .level0 .submenu li.parent>.ui-menu-icon:after {
+    content: url("../img/megamenu-arrow.png");
+}
+
+.navigation .level0 .submenu li.parent>.ui-menu-icon {
+    right: 10px;
+    position: absolute;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.drl-side-menu .drl-side-sub {
+    display: inline;
+    float: left;
+    width: 66%;
+}
+
+.drl-side-menu .drl-side-sub-second {
+    display: inline;
+    float: left;
+    width: 100%;
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.drl-side-menu .drl-side-sub-second::-webkit-scrollbar-thumb {
+    background: #9d9aa2 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 0.5;
+}
+
+.drl-side-menu .drl-side-sub-second::-webkit-scrollbar {
+    width: 4px;
+}
+
+
+ul.level1.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.expanded.drl-side-menu {
+    width: 950px;
+    height: auto;
+    background: #f6f4f9 0% 0% no-repeat padding-box;
+    border-radius: 0px 0px 5px 0px;
+    opacity: 1;
+    min-height: 250px;
+}
+
+ul.level1.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.expanded.drl-side-menu:nth-child(even) {
+    top: -76px;
+}
+
+.drl-side-menu .drl-side-sub .drl-menu-wid {
+    width: 250px;
+    display: inline;
+    float: left;
+}
+
+.drl-side-menu .drl-side-sub-second .drl-menu-wid {
+    width: 224px;
+    display: inline;
+    float: left;
+}
+
+.drl-side-menu .drl-side-sub-second .drl-menu-wid a.ui-corner-all {
+    font-size: 15px;
+    color: #5225b5;
+    opacity: 1;
+    font-family: "DRL Circular Book";
+    padding: 12px 0px 0px 5px;
+    /* width: 90%; */
+    text-transform: capitalize;
+    min-height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+.drl-side-menu .drl-side-sub .drl-menu-wid a.ui-corner-all {
+    font-size: 15px;
+    color: #5225b5;
+    opacity: 1;
+    font-family: "DRL Circular Book";
+    padding: 18px 0px 18px 15px;
+    width: 90%;
+    text-transform: capitalize;
+}
+
+ul.level0.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.drl-left-cat-main {
+    height: auto;
+}
+
+li.item.product.product-item.drl-item-right.ui-menu-item {
+    float: right;
+    display: table;
+    width: 40%;
+}
+
+.drl-img-product {
+    float: right;
+    width: 45%;
+    position: absolute;
+    right: 1%;
+    top: 5%;
+}
+
+.drl-col-50,
+.drl-col-25 {
+    width: 100%;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+ul.level1.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.expanded.drl-side-menu.first-sub-child-menu {
+    width: 350px;
+}
+
+@media screen and (min-width: 768px) {
+    .drl-image-section {
+        display: flex;
+        flex-wrap: wrap;
+        background: #f6f4f9 0% 0% no-repeat padding-box;
+        box-shadow: 0px 10px 40px #5495aa73;
+        border-radius: 5px;
+        opacity: 1;
+        padding: 2px 2px;
+    }
+
+    .drl-col-50 {
+        flex-basis: 50%;
+        height: 100%;
+    }
+
+    .drl-col-25 {
+        flex-basis: 50%;
+        text-align: -webkit-center;
+        background: #ffffff 0% 0% no-repeat padding-box;
+        border-radius: 5px 0px 0px 0px;
+        opacity: 1;
+        height: 100%;
+    }
+}
+
+/*remove block and see change at bottom*/
+.mega-drl-image {
+    display: block;
+}
+
+.megamenu-product-full {
+    padding: 1rem;
+}
+
+.megamenu-heading-drl {
+    font-size: 16px;
+    letter-spacing: 0.2rem;
+    margin-bottom: 1rem;
+    margin-top: 0rem;
+    color: #4f4f4f;
+    font-family: "DRL Circular Bold";
+}
+
+.drl-sub-words-f,
+.drl-sub-words-t,
+.drl-sub-words-fo {
+    line-height: 1.6;
+    font-size: 14px;
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-family: "DRL Circular Light";
+}
+
+.drl-sub-words-s {
+    line-height: 1.6;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    color: #4f4f4f;
+    opacity: 1;
+    letter-spacing: 0px;
+}
+
+.drl-side-menu .drl-side-sub-second .drl-menu-wid a.ui-corner-all.drl-rem-he {
+    min-height: 0;
+}
+
+/* Mobile View Start */
+
+@media only screen and (max-width: 768px) {
+    .nav-sections .header.links li.greet.welcome {
+        padding: 0.2rem 15px;
+    }
+
+    ul.header.links li.link.wishlist.mobile-view-drl,
+    ul.header.links li.link.notification.mobile-view-drl {
+        display: block;
+    }
+
+    .drl-bell-notify.notifications {
+        display: none;
+    }
+
+    .drl-side-menu .drl-side-sub-second .drl-menu-wid a.ui-corner-all {
+        min-height: 0;
+    }
+
+    .drl-side-menu .drl-side-sub,
+    .drl-side-menu .drl-side-sub-second {
+        display: block;
+    }
+
+    .page-wrapper .sections.nav-sections,
+    .nav-sections-item-content>.navigation {
+        background: #f6f4f9 0% 0% no-repeat padding-box;
+        box-shadow: 0px 4px 16px #0000000d;
+        opacity: 1;
+    }
+
+    .nav-sections-item-title a.nav-sections-item-switch {
+        font-size: 18px;
+        letter-spacing: 0px;
+        color: #4f4f4f;
+        opacity: 1;
+        font-family: "DRL Circular Bold";
+    }
+
+    .drl-main-menu .drl-head-main,
+    a.drl-sub-menu.level-top.ui-corner-all,
+    .nav-sections .header.links a,
+    .nav-sections .header.links a:hover {
+        letter-spacing: 0px;
+        color: #4b2a91;
+        opacity: 1;
+        font-size: 15px;
+        font-family: "DRL Circular Book";
+    }
+
+    .navigation .level0.parent>.level-top>.ui-menu-icon:before {
+        content: unset;
+    }
+
+    ul.level0.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.drl-left-cat-main {
+        height: 100%;
+    }
+
+    li.item.product.product-item.drl-item-right {
+        display: none;
+    }
+
+    ul.level1.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.expanded.drl-side-menu {
+        width: 100%;
+        height: 100%;
+        min-height: unset;
+    }
+
+    ul.level0.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all .drl-main-cat.level-top.ui-corner-all {
+        padding: 15px;
+        padding-top: 10px;
+        padding-right: 0;
+        padding-bottom: 10px;
+    }
+
+    .navigation .level0 .submenu li.parent>a>.ui-menu-icon:after {
+        content: unset;
+    }
+
+    .quickorder_link {
+        float: unset !important;
+    }
+
+    ul.level0.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all .drl-main-cat.level-top.ui-corner-all:after {
+        content: unset;
+    }
+
+    .drl-main-menu .drl-head-main {
+        padding-left: 0;
+    }
+}
+
+/* ipad css portrait */
+
+@media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
+    .drl-bell-notify.notifications {
+        display: block;
+    }
+
+    .navigation .level0.parent>.level-top>.ui-menu-icon:before {
+        content: url(../img/megamenu.png);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 12px;
+        line-height: 15px;
+        color: inherit;
+        vertical-align: middle;
+        display: inline-block;
+        font-weight: normal;
+        overflow: hidden;
+        speak: none;
+        text-align: center;
+    }
+
+    ul.level1.submenu.ui-menu.ui-widget.ui-widget-content.ui-corner-all.expanded.drl-side-menu {
+        width: 495px;
+        height: auto;
+        background: #f6f4f9 0% 0% no-repeat padding-box;
+        border-radius: 0px 0px 5px 0px;
+        opacity: 1;
+        min-height: 250px;
+    }
+
+    .drl-side-menu .drl-side-sub-second .drl-menu-wid {
+        width: 246px;
+    }
+}
+
+
+/* IPHONE X landscape */
+/* target iphone x */
+
+
+@media (width: 812px) and (height: 375px) and (orientation: landscape) {
+
+    .navigation .level0 {
+        margin: 0 0px 0 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .navigation .level0>.level-top {
+        color: #575757;
+        line-height: 47px;
+        padding: 0 3px;
+        text-decoration: none;
+        box-sizing: border-box;
+        position: relative;
+        display: inline-block;
+    }
+
+    .navigation .level0.parent>.level-top {
+        padding-right: 2px;
+    }
+
+}
+
+
+/* target google pixel2-xl */
+
+
+@media (width: 823px) and (height: 411px) and (orientation: landscape) {
+
+    .navigation .level0 {
+        margin: 0 0px 0 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .navigation .level0>.level-top {
+        color: #575757;
+        line-height: 47px;
+        padding: 0 3px;
+        text-decoration: none;
+        box-sizing: border-box;
+        position: relative;
+        display: inline-block;
+    }
+
+    .navigation .level0.parent>.level-top {
+        padding-right: 2px;
+    }
+
+
+}
+
+/* target Nokia N9 */
+
+@media (width: 854px) and (height: 480px) and (orientation: landscape) {
+
+    .navigation .level0 {
+        margin: 0 0px 0 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .navigation .level0>.level-top {
+        color: #575757;
+        line-height: 47px;
+        padding: 0 3px;
+        text-decoration: none;
+        box-sizing: border-box;
+        position: relative;
+        display: inline-block;
+    }
+
+    .navigation .level0.parent>.level-top {
+        padding-right: 2px;
+    }
+
+}
+
+
+/* target Nexus 7 */
+
+@media (width: 960px) and (height: 600px) and (orientation: landscape) {
+
+
+    .navigation .level0 {
+        margin: 0 0px 0 0;
+        display: inline-block;
+        position: relative;
+    }
+
+    .navigation .level0>.level-top {
+        color: #575757;
+        line-height: 47px;
+        padding: 0 3px;
+        text-decoration: none;
+        box-sizing: border-box;
+        position: relative;
+        display: inline-block;
+    }
+
+    .navigation .level0.parent>.level-top {
+        padding-right: 2px;
+    }
+
+    .drl-main-menu .drl-head-main {
+        padding-left: 21px;
+        color: #5225b5;
+        opacity: 1;
+        font-size: 13px;
+        font-family: "DRL Circular Book";
+    }
+
+}

@@ -1,0 +1,35 @@
+<?php $helper = $this->helper('Magento\Search\Helper\Data'); ?>
+
+    <div class="block block-search">
+        <div class="block block-title"><strong><?php echo __('Search'); ?></strong></div>
+        <div class="block block-content">
+            <form class="form minisearch" id="search_mini_form" action="<?php echo $helper->getResultUrl() ?>" method="get">
+                <div class="field search">
+                    <div class="control">
+                        <input id="search"
+                               data-mage-init='{"ajaxsearch":{
+                                    "formSelector":"#search_mini_form",
+                                    "url":"<?php echo $this->getUrl('search/ajax/suggest'); ?>",
+                                    "destinationSelector":"#ajaxsearchpopup"}
+                               }'
+                               type="text"
+                               name="<?php echo $helper->getQueryParamName() ?>"
+                               value="<?php echo $helper->getEscapedQueryText() ?>"
+                               placeholder="<?php echo __('Search entire store here...'); ?>"
+                               class="input-text"
+                               autocomplete="off"/>
+                        <div id="ajaxsearchpopup" class="ajaxsearchpopup"></div>
+                        <?php echo $this->getChildHtml() ?>
+                    </div>
+                    <div class="actions">
+                        <button type="submit"
+                                title="<?= __('Search') ?>"
+                                class="action search"
+                                aria-label="Search">
+                            <span><?php echo __('Search') ?></span>
+                        </button>
+                </div>
+                <div class="actions"></div>
+            </form>
+        </div>
+    </div>

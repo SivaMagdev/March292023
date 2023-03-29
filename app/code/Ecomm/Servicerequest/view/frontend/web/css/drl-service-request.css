@@ -1,0 +1,817 @@
+body.servicerequest-index-index.page-layout-2columns-left .sidebar-main {
+    width: 22.3%;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left button#uploadAttachment {
+    margin-bottom: 10px;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left form.form.drl-service-request-form .item-size a span {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-family: "DRL Circular Book";
+}
+
+body.servicerequest-index-index.page-layout-2columns-left form.form.drl-service-request-form span.file-type {
+    letter-spacing: 0px;
+    color: #9d9aa2;
+    opacity: 1;
+    font-family: "DRL Circular Light";
+}
+
+body.servicerequest-index-index.page-layout-2columns-left form.form.drl-service-request-form div#ajax-upload-error {
+    letter-spacing: 0px;
+    color: #ff7069;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+}
+
+body.servicerequest-index-index.page-layout-2columns-left form.form.drl-service-request-form span.file-type,
+body.servicerequest-index-index.page-layout-2columns-left form.form.drl-service-request-form div#ajax-upload-error,
+body.servicerequest-index-index.page-layout-2columns-left form.form.drl-service-request-form .item-size {
+    padding: 10px;
+}
+
+.servicerequest-index-activerequest h4.drl-active-req-error,
+.servicerequest-index-requesthistory h4.drl-active-req-error {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    font-size: 16px;
+    font-family: "DRL Circular Bold";
+}
+
+.servicerequest-index-index li.nav.item.current-o a,
+.servicerequest-index-requesthistory li.nav.item.current-th a,
+.servicerequest-index-activerequest li.nav.item.current-t a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    border-radius: 45px;
+    background: #c0d7f5;
+    border-left: unset;
+    font-size: 14px;
+    font-family: "DRL Circular Bold";
+    height: 37px;
+    padding: 10px 18px 10px 18px;
+    display: block;
+}
+
+.servicerequest-index-requesthistory span.drl-service-sub.drl-right.drl-fliter-first select.drl-register-input,
+.servicerequest-index-requesthistory span.drl-service-sub.drl-right.drl-fliter-second select.drl-register-input,
+.servicerequest-index-activerequest span.drl-service-sub.drl-right.drl-fliter-first select.drl-register-input,
+.servicerequest-index-activerequest span.drl-service-sub.drl-right.drl-fliter-second select.drl-register-input {
+    border: 0px;
+    outline: 0px;
+    background: #f6fbff url("../images/dropdown.svg") no-repeat 97% 45%;
+    letter-spacing: 0px;
+    color: #5225b5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+}
+
+.servicerequest-index-requesthistory .drl-active-req,
+.servicerequest-index-activerequest .drl-active-req {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.servicerequest-index-requesthistory tr.fold,
+.servicerequest-index-activerequest tr.fold {
+    display: none;
+}
+
+.servicerequest-index-requesthistory tr.fold.open,
+.servicerequest-index-activerequest tr.fold.open {
+    display: table-row;
+}
+
+.servicerequest-index-requesthistory tr.view td.drl-image-accordian-down,
+.servicerequest-index-activerequest tr.view td.drl-image-accordian-down {
+    display: block;
+    cursor: pointer;
+}
+
+.servicerequest-index-requesthistory tr.view td.drl-image-accordian-up,
+.servicerequest-index-activerequest tr.view td.drl-image-accordian-up {
+    display: none;
+    cursor: pointer;
+}
+
+.servicerequest-index-requesthistory tr.view.open td.drl-image-accordian-down,
+.servicerequest-index-activerequest tr.view.open td.drl-image-accordian-down {
+    display: none;
+    cursor: pointer;
+}
+
+.servicerequest-index-requesthistory tr.view.open td.drl-image-accordian-up,
+.servicerequest-index-activerequest tr.view.open td.drl-image-accordian-up {
+    display: block;
+    cursor: pointer;
+}
+
+.servicerequest-index-requesthistory tr.fold.drl-serv-des-cus.open td.drl-descr-cust a.drl-pdf-download,
+.servicerequest-index-activerequest tr.fold.drl-serv-des-cus.open td.drl-descr-cust a.drl-pdf-download {
+    letter-spacing: 0px;
+    color: #5225b5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+}
+
+.servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+.servicerequest-index-requesthistory .block-collapsible-nav .content,
+.servicerequest-index-activerequest .block-collapsible-nav .content {
+    background: #e6f4ff 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+    width: 261px;
+}
+
+.servicerequest-index-index.page-layout-2columns-left .column.main {
+    width: 77.7%;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+.servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+.servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 58px;
+    padding-bottom: 36px;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item.current>strong,
+body.servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item.current a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    border-radius: 45px;
+    background: #c0d7f5;
+    border-left: unset;
+    font-size: 14px;
+    font-family: "DRL Circular Bold";
+    height: 37px;
+    padding: 10px 18px 10px 18px;
+}
+
+.servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a,
+.servicerequest-index-requesthistory .block-collapsible-nav .item a,
+.servicerequest-index-activerequest .block-collapsible-nav .item a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    padding: 10px 18px 10px 18px;
+}
+
+.servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a:hover,
+.servicerequest-index-requesthistory .block-collapsible-nav .item a:hover,
+.servicerequest-index-activerequest .block-collapsible-nav .item a:hover {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    border-radius: 45px;
+    background: #c0d7f5;
+    border-left: unset;
+    font-size: 14px;
+    font-family: "DRL Circular Bold";
+    height: 37px;
+    padding: 10px 18px 10px 18px;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-service-request-form {
+    width: 100%;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-head-serivce,
+.servicerequest-index-requesthistory .drl-head-serivce,
+.servicerequest-index-activerequest .drl-head-serivce {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 24px;
+    font-family: "DRL Circular Bold";
+    margin: 0 0px 15px 0px;
+    display: block;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .block.block-dashboard-info,
+.servicerequest-index-requesthistory .block.block-dashboard-info,
+.servicerequest-index-activerequest .block.block-dashboard-info {
+    background: #f6fbff 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+    padding: 40px 20px 40px 20px;
+}
+
+.servicerequest-index-requesthistory.page-layout-2columns-left .drl-service-sub,
+.servicerequest-index-activerequest .drl-service-sub,
+.servicerequest-index-activerequest .drl-service-sub {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-size: 18px;
+    font-family: "DRL Circular Bold";
+}
+
+.servicerequest-index-requesthistory.page-layout-2columns-left .drl-service-head,
+.servicerequest-index-activerequest .drl-service-head {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Light";
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-register {
+    display: flex;
+    margin: 0 0 20px;
+    width: 100%;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-register .drl-width-input {
+    flex-basis: 100%;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-width-input label span {
+    color: #434861;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-width-input .drl-register-input,
+body.servicerequest-index-index.page-layout-2columns-left .drl-register-input {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #faf9fa;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: "DRL Circular Bold";
+    box-sizing: unset;
+    border: 1px solid #ccc;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .seperate-slash-drl,
+.servicerequest-index-requesthistory .seperate-slash-drl {
+    border: 1px dashed #434861;
+    opacity: 0.2;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    width: 100%;
+    margin: 0 0 40px;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .actions-toolbar.drl-submit-btn {
+    float: right;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .actions-toolbar.drl-submit-btn button.action.submit.primary {
+    width: 176px;
+    height: 46px;
+    margin: 0 47px 0 0;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-textarea {
+    height: 90px;
+    width: 92.5%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #faf9fa;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: "DRL Circular Bold";
+    box-sizing: unset;
+    border: 1px solid #ccc;
+}
+
+body.servicerequest-index-index.page-layout-2columns-left .drl-myfile {
+    width: 92.5%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #faf9fa;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: "DRL Circular Bold";
+    box-sizing: unset;
+    border: 1px solid #ccc;
+}
+
+.servicerequest-index-requesthistory a.drl-raise-ticket,
+.servicerequest-index-activerequest a.drl-raise-ticket {
+    border: 1px solid #5225b5;
+    border-radius: 25px;
+    opacity: 1;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    letter-spacing: 0px;
+    color: #5225b5;
+    opacity: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 10px 10px 10px 10px;
+    height: 39px;
+    width: 175px;
+}
+
+.servicerequest-index-requesthistory a.drl-raise-ticket:hover {
+    color: #ffffff;
+    background: #5225b5 0% 0% no-repeat padding-box;
+    border: 1px solid transparent;
+}
+
+.servicerequest-index-requesthistory .table-wrapper.orders-recent {
+    margin-top: 0;
+}
+
+.servicerequest-index-requesthistory .drl-left {
+    float: left;
+}
+
+.servicerequest-index-requesthistory .drl-right {
+    float: right;
+}
+
+.servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request th.drl-col,
+.servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request th.drl-col {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 0.5;
+    font-size: 12px;
+    font-family: "DRL Circular Book";
+}
+
+.servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request td.drl-col-detail,
+.servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request td.drl-col-detail {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-size: 13px;
+    font-family: "DRL Circular Light";
+}
+
+.servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request td.drl-col-order,
+.servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request td.drl-col-order {
+    letter-spacing: 0px;
+    color: #5225b5;
+    opacity: 1;
+    font-size: 13px;
+    font-family: "DRL Circular Light";
+    text-decoration: underline;
+}
+
+.servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request tr.view.odd,
+.servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request tr.view.odd {
+    background: #fcfcfc 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+}
+
+.servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request tr.view.even,
+.servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request tr.view.even {
+    background: #ededed 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+}
+
+.servicerequest-index-requesthistory tr.fold.drl-serv-des-cus.open td.drl-descr-cust,
+.servicerequest-index-activerequest tr.fold.drl-serv-des-cus.open td.drl-descr-cust {
+    display: table-cell;
+    width: 100%;
+    background: #e6f4ff 0% 0% no-repeat padding-box;
+    border-radius: 2px 2px 0px 0px;
+    opacity: 1;
+}
+
+.servicerequest-index-requesthistory tr.drl-serv-des-cus td.drl-descr-cust p.drl-ser-heading,
+.servicerequest-index-activerequest tr.drl-serv-des-cus td.drl-descr-cust p.drl-ser-heading {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-size: 16px;
+    font-family: "DRL Circular Book";
+}
+
+.servicerequest-index-requesthistory tr.drl-serv-des-cus td.drl-descr-cust p.drl-desc-cus-febck,
+.servicerequest-index-requesthistory tr.drl-serv-des-cus td.drl-descr-cust p.drl-descr-drl-febck,
+.servicerequest-index-activerequest tr.drl-serv-des-cus td.drl-descr-cust p.drl-desc-cus-febck,
+.servicerequest-index-activerequest tr.drl-serv-des-cus td.drl-descr-cust p.drl-descr-drl-febck {
+    letter-spacing: 0px;
+    color: #707172;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Light";
+    word-break: break-all;
+}
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+    body.servicerequest-index-index.page-layout-2columns-left .drl-register {
+        display: block;
+    }
+
+    body.servicerequest-index-index.page-layout-2columns-left .drl-width-input .drl-register-input,
+    body.servicerequest-index-index.page-layout-2columns-left .drl-register-input,
+    body.servicerequest-index-index.page-layout-2columns-left .drl-textarea,
+    body.servicerequest-index-index.page-layout-2columns-left .drl-myfile,
+    body.servicerequest-index-index.page-layout-2columns-left .actions-toolbar.drl-submit-btn button.action.submit.primary {
+        width: 100%;
+    }
+
+    body.servicerequest-index-index.page-layout-2columns-left .block.block-dashboard-info,
+    .servicerequest-index-requesthistory .block.block-dashboard-info,
+    .servicerequest-index-activerequest .block.block-dashboard-info {
+        padding: 10px;
+    }
+
+    body.servicerequest-index-index.page-layout-2columns-left .actions-toolbar.drl-submit-btn {
+        float: unset;
+    }
+
+    body.servicerequest-index-index.page-layout-2columns-left .drl-head-serivce,
+    .servicerequest-index-requesthistory .drl-head-serivce,
+    .servicerequest-index-activerequest .drl-head-serivce {
+        font-size: 20px;
+    }
+
+    .servicerequest-index-requesthistory a.drl-raise-ticket,
+    .servicerequest-index-activerequest a.drl-raise-ticket {
+        width: auto;
+    }
+
+    .servicerequest-index-requesthistory.page-layout-2columns-left .drl-service-sub,
+    .servicerequest-index-activerequest .drl-service-sub,
+    .servicerequest-index-activerequest .drl-service-sub {
+        font-size: 16px;
+    }
+
+    .servicerequest-index-requesthistory span.drl-service-sub.drl-right.drl-fliter-first select.drl-register-input,
+    .servicerequest-index-requesthistory span.drl-service-sub.drl-right.drl-fliter-second select.drl-register-input,
+    .servicerequest-index-activerequest span.drl-service-sub.drl-right.drl-fliter-first select.drl-register-input,
+    .servicerequest-index-activerequest span.drl-service-sub.drl-right.drl-fliter-second select.drl-register-input {
+        padding: 0;
+    }
+
+    .servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request th.drl-col,
+    .servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request th.drl-col {
+        white-space: nowrap;
+    }
+
+    .servicerequest-index-requesthistory tr.view td.drl-image-accordian-down img,
+    .servicerequest-index-activerequest tr.view td.drl-image-accordian-down img,
+    .servicerequest-index-requesthistory tr.view td.drl-image-accordian-up img,
+    .servicerequest-index-activerequest tr.view td.drl-image-accordian-up img {
+        max-width: 200px;
+    }
+}
+
+/* ipad css portrait */
+
+@media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
+    .drl-help-support {
+        width: 135%;
+        margin-left: -37% !important;
+    }
+
+    .servicerequest-index-requesthistory .table-wrapper.raise-details table.data-raise-request th.drl-col,
+    .servicerequest-index-activerequest .table-wrapper.raise-details table.data-raise-request th.drl-col {
+        white-space: normal;
+        vertical-align: baseline;
+    }
+
+    .servicerequest-index-requesthistory.page-layout-2columns-left .drl-service-sub {
+        font-size: 15px;
+    }
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        width: 163px;
+    }
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    body.servicerequest-index-index.page-layout-2columns-left .drl-width-input .drl-register-input,
+    body.servicerequest-index-index.page-layout-2columns-left .drl-register-input,
+    body.servicerequest-index-index.page-layout-2columns-left .drl-textarea,
+    body.servicerequest-index-index.page-layout-2columns-left .drl-myfile,
+    body.servicerequest-index-index.page-layout-2columns-left .actions-toolbar.drl-submit-btn button.action.submit.primary {
+        width: 95%;
+    }
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a,
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a:hover,
+    .servicerequest-index-requesthistory .block-collapsible-nav .item a:hover,
+    .servicerequest-index-activerequest .block-collapsible-nav .item a:hover {
+        height: auto;
+        border-radius: 0;
+        font-size: 13px;
+    }
+}
+
+/* ipad pro css portrait */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        width: 214px;
+    }
+
+    .servicerequest-index-requesthistory.page-layout-2columns-left .drl-service-sub {
+        font-size: 15px;
+    }
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a,
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a:hover,
+    .servicerequest-index-requesthistory .block-collapsible-nav .item a:hover,
+    .servicerequest-index-activerequest .block-collapsible-nav .item a:hover {
+        height: auto;
+        border-radius: 0;
+    }
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        width: 218px;
+    }
+}
+
+/* ipad  css landscape */
+@media all and (width: 1024px) and (height: 768px) and (orientation:landscape) {
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a,
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a:hover,
+    .servicerequest-index-requesthistory .block-collapsible-nav .item a:hover,
+    .servicerequest-index-activerequest .block-collapsible-nav .item a:hover {
+        height: auto;
+        border-radius: 0;
+    }
+
+}
+
+/* Ipad Pro Landscape */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a,
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a:hover,
+    .servicerequest-index-requesthistory .block-collapsible-nav .item a:hover,
+    .servicerequest-index-activerequest .block-collapsible-nav .item a:hover {
+        height: auto;
+        border-radius: 0;
+    }
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        width: 214px;
+    }
+}
+
+
+/* target iphone x */
+
+@media (width: 812px) and (height: 375px) and (orientation: landscape) {
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 58px;
+        padding-bottom: 36px;
+    }
+
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        background: #e6f4ff 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        opacity: 1;
+        width: 162px;
+    }
+
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        border-radius: 45px;
+        background: #c0d7f5;
+        border-left: unset;
+        font-size: 14px;
+        font-family: "DRL Circular Bold";
+        height: 37px;
+        padding: 10px 6px 10px 8px;
+        display: block;
+    }
+}
+
+
+
+/* target google pixel2-xl */
+
+@media (width: 823px) and (height: 411px) and (orientation: landscape) {
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 58px;
+        padding-bottom: 36px;
+    }
+
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        background: #e6f4ff 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        opacity: 1;
+        width: 162px;
+    }
+
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        border-radius: 45px;
+        background: #c0d7f5;
+        border-left: unset;
+        font-size: 14px;
+        font-family: "DRL Circular Bold";
+        height: 37px;
+        padding: 10px 6px 10px 8px;
+        display: block;
+    }
+
+}
+
+
+/* target Nexus 7 */
+
+@media (width: 960px) and (height: 600px) and (orientation: landscape) {
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 58px;
+        padding-bottom: 36px;
+    }
+
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        background: #e6f4ff 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        opacity: 1;
+        width: 162px;
+    }
+
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        border-radius: 45px;
+        background: #c0d7f5;
+        border-left: unset;
+        font-size: 14px;
+        font-family: "DRL Circular Bold";
+        height: 37px;
+        padding: 10px 6px 10px 8px;
+        display: block;
+    }
+
+
+}
+
+
+
+/* target Nokia N9 */
+
+@media (width: 854px) and (height: 480px) and (orientation: landscape) {
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 58px;
+        padding-bottom: 36px;
+    }
+
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        background: #e6f4ff 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        opacity: 1;
+        width: 162px;
+    }
+
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        border-radius: 45px;
+        background: #c0d7f5;
+        border-left: unset;
+        font-size: 14px;
+        font-family: "DRL Circular Bold";
+        height: 37px;
+        padding: 10px 6px 10px 8px;
+        display: block;
+    }
+}
+
+/* target from 768-1023*/
+
+@media only screen and (min-width: 768px) and (max-width: 1023px){
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content,
+    .servicerequest-index-activerequest .block-collapsible-nav .content {
+        width: auto;
+    }
+
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-requesthistory .block-collapsible-nav .content ul.nav.items,
+    .servicerequest-index-activerequest .block-collapsible-nav .content ul.nav.items {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .servicerequest-index-index li.nav.item.current-o a,
+    .servicerequest-index-requesthistory li.nav.item.current-th a,
+    .servicerequest-index-activerequest li.nav.item.current-t a,
+    .servicerequest-index-index.page-layout-2columns-left .block-collapsible-nav .item a:hover,
+    .servicerequest-index-requesthistory .block-collapsible-nav .item a:hover,
+    .servicerequest-index-activerequest .block-collapsible-nav .item a:hover {
+        height: auto;
+        border-radius: 0;
+    }
+
+    .servicerequest-index-requesthistory.page-layout-2columns-left .drl-service-sub,
+    .servicerequest-index-activerequest .drl-service-sub,
+    .servicerequest-index-activerequest .drl-service-sub {
+        font-size: 13px;
+    }
+}

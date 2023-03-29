@@ -1,0 +1,58 @@
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket Cart Reservation v2.x.x
+ * @copyright   Copyright (c) 2018 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+*/
+ -->
+
+<table id="prcr-shopping-cart-table" class="cart items data table">
+  <thead>
+      <tr>
+          <th class="col item" data-bind="i18n: 'Item'"></th>
+          <th class="col price" data-bind="i18n: 'Price'"></th>
+          <th class="col qty" data-bind="i18n: 'Qty'"></th>
+          <th class="col subtotal" data-bind="i18n: 'Subtotal'"></th>
+      </tr>
+  </thead>
+  <tbody data-bind="if: $data.hasItems()">
+   <!-- ko foreach: { data: getItems() } -->
+   <tr>
+       <td>
+           <span class="pcr-product-image-container"><img data-bind="attr: {src: product_image.src}"></span>
+           <div class="product-item-details">
+               <a data-bind="attr: {href: product_url}"><p class="pcr-product-name" data-bind="html: $t(product_name)"></p></a>
+               <dl class="pcr-item-options">
+                   <!-- ko foreach: { data: options } -->
+                       <div class="prc-item-options-one">
+                           <dt><span class="pcr-product-label" data-bind="html: $t(label)"></span></dt>
+                           <dd><span class="pcr-product-value" data-bind="html: $t(value)"></span></dd>
+                       </div>
+                   <!-- /ko -->
+               </dl>
+           </div>
+      </td>
+      <td class="pcr-product-price" data-bind="html: product_price"></td>
+      <td class="pcr-product-qty" data-bind="text: qty"></td>
+      <td class="pcr-product-subtotal"><span class="price" data-bind="text: $parent.formatPrice(product_price_value * qty)"></span></td>
+   </tr>
+   <!-- /ko -->
+   <tr>
+       <td colspan="3"></td>
+       <td class="pcr-product-subtotal-all" data-bind="html: $data.getSubtotal()"></td>
+    </tr>
+    </tbody>
+</table>
+<!-- ko if: $data.hasGlobalTimer() -->
+<div data-bind="html: getGlobalTimerHtml()"></div>
+<!-- /ko -->

@@ -1,0 +1,19 @@
+<div class="step-title" data-role="title" data-bind="i18n: 'Delivery Instructions (Optional)'">Delivery Instructions (Optional)</div>
+</br>
+<div class="control">
+    <input class="input-text" type="hidden" name="rgdd_standard_delivery_date" id="rgdd_standard_delivery_date" readonly="true" />
+    <input class="input-text" type="hidden" name="rgdd_express_delivery_date" id="rgdd_express_delivery_date" readonly="true" />
+    <input class="input-text" type="hidden" data-bind="datetimepicker: true" name="rgdd_delivery_date" id="delivery_date" readonly="true"
+    />
+    <span class="icon-calendar"></span>
+</div>
+<!-- ko if: ko_date_hint -->
+<span class="delivery_notes_hint" data-bind="text: ko_date_hint" />
+<!-- /ko -->
+<div class="control">
+    <textarea name="rgdd_delivery_comment" id="delivery_comment"></textarea>
+</div>
+<!-- ko if: ko_notes_hint -->
+<span class="delivery_notes_hint" data-bind="text: ko_notes_hint"></span>
+<!-- /ko -->
+<br />

@@ -1,0 +1,238 @@
+.quickorder-index-index h1.page-title {
+    font: normal normal bold 30px/44px DRL Circular;
+    letter-spacing: 0px;
+    color: #5225b5;
+    font-family: "DRL Circular Bold";
+}
+
+.quickorder-index-index .product-block .product-name p.name a {
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    font-family: "DRL Circular Bold";
+}
+
+.quickorder-index-index .product-block {
+    width: 96.5%;
+}
+
+.quickorder-index-index .product-block .product-name p.price {
+    letter-spacing: 0px;
+    color: #5225b5;
+    font-family: "DRL Circular Bold";
+}
+
+.quickorder-index-index form.form.form-addbysku .box.box-items .fields.additional.deletable-item-title .field.sku.required label.label span,
+.quickorder-index-index form.form.form-addbysku .box.box-items .fields.additional.deletable-item-title .field.qty.required label.label span,
+.quickorder-index-index form.form.form-addbysku .box.box-upload .fields.additional .field.sku label.label span,
+.quickorder-index-index form.form.form-addbysku .field.upload.skus label.label span {
+    font-size: 16px;
+    font-family: "DRL Circular Bold";
+    color: #4f4f4f;
+}
+
+.quickorder-index-index input.ui-autocomplete-input,
+.quickorder-index-index input.qty {
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #faf9fa;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: "DRL Circular Bold";
+    box-sizing: unset;
+}
+
+.quickorder-index-index .product-search-sku i {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.quickorder-index-index .product-search-sku {
+    color: #ffffff;
+    background: #5225b5 0% 0% no-repeat padding-box;
+    border: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 14px 15px;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: capitalize;
+    border-radius: 5px;
+}
+
+.quickorder-index-index .product-search-sku:hover {
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+.quickorder-index-index textarea#multiple_skus {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #faf9fa;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: "DRL Circular Bold";
+    box-sizing: unset;
+    width: 95%;
+}
+
+.quickorder-index-index input.ui-autocomplete-input {
+    width: 80%;
+}
+
+.quickorder-index-index .fieldset>.fields>.field .note p,
+.quickorder-index-index .column .block-addbysku .note p {
+    color: #434861;
+    font-family: "DRL Circular Book";
+}
+
+.quickorder-index-index .column .block-addbysku .note a {
+    color: #5225b5;
+    font-family: "DRL Circular Book";
+}
+
+.quickorder-index-index .column .block-addbysku .action:active,
+.quickorder-index-index .column .block-addbysku .action {
+    color: #ffffff;
+    background: #5225b5 0% 0% no-repeat padding-box;
+    border: 0;
+    border-radius: 25px;
+    -webkit-border-radius: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    font-size: 18px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    padding: 10px 10px 10px 10px;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    letter-spacing: 0;
+    width: 115px;
+}
+
+.quickorder-index-index .column .block-addbysku .action:active,
+.quickorder-index-index .column .block-addbysku .action:hover {
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+.quickorder-index-index .column .block-addbysku .action.remove:before {
+    color: #ffffff;
+}
+
+.quickorder-index-index .message.error {
+    font-family: "DRL Circular Bold";
+}
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 74%;
+    }
+}
+
+/* target from 768-1134*/
+
+@media only screen and (min-width: 768px) and (max-width: 1154px) {
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 60%;
+    }
+
+}
+
+/* Ipad Css */
+@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 61%;
+    }
+}
+
+/* Ipad Pro Portrait */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 76%;
+    }
+}
+
+/* ipad  css landscape */
+@media all and (width: 1024px) and (height: 768px) and (orientation:landscape) {
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 75%;
+    }
+}
+
+
+/* target google pixel */
+
+
+@media (width: 823px) and (height: 411px) and (orientation: landscape) {
+
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 64%;
+    }
+
+}
+
+
+/* target iphone x */
+
+
+@media (width: 812px) and (height: 375px) and (orientation: landscape) {
+
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 64%;
+    }
+
+}
+
+
+/* target Nokia N9 */
+
+
+@media (width: 854px) and (height: 480px) and (orientation: landscape) {
+
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 64%;
+    }
+
+}
+
+/* target Nexus 7 */
+
+
+@media (width: 960px) and (height: 600px) and (orientation: landscape) {
+
+    .quickorder-index-index input.ui-autocomplete-input {
+        width: 64%;
+    }
+
+}

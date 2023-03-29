@@ -1,0 +1,95 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket Cart Reservation v2.x.x
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+?>
+
+<?php
+/** @var \Plumrocket\CartReservation\Block\Template $block */
+
+use Plumrocket\CartReservation\Helper\Data;
+use Plumrocket\CartReservation\Model\Config\Source\EndAction;
+use Plumrocket\CartReservation\Model\Config\Source\TimerType;
+
+$dataHelper = $block->getDataHelper();
+$config = $block->getConfigHelper();
+?>
+
+<script type="text/javascript">
+require([
+    'jquery',
+    'prcr',
+    'mage/cookies',
+    'domReady!'
+], function($, timers) {
+    'use strict';
+
+    window.prcrTimerLoadPath = '<?= $block->escapeJsQuote($block->getBaseUrl() . 'rest/V1/prcr/timer-load'); ?>';
+    window.prcrTimerRemoveItemPath = '<?= $block->escapeJsQuote($block->getBaseUrl() . 'rest/V1/prcr/item-remove'); ?>';
+    <?php if ($config->getCartReservationType() == TimerType::TYPE_GLOBAL): ?>
+    // Global timer for minicart.
+    window.prcrGlobalTimerHtml = '<?= $block->escapeJsQuote($block->getChildBlock('prcr.timer.global')->toHtmlOneLine()) ?>';
+    <?php endif ?>
+    window.prcrReminderPopupEnabled = <?= $block->escapeJs($config->isAlertEnabled()) ?>;
+    window.prcrReminderPopupTime = <?= $block->escapeJs($dataHelper->parseTime($config->getAlertRemindTime())) ?>;
+
+    // Check mode.
+    var mode = '<?= /* @noEscape */ Data::TIMER_MODE_CART ?>';
+    var url = document.URL.toLowerCase();
+    if (url) {
+        $.each(
+            <?= /* @noEscape */ json_encode($block->getDataHelper()->getCheckoutPaths()) ?>,
+            function(i, path) {
+                if ('!' === path.substr(0, 1)
+                    && url.indexOf(path.substr(1)) !== -1
+                ) {
+                    return false;
+                }
+
+                if (url.indexOf(path) !== -1) {
+                    mode = '<?= /* @noEscape */ Data::TIMER_MODE_CHECKOUT ?>';
+                    return false;
+                }
+            }
+        );
+    }
+
+    timers.setMode(mode);
+
+    <?php if ($config->getCartEndAction() == EndAction::REMOVE_ITEM): ?>
+    // Remove items.
+    $(document).on('prcr.countdownInit_expiry', function(event, $timer, $btn, data) {
+        if ($timer.hasClass('prcr_item') || $timer.hasClass('prcr_global_timer')) {
+            // timers.hide($timer);
+            timers.removeItem();
+        }
+    });
+    <?php endif ?>
+
+    <?php if ($config->isAutoRefreshEnabled()): ?>
+    // Auto refresh via ajax
+    setInterval(function () {
+        if (null === timers.refreshedAt) {
+            return true;
+        }
+
+        var minInterval = <?= $block->escapeJs($config->getAutoRefreshMinInterval()) ?>;
+        if (Math.ceil((Date.now() - timers.refreshedAt) / 1000) >= minInterval) {
+            timers.load();
+        }
+    }, <?= $block->escapeJs($config->getAutoRefreshInterval()) * 1000 ?>);
+    <?php endif ?>
+});
+</script>

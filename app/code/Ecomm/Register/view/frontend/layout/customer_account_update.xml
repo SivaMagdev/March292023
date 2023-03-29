@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <css src="Ecomm_Register::css/jquery.steps.css" rel="stylesheet" type="text/css"  />
+        <css src="Ecomm_Register::css/intlTelInput.css" rel="stylesheet" type="text/css"  />
+        <css src="Ecomm_Register::css/drl_step.css" rel="stylesheet" type="text/css"  />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Customer\Block\Form\Edit" name="customer_update" template="Ecomm_Register::form/update.phtml" cacheable="false">
+                <container name="form.additional.info" as="form_additional_info"/>
+            </block>
+        </referenceContainer>
+	<referenceBlock name="page.main.title" remove="true" />
+    </body>
+</page>

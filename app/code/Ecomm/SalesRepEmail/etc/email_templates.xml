@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="ecomm_salesrepemail_order_template" label="Sale rep order template" file="salesrep_order.html" type="html" module="Ecomm_SalesRepEmail" area="frontend"/>
+    <template id="ecomm_salesrepemail_shipment_template" label="Sale rep shipment template" file="salesrep_shipment.html" type="html" module="Ecomm_SalesRepEmail" area="frontend"/>
+</config>

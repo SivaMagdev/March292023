@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">ecomm_servicerequest_form.ecomm_servicerequest_listing_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Service Request Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="Ecomm\Servicerequest\Block\Adminhtml\Servicerequest\Edit\Buttons\Back" />
+            <button name="delete" class="Ecomm\Servicerequest\Block\Adminhtml\Servicerequest\Edit\Buttons\Delete" />
+            <button name="reset" class="Ecomm\Servicerequest\Block\Adminhtml\Servicerequest\Edit\Buttons\Reset" />
+            <button name="save" class="Ecomm\Servicerequest\Block\Adminhtml\Servicerequest\Edit\Buttons\Save" />
+            <button name="save_and_continue" class="Ecomm\Servicerequest\Block\Adminhtml\Servicerequest\Edit\Buttons\SaveAndContinue" />
+        </buttons>
+        <namespace>servicerequest_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>ecomm_servicerequest_form.ecomm_servicerequest_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="ecomm_servicerequest_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="Ecomm\Servicerequest\Model\ServicerequestProvider" name="ecomm_servicerequest_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="data_details">
+        <settings>
+            <label/>
+        </settings>
+        <field name="id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>id</dataScope>
+            </settings>
+        </field>
+        <field name="status" sortOrder="10" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Request Status</label>
+                <dataScope>status</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">0</item>
+                                <item name="label" xsi:type="string">Pending</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">1</item>
+                                <item name="label" xsi:type="string">Completed</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="request_type"  sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Ecomm\Servicerequest\Model\Servicerequest\Source\RequestType</item>
+                <item name="config" xsi:type="array">
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string">Request Type</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="source" xsi:type="string">p_pickups</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Request Type</label>
+                <dataScope>request_type</dataScope>
+            </settings>
+        </field>
+        <field name="reference_number"  sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Reference Number</label>
+                <dataScope>reference_number</dataScope>
+            </settings>
+        </field>
+        <field name="request_description" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="cols" xsi:type="number">15</item>
+                    <item name="rows" xsi:type="number">5</item>
+                    <item name="label" translate="true" xsi:type="string">Request Description</item>
+                    <item name="dataType" translate="true" xsi:type="string">text</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="attachment" sortOrder="50" formElement="fileUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">servicerequest</item>
+                    <item name="disabled" xsi:type="string">true</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Attachment</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <fileUploader>
+                    <settings>
+                        <required>false</required>
+                        <allowedExtensions>pdf jpg jpeg png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="ecomm_servicerequest/servicerequest/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Ecomm_Servicerequest/attachment-preview</previewTmpl>
+                    </settings>
+                </fileUploader>
+            </formElements>
+        </field>
+        <field name="solution_description" sortOrder="60">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="cols" xsi:type="number">15</item>
+                    <item name="rows" xsi:type="number">5</item>
+                    <item name="label" translate="true" xsi:type="string">Solution Description</item>
+                    <item name="dataType" translate="true" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </field>
+        <field name="solution_attachment" sortOrder="70" formElement="fileUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">servicerequest</item>
+                    <item name="hint" xsi:type="string">Attachment (Max Size: 2MB) Allowed file types: PDF, JPG, JPEG and PNG.</item>
+                    <item name="tooltip" xsi:type="array">
+                        <item name="description" xsi:type="string">Attachment (Max Size: 2MB) Allowed file types: PDF, JPG, JPEG and PNG.</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/uploader</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Solution Attachment (Max Size: 2MB) Allowed file types: PDF, JPG, JPEG and PNG</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <fileUploader>
+                    <settings>
+                        <required>false</required>
+                        <allowedExtensions>pdf jpg jpeg png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="ecomm_servicerequest/servicerequest/upload2"/>
+                        </uploaderConfig>
+                        <previewTmpl>Ecomm_Servicerequest/attachment2-preview</previewTmpl>
+                    </settings>
+                </fileUploader>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

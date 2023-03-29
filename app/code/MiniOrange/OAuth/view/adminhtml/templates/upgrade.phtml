@@ -1,0 +1,162 @@
+    <!--Pricing Tab-->
+    <?php
+
+    $idpsettings = $this->getExtensionPageUrl('idpsettings');
+    $hostname = $this->getMiniOrangeUrl();
+    $email = $this->getCustomerEmail();
+
+
+    echo '
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">';
+
+    echo '
+    <div class="page" id="pricing">
+    <section class="pricing py-5">
+    <div class="container">
+      <div class="row">
+        <!-- Free Tier -->
+        <div class="col-lg-3">
+          <div class="card mb-5 mb-lg-0">
+            <div class="card-body" id="current">
+              <h5 class="card-title text-muted text-uppercase text-center">Free</h5>
+              <h6 class="card-price text-center">$0<span class="period"></span></h6>
+              <span text="center">You are automatically on this plan</span>
+              <hr>
+              <ul class="fa-ul">
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Basic Attribute Mapping</li>
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto Create Users</li>
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Add SSO login button</li>
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>1 OAuth / OpenID Connect provider Support</li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Oauth Single Logout</li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Auto redirect / Protect your complete site</li>
+
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Advanced Attribute Mapping</li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Custom Attribute Mapping
+                </li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Advanced Role Mapping
+                </li>
+
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Support for multi-store
+                </li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Support for multisites
+                </li>
+            
+              </ul>
+              <div class="d-grid">
+                <a href="#" class="btn btn-orange text-uppercase">Button</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Plus Tier -->
+        <div class="col-lg-3">
+          <div class="card mb-5 mb-lg-0">
+            <div class="card-body">
+              <h5 class="card-title text-muted text-uppercase text-center">Standard</h5>
+              <h6 class="card-price text-center">$349<span class="period">/year</span></h6>
+              <br>
+              <hr><span text="center">You are automatically on this plan</span>
+              <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Basic Attribute Mapping</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto Create Users</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Add SSO login button</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>1 OAuth / OpenID Connect provider Support</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Oauth Single Logout</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto redirect / Protect your complete site</li>
+
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Advanced Attribute Mapping</li>
+              <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Custom Attribute Mapping
+              </li>
+              <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Advanced Role Mapping
+              </li>
+              <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Support for multi-store
+              </li>
+              <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Support for multisites
+              </li>
+          
+              </ul>
+              <div class="d-grid">
+                <a href="mooauth_upgradeform(\'magento_oauth_standard_plan\')" class="btn btn-orange text-uppercase">Upgrade Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pro Tier -->
+        <div class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-muted text-uppercase text-center">Premium</h5>
+              <h6 class="card-price text-center">$449<span class="period">/year</span></h6>
+              <br>
+              <hr>
+              <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Basic Attribute Mapping</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto Create Users</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Add SSO login button</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>1 OAuth / OpenID Connect provider Support</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Oauth Single Logout</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto redirect / Protect your complete site</li>
+
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Advanced Attribute Mapping</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Custom Attribute Mapping
+              </li>
+              <li ><span class="fa-li"><i class="fas fa-check"></i></span>Advanced Role Mapping
+              </li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Support for multi-store
+              </li>
+              <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Support for multisites
+              </li>
+               </ul>
+              <div class="d-grid">
+                <a href="mooauth_upgradeform(\'magento_oauth_premium_plan\')" class="btn btn-orange text-uppercase">Upgarde Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       <div class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-muted text-uppercase text-center">Enterpise</h5>
+              <h6 class="card-price text-center">$649<span class="period">/year</span></h6>
+              <br>
+              <hr>
+              <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Basic Attribute Mapping</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto Create Users</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Add SSO login button</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>1 OAuth / OpenID Connect provider Support</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Oauth Single Logout</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Auto redirect / Protect your complete site</li>
+
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Advanced Attribute Mapping</li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Custom Attribute Mapping
+              </li>
+              <li ><span class="fa-li"><i class="fas fa-check"></i></span>Advanced Role Mapping
+              </li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Support for multi-store
+              </li>
+              <li><span class="fa-li"><i class="fas fa-check"></i></span>Support for multisites
+              </li>
+              </ul>
+              <div class="d-grid">
+                <a href="mooauth_upgradeform(\'magento_oauth_enterprise_plan\')" class="btn btn-orange text-uppercase">Upgarde Now</a>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+
+      <div style="margin:2% 0 2% 2%;">
+      <form style="display:none;" id="mocf_loginform" action="'.$hostname.'/moas/login" 
+          target="_blank" method="post">
+          <input type="email" name="username" value="'.$email.'" />
+          <input type="text" name="redirectUrl" value="'.$hostname.'/moas/initializepayment" />
+          <input type="text" name="requestOrigin" id="requestOrigin"  />
+      </form>
+  </div>
+    </div>
+
+  </section>
+    </div>';

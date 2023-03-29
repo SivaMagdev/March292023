@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var $block \Magento\Sales\Block\Order\Comments
+ * @see \Magento\Sales\Block\Order\Comments
+ */
+?>
+<?php if ($block->hasComments()) : ?>
+    <div class="order additional details comments">
+        <h3 class="subtitle"><?= $block->escapeHtml($block->getTitle()) ?></h3>
+
+         <?php foreach ($block->getComments() as $_commentItem) : ?>
+            <dl class="order comments">
+                    <dt class="comment date">
+                        <?= /* @noEscape */
+                        $block->formatDate($_commentItem->getCreatedAt(), \IntlDateFormatter::MEDIUM, false) ?>
+                    </dt>
+                    <dd class="comment text"><?= $block->escapeHtml($_commentItem->getComment()) ?></dd>
+            </dl>
+         <?php endforeach; ?>
+    </div>
+<?php endif;?>

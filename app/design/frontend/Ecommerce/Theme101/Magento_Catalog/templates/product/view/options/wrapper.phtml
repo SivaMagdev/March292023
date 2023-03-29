@@ -1,0 +1,129 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block Magento\Catalog\Block\Product\View */
+?>
+<?php
+$required = '';
+if ($block->hasRequiredOptions()) {
+    $required = ' data-hasrequired="' . $block->escapeHtmlAttr(__('* Required Fields')) . '"';
+}
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if($_product->getTypeId() == 'configurable') : ?>
+
+<?php
+
+$hide_addtocart = true;
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+
+if ($customerSession->isLoggedIn()) {
+    $hide_addtocart = false;
+
+    if($customerSession->getId()) {
+
+        $customerRepository = $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+        $_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+
+        $customerData= $customerRepository->getById($customerSession->getId());
+
+        $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+        $options = $attribute->getSource()->getAllOptions();
+        $application_statuses = [];
+        foreach ($options as $option) {
+            if ($option['value'] > 0) {
+                $application_statuses[$option['value']] = $option['label'];
+            }
+        }
+
+        $application_status = 0;
+        $approved_id = array_search("Approved",$application_statuses);
+        if($customerData->getCustomAttribute('application_status')){
+            $application_status = $customerData->getCustomAttribute('application_status')->getValue();
+        }
+
+        if($approved_id != $application_status){
+           $hide_addtocart = true;
+        }
+    }
+}
+//echo 'hide_addtocart: '.$hide_addtocart;
+?>
+<div class="container-accordion">
+	<div class="accordion">
+		<div class="accordion-head">
+            <div class="general-checkbox-header">
+                 <label class="general-container">General
+                  <input type="checkbox" checked="checked" id="general-cont">
+                  <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="label-general-header">
+                <i class="arrow-open"></i>
+            </div>
+        </div>
+        <div class="accordion-body default">
+        	<div class="general-table">
+                <div class="row">
+                    <div class="cell" data-title="Strength">
+        				<div class="product-options-wrapper" id="product-options-wrapper"<?= /* @noEscape */ $required ?>>
+        				    <div class="fieldset" tabindex="0">
+        				        <?= $block->getChildHtml('', true) ?>
+        				    </div>
+        				</div>
+                        <div class="product-attribute-case-pack">
+                            Case Pack: <span id="product-case-pack-<?= $_product->getId() ?>"></span>
+                        </div>
+                     </div>
+
+                    <?php if(!$hide_addtocart){ ?>
+                        <div class="cell" data-title="Quantity">
+            				<div class="box-tocart drl-general-cart">
+                                <div class="fieldset">
+                                    <?php if ($block->shouldRenderQuantity()): ?>
+                                    <div class="field qty">
+                                        <label class="label" for="qty"><span><?= /* @escapeNotVerified */ __('Quantity in Units') ?></span></label>
+                                        <div class="control">
+                                            <span  class="num-minus decreaseQty"><img class="drl-image-minus-plus" src='<?php echo $this->getViewFileUrl('images/drl-minus.png'); ?>' alt="Drl-Error"></span>
+                                            <input  type="number"
+                                                    name="qty"
+                                                    id="qty"
+                                                    value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                                                    title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                                                    class="input-text qty"
+                                                    data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                                    min="1"
+                                            />
+                                            <span  class="num-add increaseQty"><img class="drl-image-minus-plus" src='<?php echo $this->getViewFileUrl('images/drl-plus.png'); ?>' alt="Drl-Error"></span>
+                                        </div>
+                                        <div class="drl-available">Available: <span id="product-available-qty-value-<?= $_product->getId() ?>"></span></div>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="cell" data-title="Addtocart">
+                            <div clas="box-tocart">
+            	                <div class="product-final-price" id="product-final-general-price-<?= $_product->getId() ?>"></div>
+            	                <button type="submit"
+            	                        title="<?= /* @escapeNotVerified */ $buttonTitle ?>"
+            	                        class="action primary tocart drl-general-btn"
+            	                        id="product-addtocart-button">
+            	                    <span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+            	                </button>
+            	            </div>
+                        </div>
+                    <?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php endif; ?>

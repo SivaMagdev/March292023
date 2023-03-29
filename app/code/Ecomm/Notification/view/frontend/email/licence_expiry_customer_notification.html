@@ -1,0 +1,30 @@
+<!--@subject {{var license_type}} License Expiry Notification for {{var license_number}} in {{trans "%store_name" store_name=$store.frontend_name}} @-->
+<!--@vars {
+"var licencesHtml":"Licence items data"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">Dear {{var customer_name}}</p>
+
+Your {{var license_type}} License <b>{{var license_number}}</b> is going to expire on <b>{{var licence_expiry}}</b><br><br>
+
+<b>Address Details</b><br>
+Name: {{var customer_name}}<br>
+Street: {{var street}}<br>
+Country: {{var country}}<br>
+State: {{var region}}<br>
+City: {{var city}}<br>
+Postal Code: {{var post_code}}<br>
+Phone: {{var phone}}<br>
+
+<p>{{trans "- %store_name Team" store_name=$store.frontend_name}}</p>
+<p>Please add {{config path="trans_email/ident_support/email"}} to your address book to ensure that our emails reach your inbox.</p>
+<p>Interested in our products - please check our website - {{config path="web/secure/base_url"}}</p>
+
+<p><strong>{{trans "Disclaimer" }}</strong></p>
+<p>{{trans "This message may contains legally privileged and/or confidential information. If you are not the intended recipient(s), or employee or agent responsible for delivery of this message to the intended recipient(s), you are hereby notified that any dissemination, distribution or copying of this e-mail message is strictly prohibited. If you have received this message in error, please immediately notify the sender and delete this e-mail message from your computer."}}<br/>
+{{trans "WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email."}}
+</p>
+
+{{template config_path="design/email/footer_template"}}

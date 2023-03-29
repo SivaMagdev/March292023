@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="ecomm_sales_order_hin" resource="default" engine="innodb" comment="Sales Order HIN Details">
+        <column xsi:type="int" name="entity_id" nullable="false" comment="Entity ID" identity="true"/>
+        <column xsi:type="varchar" name="order_id" nullable="false" comment="Magento Order Id" />
+        <column xsi:type="varchar" name="sap_order_id" nullable="true" comment="SAP Order Id" />
+        <column xsi:type="varchar" name="organization_name" nullable="true" comment="Legal Name" />
+        <column xsi:type="varchar" name="sap_address_id" nullable="true" comment="Ship-to ID" />
+        <column xsi:type="varchar" name="company_name" nullable="true" comment="Company Name" />
+        <column xsi:type="varchar" name="hin_id" nullable="false" length="15" comment="HIN Number" />
+        <column xsi:type="varchar" name="hin_status" nullable="false" length="40" comment="HIN Status" />
+        <column xsi:type="date" name="hin_start" nullable="true" comment="HIN Start Date" />
+        <column xsi:type="date" name="hin_end" nullable="true" comment="HIN End Date" />
+        <column xsi:type="varchar" name="member_id" nullable="true" length="15" comment="Member ID" />
+        <column xsi:type="varchar" name="three_four_b_id" nullable="true" length="15" comment="340B ID" />
+        <column xsi:type="date" name="three_four_b_start" nullable="true" comment="340b Start Date" />
+        <column xsi:type="date" name="three_four_b_end" nullable="true" comment="340b End Date" />
+        <column xsi:type="timestamp" name="created_at" nullable="false"  comment="Created At" default="CURRENT_TIMESTAMP" on_update="false" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

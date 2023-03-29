@@ -1,0 +1,17 @@
+{
+    "name": "plumrocket/module-cartreservation",
+    "description": "Cart Reservation Extension for Magento 2",
+    "require": {
+        "php": ">=7.1",
+        "plumrocket/module-plumbase": ">=2.8.4",
+        "plumrocket/module-extended-admin-ui": ">=1.0.7"
+    },
+    "type": "magento2-module",
+    "version": "2.5.4",
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Plumrocket\\CartReservation\\": ""
+        }
+    }
+}

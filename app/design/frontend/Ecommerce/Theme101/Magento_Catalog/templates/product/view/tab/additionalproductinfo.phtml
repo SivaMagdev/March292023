@@ -1,0 +1,73 @@
+<?php
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+    $supportdocument_helper = $this->helper('Ecomm\Supportdocument\Helper\Output');
+    $_product = $block->getProduct();
+
+	$supportdocument = $supportdocument_helper->getAdditionalData($_product->getId());
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+?>
+
+
+<div class="additional-links-table">
+
+<?php //echo $_product->getlink_medication(); ?>
+  <dl class="additional-links">
+         <dd>
+         	<ul class="add-link-list">
+         		<?php if($_helper->productAttribute($_product, $_product->getLinkMedication(), 'link_medication')): ?>
+              	 		<li><a download href="<?=  $_helper->productAttribute($_product, $_product->getLinkMedication(), 'link_medication') ?>">Media</a></li>
+				<?php endif; ?>
+
+				<?php if($_helper->productAttribute($_product, $_product->getLinkPrescribing(), 'link_prescribing')): ?>
+					 <li><a download href="<?=  $_helper->productAttribute($_product, $_product->getLinkPrescribing(), 'link_prescribing') ?>">Prescribing Information</a></li>
+				<?php endif; ?>
+
+				<?php if ($customerSession->isLoggedIn()) { ?>
+				<?php if($_helper->productAttribute($_product, $_product->getLinkDailymed(), 'link_dailymed')): ?>
+					<li><a download href="<?=  $_helper->productAttribute($_product, $_product->getLinkDailymed(), 'link_dailymed') ?>">HDMA</a></li>
+				<?php endif; ?>
+				<?php } ?>
+
+				<?php if ($customerSession->isLoggedIn()) { ?>
+				<?php if($_helper->productAttribute($_product, $_product->getLinkMsds(), 'link_msds')): ?>
+					<li><a download href="<?=  $_helper->productAttribute($_product, $_product->getLinkMsds(), 'link_msds') ?>">SDS</a></li>
+				<?php endif; ?>
+				<?php } ?>
+
+
+				<?php foreach ($supportdocument->getData() as $supportdocument) { ?>
+					<?php if($supportdocument['is_logged_in']){ ?>
+						<?php if ($customerSession->isLoggedIn()){ ?>
+							<?php if($supportdocument['link'] != '') { ?>
+								<?php if($supportdocument['hide_leave_popup'] == 1) { ?>
+									<li><a data-exthref="<?= $supportdocument['link']; ?>" class="external-link-click" target="_blank"><?=  $supportdocument['link_title']; ?></a></li>
+								<?php } else { ?>
+									<li><a target="_blank" class="link-click" href="<?= $supportdocument['link']; ?>"><?=  $supportdocument['link_title']; ?></a></li>
+								<?php } ?>
+							<?php } else { ?>
+								<li><a download href="<?= $supportdocument_helper->getAttachmentUrl($supportdocument['attachment']); ?>"><?=  $supportdocument['link_title']; ?></a></li>
+							<?php } ?>
+						<?php } ?>
+					<?php }else{ ?>
+						<?php if($supportdocument['link'] != '') { ?>
+							<?php if($supportdocument['hide_leave_popup'] == 1) { ?>
+								<li><a data-exthref="<?= $supportdocument['link']; ?>" class="external-link-click" target="_blank"><?=  $supportdocument['link_title']; ?></a></li>
+							<?php } else { ?>
+								<li><a target="_blank" class="link-click" href="<?= $supportdocument['link']; ?>"><?=  $supportdocument['link_title']; ?></a></li>
+							<?php } ?>
+						<?php } else { ?>
+							<li><a download href="<?= $supportdocument_helper->getAttachmentUrl($supportdocument['attachment']); ?>"><?=  $supportdocument['link_title']; ?></a></li>
+						<?php } ?>
+					<?php } ?>
+				<?php } ?>
+
+         	</ul>
+
+         </dd>
+   </dl>
+
+</div>

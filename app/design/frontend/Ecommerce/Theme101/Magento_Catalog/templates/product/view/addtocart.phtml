@@ -1,0 +1,530 @@
+<?php
+/**
+* Copyright © Magento, Inc. All rights reserved.
+* See COPYING.txt for license details.
+*/
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php
+    $blockObj= $block->getLayout()->createBlock('Ecomm\HinEligibilityCheck\Block\exclusivePrice');
+    $priceLogicBlock =
+    $block->getLayout()->createBlock('Ecomm\PriceEngine\Block\CustomPriceLogic');
+    $exclusivePriceMethod = $blockObj->getCollection();
+    $addressRepo = $blockObj->getAddressCollection();
+    $customerId = $priceLogicBlock->getCustomerId();
+    $customerGroupId = $priceLogicBlock->getCustomerGroupId();
+    $product_sku = $_product->getSku();
+
+?>
+
+<?php
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+    $custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+    $_loggedin = $this->helper('Magento\Checkout\Helper\Cart')->getCart()->getCustomerSession()->isLoggedIn();
+    // $stockItem = $_product->getExtensionAttributes()->getStockItem();
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $StockState = $objectManager->get('\Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku');
+?>
+<?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $customerSession = $objectManager->create('Magento\Customer\Model\Session');
+
+    $application_verified_status = false;
+
+    if ($customerSession->isLoggedIn()) {
+
+    $customerRepository =
+    $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+    $_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+
+        if($customerSession->getId()) {
+
+                $customerData= $customerRepository->getById($customerSession->getId());
+
+                $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+                $options = $attribute->getSource()->getAllOptions();
+                $application_statuses = [];
+            foreach ($options as $option) {
+                if ($option['value'] > 0) {
+                    $application_statuses[$option['value']] = $option['label'];
+                }
+            }
+            $application_status = 0;
+            $approved_id = array_search("Approved",$application_statuses);
+            if($customerData->getCustomAttribute('application_status')){
+                $application_status =
+                $customerData->getCustomAttribute('application_status')->getValue();
+            }
+
+            if($approved_id == $application_status){
+                $application_verified_status = true;
+            }
+        }
+    }
+?>
+
+<!-- get customer dish status -->
+<?php
+    $customerDishStatus =
+    $priceLogicBlock->getCustomerDishStatus($customerSession->getId());
+
+    $contractIdDish = $priceLogicBlock->getContractIdWithDish($customerGroupId);
+    $contractIdWithoutDish =
+    $priceLogicBlock->getContractIdWithoutDish($customerGroupId);
+    $rcaContractId = $priceLogicBlock->getRcaContractInfo($customerGroupId);
+
+    if ($customerDishStatus == 1) {
+
+    $dishContractId =
+    $priceLogicBlock->getContractPriceData()->addFieldToFilter('contract_id',
+    ['in'=>$contractIdDish])->addFieldToFilter('sku', ['eq' => $product_sku])
+    ->load();
+
+        if($dishContractId != null){
+                foreach ($dishContractId as $testinfo) {
+                $gpoContractId = $testinfo->getContractId();
+                $gpoProductSku = $testinfo->getSku();
+                $gpoProductPrice = $testinfo->getPrice();
+                $gpoContractStatus = $testinfo->getStatus();
+            }
+        }
+     }
+
+        $withoutDishContractId =
+        $priceLogicBlock->getContractPriceData()->addFieldToFilter('contract_id',
+        ['in'=>$contractIdWithoutDish])->addFieldToFilter('sku', ['eq' => $product_sku])
+        ->load();
+
+        foreach ($withoutDishContractId as $testinfon) {
+                if($testinfon != null){
+                    $gpoContractIds = $testinfon->getContractId();
+                    $gpoProductSkus = $testinfon->getSku();
+                    $gpoProductPrices = $testinfon->getPrice();
+                    $gpoContractStatuss = $testinfon->getStatus();
+                }
+
+        }
+
+
+    if ($rcaContractId) {
+    $rcaContract = $priceLogicBlock->getContractPriceData()->addFieldToFilter('contract_id',
+    ['in'=>$rcaContractId])->addFieldToFilter('sku', ['eq' => $product_sku])->load();
+
+        foreach ($rcaContract as $rcaContractInfo) {
+        
+                $rcaContractIds = $rcaContractInfo->getContractId();
+                $rcaProductSkus = $rcaContractInfo->getSku();
+                $rcaProductPrices = $rcaContractInfo->getPrice();
+                $rcaContractStatus = $rcaContractInfo->getStatus();
+            
+        // print_r($rcaContractStatus);
+        }
+    }
+
+    $rcaOtherGroupId = $priceLogicBlock->getOtherGroup();
+
+    if($rcaOtherGroupId != null){
+
+        $rcaOtherGroup = $priceLogicBlock->getContractPriceData()->addFieldToFilter('contract_id',
+        ['in'=>$rcaOtherGroupId])->addFieldToFilter('sku', ['eq' => $product_sku])->load();
+
+        foreach ($rcaOtherGroup as $rcaContractInfo) {
+        
+                $rcaOtherContractIds = $rcaContractInfo->getContractId();
+                $rcaOtherProductSkus = $rcaContractInfo->getSku();
+                $rcaOtherProductPrices = $rcaContractInfo->getPrice();
+                $rcaOtherContractStatus = $rcaContractInfo->getStatus();
+        }
+    }
+  
+
+?>
+
+<!--getting exclusive price table data -->
+<?php
+    $customerSapCode = '';
+    $productSku = '';
+    if ($customerSession->isLoggedIn()) {
+        if ($customerData->getCustomAttribute('sap_customer_id') != null) {
+            $customerSapCode = $customerData->getCustomAttribute('sap_customer_id')->getValue();
+        }
+        $collection = $exclusivePriceMethod->addFieldToFilter('customer_id',
+        ['eq'=>$customerSapCode])->addFieldToFilter('ndc', ['eq' => $product_sku])
+        ->load();
+
+        foreach ($collection as $item) {
+        $sapCustomerId = $item->getCustomerId();
+        $productSku = $item->getData('ndc');
+        $exclusivePrice = $item->getPrice();
+        $startDate = date('Y-m-d', strtotime($item->getStartDate()));
+        $endDate = date('Y-m-d', strtotime($item->getEndDate()));
+        }
+    }
+?>
+
+<!--getting default shipping address details -->
+<?php
+    if ($customerSession->isLoggedIn()) {
+        $shippingAddressId = $customerData->getDefaultShipping();
+        $addressInfo = $addressRepo->getById($shippingAddressId);
+        $hinStatus = '';
+        if ($addressInfo->getCustomAttribute('hin_status')) {
+            $hinStatus = $addressInfo->getCustomAttribute('hin_status')->getValue();
+        }
+    }
+?>
+
+<?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $objDate = $objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
+    $date = $objDate->gmtDate();
+    $formatedDate = date('Y-m-d', strtotime($date));
+?>
+<?php echo $_product->getRegularPrice(); ?>
+<?php if($_product->getTypeId() == 'simple') { ?>
+<?php if(!($customerSession->getId())) { ?>
+<p>Please <a href="<?php echo $block->getUrl('customer/account/login')
+?>" title="<?php echo __('Login') ?>"><?php echo __('Login') ?></a> or
+<a href="<?php echo $block->getUrl('register-landing-page') ?>"
+title="<?php echo "Register" ?>"><?php echo "Register" ?></a> to buy
+this product!</p>
+<?php } ?>
+<?php if ($_product->isSaleable()): ?>
+<?php if ($customerSession->isLoggedIn()) { ?>
+
+<div class="container-accordion">
+<div class="accordion">
+<!-- <div class="accordion-head checkbox">
+<p><input type="checkbox" id="checkbox" checked="checked"
+name="vehicle1" value="General">
+<label for="checkbox"> General</label></p> <i class="arrow-open"></i>
+</div> -->
+<div class="accordion-head">
+    <div class="general-checkbox-header">
+        <label class="general-container">General
+        <input type="checkbox" checked="checked" id="general-cont">
+        <span class="checkmark"></span>
+        </label>
+    </div>
+<div class="label-general-header">
+<i class="arrow-open"></i>
+</div>
+<p class="price-select-order">Only 1 price for a product may be selected per order. Please select the appropriate price to add the product to Cart</p>
+</div>
+    <div class="accordion-body default">
+        <div class="general-table">
+        <div class="row header">
+        <div class="cell">Total Content</div>
+        <div class="cell">Pack Size</div>
+        <div class="cell">Quantity</div>
+        <div class="cell">Addtocart</div>
+    </div>
+
+<div class="row">
+<div class="cell" data-title="Strength">
+<?php if($_helper->productAttribute($_product,
+$_product->getStrength(), 'strength')): ?>
+<div class="swatch-attribute-options clearfix drl-general-swatch-options">
+<span class="swatch-attribute-label">Total Content: </span>
+<span class="swatch-attribute-value"><?=
+$_product->getResource()->getAttribute('strength')->setStoreId(0)->getFrontend()->getValue($_product);
+?></span>
+</div>
+<?php endif; ?>
+</div>
+<div class="cell cell-pack" data-title="Pack Size">
+<?php if($_helper->productAttribute($_product,
+$_product->getPackSize(), 'pack_size')): ?>
+<div class="swatch-attribute-options clearfix drl-general-swatch-options">
+<span class="swatch-attribute-label">Pack Size</span>
+<div class="swatch-attribute-options clearfix"><div class="packsize
+swatch-option text selected" ><?=
+$_product->getResource()->getAttribute('pack_size')->setStoreId(0)->getFrontend()->getValue($_product);
+?></div></div>
+<?php if($_helper->productAttribute($_product,
+$_product->getCasePack(), 'case_pack')): ?>
+<!-- <span class="drl-case-pack">Case Pack: <?=
+$_product->getResource()->getAttribute('case_pack')->setStoreId(0)->getFrontend()->getValue($_product);
+?></span> -->
+<?php endif; ?>
+</div>
+<?php endif; ?>
+</div>
+<?php if($application_verified_status){ ?>
+<div class="cell cell-qty" data-title="Quantity">
+<div class="box-tocart drl-general-cart">
+<div class="fieldset">
+<?php if ($block->shouldRenderQuantity()): ?>
+<div class="field qty">
+<label class="label" for="qty"><span><?= /* @escapeNotVerified */
+__('Quantity in Packs') ?></span></label>
+<div class="control">
+<span class="num-minus decreaseQty"><img class="drl-image-minus-plus"
+src='<?php echo $this->getViewFileUrl('images/drl-minus.png'); ?>'
+alt="Drl-Error"></span>
+<input type="number"
+name="qty"
+id="qty"
+value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+class="input-text qty"
+data-validate="<?=
+$block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+min="1"
+/>
+<span class="num-add increaseQty"><img class="drl-image-minus-plus"
+src='<?php echo $this->getViewFileUrl('images/drl-plus.png'); ?>'
+alt="Drl-Error"></span>
+</div>
+<div>
+<?php
+if($_product->getTypeId() == 'simple'){
+$salable_quantities = $StockState->execute($_product->getSku());
+
+$_productStock = $custom_helper->getStockItem($_product->getId());
+$saleable_qty = $custom_helper->getSalableStockItem($_product->getSku());
+}
+
+//echo $_productStock->getQty().'-'.$saleable_qty;
+
+$stockstatus=$custom_helper->getConfigVal('cataloginventory/options/display_product_stock_status');
+if($stockstatus)
+{
+if($_product->getTypeId() == 'simple') {
+/*Getting the config Out Of Stock Threshold value*/
+$config_min_qty = $custom_helper->getDefaultOutOfStockVal();
+
+/*Checking the whether instock or out of stock*/
+$instock=1;
+
+if($salable_quantities[0]['qty']<=$config_min_qty ||
+$_productStock->getQty() <=0)
+$instock=0;
+?>
+<?php if ($instock){?>
+<div class="stock stock-available">
+<span><?= $escaper->escapeHtml(__('In stock')) ?></span>
+</div>
+<?php }else{?>
+<div class="stock stock-unavailable">
+<span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
+</div>
+<?php }
+}
+}?>
+</div>
+<!--<div class="drl-available">Packs Available :<?php
+/*if($_product->getTypeId() == 'simple') {
+$salable_quantities = $StockState->execute($_product->getSku());
+echo $salable_quantities[0]['qty'];
+}*/?></div>-->
+</div>
+<?php endif; ?>
+</div>
+</div>
+</div>
+
+<div class="cell cell-cmp" data-title="Pricerange">
+<?php if($salable_quantities[0]['qty'] > 0 && $_productStock->getQty() > 0) { ?>
+<?php $abstractProductBlock =
+$block->getLayout()->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+?>
+<div class="cart-page-wrap">
+<div class="cmp-price-list">
+<div class="price-list-wrap">
+<div class="price-grp">
+<label class="price-name">Price</label>
+<?php
+$price_regular = 0;
+$price_type = '';
+
+
+if (isset($sapCustomerId) == $customerSapCode && $_product->getSku()
+== $productSku && $formatedDate <= $endDate) {
+
+$price_regular = $exclusivePrice;
+$price_type = 'regular_price';
+} else if ($customerDishStatus == 1 && isset($gpoContractId) &&  in_array($gpoContractId,$contractIdDish) 
+&& isset($gpoProductSku) &&  $_product->getSku() == $gpoProductSku && $gpoContractStatus == 1) {
+
+$price_regular = $gpoProductPrice;
+$price_type = 'regular_price';
+} else if (isset($gpoContractIds) && isset($gpoProductSkus) && $customerDishStatus == 0 && in_array($gpoContractIds,$contractIdWithoutDish)
+ && $_product->getSku() == $gpoProductSkus && $gpoContractStatuss == 1) {
+
+$price_regular = $gpoProductPrices;
+$price_type = 'regular_price';
+}else if (isset($gpoContractIds) && isset($gpoProductSkus) && $customerDishStatus == 1 && in_array($gpoContractIds,$contractIdWithoutDish)
+&& $_product->getSku() == $gpoProductSkus && $gpoContractStatuss == 1) {
+ 
+$price_regular = $gpoProductPrices;
+$price_type = 'regular_price';
+}  
+else if (isset($rcaContractIds) && isset($rcaProductSkus) && $rcaContractId == $rcaContractIds &&
+$_product->getSku() == $rcaProductSkus && $rcaContractStatus == 1) {
+  
+$price_regular = $rcaProductPrices;
+$price_type = 'regular_price';
+}
+else if ($rcaOtherGroupId != null && !empty($rcaOtherGroup->getData())) {
+ 
+    $price_regular = $rcaOtherProductPrices;
+    $price_type = 'regular_price';
+    }
+ else {
+
+$price_regular = number_format($_product->getPrice(), 2);
+$price_type = 'regular_price';
+}
+?>
+<p class="price-tag">
+<?php if ($price_regular == 0) { ?>
+<input type="radio" id="exclusive_price" name="price_type"
+value="<?=$price_type.'/'.$price_regular?>" required class="price-list" disabled>
+$ <?=$price_regular?>
+<?php } else { ?>
+<input type="radio" id="exclusive_price" name="price_type"
+value="<?=$price_type.'/'.$price_regular?>" required class="price-list">
+$ <?=$price_regular?>
+<?php } ?>
+</p>
+<input type="hidden" name="page" value="pdp" />
+
+<!-- else if ($_product->getPriceInfo()->getPrice('final_price')->getValue()
+!= 0) { ?>
+<p class="price-tag"><input type="radio" id="gpo_price"
+name="gpo_price" value="gpo_price" class="price-list"><?=
+$abstractProductBlock->getProductPrice($_product); ?></p> -->
+</div>
+
+<?php 
+    /* Code for displaying Product Sub Wac Price and Phs Indirect Price Start */
+    if ($hinStatus == "1") {
+        $price_type = 'sub_wac_price';
+        $subWacPrice = $_product->getResource()->getAttribute('sub_wac')->setStoreId(0)->getFrontend()->getValue($_product);
+        // if ($_product->getResource()->getAttribute('sub_wac')->setStoreId(0)->getFrontend()->getValue($_product))
+        if(empty($subWacPrice))
+        {
+            /* Code to add MRP price as Sub Wac Price is not present */
+            $subWacPrice = $_product->getPrice();
+        }
+
+        if(!empty($subWacPrice) && ($subWacPrice>0)){
+?>
+            <div class="price-grp">
+                <label class="price-name">Sub-WAC Price</label>
+                <p class="price-tag"><input type="radio" id="sub_wac" name="price_type"
+                value="<?=$price_type.'/'.$subWacPrice ?>"
+                class="price-list"> <?= $priceHelper->currency($subWacPrice, true, false) ?></p>
+            </div>
+<?php
+        }
+
+        $price_type = 'phs_price';
+        $phsIndirectPrice = $_product->getResource()->getAttribute('phs_indirect')->setStoreId(0)->getFrontend()->getValue($_product);
+        // if ($_product->getResource()->getAttribute('phs_indirect')->setStoreId(0)->getFrontend()->getValue($_product))
+        if(empty($phsIndirectPrice))
+        {
+            /* Code to add MRP price as Phs Indirect Price is not present */
+            $phsIndirectPrice = $_product->getPrice();
+        }
+        if(!empty($phsIndirectPrice) && ($phsIndirectPrice>0)){
+?>
+            <div class="price-grp">
+                <label class="price-name">Phs indirect price</label>
+                <p class="price-tag"><input type="radio" id="phs" name="price_type"
+                value="<?=$price_type.'/'.$phsIndirectPrice ?>"
+                class="price-list"> <?= $priceHelper->currency($phsIndirectPrice, true, false) ?></p>
+            </div>
+<?php
+        }
+    } 
+    /* Code for displaying Product Sub Wac Price and Phs Indirect Price End */
+?>
+</div>
+</div>
+</div>
+<?php } ?>
+</div>
+
+<div class="cell cart-icon-cell" data-title="Addtocart">
+<?php if($salable_quantities[0]['qty'] > 0 && $_productStock->getQty() > 0 && $price_regular > 0){ ?>
+
+<button type="submit" title="<?= /* @escapeNotVerified */ $buttonTitle
+?>" class="action primary tocart drl-general-btn"
+id="product-addtocart-button">
+<span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+</button>
+<?php } ?>
+<?= $block->getChildHtml('', true) ?>
+</div>
+<?php } ?>
+</div>
+</div>
+</div>
+</div>
+</div>
+<?php } ?>
+
+<?php endif; ?>
+<?php } ?>
+<script type="text/x-magento-init">
+{
+"#product_addtocart_form": {
+"Magento_Catalog/js/validate-product": {}
+}
+}
+</script>
+
+
+<script>
+
+require(["jquery"], function($){
+
+jQuery(".label-general-header").click(function () {
+if (jQuery(this).next("div").is(":visible")) {
+jQuery(this).next("div").slideUp("normal");
+jQuery(this).find('i').removeClass('arrow-open').addClass('arrow-close');
+} else if ( jQuery(".accordion-body").is(":hidden")) {
+jQuery(".accordion-body").slideDown("normal");
+jQuery(this).find('i').removeClass('arrow-close').addClass('arrow-open');
+} else {
+jQuery(".accordion-body").slideUp("normal");
+jQuery(this).next("div").slideToggle("normal");
+jQuery(this).find('i').removeClass('arrow-open').addClass('arrow-close');
+}
+});
+
+jQuery("#general-cont").click(function() {
+if(jQuery(this).is(":checked")) {
+jQuery(".accordion-head").find('i').removeClass('arrow-close').addClass('arrow-open');
+jQuery(".accordion-body").slideDown("normal");
+} else {
+jQuery(".accordion-head").find('i').removeClass('arrow-open').addClass('arrow-close');
+jQuery(".accordion-body").slideUp("normal");
+}
+});
+
+jQuery('#exclusive_price').click(function(){
+jQuery('#sub_wac').prop('checked', false);
+jQuery('#phs').prop('checked', false);
+});
+jQuery('#sub_wac').click(function(){
+jQuery('#exclusive_price').prop('checked', false);
+jQuery('#phs').prop('checked', false);
+});
+jQuery('#phs').click(function(){
+jQuery('#sub_wac').prop('checked', false);
+jQuery('#exclusive_price').prop('checked', false);
+});
+
+});
+
+
+</script>

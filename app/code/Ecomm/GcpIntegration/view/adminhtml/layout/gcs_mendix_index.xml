@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<page layout="admin-1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Ecomm\GcpIntegration\Block\Adminhtml\Mendix\Index" name="index.submit" template="Ecomm_GcpIntegration::mendix/index.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

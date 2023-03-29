@@ -1,0 +1,166 @@
+<?php
+// Get order collection
+$orderCollection = $block->getOrderCollection();
+$customerName = $block->getLoggedinCustomerName();
+$orderStatus = $block->getOrderStatus();
+$_invoices = $block->getInvoiceList();
+// echo count($orderStatus);
+?>
+<div class="drl-track-slider">
+<?php foreach ($orderStatus as $status) : ?>
+<div id="drl-track-form">
+<p class="drl-line-track">Hey <span class="drl-name-track"><?php echo $customerName; ?></span>, You’ve got an Upcoming Delivery</p>
+        <ul id="drl-progress">
+            <li class="drl-bub-track active">Order Created</li>
+            <li class="drl-bub-track active">Order Confirmed</li>
+            <li class="drl-bub-track vechfly active">Out for Delivery</li>
+            <!-- <li class="drl-bub-track none">Invoiced</li> -->
+        </ul>
+        <p class="drl-line-shipment">The delivery date for your order #<?php echo $status->getSapId(); ?> is <span class="drl-name-delivery"><?php echo $status->getRgddDeliveryDate(); ?></span></p>
+    </div>
+    <?php endforeach; ?>
+</div>
+<br>
+<div class="drl-title-dashboard-tabel block-title order">
+    <strong>Recent Orders</strong>
+</div>
+<br>
+<div class="drl-dashboard-tabel">
+
+    <div class="drl-block-content">
+        <table class="drl-dashboard-recent-order" id="">
+        <?php if ($orderCollection && count($orderCollection) > 0) { ?>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id">Order #</th>
+                    <th scope="col" class="col id">PO Number #</th>
+                    <th scope="col" class="col id">Sales Order Number #</th>
+                    <th scope="col" class="col date">Order Total</th>
+                    <th scope="col" class="col shipping">Status</th>
+                    <th scope="col" class="col total">Created on</th>
+                </tr>
+            </thead>
+            <tbody>              
+                    <?php foreach ($orderCollection as $order) : ?>
+                        <tr>
+                            <td data-th="Order #" class="col id">
+                                <?php echo $order->getIncrementId() ?>
+                            </td>
+                            <td data-th="PO Numbe #" class="col id">
+                                <?php echo $order->getPayment()->getPoNumber() ?>
+                            </td>
+                            <td data-th="PO Numbe #" class="col id">
+                                <?php echo $order->getSapId() ?>
+                            </td>
+                            <td data-th="Order Total" class="col total">
+                                <span class="price">
+                                    <?php echo number_format((float)$order->getGrandTotal(), 2, '.', '') ?>
+                                </span>
+                            </td>
+                            <td data-th="Status" class="col status">
+                                <?php echo $order->getStatusLabel() ?>
+                            </td>
+                            <td data-th="Date" class="col date">
+                                <?php echo date('Y-m-d', strtotime($order->getCreatedAt())); ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php } else { ?>
+                        <span>
+                            <?php echo '<h4 class="drl-active-req-error">There is no records in your recent orders.</h4>'?>
+                        </span>
+                    <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($orderCollection && count($orderCollection) > 0) { ?>
+        <div class="drl-block-content">
+            <a href="<?php echo $this->getBaseUrl() . "sales/order/history"; ?>" class="drl-dashboard-view-all action view">
+                View All Orders
+            </a>
+        </div>
+    <?php } ?>
+</div>
+<br>
+<div class="drl-dashboard-contact-us">
+    <div class="dashboard-drug">
+        <img class="img-dashboard" src='<?php echo $this->getViewFileUrl('Ecomm_Theme::images/drl-pill.svg'); ?>' alt="Dashboard">
+        <div>
+            <p class="drl-dashboard-drug-f">Running low on a specific drug?</p>
+            <p class="drl-dashboard-drug-s">Get express shipping within 24 hours contact us</p>
+        </div>
+        <div class="drl-btn-contact">
+            <a href="<?php echo $this->getBaseUrl() . "contact"; ?>" class="contact-us-dashboard">Contact us</a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="drl-title-dashboard-tabel block-title order">
+    <strong>Recent Invoices</strong>
+</div>
+<br>
+<div class="drl-dashboard-tabel">
+
+    <div class="drl-block-content">
+        <table class="drl-dashboard-recent-order" id="">
+            <?php if ($_invoices && count($_invoices) > 0) { ?>
+            <thead>
+                <tr>
+                    <th scope="col" class="col date">Order #</th>
+                    <th scope="col" class="col id">Invoice #</th>
+                    <th scope="col" class="col id">Sales Order Number #</th>
+                    <th scope="col" class="col date">Invoice Value</th>
+                    <th scope="col" class="col date">Status</th>
+                    <th scope="col" class="col id">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($_invoices as $_invoice): ?>
+                    <tr>
+                        <td data-th="Order #" class="col id">
+                            <?php echo $_invoice->getOrder()->getIncrementId() ?>
+                        </td>
+                        <td data-th="Invoice #" class="col id">
+                            <?php echo $_invoice->getIncrementId() ?>
+                        </td>
+                        <td data-th="Invoice #" class="col id">
+                            <?php echo $_invoice->getOrder()->getSapId() ?>
+                        </td>
+                        <td data-th="Invoice Value" class="col id">
+                            <?php echo number_format((float)$_invoice->getGrandTotal(), 2, '.', '') ?>
+                        </td>
+                        <td data-th="Status" class="col id">
+                            <?php if($_invoice->getState() == 1){ 
+                                echo "Open";
+                            } else if($_invoice->getState() == 2){ 
+                                echo "Paid";
+                            }else if($_invoice->getState() == 3) {
+                                echo "Canceled";
+                            }
+                            ?>
+                        </td>
+                        <td data-th="Action" class="col id">
+                            <a href="<?= /* @escapeNotVerified */ $block->getPrintInvoiceUrl($_invoice) ?>"
+                                onclick="this.target='_blank'"
+                                class="action view">
+                            <span><?= /* @escapeNotVerified */ __('Print Invoice') ?></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+                <?php } else { ?>
+                        <span>
+                            <?php echo '<h4 class="drl-active-req-error">There is no record in your recent invoices.</h4>'?>
+                        </span>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($_invoices && count($_invoices) > 0) { ?>
+        <div class="drl-block-content">
+            <a href="<?php echo $this->getBaseUrl() . "sales/order/history"; ?>" class="drl-dashboard-view-all action view">
+                View All Invoices
+            </a>
+        </div>
+    <?php } ?>
+</div>

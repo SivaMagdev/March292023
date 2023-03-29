@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ecomm_bellnotification_extensions" sortOrder="4000000">
+            <label>Push Notification</label>
+        </tab>
+        <section id="ecomm_bellnotification" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configuration</label>
+            <tab>ecomm_bellnotification_extensions</tab>
+            <resource>Ecomm_BellNotification::config_bellnotification</resource>
+            <group id="general" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="api_access_key" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Api Access key for Android</label>
+                </field>
+                <field id="passphase" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>passphase for IOS</label>
+                </field>
+                <field id="mode" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>IOS Mode</label>
+                    <source_model>Ecomm\BellNotification\Model\Config\Source\Mode</source_model>
+                </field>
+                <field id="sandbox_url" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>IOS Sandbox URL</label>
+                </field>
+                <field id="live_url" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>IOS Live URL</label>
+                </field>
+                <field id="port" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>IOS PORT</label>
+                </field>
+                <field id="bundle_id" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>IOS Bundle ID</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

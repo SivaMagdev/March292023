@@ -1,0 +1,149 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+$orderStatus = $block->getOrderStatus();
+$_invoices = $block->getInvoiceList();
+$blockObj = $block->getLayout()->createBlock('Ecomm\Invoice\Block\Filter');
+?>
+<?php
+$_invoices_filter = $block->getOrderFilter();
+/*print_r($_invoices_filter->getData); */
+?>
+<form data-mage-init='{"myOrdersFilter": {}, "validation": {}}'
+      class="form search my-orders-search-advanced"
+      action="<?= $escaper->escapeUrl($blockObj->getSearchPostUrl()); ?>"
+      method="get"
+      id="my-orders-search-advanced-form">
+    <input type="hidden" id="advanced-filtering" name="advanced-filtering" value=""/>
+    <fieldset class="fieldset info">
+        <div class="field field-50 filters-collapse">
+            <button id="filter-show-btn" class="action secondary" type="button">
+                <?= $escaper->escapeHtml(__('Filter')); ?>
+            </button>
+            <button id="filter-close-btn" class="action secondary filter-close" type="button">Close
+            </button>
+
+        </div>
+    </fieldset>
+    <fieldset class="fieldset info filter-summary"></fieldset>
+    <fieldset class="fieldset info extra-order-search" id="extra-order-search-filters">
+        <div class="field field-order-number field-50">
+            <label class="label" for="order-number"><?= $escaper->escapeHtml(__('Invoice Number')); ?></label>
+            <div class="control">
+                <input type="text"
+                       name="invoice-number"
+                       id="invoice-number"
+                       value="<?= $escaper->escapeHtmlAttr($blockObj->prepareInputValue('invoice-number')); ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('invoice Number')); ?>"
+                       placeholder="<?= $escaper->escapeHtmlAttr(__('Enter full or invoice number...')); ?>"
+                       minlength="<?= (int)$blockObj->getMinInputLength(); ?>"
+                       class="input-text"/>
+            </div>
+        </div>
+        <div class="field field-order-number field-50">
+            <label class="label" for="order-number"><?= $escaper->escapeHtml(__('Invoice Status')); ?></label>
+            <div class="control">
+                <select name="invoice-status" class="input-text" id="invoice-status"
+                        title="<?= $escaper->escapeHtmlAttr(__('Invoice Status')); ?>">
+                    <option value="">All</option>
+                    <option value="1">Open</option>
+                    <option value="2">Paid</option>
+                    <option value="3">Canceled</option>
+                </select>
+            </div>
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <a href="<?= $escaper->escapeUrl($blockObj->getSearchPostUrl()); ?>">
+                    <button class="secondary"
+                            type="button"
+                            data-role="action"
+                            title="<?= $escaper->escapeHtmlAttr(__('Clear All')); ?>">
+                        <span><?= $escaper->escapeHtml(__('Clear All')); ?></span>
+                    </button>
+                </a>
+                <button type="submit"
+                        class="action primary"
+                        title="<?= $escaper->escapeHtmlAttr(__('Apply')); ?>">
+                    <span><?= $escaper->escapeHtml(__('Apply')); ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<div class="field field-50 filters-collapse">
+    <form method="GET" action="<?= $block->getUrl('invoice/customer/exportinvoice'); ?>">
+        <button class="action secondary" type="submit">Export Table Data To Excel File</button>
+    </form>
+</div>
+<br />
+<div class="table-wrapper orders-history">
+    <div class="drl-block-content">
+        <table class="drl-dashboard-recent-order" id="table">
+            <?php
+            if ($_invoices_filter && count($_invoices_filter) > 0) { ?>
+            <thead>
+            <tr>
+                <th scope="col" class="col id">Invoice #</th>
+                <th scope="col" class="col date">Order #</th>
+                <th scope="col" class="col id">Sales Order Number #</th>
+                <th scope="col" class="col date">Invoice Value</th>
+                <th scope="col" class="col date"> Invoice Status</th>
+                <th scope="col" class="noExport">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($_invoices_filter as $_invoices_filters) { ?>
+                <tr>
+                    <td data-th="Invoice #" class="col id">
+                        <?php $invoiceidsw = $_invoices_filters->getIncrementId() ?>
+                        <span>'<?php echo $invoiceidsw; ?>'</span>
+
+                    </td>
+                    <td data-th="Order #" class="col id">
+                        <?php $_invoiceOrders = $_invoices_filters->getOrder()->getIncrementId() ?>
+                        <span>'<?php echo $_invoiceOrders; ?>'</span>
+
+                    </td>
+                    <td data-th="Invoice #" class="col id">
+                        <?php $sapid = $_invoices_filters->getOrder()->getSapId() ?>
+                        <span>'<?php echo $sapid; ?>'</span>
+                    </td>
+                    <td data-th="Invoice Value" class="col id">
+                        <?php echo number_format((float)$_invoices_filters->getGrandTotal(), 2, '.', '') ?>
+                    </td>
+                    <td data-th="Status" class="col id">
+                        <?php if ($_invoices_filters->getState() == 1) {
+                            echo "Open";
+                        } elseif ($_invoices_filters->getState() == 2) {
+                            echo "Paid";
+                        } elseif ($_invoices_filters->getState() == 3) {
+                            echo "Canceled";
+                        }
+                        ?>
+                    </td>
+                    <td data-th="Action" class="noExport">
+                        <a href="<?= /* @escapeNotVerified */
+                        $block->getPrintInvoiceUrl($_invoices_filters) ?>"
+                           onclick="this.target='_blank'"
+                           class="action view">
+                            <span><?= /* @escapeNotVerified */
+                                __('Print Invoice') ?></span>
+                        </a>
+                    </td>
+                </tr>
+                <?php
+            }
+            } else { ?>
+                <span>
+                    <?php echo '<h4 class="drl-active-req-error">There is no record in your recent invoices.</h4>' ?>
+                </span>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+</div>

@@ -1,0 +1,76 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart $block */
+
+/** @var \Magento\Wishlist\Model\Item $item */
+$item = $block->getItem();
+$product = $item->getProduct();
+/** @var \Magento\Wishlist\ViewModel\AllowedQuantity $viewModel */
+$viewModel = $block->getData('allowedQuantityViewModel');
+$finalPrice = $block->getData('final_price');
+$allowedQty = $viewModel->setItem($item)->getMinMaxQty();
+?>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+$StockState = $objectManager->get('\Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku');
+$custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+
+$application_verified_status = false;
+
+ if ($customerSession->isLoggedIn()) {
+
+    $customerRepository = $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+    $_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+
+    if($customerSession->getId()) {
+
+        $customerData= $customerRepository->getById($customerSession->getId());
+
+        $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+        $options = $attribute->getSource()->getAllOptions();
+        $application_statuses = [];
+        foreach ($options as $option) {
+            if ($option['value'] > 0) {
+                $application_statuses[$option['value']] = $option['label'];
+            }
+        }
+        $application_status = 0;
+        $approved_id = array_search("Approved",$application_statuses);
+        if($customerData->getCustomAttribute('application_status')){
+            $application_status = $customerData->getCustomAttribute('application_status')->getValue();
+        }
+
+        if($approved_id == $application_status){
+            $application_verified_status = true;
+        }
+    }
+}
+?>
+<?php foreach ($block->getChildNames() as $childName) : ?>
+    <?= /* @noEscape */ $block->getLayout()->renderElement($childName, false) ?>
+<?php endforeach;?>
+<?php $groupPrice = $finalPrice->getCustomerGroupPrice($product); ?>
+
+<?php
+        $stockstatus=$custom_helper->getConfigVal('cataloginventory/options/display_product_stock_status');
+        if($stockstatus)
+        {
+            /*Checking the whether instock or out of stock*/
+            $stockval=$custom_helper->getStockCheck($product->getSku(),$product->getId());
+            $instock=$stockval['instock'];
+            $custominstock=$stockval['custominstock'];
+            $_productStock = $custom_helper->getStockItem($product->getId());
+    ?>
+
+        <?php if (($instock && $_productStock->getQty() > 0) || $custominstock){?>
+
+
+<?php      } 
+        }
+?>

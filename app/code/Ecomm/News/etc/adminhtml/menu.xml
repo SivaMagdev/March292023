@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ *
+ * ==============================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * ==============================================================
+ * This package designed for Magento COMMUNITY edition
+ * PWC does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * PWC does not provide extension support in case of
+ * incorrect edition usage.
+ * ==============================================================
+ *
+ * @category    PWC
+ * @package     Ecomm_News
+ * @version     1.2
+ * @author      PWC Team
+ *
+ */
+! -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+        <add id="Ecomm_News::news" title="News" module="Ecomm_News" sortOrder="2" parent="Ecomm_Voiceofcustomer::main_menu" action="newsadmin/news/index" resource="Ecomm_News::news" />
+    </menu>
+</config>

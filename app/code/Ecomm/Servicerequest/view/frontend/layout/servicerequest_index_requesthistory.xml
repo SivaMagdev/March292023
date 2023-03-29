@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <head>
+        <css src="Ecomm_Servicerequest::css/drl-service-request.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <referenceContainer name="content">
+            <block class="Ecomm\Servicerequest\Block\Requesthistory" name="request.history" template="Ecomm_Servicerequest::Requesthistory.phtml" cacheable="false" />
+        </referenceContainer>
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\Framework\View\Element\Template" name="request.sidebar" template="Ecomm_Servicerequest::sidebar.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Cms\Block\Block" name="service-contact-us">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">service-contact-us</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

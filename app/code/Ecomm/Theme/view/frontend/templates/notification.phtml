@@ -1,0 +1,54 @@
+<?php
+$notificationDatas = $block->getNotificationCollection();
+$notification_count = count($notificationDatas);
+?>
+<div class="drl-bell-notify notifications" >
+    <div class="icon_wrap">
+        <span class="drl-notification-bell">
+            <span class="text">My Notification</span>
+            <span class="notfi-counter-number">0</span>
+        </span>
+    </div>
+    <div class="notification_dd">
+        <div>
+            <ul class="notification_ul">
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   require(["jquery",
+            'mage/url',
+            'notification'
+            ], function ($, url) {
+            /*var bellnotificationUrl = url.build('bellnotification/index/notification');*/
+            var bellnotificationUrl = '<?php echo $block->getUrl('bellnotification/index/notification'); ?>';
+
+            $.ajax({
+                url : bellnotificationUrl,
+                type : "POST",
+                data : {},
+                success: function (response) {
+                    console.log(response.count);
+                    if(response.count){
+                        for(var i=0; i < response.count; i++) {
+                            $('.notification_ul').append('<li class="starbucks success" data_id="'+ response.bellNotification[i].id +'"><div class="notify_data"><div class="sub_title">'+response.bellNotification[i].comment +'</div></div></li>');
+                            $(".notification_ul").removeClass( "empty" );
+                            $(".drl-notification-bell .notfi-counter-number").show();
+
+                        }
+                        $('.notfi-counter-number').text(response.count);
+                    }else{
+                        $('.notification_ul').append('<div class="notification-empty">No Notification yet</div>');
+                        $(".notification_ul" ).addClass( "empty" );
+                        $(".drl-notification-bell .notfi-counter-number").hide();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    console.log(err.Message);
+                }
+            });
+   });
+</script>

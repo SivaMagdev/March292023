@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_StoreConfig
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="drl_compliance" translate="label" sortOrder="5000000">
+            <label>DRL Compliance</label>
+        </tab>
+        <section id="drl_consent" translate="label" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Configuration</label>
+            <tab>drl_compliance</tab>
+            <resource>Ecomm_StoreConfig::drlconsent_config</resource>
+            <group id="drl_consent_group" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Promotion, Subscription and Signup Consent</label>
+                <field id="agreement_text" translate="label comment" sortOrder="10" type="textarea" showInStore="1" showInDefault="1" >
+                    <label>Agreement Text</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

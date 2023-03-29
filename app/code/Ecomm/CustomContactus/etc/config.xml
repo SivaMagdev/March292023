@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<contactus>
+			<email>
+				<contact_customer_confirmation>1</contact_customer_confirmation>
+				<contact_customer_confirmation_template>contactus_email_contact_customer_confirmation_template</contact_customer_confirmation_template>
+			</email>
+			<adminemail>
+				<admin_email>
+					<![CDATA[hello@example.com]]>
+				</admin_email>
+				<contact_admin_confirmation>1</contact_admin_confirmation>
+				<contact_admin_confirmation_template>contactus_adminemail_contact_admin_confirmation_template</contact_admin_confirmation_template>
+			</adminemail>
+		</contactus>
+	</default>
+</config>

@@ -1,0 +1,820 @@
+/* Font Family Start */
+@font-face {
+    font-family: 'Circular Pro Black';
+    src: url('../fonts/CircularPro-Black.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Black Italic';
+    src: url('../fonts/CircularPro-BlackItalic.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Black Bold';
+    src: url('../fonts/CircularPro-Bold.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Black Bold Italic';
+    src: url('../fonts/CircularPro-BoldItalic.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Book';
+    src: url('../fonts/CircularPro-Book.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Book Italic';
+    src: url('../fonts/CircularPro-BookItalic.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Medium';
+    src: url('../fonts/CircularPro-Medium.otf');
+}
+
+@font-face {
+    font-family: 'Circular Pro Medium Italic';
+    src: url('../fonts/CircularPro-MediumItalic.otf');
+}
+
+@font-face {
+    font-family: 'DRL Circular Black';
+    src: url('../fonts/DRLCircular-Black.otf');
+}
+
+@font-face {
+    font-family: 'DRL Circular Bold';
+    src: url('../fonts/DRLCircular-Bold.otf');
+}
+
+@font-face {
+    font-family: 'DRL Circular Book';
+    src: url('../fonts/DRLCircular-Book.otf');
+}
+
+@font-face {
+    font-family: 'DRL Circular Light';
+    src: url('../fonts/DRLCircular-Light.otf');
+}
+
+body {
+    font-family: 'DRL Circular Book';
+    color: #000;
+}
+
+/* Font Family End */
+a:hover,
+.alink:hover,
+button:hover {
+    text-decoration: none !important;
+}
+
+.block-compare .action.compare,
+.cart-summary .actions-toolbar>.primary button,
+.cart-summary .form.giftregistry .fieldset .action.primary,
+.paypal-review .block .actions-toolbar .action.primary,
+.cart-summary .actions-toolbar>.primary .cart.table-wrapper .actions-toolbar>.action,
+.cart-summary .actions-toolbar>.primary .action-gift,
+.action.primary,
+.review-form .action.submit.primary,
+button,
+.magebees_Onepagecheckout_small_button.active,
+.magebees_Onepagecheckout_button.active,
+.read-more-btn .button {
+    color: #FFFFFF;
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border: 0;
+    border-radius: 25px;
+    -webkit-border-radius: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    font-size: 18px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: capitalize;
+}
+
+.block-compare .action.compare:focus,
+.cart-summary .actions-toolbar>.primary button:focus,
+.cart-summary .form.giftregistry .fieldset .action.primary:focus,
+.paypal-review .block .actions-toolbar .action.primary:focus,
+.cart-summary .actions-toolbar>.primary .cart.table-wrapper .actions-toolbar>.action:focus,
+.cart-summary .actions-toolbar>.primary .action-gift:focus,
+.action.primary:focus,
+.review-form .action.submit.primary:focus,
+button:focus,
+.magebees_Onepagecheckout_small_button.active:focus,
+.magebees_Onepagecheckout_button.active:focus,
+.read-more-btn .button:focus,
+.block-compare .action.compare:hover,
+.cart-summary .actions-toolbar>.primary button:hover,
+.cart-summary .form.giftregistry .fieldset .action.primary:hover,
+.paypal-review .block .actions-toolbar .action.primary:hover,
+.cart-summary .actions-toolbar>.primary .cart.table-wrapper .actions-toolbar>.action:hover,
+.cart-summary .actions-toolbar>.primary .action-gift:hover,
+.action.primary:hover,
+.review-form .action.submit.primary:hover,
+button:hover,
+.magebees_Onepagecheckout_small_button.active:hover,
+.magebees_Onepagecheckout_button.active:hover,
+.read-more-btn .button:hover,
+.block-compare .action.compare:active,
+.cart-summary .actions-toolbar>.primary button:active,
+.cart-summary .form.giftregistry .fieldset .action.primary:active,
+.paypal-review .block .actions-toolbar .action.primary:active,
+.cart-summary .actions-toolbar>.primary .cart.table-wrapper .actions-toolbar>.action:active,
+.cart-summary .actions-toolbar>.primary .action-gift:active,
+.action.primary:active,
+.review-form .action.submit.primary:active,
+button:active,
+.magebees_Onepagecheckout_small_button.active:active,
+.magebees_Onepagecheckout_button.active:active,
+.read-more-btn .button:active {
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+input[type="password"] {
+    color: #434861;
+    font-size: 13px;
+
+}
+
+input.mage-error,
+select.mage-error,
+textarea.mage-error {
+    border-color: #FF5046;
+}
+
+div.mage-error[generated] {
+    color: #FF5046;
+    position:absolute;
+}
+
+div.mage-error[generated] {
+    margin-top: 0px;
+}
+
+div.mage-error[generated]:before {
+    content: '\f071';
+    font-family: "Font Awesome 5 Free";
+    transform: rotate(-45deg) skewY(0) scaleX(1.866);
+    font-weight: 900;
+    padding-right: 5px;
+}
+
+._keyfocus *:focus,
+input:not([disabled]):focus,
+textarea:not([disabled]):focus,
+select:not([disabled]):focus {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.create input.mage-error,
+.form.form-orders-search input.mage-error,
+.create select.mage-error,
+.form.form-orders-search select.mage-error,
+.create textarea.mage-error,
+.form.form-orders-search textarea.mage-error {
+    border-color: #FF5046;
+}
+
+.drl-flex {
+    display: flex;
+}
+
+.message-error.error.message button.close {
+    font-size: 24px;
+    line-height: 1.2;
+    background-color: unset;
+    color: #ee9c97;
+    margin: -13px 0 0;
+    top: 22px;
+    width: 25px;
+    position: absolute;
+    padding: 0;
+    height: 25px;
+    border-radius: 50%;
+    right: 13px;
+    border: unset;
+    box-shadow: unset;
+}
+
+.message-error.error.message button.close:hover {
+    color: #FF5046;
+    border: none;
+    box-shadow: none;
+}
+
+.message.error.message-error>*:first-child:before {
+    color: #a94442;
+    font-size: 17px;
+    content: '\f06a';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
+    margin: -14px 0 0;
+}
+
+.message-error.error.message,
+.message-success.success.message {
+    padding-left: 35px;
+    z-index: 1;
+}
+
+.message-success.success.message button.close {
+    font-size: 24px;
+    line-height: 1.2;
+    background-color: unset;
+    color: #42bb42;
+    margin: -13px 0 0;
+    top: 22px;
+    width: 25px;
+    position: absolute;
+    padding: 0;
+    height: 25px;
+    border-radius: 50%;
+    right: 13px;
+}
+.message-success.success.message a{
+     font-family: 'DRL Circular Bold';
+     color: #532fb7;
+}
+.message-success.success.message>*:first-child {
+    font-family: 'DRL Circular Bold';
+}
+.message-success.success.message button.close:hover {
+    color: #006400;
+    border: none;
+    box-shadow: none;
+}
+
+.message-success.success.message>*:first-child:before {
+    font-size: 17px;
+}
+
+.drl-required-astr::after {
+    content: '*';
+    color: #e02b27;
+    font-size: 1.2rem;
+    margin: 0 0 0 5px;
+}
+
+#back_top {
+    bottom: 80px;
+    cursor: pointer;
+    display: none;
+    height: 44px;
+    position: fixed;
+    right: 8px;
+    width: 45px;
+    z-index: 999;
+}
+
+.drl-logout-msg {
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+
+}
+
+.message.info {
+    font-family: 'DRL Circular Bold';
+}
+
+.customer-account-logoutsuccess span.base {
+    font: normal normal bold 42px/48px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+}
+
+.swatch-option {
+    height: auto;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder,
+input[type="url"]::-webkit-input-placeholder,
+input[type="tel"]::-webkit-input-placeholder,
+input[type="search"]::-webkit-input-placeholder,
+input[type="number"]::-webkit-input-placeholder,
+input[type="datetime"]::-webkit-input-placeholder,
+input[type="email"]::-webkit-input-placeholder,
+::placeholder {
+    letter-spacing: 0px;
+    color: #9D9AA2;
+    opacity: 1;
+    font-family: 'DRL Circular Light';
+}
+
+input:disabled,
+select:disabled {
+
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    font-family: 'DRL Circular Bold';
+}
+
+.abs-account-blocks .block-title>strong,
+.abs-account-blocks .block-title>span,
+.account .legend>strong,
+.account .legend>span,
+.form-giftregistry-search .legend>strong,
+.form-giftregistry-search .legend>span,
+.block-giftregistry-results .block-title>strong,
+.block-giftregistry-results .block-title>span,
+.block-giftregistry-shared-items .block-title>strong,
+.block-giftregistry-shared-items .block-title>span,
+.block-wishlist-search-form .block-title>strong,
+.block-wishlist-search-form .block-title>span,
+.block-wishlist-search-results .block-title>strong,
+.block-wishlist-search-results .block-title>span,
+.multicheckout .block-title>strong,
+.multicheckout .block-title>span,
+.multicheckout .block-content .title>strong,
+.multicheckout .block-content .title>span,
+.customer-review .review-details .title>strong,
+.customer-review .review-details .title>span,
+.company-account-index .columns .column.main .block:not(.widget) .block-title>strong,
+.company-account-index .columns .column.main .block:not(.widget) .block-title>span,
+.paypal-review .block .block-title>strong,
+.paypal-review .block .block-title>span,
+.account .column.main .block:not(.widget) .block-title>strong,
+.account .column.main .block:not(.widget) .block-title>span,
+.multicheckout .block-title>strong,
+.multicheckout .block-title>span,
+.magento-rma-guest-returns .column.main .block:not(.widget) .block-title>strong,
+.magento-rma-guest-returns .column.main .block:not(.widget) .block-title>span,
+[class^='sales-guest-'] .column.main .block:not(.widget) .block-title>strong,
+[class^='sales-guest-'] .column.main .block:not(.widget) .block-title>span,
+.sales-guest-view .column.main .block:not(.widget) .block-title>strong,
+.sales-guest-view .column.main .block:not(.widget) .block-title>span {
+    font-size: 24px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Bold';
+}
+
+.abs-account-blocks .block-title,
+.account .legend,
+.form-giftregistry-search .legend,
+.block-giftregistry-results .block-title,
+.block-giftregistry-shared-items .block-title,
+.block-wishlist-search-form .block-title,
+.block-wishlist-search-results .block-title,
+.multicheckout .block-title,
+.multicheckout .block-content .title,
+.customer-review .review-details .title,
+.company-account-index .columns .column.main .block:not(.widget) .block-title,
+.paypal-review .block .block-title,
+.account .column.main .block:not(.widget) .block-title,
+.multicheckout .block-title,
+.magento-rma-guest-returns .column.main .block:not(.widget) .block-title,
+[class^='sales-guest-'] .column.main .block:not(.widget) .block-title,
+.sales-guest-view .column.main .block:not(.widget) .block-title {
+
+    border-bottom: 1px dashed #dfe1e8;
+
+}
+
+.drl-right {
+    float: right;
+}
+
+.drl-left {
+    float: left;
+}
+
+.abs-pager-toolbar .toolbar-amount,
+.account .toolbar .toolbar-amount,
+.toolbar-giftregistry-results .toolbar-amount,
+.toolbar-wishlist-results .toolbar-amount,
+.limiter-options,
+.limiter-label,
+.limiter-text {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 0.8;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+
+}
+
+.abs-cart-block>.title,
+.quote-details-items .toggle-action .toggle,
+.abs-discount-block .block>.title,
+.cart-summary .block>.title,
+.paypal-review-discount .block>.title,
+.cart-discount .block>.title {
+    border-top: 1px dashed #dfe1e8;
+}
+
+.breadcrumbs .items {
+    padding: 0 0px 0px 10px;
+}
+
+.modal-custom .action-close:before,
+.modal-popup .action-close:before,
+.modal-slide .action-close:before {
+    color: #5225B5;
+}
+
+.minicart-items .action.edit:before {
+    content: url("../images/drl-edit.png");
+}
+
+.minicart-items .action.delete:before {
+    content: url("../images/drl-trash.png");
+}
+
+.modals-wrapper .modal-popup .modal-inner-wrap {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.modal-popup.confirm .modal-inner-wrap .modal-content div {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+.modal-popup .modal-footer button.action-primary.action-accept {
+    color: #FFFFFF;
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border: 0;
+    border-radius: 25px;
+    -webkit-border-radius: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    font-size: 18px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    padding: 10px 10px 10px 10px;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    letter-spacing: 0;
+    width: 115px;
+    float: right;
+    margin-right: 16px;
+}
+
+.modal-popup .modal-footer button.action-secondary.action-dismiss {
+    color: #532fb7;
+    background: #ffffff;
+    border: 0;
+    border-radius: 25px;
+    -webkit-border-radius: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid #532fb7;
+    font-size: 18px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    padding: 10px 10px 10px 10px;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    letter-spacing: 0;
+    width: 115px;
+    float: right;
+}
+
+.modal-popup .modal-footer button.action-primary.action-accept:hover {
+    color: #532fb7;
+    border: 1px solid #532fb7;
+    background: #ffffff;
+}
+
+.modal-popup .modal-footer button.action-secondary.action-dismiss:hover {
+    color: #ffffff;
+    border: 1px solid transparent;
+    background: #5225B5 0% 0% no-repeat padding-box;
+}
+
+a:hover {
+    color: #5225B5;
+}
+
+button:not(.primary),
+.quote-details-items .actions-toolbar>.action:not(.primary) {
+    box-shadow: unset !important;
+}
+
+select {
+    border: 1px solid #5225B533;
+    border-radius: 4px;
+    opacity: 1;
+    background: #ffffff url("../images/dropdown.svg") no-repeat 97% 45%;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-family: 'DRL Circular Book';
+    font-size: 13px;
+}
+
+@media only screen and (min-width : 320px) and (max-width: 768px) {
+
+    #back_top {
+        display: none;
+    }
+
+}
+
+/* send confiramtion css */
+
+.customer-account-confirmation .page-title-wrapper>.page-title {
+    font: normal normal normal 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-weight: bold;
+    font-family: 'DRL Circular Bold';
+    margin-bottom: 10px;
+}
+
+.customer-account-confirmation .fieldset>.field {
+    font: normal normal normal 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #434861;
+    font-family: 'DRL Circular Light';
+}
+
+.customer-account-confirmation .fieldset>.field>.label {
+    text-align: left;
+    font: normal normal normal 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #434861;
+    font-family: 'DRL Circular Light';
+    width: 126px;
+    height: 15px;
+}
+
+.customer-account-confirmation input#email_address {
+    background: #FAF9FA 0% 0% no-repeat padding-box;
+    background-clip: padding-box;
+    /* border: 1px solid #5225B533; */
+    border-radius: 1px;
+    font-size: 14px;
+    height: 48px;
+    line-height: 1.42857143;
+    padding: 0px 9px;
+    vertical-align: baseline;
+    width: 72%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font: normal normal normal 14px/21px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+
+.customer-account-confirmation .actions-toolbar>.primary .action:last-child {
+    background-image: none;
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border: 1px solid #5225B5;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    padding: 13px 8px;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border-radius: 25px;
+    width: 100%;
+    text-transform: none;
+    font: normal normal normal 14px/21px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+.breadcrumbs .items>li a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-family: 'DRL Circular Light';
+    font-size: 13px;
+}
+
+.breadcrumbs .item:not(:last-child):after {
+    content: url("../images/drl-breadcrumbs.svg");
+}
+
+.breadcrumbs .items>li strong {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-family: 'DRL Circular Book';
+    font-size: 13px;
+}
+
+.pages .item.current strong.page {
+    background: #FFFFFF;
+    color: #5225B5;
+    font-family: 'DRL Circular Bold';
+    font-size: 14px;
+}
+
+.pages .item a.page {
+    color: #434861;
+    font-family: 'DRL Circular Light';
+}
+
+.pages .item a.page .label {
+    font-size: 12px;
+}
+
+.pages .action {
+    background: #FFFFFF;
+    border: unset;
+    box-shadow: none;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+}
+.message.notice button.close {
+    font-size: 24px;
+    line-height: 1.2;
+    background-color: unset;
+    color: #42bb42;
+    margin: -13px 0 0;
+    top: 22px;
+    width: 25px;
+    position: absolute;
+    padding: 0;
+    height: 25px;
+    border-radius: 50%;
+    right: 13px;
+}
+.search.results dl.block dt.title{
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    font-family: "DRL Circular Bold";
+    font-size: 18px;
+}
+.search.results dl.block dd.item a{
+    letter-spacing: 0px;
+    color: #5225b5;
+    font-family: "DRL Circular Book";
+    font-size: 16px;
+}
+.cart-empty p a{
+    letter-spacing: 0px;
+    color: #5225b5;
+    font-family: "DRL Circular Book";
+    font-size: 16px;  
+}
+.cart-empty p{
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    font-family: "DRL Circular Book";
+    font-size: 16px;
+}
+/* Scroll Bar for all Modal Popup */
+.modal-popup._inner-scroll .modal-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modal-popup._inner-scroll .modal-content::-webkit-scrollbar-thumb {
+    background: #9D9AA2 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 0.5;
+}
+.block-authentication .block-title strong{
+    letter-spacing: 0px;
+    color: #5225b5;
+    font-family: "DRL Circular Bold";
+    font-size: 18px;  
+}
+.popup-authentication .block-content{
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    font-family: "DRL Circular Book";
+    font-size: 16px;
+}
+.block-authentication .actions-toolbar > .primary .action{
+    border-radius: 25px;
+    height: 37px;
+    line-height: 0.5;
+}
+.block-authentication .actions-toolbar > .secondary a.action{
+    margin: 0;
+    letter-spacing: 0px;
+    color: #5225b5;
+    font-family: "DRL Circular Book";
+    font-size: 14px;  
+}
+
+
+/* coockie policy */
+
+.message.global.noscript, .message.global.cookie {
+    margin: 0 0 10px;
+    padding: 12px 20px 12px 25px;
+    display: block;
+    font-size: 1.3rem;
+    background: #d0bdf1;
+    border-color: #d0bdf1;
+    color: #333333;
+    margin: 0;
+    opacity: .9;
+}
+
+.cookie-content {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
+    -ms-flex-pack: space-around;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -ms-flex-pack: distribute;
+    background: #d0bdf1;
+    width: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 20px 40px;
+    position: relative;
+}
+
+.cookie-content p span {
+    font: normal normal 300 14px/16px DRL Circular;
+    font-family: 'DRL Circular Book';
+}
+
+.message.global.cookie .actions {
+    margin-top: 0px;
+}
+
+.message.global.noscript a, .message.global.cookie a {
+    color: #532f91;
+    text-decoration: underline;
+    cursor: pointer;
+    font: normal normal 300 14px/16px DRL Circular;
+    font-family: 'DRL Circular Book';
+}
+
+
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+  .drl-notification-bell{
+      display: none;
+  }  
+
+  .cookie-content {
+    display: block;
+    text-align: center;
+    padding: 20px 10px;
+ }
+
+  .message.global p {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+}

@@ -1,0 +1,59 @@
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_HinValidator
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+<?php
+$result  =$block->getHinValidation();
+?>
+<div class="grid">
+    <div class="admin__table-wrapper">
+    <table cellspacing="0" class="data-grid">
+            <thead>
+                <tr class="headings">
+                    <th class="data-grid-th">Total Address</th>
+                    <th class="data-grid-th"><?=//@codingStandardsIgnoreStart
+                     $result['count']?></th>
+                </tr>
+                <tr class="headings">
+                    <th class="data-grid-th">Server Status</th>
+                    <th class="data-grid-th"><?=//@codingStandardsIgnoreStart
+                     $result['status']?></th>
+                </tr>
+            </thead>
+        </table>
+</div>
+</div>
+
+    <div class="grid">
+    <div class="admin__table-wrapper">
+        <h1 class="center" style=" text-align: center;">Reports</h1>
+        <table cellspacing="0" class="data-grid">
+        
+            <thead>
+                <tr class="headings">
+                    <th class="data-grid-th">ID</th>
+                    <th class="data-grid-th">HIN ID</th>
+                    <th class="data-grid-th">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result['data'] != null) {
+                    foreach ($result['data'] as $data) {?>
+                <tr class="data-grid-controls-row data-row _odd-row">
+                    <td> <?= //@codingStandardsIgnoreStart
+                     $data['id'] ?> </td>
+                      <td> <?= $data['hin_id'] ?> </td>
+                    <td> <?= $data['status'] ?> </td>
+                </tr>
+                    <?php }}?>
+            </tbody>
+        </table>
+    </div>
+</div>

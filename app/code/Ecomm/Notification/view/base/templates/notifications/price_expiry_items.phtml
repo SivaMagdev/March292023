@@ -1,0 +1,27 @@
+<?php
+/* @var \Magento\Framework\View\Element\Template $block */
+?>
+<?php
+$items = $block->getData('items');
+if ($items) {?>
+    <table class="details" cellpadding="5" cellspacing="2" border="1">
+        <tr>
+            <th><?= /* @noEscape */ __('Product Name')?></th>
+            <th><?= /* @noEscape */ __('NDC')?></th>
+            <th><?= /* @noEscape */ __('Expiry Date')?></th>
+        </tr>
+        <?php foreach ($items as $item) {?>
+            <tr>
+                <td>
+                    <?= $block->escapeHtml($item['name']); ?>
+                </td>
+                <td>
+                    <?= $block->escapeHtml($item['sku']); ?>
+                </td>
+                <td>
+                    <?= $block->escapeHtml($item['price_effective_to']); ?>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+<?php } ?>

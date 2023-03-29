@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php 
+    $objmanager = \Magento\Framework\App\ObjectManager::getInstance();
+    $session =  $objmanager->get("Magento\Checkout\Model\Session");
+    $quote =$session->getQuote();
+    $qty =  $quote->getItemsSummaryQty();
+?>
+<?php if($qty>0) { ?>
+<div class="cart-free-delivery-red"><?php //echo 'Please review your cart for updated price/inventory before placing order!!'; ?></div>
+<div class="cart-free-delivery"></div>
+<?php } ?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @var $block \Magento\Checkout\Block\Cart
+ */
+
+if ($block->getItemsCount()) {
+    // phpcs:ignore Magento2.Security.LanguageConstruct.DirectOutput
+    echo $block->getChildHtml('with-items');
+} else {
+    // phpcs:ignore Magento2.Security.LanguageConstruct.DirectOutput
+    echo $block->getChildHtml('no-items');
+}

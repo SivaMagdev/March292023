@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='urn:magento:framework/Event/etc/events.xsd'>
+    <event name='adminhtml_customer_save_after'>
+        <observer name="customer_save_after_admin" instance="Ecomm\Register\Observer\Admin\CustomerSaveAfter" />
+    </event>
+    <!--<event name="customer_address_save_after">
+        <observer name="customer_addres_after_save_admin" instance="Ecomm\Register\Observer\Admin\CustomerAddressSaveAfter" />
+    </event>-->
+</config>

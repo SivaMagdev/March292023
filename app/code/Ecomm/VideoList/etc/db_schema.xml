@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_VideoList
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+ -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="drl_video_list" resource="default" engine="innodb" comment="Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" padding="10" identity="true" comment="Entity Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <column name="video_name" nullable="false" xsi:type="varchar" length="255" comment="video name"/>
+        <column name="video_url" nullable="false" xsi:type="varchar" length="255" comment="video url"/>
+        <column name="video_status" nullable="true" xsi:type="tinyint" comment="status"/>
+        <column name="image" nullable="false" xsi:type="varchar" length="255" comment="thumbnail image"  />
+        <column name="image_name" nullable="false" xsi:type="varchar" length="255" comment="thumbnail image name"  />
+    </table>
+</schema>

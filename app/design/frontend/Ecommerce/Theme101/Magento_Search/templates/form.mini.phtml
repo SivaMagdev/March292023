@@ -1,0 +1,87 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+?>
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var $helper \Magento\Search\Helper\Data */
+$helper = $this->helper(\Magento\Search\Helper\Data::class);
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$atrributesRepository  = $objectManager->create('\Magento\Catalog\Model\Product\Attribute\Repository');
+$dosage_form_data = $atrributesRepository->get('dosage_form')->getOptions();
+$theraputic_cat_data = $atrributesRepository->get('theraputic_cat')->getOptions();
+$custom_attribute = $this->getRequest()->getParam('custom_attribute');
+?>
+<div class="block block-search">
+    <div class="block block-title"><strong><?= $block->escapeHtml(__('Search')) ?></strong></div>
+    <div class="block block-content">
+        <form class="form minisearch" id="search_mini_form"
+              action="<?= $block->escapeUrl($helper->getResultUrl()) ?>" method="get">
+            <div class="field search">
+               <div class="select">
+                  <select id="custom_attribute" name="custom_attribute">
+                    <option value="0"><?= $block->escapeHtml(__('All Products / NDC')) ?></option>
+                    <optgroup label="Dosage Form" style="padding-left: 20px;">
+                      <?php 
+                      if($dosage_form_data){
+                        foreach ($dosage_form_data as $dosage_form) {
+                          if($dosage_form->getValue()){
+                            ?>
+                            <option value="<?= 'dosage_form-'.$dosage_form->getValue() ?>" <?= $custom_attribute == 'dosage_form-'.$dosage_form->getValue() ? ' selected="selected"' : '';?> ><?= $dosage_form->getLabel() ?></option><?php
+                          }
+                        }
+                      }
+                      ?>
+                    </optgroup>
+                    <!-- <optgroup label="Therapeutic Class" style="padding-left: 20px;">
+                      <?php 
+                      if($theraputic_cat_data){
+                        foreach ($theraputic_cat_data as $theraputic_cat) {
+                          if($theraputic_cat->getValue()){
+                            ?>
+                            <option value="<?= 'theraputic_cat-'.$theraputic_cat->getValue() ?>" <?= $custom_attribute == 'theraputic_cat-'.$theraputic_cat->getValue() ? ' selected="selected"' : '';?> ><?= $theraputic_cat->getLabel() ?></option><?php
+                          }
+                        }
+                      }
+                      ?>
+                    </optgroup> -->
+                  </select>
+               </div>
+                <label class="label" for="search" data-role="minisearch-label">
+                    <span><?= $block->escapeHtml(__('Search')) ?></span>
+                </label>
+                <div class="control">
+                    <input id="search"
+                       data-mage-init='{"ajaxsearch":{
+                            "formSelector":"#search_mini_form",
+                            "url":"<?php echo $this->getUrl('search/ajax/suggest'); ?>",
+                            "destinationSelector":"#ajaxsearchpopup"}
+                       }'
+                       type="text"
+                       name="<?php echo $helper->getQueryParamName() ?>"
+                       value="<?php echo $helper->getEscapedQueryText() ?>"
+                       placeholder="<?php echo __('Search Products'); ?>"
+                       class="input-text"
+                       autocomplete="off" />
+                    <div id="ajaxsearchpopup" class="ajaxsearchpopup"></div>
+                    <?php echo $this->getChildHtml() ?>
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit"
+                    title="<?= $block->escapeHtml(__('Search')) ?>"
+                    class="action search"
+                    aria-label="Search"
+                >
+                    <span><?= $block->escapeHtml(__('Search')) ?></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

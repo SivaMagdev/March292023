@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Controller\Account\EditPost" type="Ecomm\Register\Controller\Account\EditPost" />
+    <preference for="Magento\Customer\Controller\Account\Index" type="Ecomm\Register\Controller\Account\Index" />
+    <preference for="Magento\Customer\Controller\Account\Edit" type="Ecomm\Register\Controller\Account\Edit" />
+
+    <preference for="Magento\Customer\Block\Form\Edit" type="Ecomm\Register\Block\Form\Edit" />
+
+    <preference for="Magento\Customer\Block\Address\Grid" type="Ecomm\Register\Block\Address\Grid" />
+    <preference for="Magento\Customer\Block\Address\Edit" type="Ecomm\Register\Block\Address\Edit" />
+    <preference for="Magento\Customer\Block\Address\Book" type="Ecomm\Register\Block\Address\Book" />
+</config>

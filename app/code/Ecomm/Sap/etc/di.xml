@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Ecomm\Sap\Api\AccessTokenInterface" type="Ecomm\Sap\Model\AccessToken" />
+    <preference for="Ecomm\Sap\Api\Data\AccessTokendataInterface" type="Ecomm\Sap\Model\AccessTokenmodel" />
+
+    <preference for="Ecomm\Sap\Api\SalesorderInterface" type="Ecomm\Sap\Model\Salesorder" />
+    <preference for="Ecomm\Sap\Api\Data\SalesorderdataInterface" type="Ecomm\Sap\Model\SalesOrdermodel" />
+    <preference for="Ecomm\Sap\Api\Data\OrderdataInterface" type="Ecomm\Sap\Model\Ordermodel" />
+    <preference for="Ecomm\Sap\Api\Data\OrderItemdataInterface" type="Ecomm\Sap\Model\OrderItemmodel" />
+
+    <preference for="Ecomm\Sap\Api\OrderAckInterface" type="Ecomm\Sap\Model\OrderAck"/>
+    <preference for="Ecomm\Sap\Api\OrderCancelInterface" type="Ecomm\Sap\Model\OrderCancel"/>
+    <preference for="Ecomm\Sap\Api\OrderAsnInterface" type="Ecomm\Sap\Model\OrderAsn"/>
+    <preference for="Ecomm\Sap\Api\OrderAsnPrintInterface" type="Ecomm\Sap\Model\OrderAsnPrint"/>
+    <preference for="Ecomm\Sap\Api\OrderInvoiceInterface" type="Ecomm\Sap\Model\OrderInvoice"/>
+    <preference for="Ecomm\Sap\Api\OrderInvoiceStatusInterface" type="Ecomm\Sap\Model\OrderInvoiceStatus" />
+
+    <preference for="Ecomm\Sap\Api\OrderPodStatusInterface" type="Ecomm\Sap\Model\OrderPod"/>
+
+    <preference for="Ecomm\Sap\Api\ArticleDeltaInterface" type="Ecomm\Sap\Model\ArticleDelta" />
+    <preference for="Ecomm\Sap\Api\CustomerDeltaInterface" type="Ecomm\Sap\Model\CustomerDelta" />
+
+    <preference for="Ecomm\Sap\Api\ProductMasterInterface" type="Ecomm\Sap\Model\ProductMaster" />
+    <preference for="Ecomm\Sap\Api\ProductPriceMasterInterface" type="Ecomm\Sap\Model\ProductPriceMaster" />
+    <preference for="Ecomm\Sap\Api\ProductStockOutInterface" type="Ecomm\Sap\Model\ProductStockOut" />
+
+    <preference for="Magento\Sales\Block\Order\PrintOrder\Invoice" type="Ecomm\Sap\Block\Order\PrintOrder\Invoice" />
+    <preference for="Magento\Sales\Block\Order\PrintOrder\Shipment" type="Ecomm\Sap\Block\Order\PrintOrder\Shipment" />
+    <preference for="Magento\Sales\Block\Order\Invoice\Items" type="Ecomm\Sap\Block\Order\Invoice\Items" />
+    <preference for="Magento\Shipping\Block\Items" type="Ecomm\Sap\Block\Shipping\Items" />
+</config>

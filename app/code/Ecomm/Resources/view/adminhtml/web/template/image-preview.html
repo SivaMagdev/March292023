@@ -1,0 +1,65 @@
+<div class="file-uploader-summary">
+    <div class="file-uploader-preview">
+        <a attr="href: $parent.getFilePreview($file)" target="_blank">
+            <img
+                class="preview-image"
+                if="$file.previewType === 'image'"
+                tabindex="0"
+                event="load: $parent.onPreviewLoad.bind($parent)"
+                attr="
+                    src: $parent.getFilePreview($file),
+                    alt: $file.name">
+            <span if="$file.previewType === 'document'" class="pdf-icon"></span>
+        </a>
+
+        <div class="actions">
+            <button
+                type="button"
+                class="action-remove"
+                data-role="delete-button"
+                attr="title: $t('Delete image')"
+                click="$parent.removeFile.bind($parent, $file)">
+                <span translate="'Delete image'"/>
+            </button>
+        </div>
+    </div>
+
+    <div class="file-uploader-filename" text="$file.name"/>
+    <div class="file-uploader-meta">
+        <text args="$file.previewWidth"/>x<text args="$file.previewHeight"/>
+    </div>
+</div>
+
+<style type="text/css">
+    .pdf-icon{
+          font-size: 100%;
+          box-sizing: border-box;
+          display: block;
+          position: relative;
+          width: 6em;
+          height: 8.5em;
+          background-color: #eee;
+          background-image: url('https://i.imgur.com/lZ5SgDE.png');
+          background-repeat: no-repeat;
+          background-size: 85% auto;
+          background-position: center 2em;
+          border-radius: 1px 2em 1px 1px;
+          border: 1px solid #ddd;
+          &:after
+            content: 'PDF';
+            font-family: Arial;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+            padding: .2em 0 .1em;
+            color: white;
+            display: block;
+            position: absolute;
+            top: .7em;
+            left: -1.5em;
+            width: 3.4em;
+            height: auto;
+            background: #da2525;
+            border-radius: 2px;
+    }
+</style>

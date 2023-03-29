@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <update id="Magento_Newsletter::newsletter_template" title="Promotional Templates" />
+
+        <update id="Magento_Newsletter::newsletter_queue" title="Promotional Queue" />
+
+        <update id="Magento_Newsletter::newsletter_subscriber" title="Promotional Subscribers" />
+
+        <update id="Magento_Newsletter::newsletter_problem" title="Promotional Problem Reports" />
+    </menu>
+</config>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.colan.com/LICENSE.txt
+ *
+ * ==============================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * ==============================================================
+ * This package designed for Magento COMMUNITY edition
+ * PWC does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * PWC does not provide extension support in case of
+ * incorrect edition usage.
+ * ==============================================================
+ *
+ * @category    PWC
+ * @package     Ecomm_Rewards
+ * @version     1.2
+ * @author      PWC Team
+ *
+ */
+! -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ecomm\Rewards\Api\Rewards\RewardsInterface" type="Ecomm\Rewards\Model\Rewards"/>
+    <preference for="Ecomm\Rewards\Api\RewardsRepositoryInterface" type="Ecomm\Rewards\Model\RewardsRepository" />
+    <preference for="Ecomm\Rewards\Api\Rewards\RewardsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Ecomm\Rewards\Model\ResourceModel\Rewards\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_rewards_customer</argument>
+            <argument name="eventPrefix" xsi:type="string">ecomm_rewards_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">rewards_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\Rewards\Model\ResourceModel\Rewards</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecomm_rewards_listing_data_source" xsi:type="string">Ecomm\Rewards\Model\ResourceModel\Rewards\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Rewards\Controller\Adminhtml\Rewards\MassDelete">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 record(s) have been deleted.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while deleting record(s).</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Rewards\Controller\Adminhtml\Rewards\MassDisable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been disabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while disabling selected data.</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Rewards\Controller\Adminhtml\Rewards\MassEnable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been enabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while enabling data.</argument>
+        </arguments>
+    </type>
+    <virtualType name="Ecomm\Rewards\Model\ImageUploader" >
+        <arguments>
+            <!-- Temporary file stored in pub/media/rewards/tmp/rewardsimg -->
+            <argument name="baseTmpPath" xsi:type="string">rewards/tmp/rewardsimg</argument>
+            <argument name="basePath" xsi:type="string">rewards/rewardsimg</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Ecomm\Rewards\Controller\Adminhtml\Rewards\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Ecomm\Rewards\Model\ImageUploader</argument>
+        </arguments>
+    </type>
+</config>

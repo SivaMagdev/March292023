@@ -1,0 +1,16 @@
+{
+    "name": "ecomm/module-globaldeclaration",
+    "description": "Common global module.",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Ecomm\\Globaldeclaration\\": ""
+        }
+    }
+}

@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.colan.com/LICENSE.txt
+ *
+ * ==============================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * ==============================================================
+ * This package designed for Magento COMMUNITY edition
+ * PWC does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * PWC does not provide extension support in case of
+ * incorrect edition usage.
+ * ==============================================================
+ *
+ * @category    PWC
+ * @package     Ecomm_Resources
+ * @version     1.2
+ * @author      PWC Team
+ *
+ */
+! -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Resources -->
+    <preference for="Ecomm\Resources\Api\Resources\ResourcesInterface" type="Ecomm\Resources\Model\Resources"/>
+    <preference for="Ecomm\Resources\Api\ResourcesRepositoryInterface" type="Ecomm\Resources\Model\ResourcesRepository" />
+    <preference for="Ecomm\Resources\Api\Resources\ResourcesSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <!-- Resources -->
+
+    <!-- Resourcescategory -->
+    <preference for="Ecomm\Resources\Api\Resourcescategory\ResourcescategoryInterface" type="Ecomm\Resources\Model\Resourcescategory"/>
+    <preference for="Ecomm\Resources\Api\ResourcescategoryRepositoryInterface" type="Ecomm\Resources\Model\ResourcescategoryRepository" />
+    <preference for="Ecomm\Resources\Api\Resourcescategory\ResourcescategorySearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <!-- Resourcescategory -->
+
+    <!-- Resources -->
+    <virtualType name="Ecomm\Resources\Model\ResourceModel\Resources\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_resources</argument>
+            <argument name="eventPrefix" xsi:type="string">ecomm_resources_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">resources_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\Resources\Model\ResourceModel\Resources</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecomm_resources_listing_data_source" xsi:type="string">Ecomm\Resources\Model\ResourceModel\Resources\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resources\MassDelete">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 record(s) have been deleted.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while deleting record(s).</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resources\MassDisable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been disabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while disabling selected data.</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resources\MassEnable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been enabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while enabling data.</argument>
+        </arguments>
+    </type>
+    <virtualType name="Ecomm\Resources\Model\ImageUploader" >
+        <arguments>
+            <!-- Temporary file stored in pub/media/resources/tmp/attachment -->
+            <argument name="baseTmpPath" xsi:type="string">resources/tmp/attachment</argument>
+            <argument name="basePath" xsi:type="string">resources/attachment</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resources\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Ecomm\Resources\Model\ImageUploader</argument>
+        </arguments>
+    </type>
+    <!-- Resources -->
+
+    <!-- Resourcescategory -->
+    <virtualType name="Ecomm\Resources\Model\ResourceModel\Resourcescategory\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_resources_category</argument>
+            <argument name="eventPrefix" xsi:type="string">ecomm_resourcescategory_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">resourcescategory_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\Resources\Model\ResourceModel\Resourcescategory</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecomm_resourcescategory_listing_data_source" xsi:type="string">Ecomm\Resources\Model\ResourceModel\Resourcescategory\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resourcescategory\MassDelete">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 record(s) have been deleted.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while deleting record(s).</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resourcescategory\MassDisable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been disabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while disabling selected data.</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Resources\Controller\Adminhtml\Resourcescategory\MassEnable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been enabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while enabling data.</argument>
+        </arguments>
+    </type>
+    <!-- Resourcescategory -->
+</config>

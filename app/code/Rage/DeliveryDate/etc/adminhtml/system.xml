@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="rage" sortOrder="999" translate="label">
+			<label>rage</label>
+		</tab>
+        <section id="rg_deliverydate" translate="label" type="text" sortOrder="1300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Delivery Date</label>
+            <tab>rage</tab>
+            <resource>Rage_DeliveryDate::deliverydate</resource>
+            <group id="general" type="text"  sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                 <field id="enable" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="is_unavailable_days" type="select"  sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Service Unavailable Days </label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="disabled" translate="label" type="multiselect" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Service Unavailable Days</label>
+                    <source_model>Rage\DeliveryDate\Model\Config\Source\Disabled</source_model>
+                    <depends>
+                        <field id="is_unavailable_days">1</field>
+                    </depends>
+                </field>
+                 <field id="format" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Date Format:</label>
+                    <comment>(yy-mm-dd, mm/dd/yy, dd/mm/yy)</comment>
+                </field>
+                <field id="delivery_date_hint" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery Date Hint</label>
+                    <validate>validate-length maximum-length-100</validate>
+                    <comment>(Maximum 100 characters)</comment>
+                </field>
+                <field id="delivery_notes_hint" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery Notes Hint</label>
+                    <validate>validate-length maximum-length-100</validate>
+                    <comment>(Maximum 100 characters)</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

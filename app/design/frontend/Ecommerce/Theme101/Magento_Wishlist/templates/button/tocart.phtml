@@ -1,0 +1,51 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Button $block */
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$StockState = $objectManager->get('\Magento\InventorySalesApi\Api\GetProductSalableQtyInterface');
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+
+$application_verified_status = false;
+
+ if ($customerSession->isLoggedIn()) {
+
+    $customerRepository = $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+    $_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+
+    if($customerSession->getId()) {
+
+        $customerData= $customerRepository->getById($customerSession->getId());
+
+        $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+        $options = $attribute->getSource()->getAllOptions();
+        $application_statuses = [];
+        foreach ($options as $option) {
+            if ($option['value'] > 0) {
+                $application_statuses[$option['value']] = $option['label'];
+            }
+        }
+        $application_status = 0;
+        $approved_id = array_search("Approved",$application_statuses);
+        if($customerData->getCustomAttribute('application_status')){
+            $application_status = $customerData->getCustomAttribute('application_status')->getValue();
+        }
+
+        if($approved_id == $application_status){
+            $application_verified_status = true;
+        }
+    }
+}
+?>
+<!-- <?php if ($block->getWishlist()->getItemsCount() && $block->getWishlist()->isSalable()) : ?>
+    <?php if($application_verified_status){ ?>
+    <button type="button" data-role="all-tocart" title="<?= $block->escapeHtmlAttr(__('Add All to Cart')) ?>" class="action tocart">
+        <span><?= $block->escapeHtml(__('Add All to Cart')) ?></span>
+    </button>
+    <?php } ?>
+<?php endif;?> -->

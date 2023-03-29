@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <expressshipping>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>Ecomm\ExpressShipping\Model\Carrier\Shipping</model>
+                <name>Ecomm Express Shipping Method</name>
+                <price>90.00</price>
+                <title>Next Day Delivery</title>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <handling_type>F</handling_type>
+            </expressshipping>
+        </carriers>
+    </default>
+</config>

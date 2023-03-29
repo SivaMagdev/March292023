@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_VideoList
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+        <add id="Ecomm_VideoList::video" title="Video List" module="Ecomm_VideoList" sortOrder="18" parent="Ecomm_PriceEngine::priceengine" action="drlvideo/index/index" resource="Ecomm_VideoList::video" />
+    </menu>
+</config>
+
+

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Newsletter\Controller\Adminhtml\Subscriber\Index" type="Ecomm\AjaxNewsletter\Controller\Adminhtml\Subscriber\Index" />
+     <preference for="Magento\Newsletter\Controller\Adminhtml\Template\Index" type="Ecomm\AjaxNewsletter\Controller\Adminhtml\Template\Index" /> 
+     <preference for="Magento\Newsletter\Controller\Adminhtml\Queue\Index" type="Ecomm\AjaxNewsletter\Controller\Adminhtml\Queue\Index" />
+
+     <preference for="Magento\Customer\Block\Adminhtml\Edit\Tab\Newsletter" type="Ecomm\AjaxNewsletter\Controller\Adminhtml\Customer\Tab\Newsletter" />
+
+     <preference for="Magento\Newsletter\Model\ResourceModel\Subscriber\Grid\Collection" type="Ecomm\AjaxNewsletter\Model\ResourceModel\Newsletter\Collection" />
+
+</config>
+
+
+

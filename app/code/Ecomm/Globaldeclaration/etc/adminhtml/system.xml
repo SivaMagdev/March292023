@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_StoreConfig
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="drd_configuration" translate="label" sortOrder="5000000">
+            <label>DRD Custom Configuration</label>
+        </tab>
+        <section id="drd_short_dated" translate="label" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Short Dated</label>
+            <tab>drd_configuration</tab>
+            <resource>Ecomm_AdminCatalog::drd_short_dated_config</resource>
+            <group id="drd_short_dated_group" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Group Id</label>
+                <field id="customer_group_id" translate="label comment" sortOrder="10" type="multiselect" showInStore="1" showInDefault="1" >
+                    <label>Customer Group</label>
+                    <source_model>Ecomm\AdminCatalog\Model\Adminhtml\System\Config\Source\Customer\Group</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+        </section>
+        <section id="drd_price_notification" translate="label" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Price Notification</label>
+            <tab>drd_configuration</tab>
+            <resource>Ecomm_AdminCatalog::drd_price_notification_config</resource>
+            <group id="drd_price_notification_group" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Price Decrease Notification Message Text</label>
+                <field id="price_notify_no_of_days" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                   <label>Select Last No. of Days</label>        
+                   <source_model>Ecomm\Globaldeclaration\Model\Config\Source\PriceNotifyMonthsDay</source_model>
+                </field>
+                <field id="price_bell_notification_message_text" translate="label comment" sortOrder="10" type="textarea" showInStore="1" showInDefault="1" >
+                    <label>Price Bell Notification Message Text</label>
+                    <validate>required-entry</validate> <!-- Field is required and must not contain any whitespace. -->
+                </field>
+                <field id="price_from_emails_name" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Notification Email's From Name</label>
+                    <validate>required-entry</validate> <!-- Field is required and must not contain any whitespace. -->
+                </field>
+                <field id="price_from_emails" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Notification Email's From</label>
+                    <validate>required-entry no-whitespace</validate> <!-- Field is required and must not contain any whitespace. -->
+                </field>
+                <field id="price_cc_emails" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Notification Email's CC</label>
+                </field>
+                <field id="price_notification_email_template" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price Expiry Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

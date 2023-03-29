@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<group id="default">
+		<job name="ecomm_priceengine_inventory" instance="Ecomm\PriceEngine\Cron\Inventory" method="execute">
+			<schedule>1 0 * * *</schedule>
+		</job>
+		<job name="ecomm_priceengine_regularprice" instance="Ecomm\PriceEngine\Cron\Regularprice" method="execute">
+			<schedule>1 0 * * *</schedule>
+		</job>
+		<job name="ecomm_priceengine_shortdated" instance="Ecomm\PriceEngine\Cron\Shortdated" method="execute">
+			<schedule>1 0 * * *</schedule>
+		</job>
+		<!-- <job name="ecomm_priceengine_priceexpiry" instance="Ecomm\PriceEngine\Cron\Priceexpiry" method="execute">
+			<schedule>1 0 * * 1</schedule>
+		</job> -->
+		<job name="ecomm_priceengine_licenseexpiry" instance="Ecomm\PriceEngine\Cron\Licenseexpiry" method="execute">
+			<schedule>1 0 * * 1</schedule>
+		</job>
+		<job name="ecomm_priceengine_disableexpiredlicenses" instance="Ecomm\PriceEngine\Cron\DisableExpiredLicenses" method="execute">
+			<schedule>5 0 * * *</schedule>
+		</job>
+	</group>
+</config>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ecomm\Servicerequest\Api\Servicerequest\ServicerequestInterface" type="Ecomm\Servicerequest\Model\Servicerequest"/>
+    <preference for="Ecomm\Servicerequest\Api\ServicerequestRepositoryInterface" type="Ecomm\Servicerequest\Model\ServicerequestRepository" />
+    <preference for="Ecomm\Servicerequest\Api\Servicerequest\ServicerequestSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Ecomm\Servicerequest\Model\ResourceModel\Servicerequest\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_service_request</argument>
+            <argument name="eventPrefix" xsi:type="string">eecomm_servicerequest_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">ecomm_servicerequest_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\Servicerequest\Model\ResourceModel\Servicerequest</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecomm_servicerequest_listing_data_source" xsi:type="string">Ecomm\Servicerequest\Model\ResourceModel\Servicerequest\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Servicerequest\Controller\Adminhtml\Servicerequest\MassDelete">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 record(s) have been deleted.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while deleting record(s).</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Servicerequest\Controller\Adminhtml\Servicerequest\MassDisable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been disabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while disabling selected data.</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Servicerequest\Controller\Adminhtml\Servicerequest\MassEnable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been enabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while enabling data.</argument>
+        </arguments>
+    </type>
+    <virtualType name="Ecomm\Servicerequest\Model\ImageUploader" >
+        <arguments>
+            <!-- Temporary file stored in pub/media/servicerequest/tmp/attachment -->
+            <argument name="baseTmpPath" xsi:type="string">servicerequest/tmp/attachment</argument>
+            <argument name="basePath" xsi:type="string">servicerequest/attachment</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="pdf" xsi:type="string">pdf</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Ecomm\Servicerequest\Controller\Adminhtml\Servicerequest\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Ecomm\Servicerequest\Model\ImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\Servicerequest\Controller\Adminhtml\Servicerequest\Upload2">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Ecomm\Servicerequest\Model\ImageUploader</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ecomm_subaccounts_extensions" sortOrder="4000000">
+            <label>Sub Account Configuration</label>
+        </tab>
+        <section id="subaccounts" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+            <label>Configuration</label>
+            <tab>ecomm_subaccounts_extensions</tab>
+            <resource>Ecomm_SubAccounts::config_subaccounts</resource>
+             
+             <group id="adminemail" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Options for Admin</label>
+                <field id="subaccounts_admin_notification" translate="label comment" type="select" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sub Account Admin Notification Email Template</label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+             </group>
+        </section>
+    </system>
+</config>

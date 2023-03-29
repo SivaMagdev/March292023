@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <rg_deliverydate>
+            <general>
+                <enable>1</enable>
+                <is_unavailable_days>0</is_unavailable_days>
+                <disabled>0,6</disabled>
+                <format>mm/dd/yy</format>
+            </general>
+        </rg_deliverydate>
+    </default>
+</config>

@@ -1,0 +1,46 @@
+<?php
+/* @var \BekaertSWSB2B\ProductEnrichment\Block\Adminhtml\Product\Import $block */
+$inputValue = "Works best with CSV files saved in UTF-8 encoding";
+?>
+
+<div class="mendix-integration">
+    <div class="mendix-integration">
+        <form id="import-form" action="<?= $block->escapeUrl($block->getUrl('gcs/mendix/processimport/'))?>" <?php //phpcs:ignore ?>
+              method="post" enctype="multipart/form-data">
+            <?=$block->getBlockHtml('formkey')?>
+            <fieldset class="admin__fieldset admin__fieldset-import-service required _required">
+                <div class="fieldset admin__field required _required" id="field-upload">
+                    <div class="admin__field-control">
+                        <button title="<?= $block->escapeHtmlAttr(__('Import CSV File'))?>" type="button"
+                                class="action-default scalable import-submit" data-ui-id="widget-button-0">
+                            <span><?= $block->escapeHtml(__('Import Price'))?></span>
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+<script>
+require(['jquery', 'Magento_Ui/js/modal/alert', "mage/mage", "loadingPopup", 'mage/translate'],
+    function(jQuery, uiAlert){
+        jQuery('#import-form').mage('form').mage('validation');
+        (function ($) {
+            $('.import-submit').click(function(){
+                $(this.form).submit();
+                /*if($(':input[name="import_file"]').val()) {
+                    $('body').loadingPopup({
+                        timeout: false
+                    });
+                    $(this.form).submit();
+                } else {
+                    uiAlert({
+                        content: $.mage.__('Please select a file to import!')
+                    });
+                }*/
+            });
+        })(jQuery);
+    });
+</script>

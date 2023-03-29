@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ecomm_contactus_extensions" sortOrder="4000000">
+            <label>Contact Us Configuration</label>
+        </tab>
+        <section id="contactus" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+            <label>Configuration</label>
+            <tab>ecomm_contactus_extensions</tab>
+            <resource>Ecomm_CustomContactus::config_contactus</resource>
+             <group id="email" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Options for Customer</label>
+                <field id="contact_customer_confirmation" translate="label" type="select" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Send Contact Email Response to customer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Select "Yes" to enable the module.</comment>
+                </field>
+                <field id="contact_customer_confirmation_template" translate="label comment" type="select" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Contact Customer Confirmation Email Template</label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+             <group id="adminemail" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Options for Admin</label>
+                 <!--<field id="admin_email" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Admin Email</label>
+                        <validate>validate-email</validate>
+                 </field>-->
+                <field id="contact_admin_confirmation" translate="label" type="select" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Send Contact Email Response to Admin</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Select "Yes" to enable the module.</comment>
+                </field>
+                <field id="contact_admin_confirmation_template" translate="label comment" type="select" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Contact Admin Confirmation Email Template</label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+             </group>
+        </section>
+    </system>
+</config>

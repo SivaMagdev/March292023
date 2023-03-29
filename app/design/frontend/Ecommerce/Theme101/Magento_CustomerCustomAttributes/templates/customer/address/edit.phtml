@@ -1,0 +1,688 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+?>
+<?php
+/**
+ * Edit customer address template
+ *
+ * @var $block \Magento\Customer\Block\Address\Edit
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+/** @var \Magento\Customer\Helper\Address $addressHelper */
+$addressHelper = $block->getData('addressHelper');
+$requiredAttributesPrechecked = $block->getData('required_attributes_prechecked');
+$displayAllRegions = $block->getConfig('general/region/display_all');
+/** @var \Magento\Directory\Helper\Data $directoryHelper */
+$directoryHelper = $block->getData('directoryHelper');
+$edit_page = $block->getAddress()->getId();
+
+$getSlThreshold = $block->getSlThreshold();
+$getDeaThreshold = $block->getDeaThreshold();
+?>
+<form class="form-address-edit drl-myaccount-edit"
+      action="<?= $block->escapeUrl($block->getSaveUrl()) ?>"
+      method="post"
+      id="form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+      <input type="hidden" name="notify" value="1">
+    <fieldset class="fieldset drl-contact-info" style="<?= $edit_page ? 'display : none;' : '' ; ?>">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Contact Information')) ?></span></legend><br>
+        <?= $block->getBlockHtml('formkey') ?>
+        <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>"/>
+        <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>"/>
+        <?= $block->getNameBlockHtml() ?>
+        <?php if ($addressHelper->isAttributeVisible('company')): ?>
+            <?php $requiredCompany = in_array('company', $requiredAttributesPrechecked) ? 'required' : ''; ?>
+                <div class="drl-register">
+        <div class="drl-width-input field company <?= $block->escapeHtmlAttr($requiredCompany);?>">
+            <label class="label" for="company"><span><?= $block->escapeHtml(__('Company')) ?></span></label>
+            <div class="control">
+                <?php $companyValidationClass = $addressHelper->getAttributeValidationClass('company'); ?>
+                <input type="text"
+                       name="company"
+                       id="company"
+                       title="<?= $block->escapeHtml(__('Company')) ?>"
+                       value="<?= $block->escapeHtml($block->getAddress()->getCompany()) ?>"
+                       class="drl-register-input input-text <?= $block->escapeHtmlAttr($companyValidationClass) ?>"
+                       placeholder="Enter Company"/>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php if ($addressHelper->isAttributeVisible('telephone')): ?>
+            <?php $requiredPhone = in_array('telephone', $requiredAttributesPrechecked) ? 'required' : ''; ?>
+            <div class="drl-width-input field telephone <?= $block->escapeHtmlAttr($requiredPhone);?>">
+            <label class="label drl-required-astr" for="telephone"><span><?= $block->escapeHtml(__('Phone Number')) ?></span></label>
+            <div class="control">
+                <?php $phoneValidationClass = $addressHelper->getAttributeValidationClass('telephone'); ?>
+                <input type="text"
+                       name="telephone"
+                       value="<?= $block->escapeHtml($block->getAddress()->getTelephone()) ?>"
+                       title="<?= $block->escapeHtml(__('Phone Number')) ?>"
+                       class="validate-digits drl-register-input input-text <?= /* @noEscape */ $phoneValidationClass ?>"
+                       id="telephone"
+                       minlength="10" maxlength="10"
+                       placeholder="Enter Phone Number"/>
+            </div>
+        </div>
+      </div>
+        <?php endif; ?>
+        <?php if ($addressHelper->isAttributeVisible('fax')): ?>
+        <div class="field fax">
+            <label class="label" for="fax"><span><?= $block->escapeHtml(__('Fax')) ?></span></label>
+            <div class="control">
+                <input type="text"
+                       name="fax"
+                       id="fax"
+                       title="<?= $block->escapeHtmlAttr(__('Fax')) ?>"
+                       value="<?= $block->escapeHtml($block->getAddress()->getFax()) ?>"
+                       class="drl-register-input input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('fax') ?>"/>
+            </div>
+        </div>
+        <?php endif; ?>
+    </fieldset>
+    <?php 
+
+    $now = new DateTime();
+    // state license expiry logic
+    $diff_state_status = false;
+    if(!empty($block->getAddress()->getCustomAttribute("state_license_expiry"))){
+        $state_license_expiry = new DateTime($block->getAddress()->getCustomAttribute("state_license_expiry")->getValue());
+        $diff_state = $state_license_expiry->diff($now);
+
+
+        if($diff_state->invert && $diff_state->days <= $getSlThreshold || $diff_state->invert == 0){
+            $diff_state_status = true;
+        }
+    }
+
+    // DEA license expiry logic
+    $diff_dea_status = false;
+    if(!empty($block->getAddress()->getCustomAttribute("dea_license_expiry"))){
+        $dea_license_expiry = new DateTime($block->getAddress()->getCustomAttribute("dea_license_expiry")->getValue());
+        $diff_dea = $dea_license_expiry->diff($now); 
+
+        if($diff_dea->invert && $diff_dea->days <= $getDeaThreshold || $diff_dea->invert == 0){
+            $diff_dea_status = true;
+        }                             
+    }
+
+    ?>
+    <fieldset class="fieldset drl-address-field">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Address')) ?></span></legend><br>
+        <input type="hidden" id="state_license_status" name="state_license_status" value="<?php if (!empty($block->getAddress()->getCustomAttribute("state_license_status"))) { echo $block->getAddress()->getCustomAttribute("state_license_status")->getValue(); } ?>">
+        <input type="hidden" id="dea_license_status" name="dea_license_status" value="<?php if (!empty($block->getAddress()->getCustomAttribute("dea_license_status"))) { echo $block->getAddress()->getCustomAttribute("dea_license_status")->getValue(); } ?>">
+        <input type="hidden" id="state_license_validate_check" value="<?= $edit_page ? $diff_state_status ? '' : 1  : '' ; ?>">
+        <input type="hidden" id="dea_license_validate_check" value="<?= $edit_page ? $diff_dea_status ? '' : 1  : '' ; ?>">
+        <div class="drl-register">
+           <div class="field field-state_license_id drl-width-input" style="<?= $edit_page ? $diff_state_status ? '' : 'display: none;'  : '' ; ?>">
+                <label class="label drl-required-astr" for="state_license_id"><span>State License Id</span></label>
+                <div class="control">
+                    <input type="text" id="state_license_id" name="state_license_id" autocomplete="off" value="<?php if (!empty($block->getAddress()->getCustomAttribute("state_license_id"))) { echo $block->getAddress()->getCustomAttribute("state_license_id")->getValue(); } ?>" class="validate-medpro-license drl-register-input input-text required" placeholder="Enter State License Id" <?= $edit_page ? 'readonly' : '' ; ?> >
+
+                    <div class="validate-state-license">
+                    <a class="action primary validate-medpro-state-license" data-id="state_license_id" style="float: left;height: 30px;width: 125px;">
+                        <span><?= $block->escapeHtml(__('Validate')) ?></span>
+                    </a>
+                    <span class="state-id-n" >Please click validate to get the latest expiration date</span>
+                    </div>
+
+                </div>
+           </div>
+        
+           <div class="field field-dea_license_id drl-width-input" style="<?= $edit_page ? $diff_dea_status ? '' : 'display: none' : '' ; ?>">
+              <label class="label" for="dea_license_id"><span>DEA License Id</span></label>
+              <div class="control">
+                <input type="text" id="dea_license_id" name="dea_license_id" value="<?php if (!empty($block->getAddress()->getCustomAttribute("dea_license_id"))) { echo $block->getAddress()->getCustomAttribute("dea_license_id")->getValue(); } ?>" class="drl-register-input input-text" placeholder="DEA License Id" <?= $edit_page ? 'readonly' : '' ; ?> >
+
+                <div class="validate-state-license">
+                  <a class="action primary validate-medpro-dea-license" data-id="dea_license_id" style="float: left;height: 30px;width: 125px;">
+                      <span><?= $block->escapeHtml(__('Validate')) ?></span>
+                  </a>
+                  <span class="state-id-n" >Please click validate to get the latest expiration date</span>
+                </div>
+
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field  field-state_license_upload drl-width-input" style="<?= $edit_page ? $diff_state_status ? '' : 'display: none' : '' ; ?>">
+              <label class="label drl-required-astr" for="state_license_upload"><span>Upload State License</span></label>
+              <div class="control">
+                 <input type="file" id="state_license_upload" name="state_license_upload" value="" class="drl-register-input input-file  required ">
+                 <input type="hidden" id="state_license_upload_value" name="state_license_upload_value" value="">
+              </div>
+              <span class="file-type file-type-id-n">Allowed file types (Max Size: 2MB): PDF, JPG, JPEG and PNG</span>
+           </div>
+
+           <div class="field  field-dea_license_upload drl-width-input" style="<?= $edit_page ? $diff_dea_status ? '' : 'display: none' : '' ; ?>">
+              <label class="label" for="dea_license_upload"><span>Upload DEA License</span></label>
+              <div class="control">
+                 <input type="file" id="dea_license_upload" name="dea_license_upload" value="" class="input-file drl-register-input">
+                 <input type="hidden" id="dea_license_upload_value" name="dea_license_upload_value" value="">
+              </div>
+              <span class="file-type file-type-id-n">Allowed file types (Max Size: 2MB): PDF, JPG, JPEG and PNG</span>
+           </div>
+        </div> 
+
+
+        <div class="drl-register">
+           <div class="field field-legal_business_name drl-width-input" style="<?= $edit_page ? $diff_state_status ? '' : 'display: none' : '' ; ?>">
+              <label class="label drl-required-astr" for="legal_business_name"><span>State License Expire Date</span></label>
+              <div class="control">
+                 <input type="text" id="state_license_expiry" name="state_license_expiry" autocomplete="off" value="<?php if (!empty($block->getAddress()->getCustomAttribute("state_license_expiry"))) { echo $block->getAddress()->getCustomAttribute("state_license_expiry")->getValue(); } ?>" readonly class="drl-register-input required input-text" placeholder="Enter State License Expire Date">
+              </div>
+           </div>
+
+           <div class="field field-dea_license_expiry drl-width-input" style="<?= $edit_page ? $diff_dea_status ? '' : 'display: none' : '' ; ?>">
+              <label class="label" for="dea_license_expiry"><span>DEA License Expire Date</span></label>
+              <div class="control">
+                <input type="text" id="dea_license_expiry" name="dea_license_expiry" value="<?php if (!empty($block->getAddress()->getCustomAttribute("dea_license_expiry"))) { echo $block->getAddress()->getCustomAttribute("dea_license_expiry")->getValue(); } ?>" class="drl-register-input input-text" readonly placeholder="DEA License Expire Date">
+              </div>
+           </div>
+        </div>
+
+ 
+
+        <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
+        <div class="drl-register" style="<?= $edit_page ? 'display : none;' : '' ; ?>">
+            <div class="field street required drl-width-input">
+                <label for="street_1" class="label drl-required-astr">
+                  <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?></span>
+                </label>
+                <div class="control">
+                    <input type="text"
+                         name="street[]"
+                         value="<?= $block->escapeHtml($block->getStreetLine(1)) ?>"
+                         title="<?= $block->escapeHtmlAttr(__('Street Address')) ?>"
+                         id="street_1"
+                         class="drl-register-input input-text <?= /* @noEscape */ $_streetValidationClass ?>" placeholder="Enter Street Address"/>
+                    <div class="nested" style="display:none;">
+                      <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                      <?php for ($_i = 2, $_n = $addressHelper->getStreetLines(); $_i <= $_n; $_i++): ?>
+                          <div class="field additional">
+                              <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
+                                  <span><?php  //echo $block->escapeHtml(__('Street Address %1', $_i)); ?></span>
+                              </label>
+                              <div class="control">
+                                  <input type="hidden"
+                                         name="street[]"
+                                         value="<?= $block->escapeHtml($block->getStreetLine($_i)) ?>"
+                                         title="<?= $block->escapeHtmlAttr(__('Street Address %1', $_i)) ?>"
+                                         id="street_<?= /* @noEscape */ $_i ?>"
+                                         class="drl-register-input input-text <?= /* @noEscape */ $_streetValidationClass ?>"/>
+                              </div>
+                          </div>
+                      <?php endfor; ?>
+                    </div>
+                </div>
+            </div>
+
+            <?php if ($addressHelper->isVatAttributeVisible()): ?>
+                <div class="field taxvat drl-width-input">
+                    <label class="label" for="vat_id">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?></span>
+                    </label>
+                    <div class="control">
+                        <?php $taxvatValidationClass = $addressHelper->getAttributeValidationClass('vat_id'); ?>
+                        <input type="text"
+                               name="vat_id"
+                               value="<?= $block->escapeHtml($block->getAddress()->getVatId()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
+                               class="drl-register-input input-text <?= /* @noEscape */ $taxvatValidationClass ?>"
+                               id="vat_id"/>
+                    </div>
+                </div>
+                  <?php endif; ?>
+                   
+            <div class="field city required drl-width-input">
+                <label class="label drl-required-astr" for="city">
+                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
+                </label>
+                <div class="control">
+                    <input type="text"
+                           name="city"
+                           value="<?= $block->escapeHtml($block->getAddress()->getCity()) ?>"
+                           title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                           class="drl-register-input input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('city') ?>"
+                           id="city" placeholder="Enter City"/>
+                </div>
+            </div>
+        </div>
+        <div class="drl-register" style="<?= $edit_page ? 'display : none;' : '' ; ?>">
+            <div class="field region required drl-width-input">
+                <label class="label drl-required-astr" for="region_id">
+                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?></span>
+                </label>
+                <div class="control">
+                    <select id="region_id_front"
+                            name="region_id_front"
+                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
+                            class="drl-register-input validate-select region_id"
+                            <?= (!$displayAllRegions) ? ' disabled="disabled"' : '';?>>
+                        <option value="">
+                            <?= $block->escapeHtml(__('Please select a region, state or province.')) ?>
+                        </option>
+                    </select>
+                    <input type="hidden" name="region_id" id="region_id" value="">
+                    <input type="text"
+                           id="region"
+                           name="region"
+                           value="<?= $block->escapeHtml($block->getRegion()) ?>"
+                           title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
+                           class="drl-register-input input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('region') ?>"
+                            <?= (!$displayAllRegions) ? ' disabled="disabled"' : '';?>/>
+                </div>
+            </div>
+            <div class="field zip required drl-width-input">
+                <label class="label drl-required-astr" for="zip">
+                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
+                </label>
+                <div class="control">
+                    <?php $postCodeValidationClass = $addressHelper->getAttributeValidationClass('postcode'); ?>
+                    <input type="text"
+                           name="postcode"
+                           value="<?= $block->escapeHtml($block->getAddress()->getPostcode()) ?>"
+                           title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
+                           id="zip"
+                           class="drl-register-input input-text validate-zip-international <?= /* @noEscape */ $postCodeValidationClass ?>" placeholder="Enter Zip/Postal Code"/>
+                    <div role="alert" class="message warning">
+                        <span></span>
+                    </div>
+                    <?= /* @noEscape */
+                        $secureRenderer->renderTag(
+                            'style',
+                            [],
+                            'div.zip .message.warning { display:none; }',
+                            false
+                        ); ?>
+                </div>
+            </div>
+        </div>
+        <div class="drl-register" style="<?= $edit_page ? 'display : none;' : '' ; ?>">
+            <div class="field country required drl-width-input-half">
+                <label class="label drl-required-astr" for="country">
+                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                </label>
+                <div class="control">
+                    <?= $block->getCountryHtmlSelect() ?>
+                </div>
+            </div>
+
+     <div class="field city required drl-width-input-half">
+                <label class="label" for="hin_id">
+                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('hin_id') ?></span>
+                </label>
+         <div class="control">  
+         <input type="text" name="hin_id" class="drl-register-input input-text" value="<?= ($block->getAddress()->getCustomAttribute('hin_id') === null) ? "" : $block->getAddress()->getCustomAttribute('hin_id')->getValue(); ?>" placeholder="Enter HIN Number" title="<?php echo __('hin_id') ?>" id="hin_id">
+
+        </div>
+        </div>
+    </div>
+
+
+
+ 
+
+        <?php $userDefinedAttributes = $block->getLayout()->getBlock('customer_form_address_user_attributes'); ?>
+        <?php if ($userDefinedAttributes): ?>
+            <?php //echo $userDefinedAttributes->setShowContainer(false)->toHtml() ?>
+        <?php endif;?>
+        <?php if ($block->isDefaultBilling()): ?>
+            <div class="message info">
+                <span><?= $block->escapeHtml(__("This is your default billing address.")) ?></span>
+            </div>
+        <?php elseif ($block->canSetAsDefaultBilling()): ?>
+            <input type="hidden" name="default_billing" value="0"/>
+        <?php else: ?>
+            <input type="hidden" name="default_billing" value="1"/>
+        <?php endif; ?>
+
+        <?php if ($block->isDefaultShipping()): ?>
+            <div class="message info">
+                <span><?= $block->escapeHtml(__("This is your default shipping address.")) ?></span>
+            </div>
+        <?php elseif ($block->canSetAsDefaultShipping()): ?>
+            <input type="hidden" name="default_shipping" value="0"/>
+        <?php else: ?>
+            <input type="hidden" name="default_shipping" value="1"/>
+        <?php endif; ?>
+        <input type="hidden" name="address_status" value="<?php echo $block->getApprovelPendingOprionId(); ?>">
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit"
+                    class="action submit primary save-address"
+                    data-action="save-address"
+                    title="<?= $block->escapeHtmlAttr(__('Save Address')) ?>" 
+                    >
+                <span><?= $block->escapeHtml(__('Save Address')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $block->escapeHtml(__('Go back')) ?></span>
+            </a>
+        </div>
+    </div>
+</form>
+<div id="register-success"></div>
+<script type="text/x-magento-init">
+    {
+        "#form-validate": {
+            "addressValidation": {
+                "postCodes": <?= /* @noEscape */ $block->getPostCodeConfig()->getSerializedPostCodes(); ?>
+            }
+        },
+        "#country": {
+            "regionUpdater": {
+                "optionalRegionAllowed": <?= /* @noEscape */ ($displayAllRegions ? 'true' : 'false') ?>,
+                "regionListId": "#region_id_front",
+                "regionInputId": "#region",
+                "postcodeId": "#zip",
+                "form": "#form-validate",
+                "regionJson": <?= /* @noEscape */ $directoryHelper->getRegionJson() ?>,
+                "defaultRegion": "<?= /* @noEscape */ $block->getRegionId() ?>",
+                "countriesWithOptionalZip": <?= /* @noEscape */ $directoryHelper->getCountriesWithOptionalZip(true) ?>
+            }
+        }
+    }
+</script>
+
+<script>
+    require([
+       'jquery',
+       'mage/url',
+       'Magento_Ui/js/modal/modal',
+       'stepsjs',
+       'drlnumberjs'
+    ], function($, url, modal) {
+
+        $(".validate-medpro-state-license" ).on( "click", function() {
+        // $(".validate-medpro-license" ).live( "change", function() {
+            /*alert( "Handler for .change() called."+this.id );*/
+
+            var row_id = $("#"+$(this).attr('data-id')+"_row").val();
+
+            var state_license_id = '';
+
+            if(row_id == ''){
+                state_license_id = $("#"+$(this).attr('data-id')).val();
+            } else {
+                state_license_id = $("#"+$(this).attr('data-id')).val();
+            }
+
+            $.ajax({
+                url: url.build('customer/medpro/validateStateAjax'),
+                type: 'post',
+                data: { state_license_id : state_license_id },
+                showLoader: true, //use for display loader
+                dataType: 'json',
+                beforeSend: function() {
+                //
+                },
+                success: function(json) {
+
+                    if(json['success'] == true){
+                        if(json['state_license_status'] == 'Y'){
+
+                            if(json['state_license_expiry']!= '') {
+                                $("#state_license_expiry").val(json['state_license_expiry']);
+                            }
+
+                            if(json['state_license_status']!= '') {
+                                $("#state_license_status").val(json['state_license_status']);
+                            }
+
+                            /*if(json['dea_license_id']!= '') {
+                              $("#dea_license_id").val(json['dea_license_id']);
+                              $("#dea_license_id").prop('readonly',true);
+                            } else {
+                              $("#dea_license_id").prop('readonly',false);
+                            }*/
+
+                            $street = json['state_license_address']['line2'];
+                            if(json['state_license_address']['line3'] != ''){
+                                $street += ', '+json['state_license_address']['line2'];
+                            }
+                            if($street!=''){
+                                $("#street_1").val($street);
+                                $("#street_1").prop('readonly',true);
+                            } else {
+                                $("#street_1").prop('readonly',false);
+                            }
+
+                            if(json['state_license_address']['city']!= '') {
+                                $("#city").val(json['state_license_address']['city']);
+                                $("#city").prop('readonly',true);
+                            } else {
+                                $("#city").prop('readonly',false);
+                            }
+
+                            if(json['state_license_address']['state_id']!= '') {
+                                $("#region_id").val(json['state_license_address']['state_id']);
+                                $("#region_id_front").val(json['state_license_address']['state_id']);
+                                $("#region_id_front").attr("disabled", true);
+                            } else {
+                                $("#region_id_front").attr('disabled',false);
+                            }
+
+                            if(json['state_license_address']['zip'] != ''){
+                                $("#zip").val(json['state_license_address']['zip']);
+                                $("#zip").prop('readonly',true);
+                            } else {
+                                $("#zip").prop('readonly',false);
+                            }
+
+                            $('#state_license_validate_check').val(1);
+                            if($('#state_license_validate_check').val() && $('#dea_license_validate_check').val()){
+                                $('.save-address').prop( "disabled", false );
+                            }
+                        } else {
+
+                            /* license is  invalid*/
+
+                            $("#state_license_expiry").val('');
+                            $("#state_license_expiry").prop('readonly',false);
+
+                            $("#dea_license_id").val('');
+                            $("#dea_license_id").prop('readonly',false);
+
+                            $("#street_1").val('');
+                            $("#street_1").prop('readonly',false);
+
+                            $("#city").val('');
+                            $("#city").prop('readonly',false);
+
+                            $("#region_id_front").val('');
+                            $("#region_id").val('');
+                            $("#region_id_front").attr('disabled',false);
+
+                            $("#zip").val('');
+                            $("#zip").prop('readonly',false);
+
+
+                            var options = {
+                                type: 'popup',
+                                title: '',
+                                responsive: true,
+                                innerScroll: false,
+                                clickableOverlay: false,
+                                buttons: [{
+                                    text: $.mage.__('Close'),
+                                    class: 'success-notifications',
+                                    click: function() {
+                                        this.closeModal();
+                                    }
+                                }]
+                            };
+
+                            /*$('#register-success').html(json['msg']);*/
+                            $('#register-success').html('<div class="sucess-over-popup"><i class="far fa-times-circle icon-popup-reject"></i><div class="sucess-popup"><span>Invalid state License. Please provide a valid state license</span></div></div>');
+
+                            var popup = modal(options, $('#register-success'));
+                            $("#register-success").modal("openModal");
+                        }
+                    } else {
+                        var options = {
+                            type: 'popup',
+                            title: '',
+                            responsive: true,
+                            innerScroll: false,
+                            clickableOverlay: false,
+                            buttons: [{
+                                text: $.mage.__('Close'),
+                                class: 'success-notifications',
+                                click: function() {
+                                    this.closeModal();
+                                }
+                            }]
+                        };
+
+                        /*$('#register-success').html(json['msg']);*/
+                        $('#register-success').html('<div class="sucess-over-popup"><i class="far fa-times-circle icon-popup-reject"></i><div class="sucess-popup"><span>Invalid state License. Please provide a valid state license</span></div></div>');
+
+                        var popup = modal(options, $('#register-success'));
+                        $("#register-success").modal("openModal");
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        });
+
+        $(".validate-medpro-dea-license" ).on( "click", function() {
+        // $(".validate-medpro-license" ).live( "change", function() {
+            /*alert( "Handler for .change() called."+this.id );*/
+
+            var row_id = $("#"+$(this).attr('data-id')+"_row").val();
+
+            var dea_license_id = '';
+
+            if(row_id == ''){
+                dea_license_id = $("#"+$(this).attr('data-id')).val();
+            } else {
+                dea_license_id = $("#"+$(this).attr('data-id')).val();
+            }
+
+            $.ajax({
+                url: url.build('customer/medpro/validateDeaAjax'),
+                type: 'post',
+                data: { dea_license_id : dea_license_id },
+                showLoader: true, //use for display loader
+                dataType: 'json',
+                beforeSend: function() {
+                //
+                },
+                success: function(json) {
+
+                    if(json['success'] == true){
+                        if(json['dea_overall_eligibility'] == 'Y'){
+
+                            // $('.save-address').prop( "disabled", false );
+                            if(json['dea_license_expiry']!= '') {
+                                $("#dea_license_expiry").val(json['dea_license_expiry']);
+                            }
+
+                            if(json['dea_overall_eligibility']!= '') {
+                                $("#dea_license_status").val(json['dea_overall_eligibility']);
+                            }
+
+                            /*if(json['dea_license_id']!= '') {
+                              $("#dea_license_id").val(json['dea_license_id']);
+                              $("#dea_license_id").prop('readonly',true);
+                            } else {
+                              $("#dea_license_id").prop('readonly',false);
+                            }*/
+
+                            $('#dea_license_validate_check').val(1);
+                            if($('#state_license_validate_check').val() && $('#dea_license_validate_check').val()){
+                                $('.save-address').prop( "disabled", false );
+                            }
+
+                        } else {
+
+                            /* license is  invalid*/
+
+                            $("#dea_license_expiry").val('');
+
+                            var options = {
+                                type: 'popup',
+                                title: '',
+                                responsive: true,
+                                innerScroll: false,
+                                clickableOverlay: false,
+                                buttons: [{
+                                    text: $.mage.__('Close'),
+                                    class: 'success-notifications',
+                                    click: function() {
+                                        this.closeModal();
+                                    }
+                                }]
+                            };
+
+                            /*$('#register-success').html(json['msg']);*/
+                            $('#register-success').html('<div class="sucess-over-popup"><i class="far fa-times-circle icon-popup-reject"></i><div class="sucess-popup"><span>Invalid DEA License. Please provide a valid DEA license</span></div></div>');
+
+                            var popup = modal(options, $('#register-success'));
+                            $("#register-success").modal("openModal");
+                        }
+                    } else {
+                        var options = {
+                            type: 'popup',
+                            title: '',
+                            responsive: true,
+                            innerScroll: false,
+                            clickableOverlay: false,
+                            buttons: [{
+                                text: $.mage.__('Close'),
+                                class: 'success-notifications',
+                                click: function() {
+                                    this.closeModal();
+                                }
+                            }]
+                        };
+
+                        /*$('#register-success').html(json['msg']);*/
+                        $('#register-success').html('<div class="sucess-over-popup"><i class="far fa-times-circle icon-popup-reject"></i><div class="sucess-popup"><span>Invalid DEA License. Please provide a valid DEA license</span></div></div>');
+
+                        var popup = modal(options, $('#register-success'));
+                        $("#register-success").modal("openModal");
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        });
+
+        $('#region_id_front').on('change', function() {
+            $("#region_id").val(this.value);
+        });
+    });
+
+    require(["jquery", "mage/calendar"], function ($) {
+        $('.dea_datepicker').datepicker({
+            minDate: 0,
+            prevText: '&#x3c;zurück', prevStatus: '',
+            prevJumpText: '&#x3c;&#x3c;', prevJumpStatus: '',
+            nextText: 'Vor&#x3e;', nextStatus: '',
+            nextJumpText: '&#x3e;&#x3e;', nextJumpStatus: '',
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'],
+            monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            dayNames: ['Sunday ', 'Monday', 'Tuesday ', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            showMonthAfterYear: false,
+            dateFormat: 'yy-m-d'
+        });
+    });
+</script>

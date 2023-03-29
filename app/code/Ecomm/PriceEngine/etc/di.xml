@@ -1,0 +1,52 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecomm_priceengine_exclusiveprice_listing_data_source" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\ExclusivePrice\Grid\Collection</item>
+
+                <item name="ecomm_priceengine_gpocontractprice_listing_data_source" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\ContractPrice\Grid\Collection</item>
+
+                <item name="ecomm_priceengine_regularprice_listing_data_source" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\RegularPrice\Grid\Collection</item>
+
+                <item name="ecomm_priceengine_shortdatedprice_listing_data_source" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\Shortdatedprice\Grid\Collection</item>
+
+                <item name="ecomm_priceengine_stock_listing_data_source" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\Stock\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Ecomm\PriceEngine\Model\ResourceModel\ExclusivePrice\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_exclusive_price</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\ExclusivePrice</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Ecomm\PriceEngine\Model\ResourceModel\ContractPrice\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_gpo_contract_price</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\ContractPrice</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Ecomm\PriceEngine\Model\ResourceModel\RegularPrice\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_gpo_price</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\RegularPrice</argument>
+        </arguments>
+    </virtualType>
+
+     <virtualType name="Ecomm\PriceEngine\Model\ResourceModel\Shortdatedprice\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_shortdated_price</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\Shortdatedprice</argument>
+        </arguments>
+    </virtualType>
+
+     <virtualType name="Ecomm\PriceEngine\Model\ResourceModel\Stock\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_stock</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\PriceEngine\Model\ResourceModel\Stock</argument>
+        </arguments>
+    </virtualType>
+</config>

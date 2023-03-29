@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Quote\Api\Data\CartItemInterface">
+      	<attribute code="image" type="string" />
+      	<attribute code="strength" type="string"/>
+        <attribute code="packsize" type="string"/>
+        <attribute code="casepack" type="string"/>
+        <attribute code="coldchain" type="string"/>
+        <attribute code="salablequantity" type="string"/>
+        <attribute code="parentid" type="string"/>
+        <attribute code="customoptions" type="string"/>
+        <attribute code="error" type="string"/>
+        <attribute code="regularPrice" type="string"/>
+        <attribute code="subwacPrice" type="string"/>
+        <attribute code="phsPrice" type="string"/>
+        <attribute code="price_type" type="string"/>
+        <attribute code="timer_expire_at" type="string"/>
+        <attribute code="current_store_time" type="string"/>
+    </extension_attributes>
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <attribute code="has_invoices" type="boolean" />
+        <attribute code="sap_id" type="string" />
+        <attribute code="rgdd_delivery_date" type="string" />
+        <attribute code="rgdd_delivery_comment" type="string" />
+    </extension_attributes>
+    <extension_attributes for="Magento\Sales\Api\Data\ShipmentInterface">
+        <attribute code="sap_id" type="string" />
+        <attribute code="order_increment_id" type="string" />
+        <attribute code="rgdd_delivery_date" type="string" />
+        <attribute code="rgdd_delivery_comment" type="string" />
+        <attribute code="delivery_idoc_number" type="string" />
+        <attribute code="pod_datetime" type="string" />
+        <attribute code="pod_tracking_url" type="string" />
+    </extension_attributes>
+    <extension_attributes for="Magento\Sales\Api\Data\InvoiceInterface">
+        <attribute code="sap_id" type="string" />
+        <attribute code="order_increment_id" type="string" />
+        <attribute code="invoice_idoc_number" type="string" />
+        <attribute code="price_type" type="string" />
+    </extension_attributes>
+    <extension_attributes for="Magento\Sales\Api\Data\OrderItemInterface">
+        <attribute code="productimage" type="string"/>
+        <attribute code="batch_number" type="string"/>
+        <attribute code="price_type" type="string" />
+    </extension_attributes>
+    <extension_attributes for="Magento\Catalog\Api\Data\ProductInterface">
+        <attribute code="supportdocument" type="string" />
+        <attribute code="latex_free" type="string" />
+        <attribute code="preservative_free" type="string" />
+        <attribute code="gluten_free" type="string" />
+        <attribute code="dye_free" type="string" />
+        <attribute code="stoct_status" type="string" />
+        <attribute code="custom_min_price" type="string" />
+        <attribute code="custom_max_price" type="string" />
+        <attribute code="custom_price" type="string" />
+        <attribute code="sub_wac_price" type="string" />
+        <attribute code="phs_indirect_price" type="string" />
+    </extension_attributes>
+    <extension_attributes for="Magento\Quote\Api\Data\CartInterface">
+        <attribute code="timer_mode" type="string" />
+    </extension_attributes>
+</config>

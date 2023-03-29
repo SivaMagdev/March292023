@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\CatalogSearch\Model\Autocomplete\DataProvider" type="Magecomp\Ajaxsearch\Model\Autocomplete\Ajaxsearchdataprovider" />
+    <preference for="Magento\InventorySales\Model\IsProductSalableForRequestedQtyCondition\IsSalableWithReservationsCondition" type="Magecomp\Ajaxsearch\Model\IsProductSalableForRequestedQtyCondition\IsSalableWithReservationsCondition"/>
+    
+    <preference for="Magento\Catalog\Model\Layer\Search" type="Magecomp\Ajaxsearch\Model\Layer\Search"/>
+
+</config>

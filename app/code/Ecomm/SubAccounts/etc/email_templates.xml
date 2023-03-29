@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+   <template id="subaccounts_adminemail_subaccounts_admin_notification"
+              label="Sub Account Creation Admin Notification" file="subaccounts_admin_notification.html"
+              type="html" module="Ecomm_SubAccounts" area="frontend"/>
+   
+</config>

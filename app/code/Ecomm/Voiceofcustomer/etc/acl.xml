@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+	    <resources>
+	        <resource id="Magento_Backend::admin">
+	        	<resource id="Ecomm_Voiceofcustomer::main_menu" title="Modules" sortOrder="10" >
+	        		<resource id="Ecomm_News::news" title="News" sortOrder="10" />
+	        		<resource id="Ecomm_Resources::resourcescategory" title="Resources Category" sortOrder="20" />
+	        		<resource id="Ecomm_Resources::resources" title="Resources" sortOrder="30" />
+	        		<resource id="Ecomm_Rewards::rewards" title="Slider" sortOrder="40" />
+	        		<resource id="Ecomm_Servicerequest::servicerequest" title="Service Request" sortOrder="50" />
+	        		<resource id="Ecomm_Voiceofcustomer::voiceofcustomer" title="Voice Of Customer" sortOrder="60" />
+	        	</resource>
+
+	            <resource id="Magento_Backend::stores">
+	                <resource id="Magento_Backend::stores_settings">
+	                    <resource id="Magento_Config::config">
+	                        <resource id="Ecomm_News::config_newsadmin" title="Modules" />
+	                    </resource>
+	                </resource>
+	            </resource>
+	        </resource>
+	    </resources>
+	</acl>
+</config>

@@ -1,0 +1,110 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Theme\Block\Html\Header $block
+ */
+$welcomeMessage = $block->getWelcome();
+?>
+<?php if ($block->getShowPart() == 'welcome') : ?>
+    <li class="greet welcome" data-bind="scope: 'customer'">
+        <!-- ko if: customer().fullname  -->
+        <span class="logged-in"
+              data-bind="text: new String('<?= $block->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().fullname)">
+        </span>
+        <img src='<?php echo $this->getViewFileUrl('images/user.svg'); ?>' alt="Login Profile Picture" class="drl-profile-picture"><br/>
+        <span class="comname-header" data-bind="text: customer().company"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: customer().fullname  -->
+        <span class="not-logged-in"
+              data-bind='html:"<?= $block->escapeHtml($welcomeMessage) ?>"'></span>
+        <?= $block->getBlockHtml('header.additional') ?>
+        <!-- /ko -->
+    </li>
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "customer": {
+                        "component": "Magento_Customer/js/view/customer"
+                    }
+                }
+            }
+        }
+    }
+    </script>
+<?php elseif ($block->getShowPart() == 'other') :?>
+    <?= $block->getChildHtml() ?>
+<?php endif ?>
+<!-- Scroll to top button -->
+
+<div id="back_top"><img src="<?php echo $this->getViewFileUrl('images/icon_up.gif'); ?>" /></div>
+<script>
+    require([
+        'jquery'
+    ], function($){
+        jQuery(window).scroll(function() {
+            if (jQuery(this).scrollTop() > 300) {
+                jQuery('#back_top').css("display", "block");
+            } else {
+                jQuery('#back_top').fadeOut();
+            }
+        });
+        jQuery("#back_top").click(function() {
+            jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        });
+    });
+</script>
+
+<!-- scroll to top ends here -->
+
+
+<!-- sticky header starts -->
+
+<script type="text/javascript">
+require([ "jquery" ], function($){
+    $(document).scroll(function () {
+        var $window = $(window);
+        var windowsize = $window.width();
+        var height = $(document).scrollTop();
+            if(height  > 150 && windowsize >= 768) {
+                $('.page-header').addClass('fixed-menu');
+                $('.nav-sections').addClass('sticky-menu');
+
+            }else{
+                $('.page-header').removeClass('fixed-menu');
+                $('.nav-sections').removeClass('sticky-menu');
+            }
+    });
+});
+</script>
+<style type="text/css">
+    .fixed-menu{ 
+        animation-duration: .45s;
+        animation-fill-mode: both;
+        animation-name: fadeInDown; 
+        position: fixed;
+        z-index: 500;
+        width: 100% ;
+        top:0; 
+    }
+
+    .sticky-menu{
+        animation-duration: .45s;
+        animation-fill-mode: both;
+        animation-name: fadeInDown; 
+        position: fixed;
+        z-index: 5;
+        width: 100% ;
+        top:72px;  
+    }
+
+
+</style>
+
+<!-- sticky header ends -->

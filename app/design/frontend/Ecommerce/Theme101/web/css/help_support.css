@@ -1,0 +1,322 @@
+.drl-help-support span.drl-help-heading {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+}
+
+.drl-help-support h2.drl-help-you {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 30px;
+    font-family: 'DRL Circular Bold';
+    margin-top: 1rem;
+}
+
+.drl-help-support .drl-accordian-faq {
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq {
+    padding: 38px 40px 30px 40px;
+
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq p.drl-FAQ {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .accordion {
+    background-color: unset;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    cursor: pointer;
+    padding: 18px 0;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    transition: 0.4s;
+    font-family: 'DRL Circular Book';
+    font-weight: unset;
+    border-bottom: 1px dashed #dfe1e8;
+    border-radius: unset;
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .active,
+.drl-help-support .drl-accordian-faq .drl-accord-faq .accordion:hover {
+    background-color: unset;
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .accordion:after {
+
+    content: url("../images/drl-faq-down.svg");
+    float: right;
+    margin-left: 5px;
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .active:after {
+    content: url("../images/drl-faq-up.svg");
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .panel {
+    background-color: unset;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Light';
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    border-radius: 0px 0px 5px 5px;
+    opacity: 1;
+}
+
+.drl-help-support div#oval-assit {
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+    padding: 38px 40px 30px 40px;
+    min-height: 360px;
+}
+
+.drl-help-support .oval-sub .oval-multi-line img {
+    width: 25px;
+    height: 25px;
+    float: left;
+}
+
+.drl-help-support .oval-sub .oval-drl-help {
+    padding: 0px 0px 0 40px;
+}
+
+.drl-help-support .oval-sub .oval-drl-help p.oval-one {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+.drl-help-support .oval-sub .oval-drl-help p.oval-two {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+}
+
+.drl-help-support .oval-sub .oval-drl-help p.oval-three a,
+.drl-help-support .oval-drl-help p.oval-three a {
+
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+.drl-help-support .oval-sub .oval-drl-help p.oval-three img,
+.drl-help-support .oval-drl-help p.oval-three img {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+}
+
+.drl-help-support .dotted-slash-drl {
+    border: 1px dashed #434861;
+    opacity: 0.4;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    margin: 25px 0px;
+    width: 100%;
+}
+
+.drl-help-support .drl-accord-faq .oval-drl-help {
+    margin: 20px 0;
+}
+
+.drl-help-support .seperate-slash-drl {
+    border: 1px dashed #434861;
+    opacity: 0.2;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    width: 100%;
+}
+
+.drl-help-support .drl-footer-faq p.drl-footer-word {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+.drl-help-support .oval-sub .oval-drl-help a.oval-tel-drl {
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'DRL Circular Book';
+}
+
+.drl-help-support .oval-sub .oval-drl-help p {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 12px;
+    font-family: 'DRL Circular Light';
+}
+
+.drl-help-support .oval-sub .oval-drl-help a.oval-tel-drl:hover {
+    text-decoration: underline;
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .panel {
+    padding: 0;
+    margin: 0;
+}
+
+.drl-help-support .drl-accordian-faq .drl-accord-faq .panel p {
+    padding: 5px 5px 5px 10px;
+}
+
+.drl-help-support table>tbody>tr>td {
+    padding: 0 0 2px 0px;
+}
+
+table.working-holiday-table > tbody > tr >td {
+    padding: 4px 10px 4px !important;
+    border: 1px dashed #dfe1e8;
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 767px) {
+    .drl-help-support .drl-accordian-faq .drl-accord-faq {
+        padding: 0;
+    }
+
+    .drl-help-support h2.drl-help-you {
+        margin: 0;
+    }
+
+    .drl-help-support .drl-accordian-faq .drl-accord-faq .accordion {
+        white-space: pre-wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .drl-help-support .drl-accordian-faq {
+        padding: 20px;
+    }
+
+    .drl-help-support .oval-sub .oval-drl-help {
+        padding: 0;
+    }
+
+    .drl-help-support .oval-sub .oval-multi-line img {
+        float: unset;
+        text-align: center;
+        display: block;
+        margin: auto;
+    }
+}
+
+/* ipad css portrait */
+
+@media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
+    .drl-help-support table>tbody>tr>td {
+        font-size: 13px;
+        word-break: break-word;
+    }
+
+    .pagebuilder-column.drl-help-descrption .drl-footer-faq {
+        display: none;
+    }
+
+    .pagebuilder-column .help-support-mail .oval-sub {
+        margin-left: -110%;
+        width: 155%;
+    }
+
+    .pagebuilder-column.help-support-contact .oval-sub {
+        margin-left: -60%;
+        width: 155%;
+    }
+    .drl-help-support div#oval-assit {
+        padding: 38px 30px 30px 30px;
+    }
+}
+
+
+
+
+/* target iphone x */
+
+@media (width: 812px) and (height: 375px) and (orientation: landscape) {
+
+ .drl-help-support .oval-sub .oval-drl-help>table>tbody>tr {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+}
+
+
+/* target google pixel2-xl */
+
+@media (width: 823px) and (height: 411px) and (orientation: landscape) {
+
+.drl-help-support .oval-sub .oval-drl-help>table>tbody>tr {
+        display: flex;
+        flex-wrap: wrap;
+ }
+
+}
+
+
+/* target Nexus 7 */
+
+@media (width: 960px) and (height: 600px) and (orientation: landscape) {
+    .drl-help-support .oval-sub .oval-drl-help>table>tbody>tr {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+}
+
+
+/* target Nokia N9 */
+
+@media (width: 854px) and (height: 480px) and (orientation: landscape) {
+
+    .drl-help-support .oval-sub .oval-drl-help>table>tbody>tr {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+}
+

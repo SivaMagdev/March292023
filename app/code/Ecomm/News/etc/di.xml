@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.colan.com/LICENSE.txt
+ *
+ * ==============================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * ==============================================================
+ * This package designed for Magento COMMUNITY edition
+ * PWC does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * PWC does not provide extension support in case of
+ * incorrect edition usage.
+ * ==============================================================
+ *
+ * @category    PWC
+ * @package     Ecomm_News
+ * @version     1.2
+ * @author      PWC Team
+ *
+ */
+! -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ecomm\News\Api\News\NewsInterface" type="Ecomm\News\Model\News"/>
+    <preference for="Ecomm\News\Api\NewsRepositoryInterface" type="Ecomm\News\Model\NewsRepository" />
+    <preference for="Ecomm\News\Api\News\NewsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Ecomm\News\Model\ResourceModel\News\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ecomm_news</argument>
+            <argument name="eventPrefix" xsi:type="string">ecomm_news_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">news_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ecomm\News\Model\ResourceModel\News</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecomm_news_listing_data_source" xsi:type="string">Ecomm\News\Model\ResourceModel\News\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\News\Controller\Adminhtml\News\MassDelete">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 record(s) have been deleted.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while deleting record(s).</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\News\Controller\Adminhtml\News\MassDisable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been disabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while disabling selected data.</argument>
+        </arguments>
+    </type>
+    <type name="Ecomm\News\Controller\Adminhtml\News\MassEnable">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 data have been enabled.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while enabling data.</argument>
+        </arguments>
+    </type>
+    <virtualType name="Ecomm\News\Model\ImageUploader" >
+        <arguments>
+            <!-- Temporary file stored in pub/media/news/tmp/newsimg -->
+            <argument name="baseTmpPath" xsi:type="string">news/tmp/newsimg</argument>
+            <argument name="basePath" xsi:type="string">news/newsimg</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Ecomm\News\Controller\Adminhtml\News\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Ecomm\News\Model\ImageUploader</argument>
+        </arguments>
+    </type>
+</config>

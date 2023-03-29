@@ -1,0 +1,143 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart $block */
+?>
+<?php $finalPrice = $block->getData('final_price');?>
+
+<?php
+$blockObj = $block->getLayout()->createBlock('Ecomm\HinEligibilityCheck\Block\exclusivePrice');
+$priceLogicBlock = $block->getLayout()->createBlock('Ecomm\PriceEngine\Block\CustomPriceLogic');
+$exclusivePriceMethod = $blockObj->getCollection();
+$addressRepo = $blockObj->getAddressCollection();
+$customerId = $priceLogicBlock->getCustomerId();
+$customerGroupId = $priceLogicBlock->getCustomerGroupId();
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+
+$item = $block->getItem();
+$product = $item->getProduct();
+
+$StockState = $objectManager->get('\Magento\InventorySalesApi\Api\GetProductSalableQtyInterface');
+$custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+$customerRepository = $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+
+$application_verified_status = false;
+
+if ($customerSession->isLoggedIn()) {
+
+    $_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+
+    if ($customerSession->getId()) {
+
+        $customerData = $customerRepository->getById($customerSession->getId());
+
+        $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+        $options = $attribute->getSource()->getAllOptions();
+        $application_statuses = [];
+        foreach ($options as $option) {
+            if ($option['value'] > 0) {
+                $application_statuses[$option['value']] = $option['label'];
+            }
+        }
+        $application_status = 0;
+        $approved_id = array_search("Approved", $application_statuses);
+        if ($customerData->getCustomAttribute('application_status')) {
+            $application_status = $customerData->getCustomAttribute('application_status')->getValue();
+        }
+
+        if ($approved_id == $application_status) {
+            $application_verified_status = true;
+        }
+    }
+}
+?>
+ <?php
+$product_sku = $product->getSku();
+
+$customerInfo = $customerRepository->getById($customerSession->getId());
+?>
+
+<!--getting default shipping address details -->
+<?php
+$shippingAddressId = $customerInfo->getDefaultShipping();
+$addressInfo = $addressRepo->getById($shippingAddressId);
+$hinStatus = '';
+if ($addressInfo->getCustomAttribute('hin_status')) {
+    $hinStatus = $addressInfo->getCustomAttribute('hin_status')->getValue();
+}
+?>
+
+<?php $groupPrice = $finalPrice->getCustomerGroupPrice($product);?>
+
+    <?php $price = array();?>
+    <?php if ($application_verified_status) {?>
+        <?php
+$stockstatus = $custom_helper->getConfigVal('cataloginventory/options/display_product_stock_status');
+    if ($stockstatus) {
+        /*Checking the whether instock or out of stock*/
+        /*product.price.render.wishlist, customer.wishlist.item.options*/
+        $stockval = $custom_helper->getStockCheck($product->getSku(), $product->getId());
+        $instock = $stockval['instock'];
+        $custominstock = $stockval['custominstock'];
+        $_productStock = $custom_helper->getStockItem($product->getId());
+
+        if (($instock && $_productStock->getQty() > 0) || $custominstock) {?>
+
+            <?php $regularprice = $priceLogicBlock->getCustomRegularPrice($customerId, $product);
+            $price[] = $regularprice['price'];
+            ?>
+
+                        <?php if ($hinStatus == "1") {
+                $subWac = $priceLogicBlock->get340bPrice('sub_wac', $product);
+
+                // $subWac = $_product->getResource()->getAttribute('sub_wac')->setStoreId(0)->getFrontend()->getValue($_product);
+                if (isset($subWac['price'])) {
+                    $price[] = $subWac['price'];
+                }
+                $phsIndirect = $priceLogicBlock->get340bPrice('phs_indirect', $product);
+
+                // $phsIndirect = $_product->getResource()->getAttribute('phs_indirect')->setStoreId(0)->getFrontend()->getValue($_product);
+
+                if (isset($phsIndirect['price'])) {
+                    $price[] = $phsIndirect['price'];
+                }
+                $finalPrice = array();
+                foreach ($price as $prices) {
+                    if ($prices == 0) {
+                        continue;
+                    } else {
+                        $finalPrice[] = $prices;
+                    }
+                }
+            } else {
+                $finalPrice = array();
+                foreach ($price as $prices) {
+                    if ($prices == 0) {
+                        continue;
+                    } else {
+                        $finalPrice[] = $prices;
+                    }
+                }
+            }?>
+
+                    <?php if (isset($finalPrice) && $finalPrice != null) {?>
+                <?php //if ($product->getPriceInfo()->getPrice('final_price')->getValue() != 0) { ?>
+                        <div class="price-box price-final_price" data-role="priceBox">
+
+                        </div>
+                        <p class="wish-price"><span class="wish-min-price"><?='$' . number_format(min($finalPrice), 2);?></span> - <span class="wish-max-price"><?='$' . number_format(max($finalPrice), 2);?></span></p>
+                        <p class="wish-view-para" ><a href="<?=$escaper->escapeUrl($product->getProductUrl())?>" class="wish-view-dtl">View Details</a></p>
+
+                <?php } else {?>
+                    <p class="wish-view-para" ><a href="<?=$escaper->escapeUrl($product->getProductUrl())?>" class="wish-view-dtl">View Details</a></p>
+               <?php }
+        }
+    }
+}?>
+

@@ -1,0 +1,10 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<?php if((int)$block->getOrder()->getSapId() > 0) { ?>
+<br><span class="order-sap-id">Sales Order ID # <?= $block->escapeHtml((int)$block->getOrder()->getSapId()) ?></span>
+<?php } ?>

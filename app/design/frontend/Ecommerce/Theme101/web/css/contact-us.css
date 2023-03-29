@@ -1,0 +1,288 @@
+form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .iti__selected-flag {
+    pointer-events: none;
+}
+
+.contact-us span.drl-contact-us {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+}
+
+.contact-index-index .iti.iti--allow-dropdown {
+    width: 100%;
+}
+
+.contact-index-index span.termcon {
+    font-size: 16px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Light';
+}
+
+.contact-index-index span.termcon a {
+    letter-spacing: 0px;
+    color: #5225B5;
+}
+
+.contact-index-index .modal-popup.modal-slide .modal-footer button {
+    background: #5225b5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    opacity: 1;
+    width: 187px;
+    height: 46px;
+    letter-spacing: 0px;
+    color: #fff;
+    font-family: 'DRL Circular Book';
+    font-size: 14px;
+}
+
+.modal-popup .modal-title {
+    font-family: 'DRL Circular Bold';
+    color: #4F4F4F;
+    border-bottom: 1px dashed #d5d6da;
+}
+
+.contact-index-index .modal-popup.modal-slide .modal-footer {
+    border-top: 1px dashed #d5d6da;
+    padding: 20px;
+}
+
+.contact-index-index p.drl-terms-word {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+
+}
+
+.contact-index-index .modal-custom .action-close:before,
+.contact-index-index .modal-popup .action-close:before,
+.contact-index-index .modal-slide .action-close:before {
+    color: #5225B5;
+}
+
+.contact-index-index input#agree-term-cond {
+    content: url("../images/plpcheck.svg");
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0px 5px 0 0;
+    top: 2px;
+}
+
+.contact-index-index .modals-wrapper .modal-popup .modal-inner-wrap {
+    width: 600px;
+}
+
+.contact-index-index input#agree-term-cond:checked {
+    content: url("../images/plptick.svg");
+}
+
+.contact-us h2.drl-supprt-you {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 30px;
+    font-family: 'DRL Circular Bold';
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.contact-us span.drl-contact-details {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+.contact-us .drl-card-shadow {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    height: auto;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    transition: 0.4s all;
+    padding: 15px;
+    box-shadow: 0px 5px 20px #917CC11A;
+}
+
+.contact-us .drl-card-shadow p.drl-work-hour {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 12px;
+    font-family: 'DRL Circular Light';
+}
+
+.contact-us table>tbody>tr>td {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+.contact-us .drl-card-shadow p.drl-con-head {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+.contact-us .drl-card-shadow tbody tr td a {
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    vertical-align: sub;
+}
+
+.contact-index-index .drl-contact-form {
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+    width: 100% !important;
+    padding: 50px;
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus legend.drl-contact-legend {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus legend.drl-contact-legend span {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus legend.drl-contact-legend .field.note.no-label {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex {
+    display: flex;
+    padding-bottom: 30px;
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex .field {
+    flex: 1 1 0px;
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex .field label.label span,
+.contact-index-index .field.comment.required label.label {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    font-weight: unset;
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex .field .control input {
+    height: 40px;
+    width: 90%;
+    background: #FAF9FA 0% 0% no-repeat padding-box;
+    border: 1px solid #5225B533;
+    border-radius: 4px;
+    opacity: 1;
+    font-family: 'DRL Circular Bold';
+    font-weight: unset
+}
+
+.contact-index-index .field.comment.required .control textarea {
+    background: #FAF9FA 0% 0% no-repeat padding-box;
+    border: 1px solid #5225B533;
+    border-radius: 4px;
+    opacity: 1;
+    width: 63.5%;
+    font-family: 'DRL Circular Bold';
+    font-weight: unset
+}
+
+.contact-index-index button.action.submit.primary.drl-contact-us {
+    width: 173px;
+    height: 46px;
+}
+
+.contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex .field label.label {
+    margin: 0 0 8px;
+    display: inline-block;
+}
+
+.contact-index-index hr.drl-slashed-contact {
+    border-top: 1px dashed #434861;
+    opacity: 0.4;
+    margin-bottom: 40px;
+}
+
+.contact-index-index span.drl-contact-faq {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+    display: none;
+}
+
+.contact-index-index a.drl-faq-redi {
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+.contact-index-index a.drl-faq-redi:after {
+    content: url("../images/faq-right.svg");
+    vertical-align: text-top;
+}
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+    .contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex {
+        display: block;
+    }
+
+    .contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex .field .control input,
+    .contact-index-index .field.comment.required .control textarea,
+    .contact-index-index button.action.submit.primary.drl-contact-us {
+        width: 100%;
+    }
+
+    .contact-index-index .drl-contact-form{ padding: 8px; }
+}
+
+
+/* For Iphone 5 alone */
+@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+
+    .contact-index-index form.form.contact.drl-contact-form fieldset.fieldset.drl-contactus .drl-flex .field .control input, .contact-index-index .field.comment.required .control textarea, .contact-index-index button.action.submit.primary.drl-contact-us {
+        width: 90%;
+    }
+
+}
+
+
+
+/* Ipad Css */
+@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
+    .contact-us .drl-card-shadow {
+        padding: 0;
+    }
+}
