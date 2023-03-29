@@ -1,0 +1,19 @@
+{
+    "ecomm_price_decrease_notify": {
+        "column": {
+            "entity_id": true,
+            "customer_id": true,
+            "product_id": true,
+            "product_sku": true,
+            "product_name": true,
+            "product_price": true,
+            "product_price_type": true,
+            "notified": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

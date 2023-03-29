@@ -1,0 +1,117 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\View\Element\AbstractBlock $block
+ */
+
+// We should use strlen function because coupon code could be "0", converted to bool will lead to false
+$hasCouponCode = (bool) strlen($block->getCouponCode());
+?>
+<div class="block discount"
+     id="block-discount"
+     data-mage-init='{"collapsible":{"active": <?= $hasCouponCode ? 'true' : 'false' ?>, "openedState": "active", "saveState": false}}'
+>
+    <div class="title" data-role="title">
+        <strong id="block-discount-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Apply Discount Code')) ?></strong>
+    </div>
+    <div class="content" data-role="content" aria-labelledby="block-discount-heading">
+        <form id="discount-coupon-form"
+              action="<?= $block->escapeUrl($block->getUrl('checkout/cart/couponPost')) ?>"
+              method="post"
+              data-mage-init='{"discountCode":{"couponCodeSelector": "#coupon_code",
+                                               "removeCouponSelector": "#remove-coupon",
+                                               "applyButton": "button.action.apply",
+                                               "cancelButton": "button.action.cancel"}}'>
+            <div class="fieldset coupon<?= $hasCouponCode ? ' applied' : '' ?>">
+                <input type="hidden" name="remove" id="remove-coupon" value="0" />
+                <div class="field">
+                    <label for="coupon_code" class="label"><span><?= $block->escapeHtml(__('Enter discount code')) ?></span></label>
+                    <div class="control">
+                        <input type="text"
+                               class="input-text"
+                               id="coupon_code"
+                               name="coupon_code"
+                               value="<?= $block->escapeHtmlAttr($block->getCouponCode()) ?>"
+                               placeholder="<?= $block->escapeHtmlAttr(__('Enter discount code')) ?>"
+                                <?php if ($hasCouponCode) :?>
+                                   disabled="disabled"
+                                <?php endif; ?>
+                        />
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <?php if (!$hasCouponCode) :?>
+                    <div class="primary">
+                        <button class="action apply1 primary apply_coupon_code" type="button" value="<?= $block->escapeHtmlAttr(__('Apply Discount')) ?>">
+                            <span><?= $block->escapeHtml(__('Apply Discount')) ?></span>
+                        </button>
+                    </div>
+                    <?php else :?>
+                        <div class="primary">
+                            <button  type="button" class="action cancel primary" value="<?= $block->escapeHtmlAttr(__('Cancel Coupon')) ?>"><span><?= $block->escapeHtml(__('Cancel Coupon')) ?></span></button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php if (!$hasCouponCode) : ?>
+                <?= /* @noEscape */ $block->getChildHtml('captcha') ?>
+            <?php endif; ?>
+        </form>
+    </div>
+</div>
+<script>
+    require([
+    'jquery',
+    'Magento_Ui/js/modal/confirm'
+],
+function($, confirmation) {
+    $(document).on('click', '.apply_coupon_code', function(e){
+        e.preventDefault();
+        var coupon_code = $("#coupon_code").val();
+        if(coupon_code == '')
+        {
+            var error_msg = '<div class="message-error error message" id="coupon_error">Please enter a coupon code</div>';
+            $(error_msg).insertAfter("#coupon_code");
+            setTimeout(function(){
+                if ($('#coupon_error').length > 0) {
+                    $('#coupon_error').remove();
+                }
+            }, 5000)
+        }
+        else
+        {
+            var discountdiv= $(".mark .discount");
+            if(discountdiv.length)
+            {
+                confirmation({
+                title: 'Proceed',
+                content: 'Are you sure you want to apply the coupon code? If you click on Proceed it will remove the best discount option.',
+                actions: {
+                    confirm: function () {
+                        $("#discount-coupon-form").submit();
+                    },
+                    cancel: function () {
+                        return false;
+                    }
+                }
+            });
+            }
+            else
+            {
+                $("#discount-coupon-form").submit();
+            }
+            
+        }
+
+
+        
+    });
+});
+
+
+        
+</script>

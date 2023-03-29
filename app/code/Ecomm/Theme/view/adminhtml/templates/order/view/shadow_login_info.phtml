@@ -1,0 +1,18 @@
+<?php
+    $shadow_login_name = $block->getShadowLoginName();
+?>
+<?php if ($shadow_login_name): ?>
+
+
+
+<table class="admin__table-secondary order-information-table">
+    <tr>
+        <th><?= $block->escapeHtml(__('Shadow Login Name')) ?></th>
+        <td><?= $block->escapeHtml($shadow_login_name) ?></td>
+    </tr>
+</table>
+
+
+
+
+<?php endif; ?>

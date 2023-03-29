@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="ecomm_contract_extn" resource="default" engine="innodb" comment="Contract Extn">
+        <column xsi:type="int" name="entity_id" padding="7"  unsigned="false" nullable="false" comment="ID" identity="true" />
+        <column xsi:type="varchar" name="contract_id" nullable="false" length="15" comment="Contract ID" />
+        <column xsi:type="varchar" name="contract_type" nullable="false" length="15" comment="Contract Type" />
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Name" />
+        <column xsi:type="varchar" name="gpo_name" nullable="false" length="255" comment="GPO Name" />
+        <column xsi:type="varchar" name="group_id" nullable="false" length="255" comment="Group Id" />
+        <column xsi:type="varchar" name="is_dsh" nullable="false" length="1" comment="Dsh" default="0" />
+        <column xsi:type="tinyint" name="status" nullable="false"  comment="Status" default="1" />
+        <column xsi:type="date" name="start_date" nullable="false" comment="Start Date" />
+        <column xsi:type="date" name="end_date" nullable="false" comment="End Date" />
+        <column xsi:type="tinyint" name="deleted" nullable="false"  comment="Deleted" default="0" />
+        <column xsi:type="varchar" name="created_by" nullable="false" length="254" comment="Created BY" />
+        <column xsi:type="timestamp" name="created_at" nullable="false"  comment="Created At" default="CURRENT_TIMESTAMP" on_update="false" />
+        <column xsi:type="timestamp" name="updated_at" nullable="false" comment="Updated At" default="CURRENT_TIMESTAMP" on_update="true" />
+        <column xsi:type="varchar" name="import_hash" length="32" nullable="true" comment="Hash value of imported row"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+    </table>
+     <table name="ecomm_gpo_price" resource="default" engine="innodb" comment="Contract Extn">
+        <column xsi:type="decimal" name="rca_price"   unsigned="false" nullable="true" comment="RCA Price"  />
+        <column xsi:type="decimal" name="sub_wac_price" nullable="true"  comment="Sub wac Price" />
+        <column xsi:type="decimal" name="phs_indirect_price" nullable="true"  comment="PHS Indirect Price" />
+      </table>
+</schema>

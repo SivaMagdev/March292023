@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!--<event name="checkout_cart_update_items_before">
+        <observer name="drlcheckstock" instance="Ecomm\HidePrice\Observer\Checkstock" />
+    </event>
+    <event name="controller_action_postdispatch_checkout_cart_add">
+        <observer name="drlcheckstock" instance="Ecomm\HidePrice\Observer\Checkstock" />
+    </event>-->
+<!--     <event name="controller_action_predispatch_checkout_cart_index">
+        <observer name="validate_cart" instance="Ecomm\HidePrice\Observer\ValidateCartItems" />
+    </event>
+    <event name="controller_action_predispatch_checkout_index_index">
+        <observer name="validate_cart" instance="Ecomm\HidePrice\Observer\ValidateCartObserver" />
+    </event> -->
+    <event name="controller_action_postdispatch_customer_account_loginPost">
+        <observer name="quote_cart" instance="Ecomm\HidePrice\Observer\ValidateShortdatedPrice" />
+    </event>
+</config>

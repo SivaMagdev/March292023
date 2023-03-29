@@ -1,0 +1,17 @@
+{
+    "customer_logged_count": {
+        "column": {
+            "id": true,
+            "customer_id": true,
+            "customer_name": true,
+            "company": true,
+            "bill_state": true,
+            "sales_repo": true,
+            "customer_login": true,
+            "year": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

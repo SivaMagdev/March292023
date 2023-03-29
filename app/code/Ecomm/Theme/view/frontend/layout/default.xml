@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright © Magento, Inc. All rights reserved.
+* See COPYING.txt for license details.
+*/
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+layout="3columns"
+xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<update handle="default_head_blocks" />
+<head>
+<css src="Ecomm_Theme::css/drl-dashboard.css" rel="stylesheet"
+type="text/css" />
+<css src="Ecomm_Theme::css/drl-notification.css" rel="stylesheet"
+type="text/css" />
+</head>
+<body>
+<move element="top.search" destination="header-wrapper" after="logo" />
+<!--<move element="authorization-link-login"
+destination="header-wrapper" after="top.search" />-->
+<!--<move element="register-link" destination="header-wrapper"
+before="minicart" />-->
+<!--<move element="header.links" destination="header-wrapper"
+after="register-link" />-->
+
+<!--<referenceBlock name="company.link" remove="false" />-->
+<referenceBlock name="register.customer.link" remove="true" />
+<referenceBlock name="register.company.link" remove="true" />
+
+<referenceBlock name="authorization-link-login" remove="true" />
+
+<referenceBlock name="register-link" remove="true" />
+
+<move element="minicart" destination="catalog.topnav"
+after="wish-list-link-custom" />
+<move element="header.panel.wrapper" destination="header-wrapper" />
+
+<referenceBlock name="register-link">
+<action method="setTemplate">
+<argument name="template"
+xsi:type="string">Ecomm_Theme::customer/register/link.phtml</argument>
+</action>
+</referenceBlock>
+<referenceBlock name="header.links">
+<block class="Magento\Customer\Block\Account\RegisterLink"
+template="Ecomm_Theme::customer/register/link.phtml"/>
+<block class="Magento\Customer\Block\Account\AuthorizationLink"
+template="Ecomm_Theme::account/link/authorization.phtml"/>
+</referenceBlock>
+<referenceBlock name="catalog.topnav">
+	<block class="Magento\Wishlist\Block\Link" name="wish-list-link-custom" after="minicart"
+	template="Ecomm_Theme::wishlist.phtml"/>
+</referenceBlock>
+<block name="adddress-list-link-custom" template="Ecomm_Theme::adddress.phtml"/>
+<move element="adddress-list-link-custom" destination="header.links" before="quickorder-link"/>
+<block class="Ecomm\Theme\Block\Upcomingdelivery"
+name="upcoming-delivery"
+template="Ecomm_Theme::Upcomingdelivery.phtml" cacheable="false" />
+<block class="Ecomm\Theme\Block\Recentorders" name="recent-orders"
+template="Ecomm_Theme::Recentorders.phtml" cacheable="false" />
+
+<!-- for notification bell-->
+<referenceBlock name="catalog.topnav">
+	<block class="Ecomm\Theme\Block\Notification" name="notification-link-custom" before="-"
+	template="Ecomm_Theme::notification.phtml"/>
+</referenceBlock>
+<referenceBlock name="header.links">
+<block class="Ecomm\Theme\Block\Header\QuickOrder"
+name="quickorder-link"
+ifconfig="btob/website_configuration/quickorder_active"
+after="register-link" />
+</referenceBlock>
+<referenceBlock name="quick_order_link" remove="true" />
+<referenceBlock name="register-link">
+<arguments>
+<argument name="label" xsi:type="string" translate="true">Sign Up</argument>
+</arguments>
+</referenceBlock>
+
+
+<!-- Remove compare -->
+<referenceBlock name="catalog.compare.link" remove="true" />
+<referenceBlock name="catalog.compare.sidebar" remove="true"/>
+<referenceBlock name="catalogsearch.product.addto.compare" remove="true"/>
+<referenceBlock name="category.product.addto.compare" remove="true"/>
+<referenceBlock name="crosssell.product.addto.compare" remove="true" />
+<referenceBlock name="related.product.addto.compare" remove="true" />
+<referenceBlock name="upsell.product.addto.compare" remove="true" />
+<referenceBlock name="view.addto.compare" remove="true" />
+
+<!-- Remove Gift Card-->
+<referenceContainer name="cart.summary">
+<referenceBlock name="checkout.cart.giftcardaccount" remove="true" />
+</referenceContainer>
+
+<!-- Remove Coupon-->
+<referenceBlock name="checkout.cart.coupon" remove="false" />
+
+<!-- Remove Wishlist link in top links-->
+<!-- <referenceBlock name="multiple-wish-list-link" remove="true" /> -->
+
+<referenceBlock name="invitation_link_top" remove="true" />
+<!-- Remove Custom Quick Order link-->
+<!--<referenceBlock name="quickorder-link" remove="true" />-->
+</body>
+</page>

@@ -1,0 +1,628 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Customer\Helper\Address;
+
+/** @var \Magento\Customer\Block\Form\Register $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+/** @var Magento\Customer\Helper\Address $addressHelper */
+$addressHelper = $block->getData('addressHelper');
+/** @var \Magento\Directory\Helper\Data $directoryHelper */
+$directoryHelper = $block->getData('directoryHelper');
+$formData = $block->getFormData();
+?>
+<?php $displayAll = $block->getConfig('general/region/display_all'); ?>
+<?= $block->getChildHtml('form_fields_before') ?>
+<?php /* Extensions placeholder */ ?>
+<?= $block->getChildHtml('customer.form.register.extra') ?>
+<div class="register-panel-drl">
+   <form class="form create account form-create-account drl-register-account"
+         action="<?= $escaper->escapeUrl($block->getPostActionUrl()) ?>"
+         method="post"
+         id="form-validate"
+         enctype="multipart/form-data"
+         autocomplete="off">
+         <div class="drl-page-title-wrapper">
+            <h1 class="drl-page-title">
+               <span class="base" data-ui-id="page-title-wrapper">Getting Started</span>
+            </h1>
+         </div>
+      <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+      <fieldset class="fieldset create info drl-info">
+           <!--<legend class="legend"><span><?= $escaper->escapeHtml(__('Personal Information')) ?></span></legend><br>-->
+           <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
+           <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
+           <?= $block->getLayout()
+                   ->createBlock(\Magento\Customer\Block\Widget\Name::class)
+                   ->setObject($formData)
+                   ->setForceUseCustomerAttributes(true)
+                   ->toHtml() ?>
+           <!--<?php if ($block->isNewsletterEnabled()): ?>
+               <div class="field choice newsletter">
+                   <input type="checkbox"
+                          name="is_subscribed"
+                          title="<?= $escaper->escapeHtmlAttr(__('Sign Up for Newsletter')) ?>"
+                          value="1"
+                          id="is_subscribed"
+                          <?php if ($formData->getIsSubscribed()): ?>checked="checked"<?php endif; ?>
+                          class="checkbox">
+                   <label for="is_subscribed" class="label">
+                       <span><?= $escaper->escapeHtml(__('Sign Up for Newsletter')) ?></span>
+                   </label>
+               </div>
+               <?php /* Extensions placeholder */ ?>
+               <?= $block->getChildHtml('customer.form.register.newsletter') ?>
+           <?php endif ?>-->
+
+           <?php $_dob = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Dob::class) ?>
+           <?php if ($_dob->isEnabled()): ?>
+               <?= $_dob->setDate($formData->getDob())->toHtml() ?>
+           <?php endif ?>
+
+           <?php $_taxvat = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Taxvat::class) ?>
+           <?php if ($_taxvat->isEnabled()): ?>
+               <?= $_taxvat->setTaxvat($formData->getTaxvat())->toHtml() ?>
+           <?php endif ?>
+
+           <?php $_gender = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Gender::class) ?>
+           <?php if ($_gender->isEnabled()): ?>
+               <?= $_gender->setGender($formData->getGender())->toHtml() ?>
+           <?php endif ?>
+      </fieldset>
+      <?php if ($block->getShowAddressFields()): ?>
+           <?php $cityValidationClass = $addressHelper->getAttributeValidationClass('city'); ?>
+           <?php $postcodeValidationClass = $addressHelper->getAttributeValidationClass('postcode'); ?>
+           <?php $regionValidationClass = $addressHelper->getAttributeValidationClass('region'); ?>
+           <fieldset class="fieldset address">
+               <legend class="legend"><span><?= $escaper->escapeHtml(__('Address Information')) ?></span></legend><br>
+               <input type="hidden" name="create_address" value="1" />
+
+               <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
+               <?php if ($_company->isEnabled()): ?>
+                   <?= $_company->setCompany($formData->getCompany())->toHtml() ?>
+               <?php endif ?>
+
+               <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
+               <?php if ($_telephone->isEnabled()): ?>
+                   <?= $_telephone->setTelephone($formData->getTelephone())->toHtml() ?>
+               <?php endif ?>
+
+               <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
+               <?php if ($_fax->isEnabled()): ?>
+                   <?= $_fax->setFax($formData->getFax())->toHtml() ?>
+               <?php endif ?>
+
+               <?php
+                   $_streetValidationClass = $addressHelper->getAttributeValidationClass('street');
+               ?>
+
+               <div class="field street required">
+                   <label for="street_1" class="label">
+                       <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?></span>
+                   </label>
+                   <div class="control">
+                       <input type="text"
+                              name="street[]"
+                              value="<?= $escaper->escapeHtmlAttr($formData->getStreet(0)) ?>"
+                              title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?>"
+                              id="street_1"
+                              class="input-text <?= $escaper->escapeHtmlAttr($_streetValidationClass) ?>">
+                       <div class="nested">
+                           <?php
+                               $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass));
+                               $streetLines = $addressHelper->getStreetLines();
+                           ?>
+                           <?php for ($_i = 2, $_n = $streetLines; $_i <= $_n; $_i++): ?>
+                               <div class="field additional">
+                                   <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
+                                       <span><?= $escaper->escapeHtml(__('Address')) ?></span>
+                                   </label>
+                                   <div class="control">
+                                       <input type="text"
+                                              name="street[]"
+                                              value="<?= $escaper->escapeHtml($formData->getStreetLine($_i - 1)) ?>"
+                                              title="<?= $escaper->escapeHtmlAttr(__('Street Address %1', $_i)) ?>"
+                                              id="street_<?= /* @noEscape */ $_i ?>"
+                                              class="input-text <?= $escaper->escapeHtmlAttr($_streetValidationClass) ?>">
+                                   </div>
+                               </div>
+                           <?php endfor; ?>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="field country required">
+                   <label for="country" class="label">
+                       <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                   </label>
+                   <div class="control">
+                       <?= $block->getCountryHtmlSelect() ?>
+                   </div>
+               </div>
+
+               <div class="field region required">
+                   <label for="region_id" class="label">
+                       <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?></span>
+                   </label>
+                   <div class="control">
+                       <select id="region_id"
+                               name="region_id"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
+                               class="validate-select region_id">
+                           <option value="">
+                               <?= $escaper->escapeHtml(__('Please select a region, state or province.')) ?>
+                           </option>
+                       </select>
+                       <?= /* @noEscape */ $secureRenderer->renderStyleAsTag("display: none;", 'select#region_id') ?>
+                       <input type="text"
+                              id="region"
+                              name="region"
+                              value="<?= $escaper->escapeHtml($block->getRegion()) ?>"
+                              title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
+                              class="input-text <?= $escaper->escapeHtmlAttr($regionValidationClass) ?>">
+                       <?= /* @noEscape */ $secureRenderer->renderStyleAsTag("display: none;", 'input#region') ?>
+                   </div>
+               </div>
+
+               <div class="field required">
+                   <label for="city" class="label">
+                       <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
+                   </label>
+                   <div class="control">
+                       <input type="text"
+                              name="city"
+                              value="<?= $escaper->escapeHtmlAttr($formData->getCity()) ?>"
+                              title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                              class="input-text <?= $escaper->escapeHtmlAttr($cityValidationClass) ?>"
+                              id="city">
+                   </div>
+               </div>
+
+               <div class="field zip required">
+                   <label for="zip" class="label">
+                       <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
+                   </label>
+                   <div class="control">
+                       <input type="text"
+                              name="postcode"
+                              value="<?= $escaper->escapeHtmlAttr($formData->getPostcode()) ?>"
+                              title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
+                              id="zip"
+                              class="input-text validate-zip-international
+                               <?= $escaper->escapeHtmlAttr($postcodeValidationClass) ?>">
+                   </div>
+               </div>
+
+               <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
+               <?php if ($addressAttributes): ?>
+                   <?php $addressAttributes->setEntityType('customer_address'); ?>
+                   <?php $addressAttributes->setFieldIdFormat('address:%1$s')->setFieldNameFormat('address[%1$s]');?>
+                   <?php $block->restoreSessionData($addressAttributes->getMetadataForm(), 'address');?>
+                   <?= $addressAttributes->setShowContainer(false)->toHtml() ?>
+               <?php endif;?>
+               <input type="hidden" name="default_billing" value="1">
+               <input type="hidden" name="default_shipping" value="1">
+           </fieldset>
+
+       <?php endif; ?>
+       <fieldset class="fieldset create account drl-account" data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
+           <!-- <legend class="legend"><span><?= $escaper->escapeHtml(__('Sign-in Information')) ?></span></legend><br> -->
+            <div class="drl-register">
+               <div class="field field-organization_name required">
+                  <label class="label drl-required-astr" for="organization_name"><span>Organization Name</span></label>
+                  <div class="control">
+                     <input type="text" id="organization_name" name="organization_name" value="" class="drl-register-input input-text required-entry" autocomplete="off" aria-required="true" placeholder="Enter Organization Name">
+                  </div>
+               </div>
+             </div>
+               <div class="drl-register">
+               <div class="field field-job_title required">
+                  <label class="label drl-required-astr" for="job_title"><span>Job Title</span></label>
+                  <div class="control">
+                     <input type="text" id="job_title" name="job_title" value="" class="drl-register-input input-text required-entry" autocomplete="off" aria-required="true" placeholder="Enter Job Title">
+                  </div>
+               </div>
+               <div class="field required email">
+                  <label for="email_address" class="label drl-required-astr"><span><?= $escaper->escapeHtml(__('Email')) ?></span></label>
+                  <div class="control">
+                      <input type="email" name="email" autocomplete="email" id="email_address" value="<?= $escaper->escapeHtmlAttr($formData->getEmail()) ?>" title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>" class="drl-register-input input-text"
+                             data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}" placeholder="Enter Company Email ID">
+                  </div>
+               </div>
+            </div>
+            <div class="drl-register">
+               <div class="field password required">
+                  <label for="password" class="label drl-required-astr"><span><?= $escaper->escapeHtml(__('Password')) ?></span></label>
+                  <div class="control">
+                     <div class="drl-paswd-sh-hid">
+                        <input type="password" name="password" id="password"
+                             title="<?= $escaper->escapeHtmlAttr(__('Password')) ?>"
+                             class="drl-register-input input-text passwordstrength"
+                             data-password-min-length="<?=
+                              $escaper->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
+                             data-password-min-character-sets="<?=
+                              $escaper->escapeHtmlAttr($block->getRequiredCharacterClassesNumber()) ?>"
+                             data-validate="{required:true, 'validate-customer-password':true}"
+                             autocomplete="off" placeholder="Enter Password" minlength="8" maxlength="16">
+                        <p class="show-hide"><i class="fa fa-eye" aria-hidden="true"></i></p>
+                        <!--<div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
+                          <div id="password-strength-meter" class="password-strength-meter">
+                              <?= $escaper->escapeHtml(__('Password Strength')) ?>:
+                              <span id="password-strength-meter-label" data-role="password-strength-meter-label">
+                                  <?= $escaper->escapeHtml(__('No Password')) ?>
+                              </span>
+                          </div>
+                        </div>-->
+
+                        <div id="message-drl">
+                           <label class="label">Password must contain minimum of</label>
+                           <div class="drl-flex">
+                              <p id="letter" class="invalid msg-width-drl">One Lower Case</p>
+                              <p id="capital" class="invalid msg-width-drl">One Upper Case</p>
+                           </div>
+                           <div class="drl-flex">
+                              <p id="number" class="invalid msg-width-drl">One Numeric</p>
+                              <p id="regularExpression" class="invalid msg-width-drl">One Special Character</p>
+                           </div>
+                           <p id="length" class="invalid msg-width-drl1">8 Characters and Maximum of 16 Characters</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="field confirmation required">
+                  <label for="password-confirmation" class="label drl-required-astr"><span><?= $escaper->escapeHtml(__('Confirm Password')) ?></span></label>
+                  <div class="control">
+                      <input type="password"
+                             name="password_confirmation"
+                             title="<?= $escaper->escapeHtmlAttr(__('Confirm Password')) ?>"
+                             id="password-confirmation"
+                             class="drl-register-input input-text"
+                             data-validate="{required:true, equalTo:'#password'}"
+                             autocomplete="off" placeholder="Enter Password">
+                  </div>
+               </div>
+               <?= $block->getChildHtml('form_additional_info') ?>
+            </div>
+      </fieldset>
+      <fieldset class="fieldset create-acct-btn">
+         <div class="actions-toolbar">
+            <div class="primary check-submit-drl">
+               <div class="tacbox field required">
+                  <div class="control">
+                    <input type="checkbox" data-validate="{required:true}" name="custom-terms" title="<?php /* @escapeNotVerified */ echo __('Terms and contitions') ?>" id="agree-term-cond" class="checkbox">
+                    <label for="agree-term-cond" class="term-hyper"><span id="termcon"><?php /* @escapeNotVerified */ echo __('I accept the') ?><?php /* @escapeNotVerified */ echo __('<a href="#">&nbsp;Terms and Conditions</a>') ?></span></label> 
+                  </div>
+               </div>
+               <div id="popup-modal" class="terms-conditon-drl" style="display:none;">
+                    <p class="drl-terms-word">By clicking submit below, I hereby represent that I am authorized to submit this application and bind the business identified in this application, and that the information provided is for the purpose of obtaining credit and is warranted to be true. 
+                    </p>
+                    <p class="drl-terms-word">
+                    The business identified in this application acknowledges that this request is for the extension of credit for commercial purposes only and is not intended for the extension of credit for personal, family or household purposes. 
+                  </p>
+                  <p class="drl-terms-word">
+                    In order to protect individual identities, unless an individual is intending to act as a guarantor for purposes of securing credit and is required to provide guarantor information on this application, no personally identifying information (i.e. Social Security #, driver’s license #, bank account information, etc.) should be provided.
+                    </p>
+                    <p class="drl-terms-word">
+                    The business identified in this application hereby authorizes all banks, financial institutions, trade reference sources, credit reporting agencies and others to release credit information.
+                   </p>
+                   <p class="drl-terms-word">
+                    In the event of a conflict, the terms and conditions set forth above shall control over any terms and conditions set forth below.  </p>
+                </div>
+               <button type="submit"
+                  class="action submit primary"
+                  title="<?= $escaper->escapeHtmlAttr(__('Create Account')) ?>">
+               <span><?= $escaper->escapeHtml(__('Create Account')) ?></span>
+               </button>
+            </div>
+            <div class="secondary">
+               <a class="action back"
+                  href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>">
+               <span><?= $escaper->escapeHtml(__('Back')) ?></span>
+               </a>
+            </div>
+         </div>
+      </fieldset>
+   </form>
+   <div id="oval-assit">
+      <div class="oval-sub">
+         <label class="oval-one">Need Assistance?</label>
+      </div>
+      <div class="oval-sub">
+         <label class="oval-two">How credit system works?</label>
+         <label class="oval-two">Lorem Ipsum is simply?</label>
+         <label class="oval-two">How credit system works?</label>
+      </div>
+      <div class="dotted-slash-drl"></div>
+      <div class="oval-sub">
+         <div class="oval-multi-line">
+            <img src='<?php echo $this->getViewFileUrl('Ecomm_Register::images/phone.svg'); ?>' alt="Phone">
+            <div class="oval-drl-help">
+               <p class="oval-three">Helpline</p>
+               <a href="tel:866-733-3952" class="oval-tel-drl">866-733-3952</a>
+            </div>
+         </div>
+      </div>
+      <div class="oval-sub">
+         <div class="oval-multi-line">
+          <img src='<?php echo $this->getViewFileUrl('Ecomm_Register::images/email.svg'); ?>' alt="email">
+            <div class="oval-drl-help">
+               <p class="oval-three">Email</p>
+               <a href="mailto:customercare@drreddys.com" class="oval-tel-drl">customercare@drreddys.com</a>
+            </div>
+         </div>
+      </div>
+      <div class="oval-sub">
+         <div class="oval-multi-line">
+             <img src='<?php echo $this->getViewFileUrl('Ecomm_Register::images/email.svg'); ?>' alt="email">
+            <div class="oval-drl-help">
+               <p class="oval-three">Technical Support</p>
+               <a href="mailto:Direct@drreddys.com" class="oval-tel-drl">Direct@drreddys.com</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div id="register-popup" style="display: none">
+<p class="register-alert-org-mail">We have an active account registered to your company, would you like to continue the registration?</p>
+<div class="drl-hr-line"></div>
+<div class="drl-alert-assist">
+  <div class="drl-alert-popup-msg">24/7 we are happy to assist you</div>
+ <div class="drl-multi-line">
+            <i class="fas fa-phone-alt fa-round-drl"></i>
+               <a href="tel:+1-847-555-5555" class="oval-tel-drl">1-847-555-5555</a>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+   require(['drlregisterjs'], function () {
+   });
+</script>
+<?php $ignore = /* @noEscape */ $_dob->isEnabled() ? '\'input[id$="full"]\'' : 'null';
+$scriptString = <<<script
+require([
+    'jquery',
+    'mage/mage'
+], function($){
+
+    var dataForm = $('#form-validate');
+    var ignore = {$ignore};
+
+    dataForm.mage('validation', {
+script;
+if ($_dob->isEnabled()):
+    $scriptString .= <<<script
+        errorPlacement: function(error, element) {
+            if (element.prop('id').search('full') !== -1) {
+                var dobElement = $(element).parents('.customer-dob'),
+                    errorClass = error.prop('class');
+                error.insertAfter(element.parent());
+                dobElement.find('.validate-custom').addClass(errorClass)
+                    .after('<div class="' + errorClass + '"></div>');
+            }
+            else {
+                error.insertAfter(element);
+            }
+        },
+        ignore: ':hidden:not(' + ignore + ')'
+script;
+else:
+    $scriptString .= <<<script
+        ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+script;
+endif;
+$scriptString .= <<<script
+    }).find('input:text').attr('autocomplete', 'off');
+    dataForm.submit(function (e) {
+        $(this).find(':submit').attr('disabled', 'disabled');
+        if (dataForm.valid()) {
+            /*e.preventDefault(); // avoid to execute the actual submit of the form.
+            //return false;
+
+            dataForm.validate({
+               alert("test");
+               $.ajax({
+                  url: url.build('customer/domain/validate'),
+                  type: 'post',
+                  data: 'company_email_registered': $('#company_email_registered').val(),
+                  dataType: 'json',
+                  beforeSend: function() {},
+                  success: function(json) {
+                     alert(json['domain_exist']);
+                  },
+                  error: function(xhr, ajaxOptions, thrownError) {
+
+                  }
+               });
+            }*/
+        }
+
+    });
+    dataForm.bind("invalid-form.validate", function () {
+        $(this).find(':submit').prop('disabled', false);
+    });
+
+
+
+});
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+<?php if ($block->getShowAddressFields()): ?>
+    <?php
+    $regionJson = /* @noEscape */ $directoryHelper->getRegionJson();
+    $regionId = (int) $formData->getRegionId();
+    $countriesWithOptionalZip = /* @noEscape */ $directoryHelper->getCountriesWithOptionalZip(true);
+    ?>
+<script type="text/x-magento-init">
+    {
+        "#country": {
+            "regionUpdater": {
+                "optionalRegionAllowed": <?= /* @noEscape */ $displayAll ? 'true' : 'false' ?>,
+                "regionListId": "#region_id",
+                "regionInputId": "#region",
+                "postcodeId": "#zip",
+                "form": "#form-validate",
+                "regionJson": {$regionJson},
+                "defaultRegion": "{$regionId}",
+                "countriesWithOptionalZip": {$countriesWithOptionalZip}
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        ".field.password": {
+            "passwordStrengthIndicator": {
+                "formSelector": "form.form-create-account"
+            }
+        }
+    }
+</script>
+
+<script>
+   require([
+       'jquery',
+       'mage/url',
+       'Magento_Ui/js/modal/modal'
+   ], function($, url, modal) {
+
+      $('#discard-btn').change(function() {
+         location = url.build('');
+         this.closeModal();
+      });
+
+      function IsEmail(email) {
+        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test(email)) {
+          return false;
+        }else{
+          return true;
+        }
+      }
+
+      $('#company_email_registered').change(function() {
+
+        if(IsEmail($('#form-validate input[name=\'company_email_registered\']').val())==false){
+          $('#form-validate input[name=\'company_email_registered\']').after('<div for="company_email_registered" generated="true" class="mage-error" id="company_email_registered-error" style="display: block;">Please enter a valid email address (Ex: johndoe@domain.com).</div>');
+          return false;
+        } else {
+
+          $('#company_email_registered-error').remove();
+
+          $.ajax({
+            url: url.build('customer/domain/validate'),
+            type: 'post',
+            data: $('#form-validate input[type=\'text\']'),
+            showLoader: true, //use for display loader
+            dataType: 'json',
+            beforeSend: function() {
+              //
+            },
+            success: function(json) {
+
+              if(json['domain_exist'] > 0){
+
+                 var options = {
+                   type: 'popup',
+                   title: '',
+                   responsive: true,
+                   innerScroll: false,
+                   clickableOverlay: false,
+                   buttons: [{
+                       text: $.mage.__('Discard'),
+                       class: 'discard-notifications',
+                       click: function() {
+                           location = url.build('');
+                           this.closeModal();
+                       }
+                   },{
+                       text: $.mage.__('Continue'),
+                       class: 'success-notifications',
+                       click: function() {
+                           this.closeModal();
+                       }
+                   }]
+                 };
+
+                 /*modal-popup modal-footer success-notifications*/
+
+                 var popup = modal(options, $('#register-popup'));
+                 $("#register-popup").modal("openModal");
+              }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+               alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+          });
+        }
+
+      });
+
+     /* $('#form-validate').submit(function (e) {
+         if ($('#form-validate').valid()) {
+            alert("asdasd");
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            alert("asdasd-2");
+            $.ajax({
+               url: url.build('customer/domain/validate'),
+               type: 'post',
+               data: 'company_email_registered': $('#company_email_registered').val(),
+               dataType: 'json',
+               beforeSend: function() {},
+               success: function(json) {
+                  alert(json['domain_exist']);
+               },
+               error: function(xhr, ajaxOptions, thrownError) {
+
+               }
+            });
+         }
+      });*/
+
+      /*$('#form-validate').validate({  // initialize the plugin on your form.
+           // rules, options, and/or callback functions
+           alert("asdasd");
+      });*/
+
+   });
+</script>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Terms and Conditions',
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: 'drl-term-condition',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-modal'));
+            $("#termcon").on('click',function(){ 
+                $("#popup-modal").modal("openModal");
+            });
+
+        }
+    );
+</script>

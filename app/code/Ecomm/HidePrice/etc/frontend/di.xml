@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--<preference for="Magento\Checkout\Controller\Cart\Index" type="Ecomm\HidePrice\Controller\Cart\Index" />-->
+    <!--<preference for="Magento\Checkout\Controller\Index\Index" type="Ecomm\HidePrice\Controller\Index\Index" />-->
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="drl_check_stock" type="Ecomm\HidePrice\Plugin\Quote" sortOrder="1"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\UpdatePost">
+	    <plugin name="quantity_update_validation" type="Ecomm\HidePrice\Observer\UpdateItemQty" sortOrder="1" disabled="false"  />
+	</type>
+</config>

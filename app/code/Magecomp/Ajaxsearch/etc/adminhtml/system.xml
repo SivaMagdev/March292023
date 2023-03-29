@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="magecomp" translate="label" sortOrder="100">
+			<label>Ajax Search</label>
+		</tab>
+		<section id="ajaxsearch" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+			<label>Ajax Search</label>
+			<tab>magecomp</tab>
+			<resource>Magecomp_Ajaxsearch::ajaxsearchconfig</resource>
+			<group id="general" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Configuration</label>
+				<field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ajax Search</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+				<field id="productcount" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Products per Result</label>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry validate-not-negative-number</validate>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

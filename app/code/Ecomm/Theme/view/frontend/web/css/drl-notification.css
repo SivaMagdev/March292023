@@ -1,0 +1,103 @@
+.drl-bell-notify .notification_dd {
+    position: absolute;
+    top: 48px;
+    right: 38px;
+    user-select: none;
+    background: #fff;
+    border: 1px solid #c7d8e2;
+    width: 350px;
+    height: auto;
+    display: none;
+    border-radius: 3px;
+    box-shadow: 10px 10px 35px rgba(0, 0, 0, 0.125), -10px -10px 35px rgba(0, 0, 0, 0.125);
+}
+
+.drl-bell-notify ul.notification_ul.ui-menu.ui-widget.ui-widget-content.ui-corner-all.empty {
+    height: 100%;
+}
+
+.drl-bell-notify .notification-empty {
+    padding: 20px 20px 20px 20px;
+    height: 100px;
+    text-align: center;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Bold';
+    font-size: 18px;
+    line-height: 4;
+}
+
+.drl-bell-notify .notification_dd li {
+    border-bottom: 1px dashed #dfe1e8;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.drl-bell-notify .notification_dd li .notify_icon {
+    display: flex;
+}
+
+.drl-bell-notify .notification_dd li .notify_data {
+    margin: 0 15px;
+    width: auto;
+}
+
+.drl-bell-notify .notification_dd li .notify_data .sub_title {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 5px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Bold';
+}
+
+.notifications.active .notification_dd {
+    display: block;
+}
+
+.drl-bell-notify .notification_ul {
+    display: block !important;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.drl-bell-notify .notification_ul::-webkit-scrollbar {
+    width: 4px;
+}
+
+.drl-bell-notify .notification_ul::-webkit-scrollbar-thumb {
+    background: #9D9AA2 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 0.5;
+}
+
+@media only screen and (max-width: 768px) {
+    .drl-bell-notify span.base.drl-head-serivce {
+        letter-spacing: 0px;
+        color: #4B2A91;
+        opacity: 1;
+        font-size: 18px;
+        font-family: 'DRL Circular Bold';
+        display: block;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .block.block-dashboard-info .block-content ul.notification_ul .notify_data .sub_title {
+        color: #434861;
+        opacity: 1;
+        font-size: 15px;
+        font-family: 'DRL Circular Book';
+        font-weight: unset;
+    }
+}
+
+/* ipad css portrait */
+
+@media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
+    .drl-bell-notify .notification_dd {
+        top: 95px;
+        right: 25px;
+    }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="contactus_email_contact_customer_confirmation_template"
+              label="Contact Us Customer Notification" file="contactus_customer_notification.html"
+              type="html" module="Ecomm_CustomContactus" area="frontend"/>
+
+    <template id="contactus_adminemail_contact_admin_confirmation_template"
+              label="Contact Us Admin Notification" file="contactus_admin_notification.html"
+              type="html" module="Ecomm_CustomContactus" area="frontend"/>
+   
+</config>

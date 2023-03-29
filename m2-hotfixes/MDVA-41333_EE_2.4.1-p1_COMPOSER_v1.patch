@@ -1,0 +1,4132 @@
+diff --git a/vendor/magento/module-catalog/Model/Product/Option/Type/Date.php b/vendor/magento/module-catalog/Model/Product/Option/Type/Date.php
+index 6ac48c565e8..725635bf4fc 100644
+--- a/vendor/magento/module-catalog/Model/Product/Option/Type/Date.php
++++ b/vendor/magento/module-catalog/Model/Product/Option/Type/Date.php
+@@ -72,8 +72,21 @@ class Date extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
+         $dateValid = true;
+         if ($this->_dateExists()) {
+             if ($this->useCalendar()) {
++                if (is_array($value) && $this->checkDateWithoutJSCalendar($value)) {
++                    $value['date'] = sprintf("%s/%s/%s", $value['day'], $value['month'], $value['year']);
++                }
++                /* Fixed validation if the date was not saved correctly after re-saved the order
++                for example: "09\/24\/2020,2020-09-24 00:00:00" */
++                if (is_string($value) && preg_match('/^\d{1,4}.+\d{1,4}.+\d{1,4},+(\w|\W)*$/', $value)) {
++                    $value = [
++                        'date' => preg_replace('/,([^,]+),?$/', '', $value),
++                    ];
++                }
+                 $dateValid = isset($value['date']) && preg_match('/^\d{1,4}.+\d{1,4}.+\d{1,4}$/', $value['date']);
+             } else {
++                if (is_array($value)) {
++                    $value = $this->prepareDateByDateInternal($value);
++                }
+                 $dateValid = isset(
+                     $value['day']
+                 ) && isset(
+@@ -184,8 +197,10 @@ class Date extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
+             $date = (new \DateTime())->setTimestamp($timestamp);
+             $result = $date->format('Y-m-d H:i:s');
+ 
++            $originDate = (isset($value['date']) && $value['date'] != '') ? $value['date'] : null;
++
+             // Save date in internal format to avoid locale date bugs
+-            $this->_setInternalInRequest($result);
++            $this->_setInternalInRequest($result, $originDate);
+ 
+             return $result;
+         } else {
+@@ -352,9 +367,10 @@ class Date extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
+      * Save internal value of option in infoBuy_request
+      *
+      * @param string $internalValue Datetime value in internal format
++     * @param string|null $originDate date value in origin format
+      * @return void
+      */
+-    protected function _setInternalInRequest($internalValue)
++    protected function _setInternalInRequest($internalValue, $originDate = null)
+     {
+         $requestOptions = $this->getRequest()->getOptions();
+         if (!isset($requestOptions[$this->getOption()->getId()])) {
+@@ -364,6 +380,9 @@ class Date extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
+             $requestOptions[$this->getOption()->getId()] = [];
+         }
+         $requestOptions[$this->getOption()->getId()]['date_internal'] = $internalValue;
++        if ($originDate) {
++            $requestOptions[$this->getOption()->getId()]['date'] = $originDate;
++        }
+         $this->getRequest()->setOptions($requestOptions);
+     }
+ 
+@@ -398,4 +417,38 @@ class Date extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
+             ]
+         );
+     }
++
++    /**
++     * Check is date without JS Calendar
++     *
++     * @param array $value
++     *
++     * @return bool
++     */
++    private function checkDateWithoutJSCalendar(array $value): bool
++    {
++        return empty($value['date'])
++            && !empty($value['day'])
++            && !empty($value['month'])
++            && !empty($value['year']);
++    }
++
++    /**
++     * Prepare date by date internal
++     *
++     * @param array $value
++     * @return array
++     */
++    private function prepareDateByDateInternal(array $value): array
++    {
++        if (!empty($value['date']) && !empty($value['date_internal'])) {
++            $formatDate = explode(' ', $value['date_internal']);
++            $date = explode('-', $formatDate[0]);
++            $value['year'] = $date[0];
++            $value['month'] = $date[1];
++            $value['day'] = $date[2];
++        }
++
++        return $value;
++    }
+ }
+diff --git a/vendor/magento/module-catalog/Model/ProductOptionProcessor.php b/vendor/magento/module-catalog/Model/ProductOptionProcessor.php
+index a5e1d05409e..db9f4de1429 100644
+--- a/vendor/magento/module-catalog/Model/ProductOptionProcessor.php
++++ b/vendor/magento/module-catalog/Model/ProductOptionProcessor.php
+@@ -5,13 +5,15 @@
+  */
+ namespace Magento\Catalog\Model;
+ 
+-use Magento\Catalog\Api\Data\ProductOptionExtensionFactory;
+ use Magento\Catalog\Api\Data\ProductOptionInterface;
+ use Magento\Catalog\Model\CustomOptions\CustomOption;
+ use Magento\Catalog\Model\CustomOptions\CustomOptionFactory;
+ use Magento\Framework\DataObject;
+ use Magento\Framework\DataObject\Factory as DataObjectFactory;
+ 
++/**
++ * Processor for product options
++ */
+ class ProductOptionProcessor implements ProductOptionProcessorInterface
+ {
+     /**
+@@ -88,7 +90,8 @@ class ProductOptionProcessor implements ProductOptionProcessorInterface
+         if (!empty($options) && is_array($options)) {
+             $data = [];
+             foreach ($options as $optionId => $optionValue) {
+-                if (is_array($optionValue)) {
++
++                if (is_array($optionValue) && !$this->isDateWithDateInternal($optionValue)) {
+                     $optionValue = $this->processFileOptionValue($optionValue);
+                     $optionValue = implode(',', $optionValue);
+                 }
+@@ -126,6 +129,8 @@ class ProductOptionProcessor implements ProductOptionProcessorInterface
+     }
+ 
+     /**
++     * Get url builder
++     *
+      * @return \Magento\Catalog\Model\Product\Option\UrlBuilder
+      *
+      * @deprecated 101.0.0
+@@ -138,4 +143,15 @@ class ProductOptionProcessor implements ProductOptionProcessorInterface
+         }
+         return $this->urlBuilder;
+     }
++
++    /**
++     * Check if the option has a date_internal and date
++     *
++     * @param array $optionValue
++     * @return bool
++     */
++    private function isDateWithDateInternal(array $optionValue): bool
++    {
++        return array_key_exists('date_internal', $optionValue) && array_key_exists('date', $optionValue);
++    }
+ }
+diff --git a/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Address/File.php b/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Address/File.php
+new file mode 100644
+index 00000000000..0286ef4b96a
+--- /dev/null
++++ b/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Address/File.php
+@@ -0,0 +1,25 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\Customer\Block\Adminhtml\Form\Element\Address;
++
++/**
++ * Customer Address Widget Form File Element Block
++ */
++class File extends \Magento\Customer\Block\Adminhtml\Form\Element\File
++{
++    /**
++     * @inheritdoc
++     */
++    protected function _getPreviewUrl()
++    {
++        return $this->_adminhtmlData->getUrl(
++            'customer/address/viewfile',
++            ['file' => $this->urlEncoder->encode($this->getValue())]
++        );
++    }
++}
+diff --git a/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Address/Image.php b/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Address/Image.php
+new file mode 100644
+index 00000000000..fe1a0a26d6f
+--- /dev/null
++++ b/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Address/Image.php
+@@ -0,0 +1,25 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\Customer\Block\Adminhtml\Form\Element\Address;
++
++/**
++ * Customer Address Widget Form Image Element Block
++ */
++class Image extends \Magento\Customer\Block\Adminhtml\Form\Element\Image
++{
++    /**
++     * @inheritdoc
++     */
++    protected function _getPreviewUrl()
++    {
++        return $this->_adminhtmlData->getUrl(
++            'customer/address/viewfile',
++            ['file' => $this->urlEncoder->encode($this->getValue())]
++        );
++    }
++}
+diff --git a/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Image.php b/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Image.php
+index 3452085a85c..2f6609486ee 100644
+--- a/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Image.php
++++ b/vendor/magento/module-customer/Block/Adminhtml/Form/Element/Image.php
+@@ -73,7 +73,7 @@ class Image extends \Magento\Customer\Block\Adminhtml\Form\Element\File
+     {
+         return $this->_adminhtmlData->getUrl(
+             'customer/index/viewfile',
+-            ['image' => $this->urlEncoder->encode($this->getValue())]
++            ['file' => $this->urlEncoder->encode($this->getValue())]
+         );
+     }
+ }
+diff --git a/vendor/magento/module-customer/Controller/Account/EditPost.php b/vendor/magento/module-customer/Controller/Account/EditPost.php
+index fe201f417b4..d53f57ac3ef 100644
+--- a/vendor/magento/module-customer/Controller/Account/EditPost.php
++++ b/vendor/magento/module-customer/Controller/Account/EditPost.php
+@@ -33,6 +33,8 @@ use Magento\Framework\Exception\NoSuchEntityException;
+ use Magento\Framework\Exception\State\UserLockedException;
+ use Magento\Customer\Controller\AbstractAccount;
+ use Magento\Framework\Phrase;
++use Magento\Framework\Filesystem;
++use Magento\Framework\App\Filesystem\DirectoryList;
+ 
+ /**
+  * Customer edit page.
+@@ -96,6 +98,11 @@ class EditPost extends AbstractAccount implements CsrfAwareActionInterface, Http
+      */
+     private $addressRegistry;
+ 
++    /**
++     * @var Filesystem
++     */
++    private $filesystem;
++
+     /**
+      * @var SessionCleanerInterface|null
+      */
+@@ -110,6 +117,7 @@ class EditPost extends AbstractAccount implements CsrfAwareActionInterface, Http
+      * @param CustomerExtractor $customerExtractor
+      * @param Escaper|null $escaper
+      * @param AddressRegistry|null $addressRegistry
++     * @param Filesystem $filesystem
+      * @param SessionCleanerInterface|null $sessionCleaner
+      */
+     public function __construct(
+@@ -121,6 +129,7 @@ class EditPost extends AbstractAccount implements CsrfAwareActionInterface, Http
+         CustomerExtractor $customerExtractor,
+         ?Escaper $escaper = null,
+         AddressRegistry $addressRegistry = null,
++        Filesystem $filesystem = null,
+         ?SessionCleanerInterface $sessionCleaner = null
+     ) {
+         parent::__construct($context);
+@@ -131,6 +140,7 @@ class EditPost extends AbstractAccount implements CsrfAwareActionInterface, Http
+         $this->customerExtractor = $customerExtractor;
+         $this->escaper = $escaper ?: ObjectManager::getInstance()->get(Escaper::class);
+         $this->addressRegistry = $addressRegistry ?: ObjectManager::getInstance()->get(AddressRegistry::class);
++        $this->filesystem = $filesystem ?: ObjectManager::getInstance()->get(Filesystem::class);
+         $this->sessionCleaner = $sessionCleaner ?: ObjectManager::getInstance()->get(SessionCleanerInterface::class);
+     }
+ 
+@@ -205,6 +215,14 @@ class EditPost extends AbstractAccount implements CsrfAwareActionInterface, Http
+                 $currentCustomerDataObject
+             );
+ 
++            $attributeToDelete = $this->_request->getParam('delete_attribute_value');
++            if ($attributeToDelete !== null) {
++                $this->deleteCustomerFileAttribute(
++                    $customerCandidateDataObject,
++                    $attributeToDelete
++                );
++            }
++
+             try {
+                 // whether a customer enabled change email option
+                 $this->processChangeEmailRequest($currentCustomerDataObject);
+@@ -390,4 +408,41 @@ class EditPost extends AbstractAccount implements CsrfAwareActionInterface, Http
+             $addressModel->setShouldIgnoreValidation(true);
+         }
+     }
++
++    /**
++     * Removes file attribute from customer entity and file from filesystem
++     *
++     * @param CustomerInterface $customerCandidateDataObject
++     * @param string $attributeToDelete
++     * @return void
++     */
++    private function deleteCustomerFileAttribute(
++        CustomerInterface $customerCandidateDataObject,
++        string $attributeToDelete
++    ) : void {
++        if ($attributeToDelete !== '') {
++            if (strpos($attributeToDelete, ',') !== false) {
++                $attributes = explode(',', $attributeToDelete);
++            } else {
++                $attributes[] = $attributeToDelete;
++            }
++            foreach ($attributes as $attr) {
++                $attributeValue = $customerCandidateDataObject->getCustomAttribute($attr);
++                if ($attributeValue!== null) {
++                    if ($attributeValue->getValue() !== '') {
++                        $mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
++                        $fileName = $attributeValue->getValue();
++                        $path = $mediaDirectory->getAbsolutePath('customer' . $fileName);
++                        if ($fileName && $mediaDirectory->isFile($path)) {
++                            $mediaDirectory->delete($path);
++                        }
++                        $customerCandidateDataObject->setCustomAttribute(
++                            $attr,
++                            ''
++                        );
++                    }
++                }
++            }
++        }
++    }
+ }
+diff --git a/vendor/magento/module-customer/Controller/Address/FormPost.php b/vendor/magento/module-customer/Controller/Address/FormPost.php
+index 25618e31291..cae039ea975 100644
+--- a/vendor/magento/module-customer/Controller/Address/FormPost.php
++++ b/vendor/magento/module-customer/Controller/Address/FormPost.php
+@@ -24,6 +24,9 @@ use Magento\Framework\Data\Form\FormKey\Validator as FormKeyValidator;
+ use Magento\Framework\Exception\InputException;
+ use Magento\Framework\Reflection\DataObjectProcessor;
+ use Magento\Framework\View\Result\PageFactory;
++use Magento\Framework\Filesystem;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\Exception\NotFoundException;
+ 
+ /**
+  * Customer Address Form Post Controller
+@@ -47,6 +50,11 @@ class FormPost extends \Magento\Customer\Controller\Address implements HttpPostA
+      */
+     private $customerAddressMapper;
+ 
++    /**
++     * @var Filesystem
++     */
++    private $filesystem;
++
+     /**
+      * @param Context $context
+      * @param Session $customerSession
+@@ -61,6 +69,7 @@ class FormPost extends \Magento\Customer\Controller\Address implements HttpPostA
+      * @param PageFactory $resultPageFactory
+      * @param RegionFactory $regionFactory
+      * @param HelperData $helperData
++     * @param Filesystem $filesystem
+      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+      */
+     public function __construct(
+@@ -76,10 +85,12 @@ class FormPost extends \Magento\Customer\Controller\Address implements HttpPostA
+         ForwardFactory $resultForwardFactory,
+         PageFactory $resultPageFactory,
+         RegionFactory $regionFactory,
+-        HelperData $helperData
++        HelperData $helperData,
++        Filesystem $filesystem = null
+     ) {
+         $this->regionFactory = $regionFactory;
+         $this->helperData = $helperData;
++        $this->filesystem = $filesystem ?: ObjectManager::getInstance()->get(Filesystem::class);
+         parent::__construct(
+             $context,
+             $customerSession,
+@@ -150,7 +161,7 @@ class FormPost extends \Magento\Customer\Controller\Address implements HttpPostA
+         if ($addressId = $this->getRequest()->getParam('id')) {
+             $existingAddress = $this->_addressRepository->getById($addressId);
+             if ($existingAddress->getCustomerId() !== $this->_getSession()->getCustomerId()) {
+-                throw new \Exception();
++                throw new NotFoundException(__('Address not found.'));
+             }
+             $existingAddressData = $this->getCustomerAddressMapper()->toFlatArray($existingAddress);
+         }
+@@ -210,6 +221,9 @@ class FormPost extends \Magento\Customer\Controller\Address implements HttpPostA
+ 
+         try {
+             $address = $this->_extractAddress();
++            if ($this->_request->getParam('delete_attribute_value')) {
++                $address = $this->deleteAddressFileAttribute($address);
++            }
+             $this->_addressRepository->save($address);
+             $this->messageManager->addSuccessMessage(__('You saved the address.'));
+             $url = $this->_buildUrl('*/*/index', ['_secure' => true]);
+@@ -249,4 +263,31 @@ class FormPost extends \Magento\Customer\Controller\Address implements HttpPostA
+         }
+         return $this->customerAddressMapper;
+     }
++
++    /**
++     * Removes file attribute from customer address and file from filesystem
++     *
++     * @param \Magento\Customer\Api\Data\AddressInterface $address
++     * @return mixed
++     */
++    private function deleteAddressFileAttribute($address)
++    {
++        $attributeValue = $address->getCustomAttribute($this->_request->getParam('delete_attribute_value'));
++        if ($attributeValue!== null) {
++            if ($attributeValue->getValue() !== '') {
++                $mediaDirectory = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
++                $fileName = $attributeValue->getValue();
++                $path = $mediaDirectory->getAbsolutePath('customer_address' . $fileName);
++                if ($fileName && $mediaDirectory->isFile($path)) {
++                    $mediaDirectory->delete($path);
++                }
++                $address->setCustomAttribute(
++                    $this->_request->getParam('delete_attribute_value'),
++                    ''
++                );
++            }
++        }
++
++        return $address;
++    }
+ }
+diff --git a/vendor/magento/module-customer/Controller/Adminhtml/Address/Viewfile.php b/vendor/magento/module-customer/Controller/Adminhtml/Address/Viewfile.php
+new file mode 100644
+index 00000000000..71167f289ff
+--- /dev/null
++++ b/vendor/magento/module-customer/Controller/Adminhtml/Address/Viewfile.php
+@@ -0,0 +1,181 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\Customer\Controller\Adminhtml\Address;
++
++use Magento\Customer\Api\AddressMetadataInterface;
++use Magento\Framework\App\ResponseInterface;
++use Magento\Framework\Exception\NotFoundException;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\Controller\Result\RawFactory;
++use Magento\Framework\Url\DecoderInterface;
++use Magento\Framework\Controller\ResultInterface;
++use Magento\Framework\Filesystem;
++use Magento\Framework\Controller\Result\Raw;
++use Magento\MediaStorage\Helper\File\Storage;
++use Magento\Framework\App\Response\Http\FileFactory;
++use Magento\Framework\Filesystem\Io\File as IoFile;
++use Magento\Backend\App\Action\Context;
++use Magento\Framework\App\Action\HttpGetActionInterface;
++use Magento\Backend\App\Action;
++
++/**
++ * Class Viewfile serves to show file or image by file/image name provided in request parameters.
++ */
++class Viewfile extends Action implements HttpGetActionInterface
++{
++    /**
++     * Authorization level of a basic admin session
++     */
++    const ADMIN_RESOURCE = 'Magento_Customer::manage';
++
++    /**
++     * @var RawFactory
++     */
++    private $resultRawFactory;
++
++    /**
++     * @var DecoderInterface
++     */
++    private $urlDecoder;
++
++    /**
++     * @var Filesystem
++     */
++    private $filesystem;
++
++    /**
++     * @var Storage
++     */
++    private $storage;
++
++    /**
++     * @var FileFactory
++     */
++    private $fileFactory;
++
++    /**
++     * @var IoFile
++     */
++    private $ioFile;
++
++    /**
++     * @param Context $context
++     * @param FileFactory $fileFactory
++     * @param RawFactory $resultRawFactory
++     * @param DecoderInterface $urlDecoder
++     * @param Filesystem $filesystem
++     * @param Storage $storage
++     * @param IoFile $ioFile
++     */
++    public function __construct(
++        Context $context,
++        FileFactory $fileFactory,
++        RawFactory $resultRawFactory,
++        DecoderInterface $urlDecoder,
++        Filesystem $filesystem,
++        Storage $storage,
++        IoFile $ioFile
++    ) {
++        parent::__construct($context);
++        $this->resultRawFactory = $resultRawFactory;
++        $this->urlDecoder  = $urlDecoder;
++        $this->filesystem = $filesystem;
++        $this->storage = $storage;
++        $this->fileFactory = $fileFactory;
++        $this->ioFile = $ioFile;
++    }
++
++    /**
++     * Customer address view file action
++     *
++     * @return ResultInterface|ResponseInterface|void
++     * @throws NotFoundException
++     */
++    public function execute()
++    {
++        list($file, $plain) = $this->getFileParams();
++
++        $directory = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA);
++        $fileName = AddressMetadataInterface::ENTITY_TYPE_ADDRESS . DIRECTORY_SEPARATOR .
++            ltrim($file, DIRECTORY_SEPARATOR);
++        $path = $directory->getAbsolutePath($fileName);
++        if (mb_strpos($path, '..') !== false
++            || (!$directory->isFile($fileName) && !$this->storage->processStorageFile($path))
++        ) {
++            throw new NotFoundException(__('Page not found.'));
++        }
++
++        $pathInfo = $this->ioFile->getPathInfo($path);
++        if ($plain) {
++            $extension = $pathInfo['extension'];
++            switch (strtolower($extension)) {
++                case 'gif':
++                    $contentType = 'image/gif';
++                    break;
++                case 'jpg':
++                    $contentType = 'image/jpeg';
++                    break;
++                case 'png':
++                    $contentType = 'image/png';
++                    break;
++                default:
++                    $contentType = 'application/octet-stream';
++                    break;
++            }
++            $stat = $directory->stat($fileName);
++            $contentLength = $stat['size'];
++            $contentModify = $stat['mtime'];
++
++            /** @var Raw $resultRaw */
++            $resultRaw = $this->resultRawFactory->create();
++            $resultRaw->setHttpResponseCode(200)
++                ->setHeader('Pragma', 'public', true)
++                ->setHeader('Content-type', $contentType, true)
++                ->setHeader('Content-Length', $contentLength)
++                ->setHeader('Last-Modified', date('r', $contentModify));
++            $resultRaw->setContents($directory->readFile($fileName));
++
++            return $resultRaw;
++        } else {
++            $name = $pathInfo['basename'];
++            return $this->fileFactory->create(
++                $name,
++                ['type' => 'filename', 'value' => $fileName],
++                DirectoryList::MEDIA
++            );
++        }
++    }
++
++    /**
++     * Get parameters from request.
++     *
++     * @return array
++     * @throws NotFoundException
++     */
++    private function getFileParams() : array
++    {
++        $file = null;
++        $plain = false;
++        if ($this->getRequest()->getParam('file')) {
++            // download file
++            $file = $this->urlDecoder->decode(
++                $this->getRequest()->getParam('file')
++            );
++        } elseif ($this->getRequest()->getParam('image')) {
++            // show plain image
++            $file = $this->urlDecoder->decode(
++                $this->getRequest()->getParam('image')
++            );
++            $plain = true;
++        } else {
++            throw new NotFoundException(__('Page not found.'));
++        }
++
++        return [$file, $plain];
++    }
++}
+diff --git a/vendor/magento/module-customer/Controller/Adminhtml/Index/Save.php b/vendor/magento/module-customer/Controller/Adminhtml/Index/Save.php
+index 192a0f1362e..cc8531214c7 100644
+--- a/vendor/magento/module-customer/Controller/Adminhtml/Index/Save.php
++++ b/vendor/magento/module-customer/Controller/Adminhtml/Index/Save.php
+@@ -3,6 +3,7 @@
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
++
+ namespace Magento\Customer\Controller\Adminhtml\Index;
+ 
+ use Magento\Backend\App\Action\Context;
+@@ -40,6 +41,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
+ use Magento\Framework\Math\Random;
+ use Magento\Framework\Reflection\DataObjectProcessor;
+ use Magento\Framework\Registry;
++use Magento\Framework\Validator\Exception;
+ use Magento\Framework\View\Result\LayoutFactory;
+ use Magento\Framework\View\Result\PageFactory;
+ use Magento\Newsletter\Model\SubscriberFactory;
+@@ -243,10 +245,10 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+     /**
+      * Saves default_billing and default_shipping flags for customer address
+      *
+-     * @deprecated 102.0.1 must be removed because addresses are save separately for now
+      * @param array $addressIdList
+      * @param array $extractedCustomerData
+      * @return array
++     * @deprecated 102.0.1 must be removed because addresses are save separately for now
+      */
+     protected function saveDefaultFlags(array $addressIdList, array &$extractedCustomerData)
+     {
+@@ -286,9 +288,9 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+     /**
+      * Reformat customer addresses data to be compatible with customer service interface
+      *
+-     * @deprecated 102.0.1 addresses are saved separately for now
+      * @param array $extractedCustomerData
+      * @return array
++     * @deprecated 102.0.1 addresses are saved separately for now
+      */
+     protected function _extractCustomerAddressData(array &$extractedCustomerData)
+     {
+@@ -318,6 +320,7 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+     {
+         $returnToEdit = false;
+         $customerId = $this->getCurrentCustomerId();
++        $customer = $this->customerDataFactory->create();
+ 
+         if ($this->getRequest()->getPostValue()) {
+             try {
+@@ -335,8 +338,6 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+                     $customerData['id'] = $customerId;
+                 }
+ 
+-                /** @var CustomerInterface $customer */
+-                $customer = $this->customerDataFactory->create();
+                 $this->dataObjectHelper->populateWithArray(
+                     $customer,
+                     $customerData,
+@@ -353,7 +354,7 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+                     try {
+                         $this->customerAccountManagement->validateCustomerStoreIdByWebsiteId($customer);
+                     } catch (LocalizedException $exception) {
+-                        throw new LocalizedException(__("The Store View selected for sending Welcome email from".
++                        throw new LocalizedException(__("The Store View selected for sending Welcome email from" .
+                             " is not related to the customer's associated website."));
+                     }
+                 }
+@@ -361,7 +362,6 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+                 // Save customer
+                 if ($customerId) {
+                     $this->_customerRepository->save($customer);
+-
+                     $this->getEmailNotification()->credentialsChanged($customer, $currentCustomer->getEmail());
+                 } else {
+                     $customer = $this->customerAccountManagement->createAccount($customer);
+@@ -386,13 +386,13 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+                     __('Something went wrong while saving the customer.')
+                 );
+                 $returnToEdit = false;
+-            } catch (\Magento\Framework\Validator\Exception $exception) {
++            } catch (Exception $exception) {
+                 $messages = $exception->getMessages();
+                 if (empty($messages)) {
+                     $messages = $exception->getMessage();
+                 }
+                 $this->_addSessionErrorMessages($messages);
+-                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData());
++                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData($customer));
+                 $returnToEdit = true;
+             } catch (AbstractAggregateException $exception) {
+                 $errors = $exception->getErrors();
+@@ -401,18 +401,18 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+                     $messages[] = $error->getMessage();
+                 }
+                 $this->_addSessionErrorMessages($messages);
+-                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData());
++                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData($customer));
+                 $returnToEdit = true;
+             } catch (LocalizedException $exception) {
+                 $this->_addSessionErrorMessages($exception->getMessage());
+-                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData());
++                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData($customer));
+                 $returnToEdit = true;
+             } catch (\Exception $exception) {
+                 $this->messageManager->addExceptionMessage(
+                     $exception,
+                     __('Something went wrong while saving the customer.')
+                 );
+-                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData());
++                $this->_getSession()->setCustomerFormData($this->retrieveFormattedFormData($customer));
+                 $returnToEdit = true;
+             }
+         }
+@@ -553,21 +553,16 @@ class Save extends \Magento\Customer\Controller\Adminhtml\Index implements HttpP
+     /**
+      * Retrieve formatted form data
+      *
++     * @param CustomerInterface $customer
+      * @return array
+      */
+-    private function retrieveFormattedFormData(): array
++    private function retrieveFormattedFormData(CustomerInterface $customer): array
+     {
+         $originalRequestData = $this->getRequest()->getPostValue();
++        $customerData = $this->customerMapper->toFlatArray($customer);
+ 
+         /* Customer data filtration */
+         if (isset($originalRequestData['customer'])) {
+-            $customerData = $this->_extractData(
+-                'adminhtml_customer',
+-                CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER,
+-                [],
+-                'customer'
+-            );
+-
+             $customerData = array_intersect_key($customerData, $originalRequestData['customer']);
+             $originalRequestData['customer'] = array_merge($originalRequestData['customer'], $customerData);
+         }
+diff --git a/vendor/magento/module-customer/Controller/Adminhtml/Index/Viewfile.php b/vendor/magento/module-customer/Controller/Adminhtml/Index/Viewfile.php
+index 02a04508622..8aa55a6d1c5 100644
+--- a/vendor/magento/module-customer/Controller/Adminhtml/Index/Viewfile.php
++++ b/vendor/magento/module-customer/Controller/Adminhtml/Index/Viewfile.php
+@@ -14,6 +14,8 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
+ use Magento\Customer\Api\Data\AddressInterfaceFactory;
+ use Magento\Customer\Api\Data\CustomerInterfaceFactory;
+ use Magento\Customer\Model\Address\Mapper;
++use Magento\Framework\App\ResponseInterface;
++use Magento\Framework\Controller\ResultInterface;
+ use Magento\Framework\Exception\NotFoundException;
+ use Magento\Framework\App\Filesystem\DirectoryList;
+ use Magento\Framework\DataObjectFactory;
+@@ -130,7 +132,7 @@ class Viewfile extends \Magento\Customer\Controller\Adminhtml\Index
+     /**
+      * Customer view file action
+      *
+-     * @return \Magento\Framework\Controller\ResultInterface|void
++     * @return ResultInterface|ResponseInterface|void
+      * @throws NotFoundException
+      */
+     public function execute()
+@@ -181,7 +183,7 @@ class Viewfile extends \Magento\Customer\Controller\Adminhtml\Index
+         } else {
+             // phpcs:ignore Magento2.Functions.DiscouragedFunction
+             $name = pathinfo($path, PATHINFO_BASENAME);
+-            $this->_fileFactory->create(
++            return $this->_fileFactory->create(
+                 $name,
+                 ['type' => 'filename', 'value' => $fileName],
+                 DirectoryList::MEDIA
+diff --git a/vendor/magento/module-customer/Model/Address/AbstractAddress.php b/vendor/magento/module-customer/Model/Address/AbstractAddress.php
+index 8421fc92f8c..d1364dc0aeb 100644
+--- a/vendor/magento/module-customer/Model/Address/AbstractAddress.php
++++ b/vendor/magento/module-customer/Model/Address/AbstractAddress.php
+@@ -331,10 +331,11 @@ class AbstractAddress extends AbstractExtensibleModel implements AddressModelInt
+                 return '';
+             }
+ 
+-            $isScalar = false;
++            $isScalar = true;
+             foreach ($value as $val) {
+-                if (is_scalar($val)) {
+-                    $isScalar = true;
++                if (!is_scalar($val)) {
++                    $isScalar = false;
++                    break;
+                 }
+             }
+             if ($isScalar) {
+diff --git a/vendor/magento/module-customer/Model/Customer/DataProviderWithDefaultAddresses.php b/vendor/magento/module-customer/Model/Customer/DataProviderWithDefaultAddresses.php
+index 604295cc0c0..a82af07342a 100644
+--- a/vendor/magento/module-customer/Model/Customer/DataProviderWithDefaultAddresses.php
++++ b/vendor/magento/module-customer/Model/Customer/DataProviderWithDefaultAddresses.php
+@@ -8,11 +8,13 @@ namespace Magento\Customer\Model\Customer;
+ 
+ use Magento\Customer\Model\Address;
+ use Magento\Customer\Model\Customer;
++use Magento\Customer\Model\CustomerFactory;
+ use Magento\Customer\Model\ResourceModel\Customer\CollectionFactory as CustomerCollectionFactory;
+ use Magento\Directory\Model\CountryFactory;
+ use Magento\Eav\Model\Config;
+ use Magento\Eav\Model\Entity\Attribute\AbstractAttribute;
+ use Magento\Eav\Model\Entity\Type;
++use Magento\Framework\App\ObjectManager;
+ use Magento\Framework\Exception\LocalizedException;
+ use Magento\Framework\Session\SessionManagerInterface;
+ use Magento\Customer\Model\FileUploaderDataResolver;
+@@ -66,6 +68,11 @@ class DataProviderWithDefaultAddresses extends AbstractDataProvider
+      */
+     private $attributeMetadataResolver;
+ 
++    /**
++     * @var CustomerFactory
++     */
++    private $customerFactory;
++
+     /**
+      * @param string $name
+      * @param string $primaryFieldName
+@@ -79,6 +86,7 @@ class DataProviderWithDefaultAddresses extends AbstractDataProvider
+      * @param bool $allowToShowHiddenAttributes
+      * @param array $meta
+      * @param array $data
++     * @param CustomerFactory $customerFactory
+      * @throws LocalizedException
+      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+      */
+@@ -94,7 +102,8 @@ class DataProviderWithDefaultAddresses extends AbstractDataProvider
+         AttributeMetadataResolver $attributeMetadataResolver,
+         $allowToShowHiddenAttributes = true,
+         array $meta = [],
+-        array $data = []
++        array $data = [],
++        CustomerFactory $customerFactory = null
+     ) {
+         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
+         $this->collection = $customerCollectionFactory->create();
+@@ -107,6 +116,7 @@ class DataProviderWithDefaultAddresses extends AbstractDataProvider
+         $this->meta['customer']['children'] = $this->getAttributesMeta(
+             $eavConfig->getEntityType('customer')
+         );
++        $this->customerFactory = $customerFactory ?: ObjectManager::getInstance()->get(CustomerFactory::class);
+     }
+ 
+     /**
+@@ -142,9 +152,10 @@ class DataProviderWithDefaultAddresses extends AbstractDataProvider
+ 
+             $this->loadedData[$customer->getId()] = $result;
+         }
+-
+         $data = $this->session->getCustomerFormData();
+         if (!empty($data)) {
++            $customer = $this->customerFactory->create();
++            $this->fileUploaderDataResolver->overrideFileUploaderData($customer, $data['customer']);
+             $customerId = $data['customer']['entity_id'] ?? null;
+             $this->loadedData[$customerId] = $data;
+             $this->session->unsCustomerFormData();
+diff --git a/vendor/magento/module-customer/Model/FileProcessor.php b/vendor/magento/module-customer/Model/FileProcessor.php
+index c16faea2842..0c1b69aab82 100644
+--- a/vendor/magento/module-customer/Model/FileProcessor.php
++++ b/vendor/magento/module-customer/Model/FileProcessor.php
+@@ -7,6 +7,18 @@ declare(strict_types=1);
+ 
+ namespace Magento\Customer\Model;
+ 
++use Magento\Customer\Api\AddressMetadataInterface;
++use Magento\Customer\Api\CustomerMetadataInterface;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\Exception\LocalizedException;
++use Magento\Framework\File\Mime;
++use Magento\Framework\Filesystem;
++use Magento\Framework\Filesystem\Directory\WriteInterface;
++use Magento\Framework\Url\EncoderInterface;
++use Magento\Framework\UrlInterface;
++use Magento\MediaStorage\Model\File\Uploader;
++use Magento\MediaStorage\Model\File\UploaderFactory;
++
+ /**
+  * Processor class for work with uploaded files
+  */
+@@ -17,23 +29,27 @@ class FileProcessor
+      */
+     const TMP_DIR = 'tmp';
+ 
++    private const CUSTOMER_FILE_URL_PATH = 'customer/index/viewfile';
++
++    private const CUSTOMER_ADDRESS_FILE_URL_PATH = 'customer/address/viewfile';
++
+     /**
+-     * @var \Magento\Framework\Filesystem\Directory\WriteInterface
++     * @var WriteInterface
+      */
+     private $mediaDirectory;
+ 
+     /**
+-     * @var \Magento\MediaStorage\Model\File\UploaderFactory
++     * @var UploaderFactory
+      */
+     private $uploaderFactory;
+ 
+     /**
+-     * @var \Magento\Framework\UrlInterface
++     * @var UrlInterface
+      */
+     private $urlBuilder;
+ 
+     /**
+-     * @var \Magento\Framework\Url\EncoderInterface
++     * @var EncoderInterface
+      */
+     private $urlEncoder;
+ 
+@@ -48,35 +64,51 @@ class FileProcessor
+     private $allowedExtensions = [];
+ 
+     /**
+-     * @var \Magento\Framework\File\Mime
++     * @var Mime
+      */
+     private $mime;
+ 
+     /**
+-     * @param \Magento\Framework\Filesystem $filesystem
+-     * @param \Magento\MediaStorage\Model\File\UploaderFactory $uploaderFactory
+-     * @param \Magento\Framework\UrlInterface $urlBuilder
+-     * @param \Magento\Framework\Url\EncoderInterface $urlEncoder
++     * @var string
++     */
++    private $customerFileUrlPath;
++
++    /**
++     * @var string
++     */
++    private $customerAddressFileUrlPath;
++
++    /**
++     * @param Filesystem $filesystem
++     * @param UploaderFactory $uploaderFactory
++     * @param UrlInterface $urlBuilder
++     * @param EncoderInterface $urlEncoder
+      * @param string $entityTypeCode
+-     * @param \Magento\Framework\File\Mime $mime
++     * @param Mime $mime
+      * @param array $allowedExtensions
++     * @param string $customerFileUrlPath
++     * @param string $customerAddressFileUrlPath
+      */
+     public function __construct(
+-        \Magento\Framework\Filesystem $filesystem,
+-        \Magento\MediaStorage\Model\File\UploaderFactory $uploaderFactory,
+-        \Magento\Framework\UrlInterface $urlBuilder,
+-        \Magento\Framework\Url\EncoderInterface $urlEncoder,
++        Filesystem $filesystem,
++        UploaderFactory $uploaderFactory,
++        UrlInterface $urlBuilder,
++        EncoderInterface $urlEncoder,
+         $entityTypeCode,
+-        \Magento\Framework\File\Mime $mime,
+-        array $allowedExtensions = []
++        Mime $mime,
++        array $allowedExtensions = [],
++        string $customerFileUrlPath = self::CUSTOMER_FILE_URL_PATH,
++        string $customerAddressFileUrlPath = self::CUSTOMER_ADDRESS_FILE_URL_PATH
+     ) {
+-        $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
++        $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
+         $this->uploaderFactory = $uploaderFactory;
+         $this->urlBuilder = $urlBuilder;
+         $this->urlEncoder = $urlEncoder;
+         $this->entityTypeCode = $entityTypeCode;
+         $this->mime = $mime;
+         $this->allowedExtensions = $allowedExtensions;
++        $this->customerFileUrlPath = $customerFileUrlPath;
++        $this->customerAddressFileUrlPath = $customerAddressFileUrlPath;
+     }
+ 
+     /**
+@@ -91,8 +123,7 @@ class FileProcessor
+ 
+         $fileContent = $this->mediaDirectory->readFile($filePath);
+ 
+-        $encodedContent = base64_encode($fileContent);
+-        return $encodedContent;
++        return base64_encode($fileContent);
+     }
+ 
+     /**
+@@ -105,8 +136,7 @@ class FileProcessor
+     {
+         $filePath = $this->entityTypeCode . '/' . ltrim($fileName, '/');
+ 
+-        $result = $this->mediaDirectory->stat($filePath);
+-        return $result;
++        return $this->mediaDirectory->stat($filePath);
+     }
+ 
+     /**
+@@ -120,8 +150,7 @@ class FileProcessor
+         $filePath = $this->entityTypeCode . '/' . ltrim($fileName, '/');
+         $absoluteFilePath = $this->mediaDirectory->getAbsolutePath($filePath);
+ 
+-        $result = $this->mime->getMimeType($absoluteFilePath);
+-        return $result;
++        return $this->mime->getMimeType($absoluteFilePath);
+     }
+ 
+     /**
+@@ -134,8 +163,7 @@ class FileProcessor
+     {
+         $filePath = $this->entityTypeCode . '/' . ltrim($fileName, '/');
+ 
+-        $result = $this->mediaDirectory->isExist($filePath);
+-        return $result;
++        return $this->mediaDirectory->isExist($filePath);
+     }
+ 
+     /**
+@@ -149,15 +177,16 @@ class FileProcessor
+     {
+         $viewUrl = '';
+ 
+-        if ($this->entityTypeCode == \Magento\Customer\Api\AddressMetadataInterface::ENTITY_TYPE_ADDRESS) {
+-            $filePath = $this->entityTypeCode . '/' . ltrim($filePath, '/');
+-            $viewUrl = $this->urlBuilder->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA])
+-                . $this->mediaDirectory->getRelativePath($filePath);
++        if ($this->entityTypeCode == AddressMetadataInterface::ENTITY_TYPE_ADDRESS) {
++            $viewUrl = $this->urlBuilder->getUrl(
++                $this->customerAddressFileUrlPath,
++                [$type => $this->urlEncoder->encode(ltrim($filePath, '/'))]
++            );
+         }
+ 
+-        if ($this->entityTypeCode == \Magento\Customer\Api\CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER) {
++        if ($this->entityTypeCode == CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER) {
+             $viewUrl = $this->urlBuilder->getUrl(
+-                'customer/index/viewfile',
++                $this->customerFileUrlPath,
+                 [$type => $this->urlEncoder->encode(ltrim($filePath, '/'))]
+             );
+         }
+@@ -170,11 +199,11 @@ class FileProcessor
+      *
+      * @param string $fileId
+      * @return \string[]
+-     * @throws \Magento\Framework\Exception\LocalizedException
++     * @throws LocalizedException
+      */
+     public function saveTemporaryFile($fileId)
+     {
+-        /** @var \Magento\MediaStorage\Model\File\Uploader $uploader */
++        /** @var Uploader $uploader */
+         $uploader = $this->uploaderFactory->create(['fileId' => $fileId]);
+         $uploader->setFilesDispersion(false);
+         $uploader->setFilenamesCaseSensitivity(false);
+@@ -188,7 +217,7 @@ class FileProcessor
+         $result = $uploader->save($path);
+         unset($result['path']);
+         if (!$result) {
+-            throw new \Magento\Framework\Exception\LocalizedException(
++            throw new LocalizedException(
+                 __('File can not be saved to the destination folder.')
+             );
+         }
+@@ -201,28 +230,32 @@ class FileProcessor
+      *
+      * @param string $fileName
+      * @return string
+-     * @throws \Magento\Framework\Exception\LocalizedException
++     * @throws LocalizedException
+      */
+     public function moveTemporaryFile($fileName)
+     {
++        if (!$this->isFileTemporary($fileName)) {
++            return $fileName;
++        }
++
+         $fileName = ltrim($fileName, '/');
+ 
+-        $dispersionPath = \Magento\MediaStorage\Model\File\Uploader::getDispersionPath($fileName);
++        $dispersionPath = Uploader::getDispersionPath($fileName);
+         $destinationPath = $this->entityTypeCode . $dispersionPath;
+ 
+         if (!$this->mediaDirectory->create($destinationPath)) {
+-            throw new \Magento\Framework\Exception\LocalizedException(
++            throw new LocalizedException(
+                 __('Unable to create directory %1.', $destinationPath)
+             );
+         }
+ 
+         if (!$this->mediaDirectory->isWritable($destinationPath)) {
+-            throw new \Magento\Framework\Exception\LocalizedException(
++            throw new LocalizedException(
+                 __('Destination folder is not writable or does not exists.')
+             );
+         }
+ 
+-        $destinationFileName = \Magento\MediaStorage\Model\File\Uploader::getNewFileName(
++        $destinationFileName = Uploader::getNewFileName(
+             $this->mediaDirectory->getAbsolutePath($destinationPath) . '/' . $fileName
+         );
+ 
+@@ -237,8 +270,7 @@ class FileProcessor
+             );
+         }
+ 
+-        $fileName = $dispersionPath . '/' . $destinationFileName;
+-        return $fileName;
++        return $dispersionPath . '/' . $destinationFileName;
+     }
+ 
+     /**
+@@ -251,7 +283,20 @@ class FileProcessor
+     {
+         $filePath = $this->entityTypeCode . '/' . ltrim($fileName, '/');
+ 
+-        $result = $this->mediaDirectory->delete($filePath);
+-        return $result;
++        return $this->mediaDirectory->delete($filePath);
++    }
++
++    /**
++     * Verify if given file temporary.
++     *
++     * @param string $fileName
++     * @return bool
++     */
++    private function isFileTemporary(string $fileName): bool
++    {
++        $tmpFile = $this->entityTypeCode . '/' . self::TMP_DIR . '/' . ltrim($fileName, '/');
++        $destinationFile = $this->entityTypeCode . '/' . ltrim($fileName, '/');
++
++        return $this->mediaDirectory->isExist($tmpFile) && !$this->mediaDirectory->isExist($destinationFile);
+     }
+ }
+diff --git a/vendor/magento/module-customer/Model/FileUploader.php b/vendor/magento/module-customer/Model/FileUploader.php
+index c425ac06666..411ab37a1d7 100644
+--- a/vendor/magento/module-customer/Model/FileUploader.php
++++ b/vendor/magento/module-customer/Model/FileUploader.php
+@@ -100,14 +100,33 @@ class FileUploader
+      * @throws LocalizedException
+      */
+     public function upload()
++    {
++        return $this->uploadFile();
++    }
++
++    /**
++     * File uploading process
++     *
++     * @param bool $useScope
++     * @return string[]
++     * @throws LocalizedException
++     */
++    public function uploadFile($useScope = true)
+     {
+         /** @var FileProcessor $fileProcessor */
+-        $fileProcessor = $this->fileProcessorFactory->create([
+-            'entityTypeCode' => $this->entityTypeCode,
+-            'allowedExtensions' => $this->getAllowedExtensions(),
+-        ]);
++        $fileProcessor = $this->fileProcessorFactory->create(
++            [
++                'entityTypeCode' => $this->entityTypeCode,
++                'allowedExtensions' => $this->getAllowedExtensions(),
++            ]
++        );
+ 
+-        $result = $fileProcessor->saveTemporaryFile($this->scope . '[' . $this->getAttributeCode() . ']');
++        if ($useScope === true) {
++            $fileId = $this->scope . '[' . $this->getAttributeCode() . ']';
++        } else {
++            $fileId = $this->getAttributeCode();
++        }
++        $result = $fileProcessor->saveTemporaryFile($fileId);
+ 
+         // Update tmp_name param. Required for attribute validation!
+         $result['tmp_name'] = ltrim($result['file'], '/');
+@@ -127,7 +146,14 @@ class FileUploader
+      */
+     private function getAttributeCode()
+     {
+-        return key($_FILES[$this->scope]['name']);
++        // phpcs:disable Magento2.Security.Superglobal
++        if (is_array($_FILES[$this->scope]['name'])) {
++            $code = key($_FILES[$this->scope]['name']);
++        } else {
++            $code = $this->scope;
++        }
++        // phpcs:enable Magento2.Security.Superglobal
++        return $code;
+     }
+ 
+     /**
+@@ -139,10 +165,16 @@ class FileUploader
+     {
+         $data = [];
+ 
++        // phpcs:disable Magento2.Security.Superglobal
+         $fileAttributes = $_FILES[$this->scope];
+         foreach ($fileAttributes as $attributeName => $attributeValue) {
+-            $data[$attributeName] = $attributeValue[$this->getAttributeCode()];
++            if (is_array($attributeValue)) {
++                $data[$attributeName] = $attributeValue[$this->getAttributeCode()];
++            } else {
++                $data[$attributeName] = $attributeValue;
++            }
+         }
++        // phpcs:enable Magento2.Security.Superglobal
+ 
+         return $data;
+     }
+@@ -160,9 +192,12 @@ class FileUploader
+         foreach ($validationRules as $validationRule) {
+             if ($validationRule->getName() == 'file_extensions') {
+                 $allowedExtensions = explode(',', $validationRule->getValue());
+-                array_walk($allowedExtensions, function (&$value) {
+-                    $value = strtolower(trim($value));
+-                });
++                array_walk(
++                    $allowedExtensions,
++                    function (&$value) {
++                        $value = strtolower(trim($value));
++                    }
++                );
+                 break;
+             }
+         }
+diff --git a/vendor/magento/module-customer/Model/Metadata/Form/File.php b/vendor/magento/module-customer/Model/Metadata/Form/File.php
+index 9f0d13da423..65614463a3d 100644
+--- a/vendor/magento/module-customer/Model/Metadata/Form/File.php
++++ b/vendor/magento/module-customer/Model/Metadata/Form/File.php
+@@ -14,7 +14,7 @@ use Magento\Framework\App\ObjectManager;
+ use Magento\Framework\Exception\LocalizedException;
+ use Magento\Framework\File\UploaderFactory;
+ use Magento\Framework\Filesystem;
+-use Magento\Framework\Filesystem\Io\File as FileIo;
++use Magento\Framework\Filesystem\Io\File as IoFile;
+ 
+ /**
+  * Processes files that are save for customer.
+@@ -63,6 +63,11 @@ class File extends AbstractData
+      */
+     protected $fileProcessorFactory;
+ 
++    /**
++     * @var IoFile|null
++     */
++    private $ioFile;
++
+     /**
+      * @var FileIo
+      */
+@@ -83,7 +88,7 @@ class File extends AbstractData
+      * @param Filesystem $fileSystem
+      * @param UploaderFactory $uploaderFactory
+      * @param \Magento\Customer\Model\FileProcessorFactory|null $fileProcessorFactory
+-     * @param FileIo|null $fileIo
++     * @param IoFile|null $ioFile
+      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+      */
+     public function __construct(
+@@ -98,19 +103,20 @@ class File extends AbstractData
+         \Magento\MediaStorage\Model\File\Validator\NotProtectedExtension $fileValidator,
+         Filesystem $fileSystem,
+         UploaderFactory $uploaderFactory,
+-        \Magento\Customer\Model\FileProcessorFactory $fileProcessorFactory = null,
+-        FileIo $fileIo = null
++        FileProcessorFactory $fileProcessorFactory = null,
++        IoFile $ioFile = null
+     ) {
++        $value = $this->prepareFileValue($value);
+         parent::__construct($localeDate, $logger, $attribute, $localeResolver, $value, $entityTypeCode, $isAjax);
+         $this->urlEncoder = $urlEncoder;
+         $this->_fileValidator = $fileValidator;
+         $this->_fileSystem = $fileSystem;
+         $this->uploaderFactory = $uploaderFactory;
+         $this->fileProcessorFactory = $fileProcessorFactory ?: ObjectManager::getInstance()
+-            ->get(\Magento\Customer\Model\FileProcessorFactory::class);
++            ->get(FileProcessorFactory::class);
+         $this->fileProcessor = $this->fileProcessorFactory->create(['entityTypeCode' => $this->_entityTypeCode]);
+-        $this->fileIo = $fileIo ?: ObjectManager::getInstance()
+-            ->get(FileIo::class);
++        $this->ioFile = $ioFile ?: ObjectManager::getInstance()
++            ->get(IoFile::class);
+     }
+ 
+     /**
+@@ -121,12 +127,18 @@ class File extends AbstractData
+     {
+         $extend = $this->_getRequestValue($request);
+ 
++        // phpcs:disable Magento2.Security.Superglobal
+         $attrCode = $this->getAttribute()->getAttributeCode();
+         // phpcs:ignore Magento2.Security.Superglobal
+-        if ($this->_requestScope || !isset($_FILES[$attrCode])) {
++
++        // phpcs:disable Magento2.Security.Superglobal
++        $uploadedFile = $request->getParam($attrCode . '_uploaded');
++        if ($uploadedFile) {
++            $value = $uploadedFile;
++        } elseif ($this->_requestScope || !isset($_FILES[$attrCode])) {
+             $value = [];
+-            if (strpos($this->_requestScope, '/') !== false) {
+-                $scopes = explode('/', $this->_requestScope);
++            if (strpos($this->_requestScope, DIRECTORY_SEPARATOR) !== false) {
++                $scopes = explode(DIRECTORY_SEPARATOR, $this->_requestScope);
+                 $mainScope = array_shift($scopes);
+             } else {
+                 $mainScope = $this->_requestScope;
+@@ -168,6 +180,7 @@ class File extends AbstractData
+                 $value = [];
+             }
+         }
++        // phpcs:enable Magento2.Security.Superglobal
+ 
+         if (!empty($extend['delete'])) {
+             $value['delete'] = true;
+@@ -186,7 +199,9 @@ class File extends AbstractData
+     {
+         $label = $value['name'];
+         $rules = $this->getAttribute()->getValidationRules();
+-        $extension = $this->fileIo->getPathInfo($value['name'])['extension'];
++        // phpcs:ignore Magento2.Functions.DiscouragedFunction
++        $pathInfo = $this->ioFile->getPathInfo($label);
++        $extension = $pathInfo['extension'] ?? null;
+         $fileExtensions = ArrayObjectSearch::getArrayElementByName(
+             $rules,
+             'file_extensions'
+@@ -240,7 +255,8 @@ class File extends AbstractData
+         }
+ 
+         // This case is required for file uploader UI component
+-        $temporaryFile = FileProcessor::TMP_DIR . '/' . $this->fileIo->getPathInfo($filename)['basename'];
++        $temporaryFile = FileProcessor::TMP_DIR . DIRECTORY_SEPARATOR .
++            $this->ioFile->getPathInfo($filename)['basename'];
+         if ($this->fileProcessor->isExist($temporaryFile)) {
+             return true;
+         }
+@@ -297,19 +313,18 @@ class File extends AbstractData
+     public function compactValue($value)
+     {
+         if ($this->getIsAjaxRequest()) {
+-            return $this;
++            return '';
+         }
+ 
+         // Remove outdated file (in the case of file uploader UI component)
+-        if (empty($value) && !empty($this->_value)) {
++        if (!empty($this->_value) && !empty($value['delete'])) {
+             $this->fileProcessor->removeUploadedFile($this->_value);
+             return $value;
+         }
+ 
+-        if (isset($value['file']) && !empty($value['file'])) {
+-            if ($value['file'] == $this->_value) {
+-                return $this->_value;
+-            }
++        if ($value && is_string($value) && $this->fileProcessor->isExist($value)) {
++            $result = $value;
++        } elseif (isset($value['file']) && !empty($value['file'])) {
+             $result = $this->processUiComponentValue($value);
+         } else {
+             $result = $this->processInputFieldValue($value);
+@@ -326,6 +341,9 @@ class File extends AbstractData
+      */
+     protected function processUiComponentValue(array $value)
+     {
++        if ($value['file'] == $this->_value) {
++            return $this->_value;
++        }
+         $result = $this->fileProcessor->moveTemporaryFile($value['file']);
+         return $result;
+     }
+@@ -354,7 +372,8 @@ class File extends AbstractData
+         $result = $this->_value;
+ 
+         if ($toDelete) {
+-            $mediaDir->delete($this->_entityTypeCode . '/' . ltrim($this->_value, '/'));
++            $mediaDir->delete($this->_entityTypeCode . DIRECTORY_SEPARATOR .
++                ltrim($this->_value, DIRECTORY_SEPARATOR));
+             $result = '';
+         }
+ 
+@@ -383,7 +402,10 @@ class File extends AbstractData
+      */
+     public function restoreValue($value)
+     {
+-        return $this->_value;
++        if (!empty($this->_value)) {
++            return $this->_value;
++        }
++        return $this->compactValue($value);
+     }
+ 
+     /**
+@@ -413,4 +435,19 @@ class File extends AbstractData
+     {
+         return $this->fileProcessor;
+     }
++
++    /**
++     * Prepare File value.
++     *
++     * @param array|string $value
++     * @return array|string
++     */
++    private function prepareFileValue($value)
++    {
++        if (is_array($value) && isset($value['value'])) {
++            $value = $value['value'];
++        }
++
++        return $value;
++    }
+ }
+diff --git a/vendor/magento/module-customer/Model/Metadata/Form/Image.php b/vendor/magento/module-customer/Model/Metadata/Form/Image.php
+index d023db14549..b5bfe00c233 100644
+--- a/vendor/magento/module-customer/Model/Metadata/Form/Image.php
++++ b/vendor/magento/module-customer/Model/Metadata/Form/Image.php
+@@ -16,15 +16,15 @@ use Magento\Customer\Model\FileProcessorFactory;
+ use Magento\Framework\Api\ArrayObjectSearch;
+ use Magento\Framework\Api\Data\ImageContentInterface;
+ use Magento\Framework\Api\Data\ImageContentInterfaceFactory;
++use Magento\Framework\App\Filesystem\DirectoryList;
+ use Magento\Framework\App\ObjectManager;
+ use Magento\Framework\Exception\FileSystemException;
+ use Magento\Framework\Exception\LocalizedException;
+ use Magento\Framework\File\UploaderFactory;
+ use Magento\Framework\Filesystem;
++use Magento\Framework\Filesystem\Directory\WriteFactory;
+ use Magento\Framework\Filesystem\Directory\WriteInterface;
+ use Magento\Framework\Filesystem\Io\File as IoFileSystem;
+-use Magento\Framework\App\Filesystem\DirectoryList;
+-use Magento\Framework\Filesystem\Directory\WriteFactory;
+ use Magento\Framework\Locale\ResolverInterface;
+ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+ use Magento\Framework\Url\EncoderInterface;
+@@ -54,8 +54,6 @@ class Image extends File
+     private $mediaEntityTmpDirectory;
+ 
+     /**
+-     * Constructor
+-     *
+      * @param TimezoneInterface $localeDate
+      * @param LoggerInterface $logger
+      * @param AttributeMetadataInterface $attribute
+@@ -207,13 +205,11 @@ class Image extends File
+     protected function processUiComponentValue(array $value)
+     {
+         if ($this->_entityTypeCode == AddressMetadataInterface::ENTITY_TYPE_ADDRESS) {
+-            $result = $this->processCustomerAddressValue($value);
+-            return $result;
++            return $this->processCustomerAddressValue($value);
+         }
+ 
+         if ($this->_entityTypeCode == CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER) {
+-            $result = $this->processCustomerValue($value);
+-            return $result;
++            return $this->processCustomerValue($value);
+         }
+ 
+         return $this->_value;
+@@ -267,6 +263,6 @@ class Image extends File
+             return $imageContentDataObject;
+         }
+ 
+-        return $this->_value;
++        return $this->_value ?: $value['file'];
+     }
+ }
+diff --git a/vendor/magento/module-sales/Block/Adminhtml/Order/Create/Form/Address.php b/vendor/magento/module-sales/Block/Adminhtml/Order/Create/Form/Address.php
+index bcdeb4e7d67..123b7776029 100644
+--- a/vendor/magento/module-sales/Block/Adminhtml/Order/Create/Form/Address.php
++++ b/vendor/magento/module-sales/Block/Adminhtml/Order/Create/Form/Address.php
+@@ -399,4 +399,18 @@ class Address extends \Magento\Sales\Block\Adminhtml\Order\Create\Form\AbstractF
+     {
+         return $this->getBackendQuoteSession()->getStoreId();
+     }
++
++    /**
++     * @inheritdoc
++     */
++    protected function _getAdditionalFormElementTypes()
++    {
++        return array_merge(
++            parent::_getAdditionalFormElementTypes(),
++            [
++                'file' => \Magento\Customer\Block\Adminhtml\Form\Element\Address\File::class,
++                'image' => \Magento\Customer\Block\Adminhtml\Form\Element\Address\Image::class,
++            ]
++        );
++    }
+ }
+diff --git a/vendor/magento/module-sales/Controller/Adminhtml/Order/AddressSave.php b/vendor/magento/module-sales/Controller/Adminhtml/Order/AddressSave.php
+index 5633e16d7d3..879baa948e9 100644
+--- a/vendor/magento/module-sales/Controller/Adminhtml/Order/AddressSave.php
++++ b/vendor/magento/module-sales/Controller/Adminhtml/Order/AddressSave.php
+@@ -27,6 +27,7 @@ use Magento\Framework\Controller\Result\RawFactory;
+ use Magento\Framework\Exception\LocalizedException;
+ use Magento\Framework\App\ObjectManager;
+ use Magento\Framework\App\Action\HttpPostActionInterface;
++use Magento\Customer\Model\AttributeMetadataDataProvider;
+ 
+ /**
+  * Sales address save
+@@ -52,6 +53,11 @@ class AddressSave extends Order implements HttpPostActionInterface
+      */
+     private $orderAddressRepository;
+ 
++    /**
++     * @var AttributeMetadataDataProvider
++     */
++    private $attributeMetadataDataProvider;
++
+     /**
+      * @param Context $context
+      * @param Registry $coreRegistry
+@@ -82,7 +88,8 @@ class AddressSave extends Order implements HttpPostActionInterface
+         OrderRepositoryInterface $orderRepository,
+         LoggerInterface $logger,
+         RegionFactory $regionFactory = null,
+-        OrderAddressRepositoryInterface $orderAddressRepository = null
++        OrderAddressRepositoryInterface $orderAddressRepository = null,
++        AttributeMetadataDataProvider $attributeMetadataDataProvider = null
+     ) {
+         $this->regionFactory = $regionFactory ?: ObjectManager::getInstance()->get(RegionFactory::class);
+         $this->orderAddressRepository = $orderAddressRepository ?: ObjectManager::getInstance()
+@@ -100,6 +107,8 @@ class AddressSave extends Order implements HttpPostActionInterface
+             $orderRepository,
+             $logger
+         );
++        $this->attributeMetadataDataProvider = $attributeMetadataDataProvider ?: ObjectManager::getInstance()
++            ->get(AttributeMetadataDataProvider::class);
+     }
+ 
+     /**
+@@ -115,6 +124,7 @@ class AddressSave extends Order implements HttpPostActionInterface
+             OrderAddressInterface::class
+         )->load($addressId);
+         $data = $this->getRequest()->getPostValue();
++        $data = $this->truncateCustomFileAttributes($data);
+         $data = $this->updateRegionData($data);
+         $resultRedirect = $this->resultRedirectFactory->create();
+         if ($data && $address->getId()) {
+@@ -139,7 +149,7 @@ class AddressSave extends Order implements HttpPostActionInterface
+             return $resultRedirect->setPath('sales/*/');
+         }
+     }
+-    
++
+     /**
+      * Update region data
+      *
+@@ -155,4 +165,40 @@ class AddressSave extends Order implements HttpPostActionInterface
+         }
+         return $attributeValues;
+     }
++
++    /**
++     * Truncates custom file attributes from a request.
++     *
++     * As custom file type attributes are not working workaround is introduced.
++     *
++     * @param array $data
++     * @return array
++     */
++    private function truncateCustomFileAttributes(array $data): array
++    {
++        $foundArrays = [];
++
++        foreach ($data as $value) {
++            if (is_array($value)) {
++                $foundArrays = $value;
++            }
++        }
++
++        if (empty($foundArrays)) {
++            return $data;
++        }
++
++        $attributesList = $this->attributeMetadataDataProvider->loadAttributesCollection(
++            'customer_address',
++            'adminhtml_customer_address'
++        );
++        $attributesList->addFieldToFilter('is_user_defined', 1);
++        $attributesList->addFieldToFilter('frontend_input', 'file');
++
++        foreach ($attributesList as $customFileAttribute) {
++            unset($data[$customFileAttribute->getAttributeCode()]);
++        }
++
++        return $data;
++    }
+ }
+diff --git a/vendor/magento/module-sales/Model/AdminOrder/Create.php b/vendor/magento/module-sales/Model/AdminOrder/Create.php
+index d5a94a4dd1f..3a95ea6153c 100644
+--- a/vendor/magento/module-sales/Model/AdminOrder/Create.php
++++ b/vendor/magento/module-sales/Model/AdminOrder/Create.php
+@@ -7,10 +7,12 @@
+ namespace Magento\Sales\Model\AdminOrder;
+ 
+ use Magento\Customer\Api\AddressMetadataInterface;
++use Magento\Customer\Api\Data\AttributeMetadataInterface;
+ use Magento\Customer\Model\Metadata\Form as CustomerForm;
+ use Magento\Framework\Api\ExtensibleDataObjectConverter;
+ use Magento\Framework\App\ObjectManager;
+ use Magento\Quote\Model\Quote\Address;
++use Magento\Quote\Model\Quote\Address\CustomAttributeListInterface;
+ use Magento\Quote\Model\Quote\Item;
+ use Magento\Sales\Api\Data\OrderAddressInterface;
+ use Magento\Sales\Model\Order;
+@@ -250,6 +252,11 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+      */
+     private $storeManager;
+ 
++    /**
++     * @var CustomAttributeListInterface
++     */
++    private $customAttributeList;
++
+     /**
+      * @param \Magento\Framework\ObjectManagerInterface $objectManager
+      * @param \Magento\Framework\Event\ManagerInterface $eventManager
+@@ -282,6 +289,7 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+      * @param \Magento\Framework\Serialize\Serializer\Json|null $serializer
+      * @param ExtensibleDataObjectConverter|null $dataObjectConverter
+      * @param StoreManagerInterface $storeManager
++     * @param CustomAttributeListInterface|null $customAttributeList
+      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+      */
+     public function __construct(
+@@ -315,7 +323,8 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+         array $data = [],
+         \Magento\Framework\Serialize\Serializer\Json $serializer = null,
+         ExtensibleDataObjectConverter $dataObjectConverter = null,
+-        StoreManagerInterface $storeManager = null
++        StoreManagerInterface $storeManager = null,
++        CustomAttributeListInterface $customAttributeList = null
+     ) {
+         $this->_objectManager = $objectManager;
+         $this->_eventManager = $eventManager;
+@@ -350,6 +359,8 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+         $this->dataObjectConverter = $dataObjectConverter ?: ObjectManager::getInstance()
+             ->get(ExtensibleDataObjectConverter::class);
+         $this->storeManager = $storeManager ?: ObjectManager::getInstance()->get(StoreManagerInterface::class);
++        $this->customAttributeList = $customAttributeList ?: ObjectManager::getInstance()
++            ->get(CustomAttributeListInterface::class);
+     }
+ 
+     /**
+@@ -642,6 +653,7 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+      * @param \Magento\Sales\Model\Order\Item $orderItem
+      * @param int $qty
+      * @return \Magento\Quote\Model\Quote\Item|string|$this
++     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+      */
+     public function initFromOrderItem(\Magento\Sales\Model\Order\Item $orderItem, $qty = null)
+     {
+@@ -667,9 +679,18 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+             if ($productOptions !== null && !empty($productOptions['options'])) {
+                 $formattedOptions = [];
+                 foreach ($productOptions['options'] as $option) {
++                    if (in_array($option['option_type'], ['date', 'date_time', 'time', 'file'])) {
++                        $product->setSkipCheckRequiredOption(false);
++                        $formattedOptions[$option['option_id']] =
++                            $buyRequest->getDataByKey('options')[$option['option_id']];
++                        continue;
++                    }
++
+                     $formattedOptions[$option['option_id']] = $option['option_value'];
+                 }
+-                $buyRequest->setData('options', $formattedOptions);
++                if (!empty($formattedOptions)) {
++                    $buyRequest->setData('options', $formattedOptions);
++                }
+             }
+             $item = $this->getQuote()->addProduct($product, $buyRequest);
+             if (is_string($item)) {
+@@ -1512,7 +1533,8 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+         $billingAddress->setData('save_in_address_book', $saveInAddressBook);
+ 
+         $quote = $this->getQuote();
+-        if (!$quote->isVirtual() && $this->getShippingAddress()->getSameAsBilling()) {
++        $shippingAddress = $this->getShippingAddress();
++        if (!$quote->isVirtual() && $shippingAddress->getSameAsBilling()) {
+             $address['save_in_address_book'] = 0;
+             $this->setShippingAddress($address);
+         }
+@@ -1525,9 +1547,36 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+         }
+         $quote->setBillingAddress($billingAddress);
+ 
++        if ($shippingAddress->getSameAsBilling()) {
++            $this->synchronizeAddressesFileAttributes();
++        }
++
+         return $this;
+     }
+ 
++    /**
++     * Synchronizes addresses file attributes.
++     *
++     * @return void
++     */
++    private function synchronizeAddressesFileAttributes(): void
++    {
++        $billingAddress = $this->getBillingAddress();
++        $shippingAddress = $this->getShippingAddress();
++
++        /** @var AttributeMetadataInterface[] $customAttributes */
++        $customAttributes = $this->customAttributeList->getAttributes();
++        foreach ($customAttributes as $attribute) {
++            $attributeCode = $attribute->getAttributeCode();
++            if ($attribute->getFrontendInput() === 'file'
++                && !empty($billingAddress->getData($attributeCode))
++                && empty($shippingAddress->getData($attributeCode))
++            ) {
++                $shippingAddress->setData($attributeCode, $billingAddress->getData($attributeCode));
++            }
++        }
++    }
++
+     /**
+      * Set shipping method
+      *
+@@ -1644,7 +1693,8 @@ class Create extends \Magento\Framework\DataObject implements \Magento\Checkout\
+ 
+         // emulate request
+         $request = $form->prepareRequest($accountData);
+-        $data = $form->extractData($request);
++        $requestScope = $request->getPostValue() ? 'order/account' : null;
++        $data = $form->extractData($request, $requestScope);
+         $data = $form->restoreData($data);
+         $customer = $this->customerFactory->create();
+         $this->dataObjectHelper->populateWithArray(
+diff --git a/vendor/magento/module-customer-custom-attributes/Block/Checkout/AttributeMerger.php b/vendor/magento/module-customer-custom-attributes/Block/Checkout/AttributeMerger.php
+index 69c4572a749..d190512b55e 100644
+--- a/vendor/magento/module-customer-custom-attributes/Block/Checkout/AttributeMerger.php
++++ b/vendor/magento/module-customer-custom-attributes/Block/Checkout/AttributeMerger.php
+@@ -98,7 +98,7 @@ class AttributeMerger extends CheckoutAttributesMerger
+ 
+         if (in_array($attributeConfig['formElement'], ['file', 'image'])) {
+             $result['config']['uploaderConfig'] = [
+-                'url' => $this->url->getUrl('customer/address_file/upload')
++                'url' => $this->url->getUrl('customer_custom_attributes/address_file/upload')
+             ];
+         }
+ 
+diff --git a/vendor/magento/module-customer-custom-attributes/Controller/AbstractUploadFile.php b/vendor/magento/module-customer-custom-attributes/Controller/AbstractUploadFile.php
+new file mode 100644
+index 00000000000..eb46ae4a69f
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Controller/AbstractUploadFile.php
+@@ -0,0 +1,187 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Controller;
++
++use Magento\Customer\Api\MetadataInterface;
++use Magento\Customer\Model\FileProcessorFactory;
++use Magento\Customer\Model\FileUploader;
++use Magento\Customer\Model\FileUploaderFactory;
++use Magento\CustomerCustomAttributes\Model\Customer\FileUploadPostprocessorFactory;
++use Magento\Framework\Api\CustomAttributesDataInterface;
++use Magento\Framework\App\Action\HttpPostActionInterface;
++use Magento\Framework\App\ActionInterface;
++use Magento\Framework\App\ObjectManager;
++use Magento\Framework\App\RequestInterface;
++use Magento\Framework\Controller\ResultFactory;
++use Magento\Framework\Exception\LocalizedException;
++use Psr\Log\LoggerInterface;
++
++/**
++ * Class for uploading files for customer or address custom attributes
++ */
++abstract class AbstractUploadFile implements ActionInterface, HttpPostActionInterface
++{
++    /**
++     * @var FileUploaderFactory
++     */
++    private $fileUploaderFactory;
++
++    /**
++     * @var LoggerInterface
++     */
++    private $logger;
++
++    /**
++     * @var FileProcessorFactory
++     */
++    private $fileProcessorFactory;
++
++    /**
++     * @var RequestInterface
++     */
++    private $request;
++
++    /**
++     * @var ResultFactory
++     */
++    private $resultFactory;
++
++    /**
++     * @var MetadataInterface
++     */
++    private $metadata;
++
++    /**
++     * @var FileUploadPostprocessorFactory
++     */
++    private $fileUploadPostprocessorFactory;
++
++    /**
++     * @param FileUploaderFactory $fileUploaderFactory
++     * @param LoggerInterface $logger
++     * @param FileProcessorFactory $fileProcessorFactory
++     * @param RequestInterface $request
++     * @param ResultFactory $resultFactory
++     * @param MetadataInterface $metadata
++     * @param FileUploadPostprocessorFactory|null $fileUploadPostprocessorFactory
++     */
++    public function __construct(
++        FileUploaderFactory $fileUploaderFactory,
++        LoggerInterface $logger,
++        FileProcessorFactory $fileProcessorFactory,
++        RequestInterface $request,
++        ResultFactory $resultFactory,
++        MetadataInterface $metadata,
++        ?FileUploadPostprocessorFactory $fileUploadPostprocessorFactory = null
++    ) {
++        $this->fileUploaderFactory = $fileUploaderFactory;
++        $this->logger = $logger;
++        $this->fileProcessorFactory = $fileProcessorFactory;
++        $this->request = $request;
++        $this->resultFactory = $resultFactory;
++        $this->metadata = $metadata;
++        $this->fileUploadPostprocessorFactory = $fileUploadPostprocessorFactory
++            ?: ObjectManager::getInstance()->get(FileUploadPostprocessorFactory::class);
++    }
++
++    /**
++     * @inheritDoc
++     */
++    public function execute()
++    {
++        try {
++            $useScope = false;
++            if ($this->request->getFiles(CustomAttributesDataInterface::CUSTOM_ATTRIBUTES)) {
++                $useScope = true;
++                $requestedFiles = $this->request->getFiles(CustomAttributesDataInterface::CUSTOM_ATTRIBUTES);
++            } else {
++                $requestedFiles = $this->request->getFiles()->toArray();
++            }
++            if (empty($requestedFiles)) {
++                $result = $this->processError(__('No files for upload.'));
++            } else {
++                $attributeCode = key($requestedFiles);
++                $attributeMetadata = $this->metadata->getAttributeMetadata($attributeCode);
++                /** @var FileUploader $fileUploader */
++                $fileUploader = $this->fileUploaderFactory->create(
++                    [
++                        'attributeMetadata' => $attributeMetadata,
++                        'entityTypeCode' => $this->getEntityType(),
++                        'scope' => $useScope ? CustomAttributesDataInterface::CUSTOM_ATTRIBUTES : $attributeCode,
++                    ]
++                );
++
++                $errors = $fileUploader->validate();
++                if (true !== $errors) {
++                    $errorMessage = implode('</br>', $errors);
++                    $result = $this->processError(($errorMessage));
++                } else {
++                    $result = $fileUploader->uploadFile($useScope);
++                    $this->moveTmpFileToSuitableFolder($result);
++                    $this->fileUploadPostprocessorFactory->create(['entityTypeCode' => $this->getEntityType()])
++                        ->process($attributeCode, $result['file']);
++                }
++            }
++        } catch (LocalizedException $e) {
++            $result = $this->processError($e->getMessage(), $e->getCode());
++        } catch (\Exception $e) {
++            $this->logger->critical($e);
++            $result = $this->processError(__('Something went wrong.'));
++        }
++
++        /** @var \Magento\Framework\Controller\Result\Json $resultJson */
++        $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
++        $resultJson->setData($result);
++
++        return $resultJson;
++    }
++
++    /**
++     * Move file from temporary folder to media folder
++     *
++     * @param array $fileInfo
++     */
++    private function moveTmpFileToSuitableFolder(&$fileInfo)
++    {
++        $fileName = $fileInfo['file'];
++
++        $fileProcessor = $this->fileProcessorFactory
++            ->create(['entityTypeCode' => $this->getEntityType()]);
++
++        $newFilePath = $fileProcessor->moveTemporaryFile($fileName);
++        $fileInfo['file'] = $newFilePath;
++        $fileInfo['url'] = $fileProcessor->getViewUrl(
++            $newFilePath,
++            'file'
++        );
++    }
++
++    /**
++     * Prepare result array for errors
++     *
++     * @param string $message
++     * @param int $code
++     * @return array
++     */
++    private function processError($message, $code = 0)
++    {
++        $result = [
++            'error' => $message,
++            'errorcode' => $code,
++        ];
++
++        return $result;
++    }
++
++    /**
++     * Returns entity type
++     *
++     * @return string
++     */
++    abstract protected function getEntityType(): string;
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Controller/Address/File/Upload.php b/vendor/magento/module-customer-custom-attributes/Controller/Address/File/Upload.php
+new file mode 100644
+index 00000000000..10c4d4f501a
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Controller/Address/File/Upload.php
+@@ -0,0 +1,58 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Controller\Address\File;
++
++use Magento\Customer\Model\FileUploaderFactory;
++use Magento\Framework\Controller\ResultFactory;
++use Psr\Log\LoggerInterface;
++use Magento\Customer\Model\FileProcessorFactory;
++use Magento\Framework\App\RequestInterface;
++use Magento\CustomerCustomAttributes\Controller\AbstractUploadFile;
++use Magento\Customer\Api\AddressMetadataInterface;
++
++/**
++ * Class for uploading files for customer custom address attributes
++ */
++class Upload extends AbstractUploadFile
++{
++    /**
++     * @param FileUploaderFactory $fileUploaderFactory
++     * @param LoggerInterface $logger
++     * @param FileProcessorFactory $fileProcessorFactory
++     * @param RequestInterface $request
++     * @param ResultFactory $resultFactory
++     * @param AddressMetadataInterface $addressMetadataService
++     */
++    public function __construct(
++        FileUploaderFactory $fileUploaderFactory,
++        LoggerInterface $logger,
++        FileProcessorFactory $fileProcessorFactory,
++        RequestInterface $request,
++        ResultFactory $resultFactory,
++        AddressMetadataInterface $addressMetadataService
++    ) {
++        parent::__construct(
++            $fileUploaderFactory,
++            $logger,
++            $fileProcessorFactory,
++            $request,
++            $resultFactory,
++            $addressMetadataService
++        );
++    }
++
++    /**
++     * Returns entity type of address
++     *
++     * @return string
++     */
++    protected function getEntityType(): string
++    {
++        return AddressMetadataInterface::ENTITY_TYPE_ADDRESS;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Controller/Address/File/Viewfile.php b/vendor/magento/module-customer-custom-attributes/Controller/Address/File/Viewfile.php
+new file mode 100644
+index 00000000000..04e5de760da
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Controller/Address/File/Viewfile.php
+@@ -0,0 +1,191 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Controller\Address\File;
++
++use Magento\Framework\App\Action\HttpGetActionInterface;
++use Magento\Framework\App\ResponseInterface;
++use Magento\Framework\Controller\ResultInterface;
++use Magento\Framework\Exception\NotFoundException;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\File\Mime;
++use Magento\Framework\Controller\ResultFactory;
++use Magento\Customer\Model\Session;
++use Magento\CustomerCustomAttributes\Model\Customer\Address\Attribute\File\Download\Validator;
++use Magento\CustomerCustomAttributes\Model\Customer\FileDownload;
++use Magento\Framework\Url\DecoderInterface;
++use Magento\Framework\App\Response\Http\FileFactory;
++use Magento\Framework\Controller\Result\Raw;
++use Magento\Framework\App\RequestInterface;
++use Magento\Framework\App\ActionInterface;
++
++/**
++ * Class Viewfile serves to show file by file name provided in request parameters.
++ */
++class Viewfile implements ActionInterface, HttpGetActionInterface
++{
++    /**
++     * @var DecoderInterface
++     */
++    private $urlDecoder;
++
++    /**
++     * @var FileFactory
++     */
++    private $fileFactory;
++
++    /**
++     * @var Mime
++     */
++    private $mime;
++
++    /**
++     * @var Session
++     */
++    private $session;
++
++    /**
++     * @var Validator
++     */
++    private $downloadValidator;
++
++    /**
++     * @var FileDownload
++     */
++    private $fileDownload;
++
++    /**
++     * @var RequestInterface
++     */
++    private $request;
++
++    /**
++     * @var ResultFactory
++     */
++    private $resultFactory;
++
++    /**
++     * @param FileFactory $fileFactory
++     * @param DecoderInterface $urlDecoder
++     * @param Mime $mime
++     * @param Session $session
++     * @param Validator $downloadValidator
++     * @param FileDownload $fileDownload
++     * @param RequestInterface $request
++     * @param ResultFactory $resultFactory
++     */
++    public function __construct(
++        FileFactory $fileFactory,
++        DecoderInterface $urlDecoder,
++        Mime $mime,
++        Session $session,
++        Validator $downloadValidator,
++        FileDownload $fileDownload,
++        RequestInterface $request,
++        ResultFactory $resultFactory
++    ) {
++        $this->fileFactory = $fileFactory;
++        $this->urlDecoder  = $urlDecoder;
++        $this->mime = $mime;
++        $this->session = $session;
++        $this->downloadValidator = $downloadValidator;
++        $this->fileDownload = $fileDownload;
++        $this->request = $request;
++        $this->resultFactory = $resultFactory;
++    }
++
++    /**
++     * Customer view file action
++     *
++     * @return ResultInterface|ResponseInterface|void
++     */
++    public function execute()
++    {
++        $customAttributes = [];
++        if ($this->session->isLoggedIn()) {
++            $addresses = $this->session->getCustomerData()->getAddresses();
++            $customAttributes = [];
++            foreach ($addresses as $address) {
++                foreach ($address->getCustomAttributes() as $key => $value) {
++                    $customAttributes[$key] = $value;
++                }
++            }
++        }
++
++        list($file, $plain) = $this->getFileParams();
++        if ($this->downloadValidator->canDownloadFile($file, $customAttributes)) {
++            list($fileName, $path) = $this->fileDownload->getFilePath($file);
++
++            $pathInfo = $this->fileDownload->getPathInfo($path);
++
++            if ($plain) {
++                return $this->generateImageResult($path);
++            } else {
++                $name = $pathInfo['basename'];
++                return $this->fileFactory->create(
++                    $name,
++                    ['type' => 'filename', 'value' => $fileName],
++                    DirectoryList::MEDIA
++                );
++            }
++        }
++    }
++
++    /**
++     * Get parameters from request.
++     *
++     * @return array
++     * @throws NotFoundException
++     */
++    private function getFileParams(): array
++    {
++        $file = null;
++        $plain = false;
++        if ($this->request->getParam('file')) {
++            // download file
++            $file = $this->urlDecoder->decode(
++                $this->request->getParam('file')
++            );
++        } elseif ($this->request->getParam('image')) {
++            // show plain image
++            $file = $this->urlDecoder->decode(
++                $this->request->getParam('image')
++            );
++            $plain = true;
++        } else {
++            throw new NotFoundException(__('Page not found.'));
++        }
++
++        return [$file, $plain];
++    }
++
++    /**
++     * Generates raw response of image
++     *
++     * @param string $path
++     * @return Raw
++     */
++    public function generateImageResult(string $path): Raw
++    {
++        $directory = $this->fileDownload->getDirectory();
++        $contentType = $this->mime->getMimeType($path);
++        $stat = $directory->stat($path);
++        $contentLength = $stat['size'];
++        $contentModify = $stat['mtime'];
++
++        /** @var Raw $resultRaw */
++        $resultRaw = $this->resultFactory->create(ResultFactory::TYPE_RAW);
++        $resultRaw->setHttpResponseCode(200)
++            ->setHeader('Pragma', 'public', true)
++            ->setHeader('Content-type', $contentType, true)
++            ->setHeader('Content-Length', $contentLength)
++            ->setHeader('Last-Modified', date('r', $contentModify));
++        $resultRaw->setContents($directory->readFile($path));
++
++        return $resultRaw;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Controller/Customer/File/Upload.php b/vendor/magento/module-customer-custom-attributes/Controller/Customer/File/Upload.php
+new file mode 100644
+index 00000000000..0c936fe9466
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Controller/Customer/File/Upload.php
+@@ -0,0 +1,58 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Controller\Customer\File;
++
++use Magento\Customer\Api\CustomerMetadataInterface;
++use Magento\Customer\Model\FileUploaderFactory;
++use Magento\Framework\Controller\ResultFactory;
++use Psr\Log\LoggerInterface;
++use Magento\Customer\Model\FileProcessorFactory;
++use Magento\Framework\App\RequestInterface;
++use Magento\CustomerCustomAttributes\Controller\AbstractUploadFile;
++
++/**
++ * Class for uploading files for customer custom attributes
++ */
++class Upload extends AbstractUploadFile
++{
++    /**
++     * @param FileUploaderFactory $fileUploaderFactory
++     * @param LoggerInterface $logger
++     * @param FileProcessorFactory $fileProcessorFactory
++     * @param RequestInterface $request
++     * @param ResultFactory $resultFactory
++     * @param CustomerMetadataInterface $customerMetadataService
++     */
++    public function __construct(
++        FileUploaderFactory $fileUploaderFactory,
++        LoggerInterface $logger,
++        FileProcessorFactory $fileProcessorFactory,
++        RequestInterface $request,
++        ResultFactory $resultFactory,
++        CustomerMetadataInterface $customerMetadataService
++    ) {
++        parent::__construct(
++            $fileUploaderFactory,
++            $logger,
++            $fileProcessorFactory,
++            $request,
++            $resultFactory,
++            $customerMetadataService
++        );
++    }
++
++    /**
++     * Returns entity type of customer
++     *
++     * @return string
++     */
++    protected function getEntityType(): string
++    {
++        return CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Controller/Index/Viewfile.php b/vendor/magento/module-customer-custom-attributes/Controller/Index/Viewfile.php
+new file mode 100644
+index 00000000000..5f9f8beff39
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Controller/Index/Viewfile.php
+@@ -0,0 +1,185 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Controller\Index;
++
++use Magento\Framework\App\Action\HttpGetActionInterface;
++use Magento\Framework\App\ResponseInterface;
++use Magento\Framework\Controller\ResultInterface;
++use Magento\Framework\Exception\NotFoundException;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\File\Mime;
++use Magento\Framework\Controller\ResultFactory;
++use Magento\Customer\Model\Session;
++use Magento\CustomerCustomAttributes\Model\Customer\Attribute\File\Download\Validator;
++use Magento\CustomerCustomAttributes\Model\Customer\FileDownload;
++use Magento\Framework\Url\DecoderInterface;
++use Magento\Framework\App\Response\Http\FileFactory;
++use Magento\Framework\Controller\Result\Raw;
++use Magento\Framework\App\RequestInterface;
++use Magento\Framework\App\ActionInterface;
++
++/**
++ * Class Viewfile serves to show file by file name provided in request parameters.
++ */
++class Viewfile implements ActionInterface, HttpGetActionInterface
++{
++    /**
++     * @var DecoderInterface
++     */
++    private $urlDecoder;
++
++    /**
++     * @var FileFactory
++     */
++    private $fileFactory;
++
++    /**
++     * @var Mime
++     */
++    private $mime;
++
++    /**
++     * @var Session
++     */
++    private $session;
++
++    /**
++     * @var Validator
++     */
++    private $downloadValidator;
++
++    /**
++     * @var FileDownload
++     */
++    private $fileDownload;
++
++    /**
++     * @var RequestInterface
++     */
++    private $request;
++
++    /**
++     * @var ResultFactory
++     */
++    private $resultFactory;
++
++    /**
++     * @param FileFactory $fileFactory
++     * @param DecoderInterface $urlDecoder
++     * @param Mime $mime
++     * @param Session $session
++     * @param Validator $downloadValidator
++     * @param FileDownload $fileDownload
++     * @param RequestInterface $request
++     * @param ResultFactory $resultFactory
++     */
++    public function __construct(
++        FileFactory $fileFactory,
++        DecoderInterface $urlDecoder,
++        Mime $mime,
++        Session $session,
++        Validator $downloadValidator,
++        FileDownload $fileDownload,
++        RequestInterface $request,
++        ResultFactory $resultFactory
++    ) {
++        $this->fileFactory = $fileFactory;
++        $this->urlDecoder  = $urlDecoder;
++        $this->mime = $mime;
++        $this->session = $session;
++        $this->downloadValidator = $downloadValidator;
++        $this->fileDownload = $fileDownload;
++        $this->request = $request;
++        $this->resultFactory = $resultFactory;
++    }
++
++    /**
++     * Customer view file action
++     *
++     * @return ResultInterface|ResponseInterface|void
++     */
++    public function execute()
++    {
++        $customAttributes = [];
++        if ($this->session->isLoggedIn()) {
++            $customAttributes = $this->session->getCustomerData()->getCustomAttributes();
++        }
++
++        list($file, $plain) = $this->getFileParams();
++        if ($this->downloadValidator->canDownloadFile($file, $customAttributes)) {
++            list($fileName, $path) = $this->fileDownload->getFilePath($file);
++
++            $pathInfo = $this->fileDownload->getPathInfo($path);
++
++            if ($plain) {
++                return $this->generateImageResult($path);
++            } else {
++                $name = $pathInfo['basename'];
++                return $this->fileFactory->create(
++                    $name,
++                    ['type' => 'filename', 'value' => $fileName],
++                    DirectoryList::MEDIA
++                );
++            }
++        }
++    }
++
++    /**
++     * Get parameters from request.
++     *
++     * @return array
++     * @throws NotFoundException
++     */
++    private function getFileParams(): array
++    {
++        $file = null;
++        $plain = false;
++        if ($this->request->getParam('file')) {
++            // download file
++            $file = $this->urlDecoder->decode(
++                $this->request->getParam('file')
++            );
++        } elseif ($this->request->getParam('image')) {
++            // show plain image
++            $file = $this->urlDecoder->decode(
++                $this->request->getParam('image')
++            );
++            $plain = true;
++        } else {
++            throw new NotFoundException(__('Page not found.'));
++        }
++
++        return [$file, $plain];
++    }
++
++    /**
++     * Generates raw response of image
++     *
++     * @param string $path
++     * @return Raw
++     */
++    public function generateImageResult(string $path): Raw
++    {
++        $directory = $this->fileDownload->getDirectory();
++        $contentType = $this->mime->getMimeType($path);
++        $stat = $directory->stat($path);
++        $contentLength = $stat['size'];
++        $contentModify = $stat['mtime'];
++
++        /** @var Raw $resultRaw */
++        $resultRaw = $this->resultFactory->create(ResultFactory::TYPE_RAW);
++        $resultRaw->setHttpResponseCode(200)
++            ->setHeader('Pragma', 'public', true)
++            ->setHeader('Content-type', $contentType, true)
++            ->setHeader('Content-Length', $contentLength)
++            ->setHeader('Last-Modified', date('r', $contentModify));
++        $resultRaw->setContents($directory->readFile($path));
++
++        return $resultRaw;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attribute/File/Download/Validator.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attribute/File/Download/Validator.php
+new file mode 100644
+index 00000000000..3d3b1af7899
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attribute/File/Download/Validator.php
+@@ -0,0 +1,64 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer\Address\Attribute\File\Download;
++
++use Magento\CustomerCustomAttributes\Model\Customer\FileDownloadValidator;
++use Magento\CustomerCustomAttributes\Model\Customer\FileDownloadValidatorFactory;
++use Magento\Customer\Api\AddressMetadataInterface;
++
++/**
++ * Class Validator validates if user can have access to requested file
++ */
++class Validator
++{
++    /**
++     * @var AddressMetadataInterface
++     */
++    private $addressMetadata;
++
++    /**
++     * @var FileDownloadValidatorFactory
++     */
++    private $fileDownloadValidatorFactory;
++
++    /**
++     * @param AddressMetadataInterface $addressMetadata
++     * @param FileDownloadValidatorFactory $fileDownloadValidatorFactory
++     */
++    public function __construct(
++        AddressMetadataInterface $addressMetadata,
++        FileDownloadValidatorFactory $fileDownloadValidatorFactory
++    ) {
++        $this->addressMetadata = $addressMetadata;
++        $this->fileDownloadValidatorFactory = $fileDownloadValidatorFactory;
++    }
++
++    /**
++     * Check if customer can download file
++     *
++     * @param string $fileName
++     * @param array $customAttributes
++     * @return bool
++     */
++    public function canDownloadFile(string $fileName, array $customAttributes) : bool
++    {
++        /**
++         * @var FileDownloadValidator $validator
++         */
++        $validator = $this->fileDownloadValidatorFactory->create(
++            [
++                'metadata' => $this->addressMetadata,
++                'entityTypeCode' => AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
++            ]
++        );
++        return $validator->canDownloadFile(
++            $fileName,
++            $customAttributes,
++        );
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/ProcessorComponentInterface.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/ProcessorComponentInterface.php
+new file mode 100644
+index 00000000000..b92e5b33fa3
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/ProcessorComponentInterface.php
+@@ -0,0 +1,26 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes;
++
++use Magento\Framework\Api\AttributeInterface;
++
++/**
++ * Attribute processor.
++ *
++ * A component of the CustomerAddressCustomAttributesProcessor composition
++ */
++interface ProcessorComponentInterface
++{
++    /**
++     * Process attribute object.
++     *
++     * @param AttributeInterface $attribute
++     * @return void
++     */
++    public function process(AttributeInterface $attribute): void;
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/Processors/ArrayTypeOfValue.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/Processors/ArrayTypeOfValue.php
+new file mode 100644
+index 00000000000..26347fb08df
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/Processors/ArrayTypeOfValue.php
+@@ -0,0 +1,44 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\Processors;
++
++use Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\ProcessorComponentInterface;
++use Magento\Framework\Api\AttributeInterface;
++
++/**
++ * Transforms array type of customer address attribute value.
++ */
++class ArrayTypeOfValue implements ProcessorComponentInterface
++{
++    /**
++     * @inheritDoc
++     */
++    public function process(AttributeInterface $attribute): void
++    {
++        if (!$this->isTransformationRequired($attribute)) {
++            return;
++        }
++
++        $customAttributeValue = $attribute->getValue();
++        $attribute->setValue($customAttributeValue['value']);
++    }
++
++    /**
++     * Whether the attribute has signs that the transformation is required.
++     *
++     * @param AttributeInterface $attribute
++     * @return bool
++     */
++    private function isTransformationRequired(AttributeInterface $attribute): bool
++    {
++        $customAttributeValue = $attribute->getValue();
++
++        return isset($customAttributeValue['value']) &&
++            $customAttributeValue['value'] !== null;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/Processors/FileTypeOfFrontendInput.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/Processors/FileTypeOfFrontendInput.php
+new file mode 100644
+index 00000000000..62106e97195
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/Address/Attributes/Processors/FileTypeOfFrontendInput.php
+@@ -0,0 +1,78 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\Processors;
++
++use Magento\Framework\Api\AttributeInterface;
++use Magento\Quote\Model\Quote\Address\CustomAttributeListInterface;
++use Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\ProcessorComponentInterface;
++
++/**
++ * Transforms File type of customer address attribute.
++ */
++class FileTypeOfFrontendInput implements ProcessorComponentInterface
++{
++    /**
++     * List of file input types
++     */
++    private const INPUT_TYPES = [
++        'file',
++        'image'
++    ];
++
++    /**
++     * @var CustomAttributeListInterface
++     */
++    private $customAttributeList;
++
++    /**
++     * @param CustomAttributeListInterface $customAttributeList
++     */
++    public function __construct(CustomAttributeListInterface $customAttributeList)
++    {
++        $this->customAttributeList = $customAttributeList;
++    }
++
++    /**
++     * @inheritDoc
++     */
++    public function process(AttributeInterface $attribute): void
++    {
++        if (!$this->isTransformationRequired($attribute)) {
++            return;
++        }
++
++        $attributeValue = $attribute->getValue();
++        $attribute->setValue($attributeValue['value'][0]['file']);
++    }
++
++    /**
++     * Whether the attribute has signs that the transformation is required.
++     *
++     * @param AttributeInterface $attribute
++     * @return bool
++     */
++    private function isTransformationRequired(AttributeInterface $attribute): bool
++    {
++        $attributesMetaData = $this->customAttributeList->getAttributes();
++
++        if (!isset($attributesMetaData[$attribute->getAttributeCode()])) {
++            return false;
++        }
++
++        $attributeMetaData = $attributesMetaData[$attribute->getAttributeCode()];
++
++        if (!in_array($attributeMetaData->getFrontendInput(), self::INPUT_TYPES, true)) {
++            return false;
++        }
++
++        $attributeValue = $attribute->getValue();
++
++        return is_array($attributeValue) &&
++            isset($attributeValue['value'][0]['file']);
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/Attribute/File/Download/Validator.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/Attribute/File/Download/Validator.php
+new file mode 100644
+index 00000000000..3293ca88429
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/Attribute/File/Download/Validator.php
+@@ -0,0 +1,66 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer\Attribute\File\Download;
++
++use Magento\Customer\Model\Metadata\CustomerMetadata;
++use Magento\CustomerCustomAttributes\Model\Customer\FileDownloadValidator;
++use Magento\CustomerCustomAttributes\Model\Customer\FileDownloadValidatorFactory;
++use Magento\Framework\App\ObjectManager;
++
++/**
++ * Class Validator validates if user can have access to requested file
++ */
++class Validator
++{
++    /**
++     * @var CustomerMetadata
++     */
++    private $customerMetaData;
++
++    /**
++     * @var FileDownloadValidatorFactory
++     */
++    private $fileDownloadValidatorFactory;
++
++    /**
++     * @param CustomerMetadata $customerMetaData
++     * @param FileDownloadValidatorFactory|null $fileDownloadValidatorFactory
++     */
++    public function __construct(
++        CustomerMetadata $customerMetaData,
++        ?FileDownloadValidatorFactory $fileDownloadValidatorFactory = null
++    ) {
++        $this->customerMetaData = $customerMetaData;
++        $this->fileDownloadValidatorFactory = $fileDownloadValidatorFactory ??
++            ObjectManager::getInstance()->get(FileDownloadValidatorFactory::class);
++    }
++
++    /**
++     * Check if customer can download file
++     *
++     * @param string $fileName
++     * @param array $customAttributes
++     * @return bool
++     */
++    public function canDownloadFile(string $fileName, array $customAttributes) : bool
++    {
++        /**
++         * @var FileDownloadValidator $validator
++         */
++        $validator = $this->fileDownloadValidatorFactory->create(
++            [
++                'metadata' => $this->customerMetaData,
++                'entityTypeCode' => CustomerMetadata::ENTITY_TYPE_CUSTOMER,
++            ]
++        );
++        return $validator->canDownloadFile(
++            $fileName,
++            $customAttributes,
++        );
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/FileDownload.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/FileDownload.php
+new file mode 100644
+index 00000000000..fa2db2c858d
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/FileDownload.php
+@@ -0,0 +1,108 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer;
++
++use Magento\Framework\Filesystem;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\Filesystem\Io\File as FilesystemClient;
++use Magento\Customer\Api\CustomerMetadataInterface;
++use Magento\Framework\Exception\NotFoundException;
++use Magento\MediaStorage\Helper\File\Storage;
++use Magento\Framework\Filesystem\Directory\ReadInterface;
++
++/**
++ * Class FileDownload returns information for file download
++ */
++class FileDownload
++{
++    /**
++     * @var Filesystem
++     */
++    private $fileSystem;
++
++    /**
++     * @var ReadInterface
++     */
++    private $directory;
++
++    /**
++     * @var FilesystemClient
++     */
++    private $filesystemClient;
++
++    /**
++     * @var Storage
++     */
++    private $fileStorage;
++
++    /**
++     * @var string
++     */
++    private $entityType;
++
++    /**
++     * @param Filesystem $fileSystem
++     * @param FilesystemClient $filesystemClient
++     * @param Storage $fileStorage
++     * @param string $entityType
++     */
++    public function __construct(
++        FileSystem $fileSystem,
++        FilesystemClient $filesystemClient,
++        Storage $fileStorage,
++        string $entityType = CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER
++    ) {
++        $this->fileSystem = $fileSystem;
++        $this->directory = $this->fileSystem->getDirectoryRead(DirectoryList::MEDIA);
++        $this->filesystemClient = $filesystemClient;
++        $this->fileStorage = $fileStorage;
++        $this->entityType = $entityType;
++    }
++
++    /**
++     * Returns file name and file path
++     *
++     * @param string $file
++     * @return array
++     * @throws NotFoundException
++     */
++    public function getFilePath(string $file): array
++    {
++        $fileName = $this->entityType . DIRECTORY_SEPARATOR . ltrim($file, DIRECTORY_SEPARATOR);
++
++        $path = $this->directory->getAbsolutePath($fileName);
++        if (mb_strpos($fileName, '..') !== false
++            || (!$this->directory->isFile($fileName) && !$this->fileStorage->processStorageFile($path))
++        ) {
++            throw new NotFoundException(__('Page not found.'));
++        }
++
++        return [$fileName, $path];
++    }
++
++    /**
++     * Returns file path info
++     *
++     * @param string $path
++     * @return array
++     */
++    public function getPathInfo(string $path): array
++    {
++        return $this->filesystemClient->getPathInfo($path);
++    }
++
++    /**
++     * Returns file directory
++     *
++     * @return ReadInterface
++     */
++    public function getDirectory(): ReadInterface
++    {
++        return $this->directory;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/FileDownloadValidator.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/FileDownloadValidator.php
+new file mode 100644
+index 00000000000..e0972acf9e4
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/FileDownloadValidator.php
+@@ -0,0 +1,138 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer;
++
++use Magento\Customer\Api\MetadataInterface;
++use Magento\Framework\Api\AttributeInterface;
++use Magento\Framework\Api\AttributeInterfaceFactory;
++use Magento\Framework\Exception\NoSuchEntityException;
++
++/**
++ * Class Validator validates if user can have access to requested file
++ */
++class FileDownloadValidator
++{
++    /**
++     * List of file input types
++     */
++    private const INPUT_TYPES = [
++        'file',
++        'image'
++    ];
++
++    /**
++     * @var TemporaryFileStorageInterface
++     */
++    private $storage;
++
++    /**
++     * @var MetadataInterface
++     */
++    private $metadata;
++
++    /**
++     * @var string
++     */
++    private $entityTypeCode;
++
++    /**
++     * @var AttributeInterfaceFactory
++     */
++    private $attributeFactory;
++
++    /**
++     * @param TemporaryFileStorageInterface $storage
++     * @param MetadataInterface $metadata
++     * @param AttributeInterfaceFactory $attributeFactory
++     * @param string $entityTypeCode
++     */
++    public function __construct(
++        TemporaryFileStorageInterface $storage,
++        MetadataInterface $metadata,
++        AttributeInterfaceFactory $attributeFactory,
++        string $entityTypeCode
++    ) {
++        $this->storage = $storage;
++        $this->metadata = $metadata;
++        $this->entityTypeCode = $entityTypeCode;
++        $this->attributeFactory = $attributeFactory;
++    }
++
++    /**
++     * Check if customer can download file
++     *
++     * @param string $fileName
++     * @param AttributeInterface[] $customAttributes
++     * @return bool
++     */
++    public function canDownloadFile(
++        string $fileName,
++        array $customAttributes
++    ): bool {
++        $fileName = ltrim($fileName, DIRECTORY_SEPARATOR);
++        foreach ($customAttributes as $attribute) {
++            if ($this->validate($attribute, $fileName)) {
++                return true;
++            }
++        }
++
++        return $this->canDownloadTemporaryFile($fileName);
++    }
++
++    /**
++     * Check if the file is a temporary file
++     *
++     * @param string $fileName
++     * @return bool
++     */
++    private function canDownloadTemporaryFile(string $fileName): bool
++    {
++        $tmpFiles = $this->storage->get();
++        if (isset($tmpFiles[$this->entityTypeCode])) {
++            foreach ($tmpFiles[$this->entityTypeCode] as $attributeCode => $value) {
++                $attribute = $this->attributeFactory->create(
++                    [
++                        'data' => [
++                            AttributeInterface::ATTRIBUTE_CODE => $attributeCode,
++                            AttributeInterface::VALUE => $value,
++                        ]
++                    ]
++                );
++                if ($this->validate($attribute, $fileName)) {
++                    return true;
++                }
++            }
++        }
++
++        return false;
++    }
++
++    /**
++     * Validate attribute value with provided file name
++     *
++     * @param AttributeInterface $attribute
++     * @param string $file
++     * @return bool
++     */
++    private function validate(AttributeInterface $attribute, string $file): bool
++    {
++        try {
++            $valid = false;
++            if ($attribute->getValue() && $file === ltrim($attribute->getValue(), DIRECTORY_SEPARATOR)) {
++                $attributeMeta = $this->metadata->getAttributeMetadata($attribute->getAttributeCode());
++                if (in_array($attributeMeta->getFrontendInput(), self::INPUT_TYPES, true)) {
++                    $valid = true;
++                }
++            }
++        } catch (NoSuchEntityException $e) {
++            $valid = false;
++        }
++
++        return $valid;
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/FileUploadPostprocessor.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/FileUploadPostprocessor.php
+new file mode 100644
+index 00000000000..9eb16821e5a
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/FileUploadPostprocessor.php
+@@ -0,0 +1,49 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer;
++
++/**
++ * Customer temp files persistor
++ */
++class FileUploadPostprocessor
++{
++    /**
++     * @var TemporaryFileStorageInterface
++     */
++    private $storage;
++
++    /**
++     * @var string
++     */
++    private $entityTypeCode;
++
++    /**
++     * @param TemporaryFileStorageInterface $storage
++     * @param string $entityTypeCode
++     */
++    public function __construct(
++        TemporaryFileStorageInterface $storage,
++        string $entityTypeCode
++    ) {
++        $this->storage = $storage;
++        $this->entityTypeCode = $entityTypeCode;
++    }
++
++    /**
++     * Persist temp files in the storage for preview
++     *
++     * @param string $attributeCode
++     * @param string $file
++     */
++    public function process(string $attributeCode, string $file): void
++    {
++        $tmpFiles = $this->storage->get();
++        $tmpFiles[$this->entityTypeCode][$attributeCode] = $file;
++        $this->storage->set($tmpFiles);
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/TemporaryFileSessionStorage.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/TemporaryFileSessionStorage.php
+new file mode 100644
+index 00000000000..03a289976df
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/TemporaryFileSessionStorage.php
+@@ -0,0 +1,58 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer;
++
++use Magento\Framework\Session\SessionManagerInterface;
++
++/**
++ * Customer temporary files session storage
++ *
++ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
++ */
++class TemporaryFileSessionStorage implements TemporaryFileStorageInterface
++{
++    const SESSION_KEY = '_tmp_files';
++
++    /**
++     * @var SessionManagerInterface
++     */
++    private $session;
++
++    /**
++     * @param SessionManagerInterface $session
++     */
++    public function __construct(
++        SessionManagerInterface $session
++    ) {
++        $this->session = $session;
++    }
++
++    /**
++     * @inheritdoc
++     */
++    public function get(): array
++    {
++        return $this->session->getData(self::SESSION_KEY) ?? [];
++    }
++
++    /**
++     * @inheritdoc
++     */
++    public function set(array $value): void
++    {
++        $this->session->setData(self::SESSION_KEY, $value);
++    }
++
++    /**
++     * @inheritdoc
++     */
++    public function clean(): void
++    {
++        $this->session->unsetData(self::SESSION_KEY);
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Customer/TemporaryFileStorageInterface.php b/vendor/magento/module-customer-custom-attributes/Model/Customer/TemporaryFileStorageInterface.php
+new file mode 100644
+index 00000000000..edf0898f2aa
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Customer/TemporaryFileStorageInterface.php
+@@ -0,0 +1,33 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Customer;
++
++/**
++ * Customer temporary files storage interface
++ */
++interface TemporaryFileStorageInterface
++{
++    /**
++     * Get temporary files from the storage
++     *
++     * @return array
++     */
++    public function get(): array;
++
++    /**
++     * Set temporary files in the storage
++     *
++     * @param array $value
++     */
++    public function set(array $value): void;
++
++    /**
++     * Clean temporary files in the storage
++     */
++    public function clean(): void;
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/CustomerAddressCustomAttributesProcessor.php b/vendor/magento/module-customer-custom-attributes/Model/CustomerAddressCustomAttributesProcessor.php
+new file mode 100644
+index 00000000000..316245c0da8
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/CustomerAddressCustomAttributesProcessor.php
+@@ -0,0 +1,97 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model;
++
++use Magento\Quote\Api\Data\AddressInterface;
++use Magento\Framework\Api\AttributeInterface;
++use Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\ProcessorComponentInterface;
++use Magento\Quote\Model\Quote\Address\CustomAttributeListInterface;
++
++/**
++ * Helper class for processing shipping or billing custom attributes
++ */
++class CustomerAddressCustomAttributesProcessor
++{
++    /**
++     * @var int[]
++     */
++    private $processedAttributes = [];
++
++    /**
++     * @var ProcessorComponentInterface[]
++     */
++    private $processors;
++
++    /**
++     * @param ProcessorComponentInterface[] $processors
++     */
++    public function __construct(array $processors = [])
++    {
++        $this->processors = $processors;
++    }
++
++    /**
++     * Process customer custom attribute before save shipping or billing address
++     *
++     * @param AddressInterface $addressInformation
++     * @return void
++     */
++    public function execute(AddressInterface $addressInformation): void
++    {
++        $customerCustomAttributes = $addressInformation->getCustomAttributes();
++        if ($customerCustomAttributes) {
++            foreach ($customerCustomAttributes as $customAttribute) {
++                $this->processAttribute($customAttribute);
++            }
++        }
++    }
++
++    /**
++     * Transform attribute to Model data format.
++     *
++     * @param AttributeInterface $attribute
++     * @return void
++     */
++    private function processAttribute(AttributeInterface $attribute): void
++    {
++        // Make sure the same attribute won't be processed repeatedly
++        if ($this->hasBeenProcessed($attribute)) {
++            return;
++        }
++
++        // Make attribute transformations based on various signs
++        foreach ($this->processors as $processor) {
++            $processor->process($attribute);
++        }
++
++        $this->registerProcessedAttribute($attribute);
++    }
++
++    /**
++     * Whether attribute has been already processed.
++     *
++     * @param AttributeInterface $attribute
++     * @return bool
++     */
++    private function hasBeenProcessed(AttributeInterface $attribute): bool
++    {
++        $objectId = spl_object_id($attribute);
++
++        return in_array($objectId, $this->processedAttributes);
++    }
++
++    /**
++     * Register processed attribute.
++     *
++     * @param AttributeInterface $attribute
++     */
++    private function registerProcessedAttribute(AttributeInterface $attribute): void
++    {
++        $this->processedAttributes[] = spl_object_id($attribute);
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessCustomerBillingAddressCustomAttributes.php b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessCustomerBillingAddressCustomAttributes.php
+new file mode 100644
+index 00000000000..49e73db5996
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessCustomerBillingAddressCustomAttributes.php
+@@ -0,0 +1,54 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Plugin;
++
++use Magento\Checkout\Api\PaymentInformationManagementInterface;
++use Magento\CustomerCustomAttributes\Model\CustomerAddressCustomAttributesProcessor;
++use Magento\Quote\Api\Data\AddressInterface;
++use Magento\Quote\Api\Data\PaymentInterface;
++
++/**
++ * Process custom customer attributes before saving billing address
++ */
++class ProcessCustomerBillingAddressCustomAttributes
++{
++    /** @var CustomerAddressCustomAttributesProcessor */
++    private $customerAddressCustomAttributesProcessor;
++
++    /**
++     * Constructor for billing custom attribute for registered user plugin
++     *
++     * @param CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++     */
++    public function __construct(
++        CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++    ) {
++        $this->customerAddressCustomAttributesProcessor = $customerAddressCustomAttributesProcessor;
++    }
++
++    /**
++     * Process billing custom attribute before save for registered customer
++     *
++     * @param PaymentInformationManagementInterface $subject
++     * @param string $cartId
++     * @param PaymentInterface $paymentMethod
++     * @param AddressInterface|null $billingAddress
++     * @return void
++     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
++     */
++    public function beforeSavePaymentInformation(
++        PaymentInformationManagementInterface $subject,
++        string $cartId,
++        PaymentInterface $paymentMethod,
++        AddressInterface $billingAddress = null
++    ): void {
++        if ($billingAddress) {
++            $this->customerAddressCustomAttributesProcessor->execute($billingAddress);
++        }
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessCustomerShippingAddressCustomAttributes.php b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessCustomerShippingAddressCustomAttributes.php
+new file mode 100644
+index 00000000000..43c5cbabbbe
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessCustomerShippingAddressCustomAttributes.php
+@@ -0,0 +1,57 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Plugin;
++
++use Magento\Checkout\Api\ShippingInformationManagementInterface;
++use Magento\Checkout\Api\Data\ShippingInformationInterface;
++use Magento\CustomerCustomAttributes\Model\CustomerAddressCustomAttributesProcessor;
++
++/**
++ * Process custom customer attributes before saving shipping and billing address
++ */
++class ProcessCustomerShippingAddressCustomAttributes
++{
++    /** @var CustomerAddressCustomAttributesProcessor */
++    private $customerAddressCustomAttributesProcessor;
++
++    /**
++     * Constructor for shipping and billing custom attribute for registered user plugin
++     *
++     * @param CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++     */
++    public function __construct(
++        CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++    ) {
++        $this->customerAddressCustomAttributesProcessor = $customerAddressCustomAttributesProcessor;
++    }
++
++    /**
++     * Process shipping and billing custom attribute before save for registered customer
++     *
++     * @param ShippingInformationManagementInterface $subject
++     * @param string $cartId
++     * @param ShippingInformationInterface $addressInformation
++     * @return void
++     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
++     */
++    public function beforeSaveAddressInformation(
++        ShippingInformationManagementInterface $subject,
++        string $cartId,
++        ShippingInformationInterface $addressInformation
++    ): void {
++        $shippingAddress = $addressInformation->getShippingAddress();
++        if ($shippingAddress) {
++            $this->customerAddressCustomAttributesProcessor->execute($shippingAddress);
++        }
++
++        $billingAddress = $addressInformation->getBillingAddress();
++        if ($billingAddress) {
++            $this->customerAddressCustomAttributesProcessor->execute($billingAddress);
++        }
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessGuestBillingAddressCustomAttributes.php b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessGuestBillingAddressCustomAttributes.php
+new file mode 100644
+index 00000000000..0ead39b39fe
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessGuestBillingAddressCustomAttributes.php
+@@ -0,0 +1,56 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Plugin;
++
++use Magento\Checkout\Api\GuestPaymentInformationManagementInterface;
++use Magento\CustomerCustomAttributes\Model\CustomerAddressCustomAttributesProcessor;
++use Magento\Quote\Api\Data\AddressInterface;
++use Magento\Quote\Api\Data\PaymentInterface;
++
++/**
++ * Process custom guest attributes before saving billing address
++ */
++class ProcessGuestBillingAddressCustomAttributes
++{
++    /** @var CustomerAddressCustomAttributesProcessor */
++    private $customerAddressCustomAttributesProcessor;
++
++    /**
++     * Constructor for billing custom attribute for guest user plugin
++     *
++     * @param CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++     */
++    public function __construct(
++        CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++    ) {
++        $this->customerAddressCustomAttributesProcessor = $customerAddressCustomAttributesProcessor;
++    }
++
++    /**
++     * Process billing custom attribute before save for guest
++     *
++     * @param GuestPaymentInformationManagementInterface $subject
++     * @param string $cartId
++     * @param string $email
++     * @param PaymentInterface $paymentMethod
++     * @param AddressInterface|null $billingAddress
++     * @return void
++     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
++     */
++    public function beforeSavePaymentInformation(
++        GuestPaymentInformationManagementInterface $subject,
++        string $cartId,
++        string $email,
++        PaymentInterface $paymentMethod,
++        AddressInterface $billingAddress = null
++    ): void {
++        if ($billingAddress) {
++            $this->customerAddressCustomAttributesProcessor->execute($billingAddress);
++        }
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessGuestShippingAddressCustomAttributes.php b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessGuestShippingAddressCustomAttributes.php
+new file mode 100644
+index 00000000000..b504b9e8d3b
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/Model/Plugin/ProcessGuestShippingAddressCustomAttributes.php
+@@ -0,0 +1,57 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\Model\Plugin;
++
++use Magento\Checkout\Api\Data\ShippingInformationInterface;
++use Magento\Checkout\Api\GuestShippingInformationManagementInterface;
++use Magento\CustomerCustomAttributes\Model\CustomerAddressCustomAttributesProcessor;
++
++/**
++ * Process shipping and billing custom guest attributes before saving shipping address
++ */
++class ProcessGuestShippingAddressCustomAttributes
++{
++    /** @var CustomerAddressCustomAttributesProcessor */
++    private $customerAddressCustomAttributesProcessor;
++
++    /**
++     * Constructor for shipping and billing custom attribute for guest user plugin
++     *
++     * @param CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++     */
++    public function __construct(
++        CustomerAddressCustomAttributesProcessor $customerAddressCustomAttributesProcessor
++    ) {
++        $this->customerAddressCustomAttributesProcessor = $customerAddressCustomAttributesProcessor;
++    }
++
++    /**
++     * Process shipping and billing custom attribute before save for guest
++     *
++     * @param GuestShippingInformationManagementInterface $subject
++     * @param string $cartId
++     * @param ShippingInformationInterface $addressInformation
++     * @return void
++     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
++     */
++    public function beforeSaveAddressInformation(
++        GuestShippingInformationManagementInterface $subject,
++        string $cartId,
++        ShippingInformationInterface $addressInformation
++    ): void {
++        $shippingAddress = $addressInformation->getShippingAddress();
++        if ($shippingAddress) {
++            $this->customerAddressCustomAttributesProcessor->execute($shippingAddress);
++        }
++
++        $billingAddress = $addressInformation->getBillingAddress();
++        if ($billingAddress) {
++            $this->customerAddressCustomAttributesProcessor->execute($billingAddress);
++        }
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/ViewModel/FileAttribute.php b/vendor/magento/module-customer-custom-attributes/ViewModel/FileAttribute.php
+new file mode 100644
+index 00000000000..8fa90a6cca7
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/ViewModel/FileAttribute.php
+@@ -0,0 +1,195 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++
++declare(strict_types=1);
++
++namespace Magento\CustomerCustomAttributes\ViewModel;
++
++use Magento\Customer\Model\FileProcessorFactory;
++use Magento\Framework\App\Filesystem\DirectoryList;
++use Magento\Framework\View\Element\Block\ArgumentInterface;
++use Magento\Framework\Filesystem;
++use Magento\Framework\Filesystem\Directory\WriteInterface;
++use Magento\Store\Model\StoreManagerInterface;
++use Magento\Framework\Url;
++use Magento\Framework\File\Mime;
++use Magento\Framework\Model\AbstractModel;
++use Magento\Framework\Filesystem\Io\File;
++use Magento\Framework\Url\EncoderInterface;
++use Magento\Framework\UrlInterface;
++use Magento\Framework\App\ObjectManager;
++
++/**
++ * View model for custom attributes form block
++ */
++class FileAttribute implements ArgumentInterface
++{
++    /**
++     * @var Url
++     */
++    private $url;
++
++    /**
++     * Filesystem object.
++     *
++     * @var Filesystem
++     */
++    private $filesystem;
++
++    /**
++     * Media Directory object (writable).
++     *
++     * @var WriteInterface
++     */
++    private $mediaDirectory;
++
++    /**
++     * @var StoreManagerInterface
++     */
++    private $storeManager;
++
++    /**
++     * @var FileProcessorFactory
++     */
++    private $fileProcessorFactory;
++
++    /**
++     * @var Mime
++     */
++    private $mime;
++
++    /**
++     * @var string
++     */
++    private $uploadUrl;
++
++    /**
++     * @var string
++     */
++    private $entityType;
++
++    /**
++     * @var File
++     */
++    private $ioFile;
++
++    /**
++     * @var string
++     */
++    private $downloadUrl;
++    /**
++     * @var UrlInterface
++     */
++    private $urlBuilder;
++
++    /**
++     * @var EncoderInterface
++     */
++    private $urlEncoder;
++
++
++    /**
++     * @param Url $url
++     * @param StoreManagerInterface $storeManager
++     * @param Filesystem $filesystem
++     * @param FileProcessorFactory $fileProcessorFactory
++     * @param Mime $mime
++     * @param string $uploadUrl
++     * @param string $entityType
++     * @param File $ioFile
++     */
++    public function __construct(
++        Url $url,
++        StoreManagerInterface $storeManager,
++        Filesystem $filesystem,
++        FileProcessorFactory $fileProcessorFactory,
++        Mime $mime,
++        string $uploadUrl,
++        string $entityType,
++        File $ioFile,
++        string $downloadUrl = '',
++        UrlInterface $urlBuilder = null,
++        EncoderInterface $urlEncoder = null
++    ) {
++        $this->url = $url;
++        $this->storeManager = $storeManager;
++        $this->filesystem = $filesystem;
++        $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
++        $this->fileProcessorFactory = $fileProcessorFactory;
++        $this->mime = $mime;
++        $this->uploadUrl = $uploadUrl;
++        $this->entityType = $entityType;
++        $this->ioFile = $ioFile;
++        $this->downloadUrl = $downloadUrl;
++        $this->urlBuilder = $urlBuilder ?? ObjectManager::getInstance()->get(UrlInterface::class);
++        $this->urlEncoder = $urlEncoder ?? ObjectManager::getInstance()->get(EncoderInterface::class);
++    }
++
++    /**
++     * Get json definition for js Ui component fields
++     *
++     * @param array $userAttributes
++     * @param AbstractModel $entity
++     * @return string
++     */
++    public function getJsComponentsDefinitions(
++        array $userAttributes,
++        AbstractModel $entity
++    ): string {
++        $result = [];
++        foreach ($userAttributes as $attribute) {
++            $config = [];
++            $frontendInput = $attribute->getFrontendInput();
++
++            if (in_array($frontendInput, ['file', 'image'])) {
++                $config['component'] = 'Magento_CustomerCustomAttributes/js/component/file-uploader';
++                $config['template'] = 'Magento_CustomerCustomAttributes/form/element/uploader/uploader';
++                $config['label'] = $attribute->getDefaultFrontendLabel();
++                $config['formElement'] = 'fileUploader';
++                $config['componentType'] = 'fileUploader';
++                $config['uploaderConfig'] = [
++                    'url' => $this->url->getUrl(
++                        $this->uploadUrl
++                    )
++                ];
++
++                $config['dataScope'] = $attribute->getAttributeCode();
++
++                $filename = $entity->getData($attribute->getAttributeCode());
++
++                if ($filename) {
++                    $filePath = $this->entityType . $filename;
++                    $fileInfo = $this->mediaDirectory->stat($filePath);
++
++                    $fileAbsolutePath = $this->mediaDirectory->getAbsolutePath() . $filePath;
++                    $config['value'] = [
++                        [
++                            'file' => $filename,
++                            'name' => $this->ioFile->getPathInfo($filename)['basename'],
++                            'size' => $fileInfo['size'],
++                            'url' => $this->urlBuilder->getUrl(
++                                $this->downloadUrl,
++                                ['file' => $this->urlEncoder->encode(ltrim($filename, '/'))]
++                            ),
++                            'type' => $this->mime->getMimeType($fileAbsolutePath),
++                        ]
++                    ];
++                }
++
++                if ($attribute->getIsRequired()) {
++                    $config['validation'] = [
++                        'required' => true,
++                    ];
++                    $config['required'] = '1';
++                }
++            }
++
++            $result[$attribute->getAttributeCode()] = $config;
++        }
++
++        return json_encode($result);
++    }
++}
+diff --git a/vendor/magento/module-customer-custom-attributes/etc/di.xml b/vendor/magento/module-customer-custom-attributes/etc/di.xml
+index 5af83f2fdbe..8f53069de3b 100644
+--- a/vendor/magento/module-customer-custom-attributes/etc/di.xml
++++ b/vendor/magento/module-customer-custom-attributes/etc/di.xml
+@@ -10,6 +10,8 @@
+                 type="Magento\CustomerCustomAttributes\Model\Quote\Address\CustomAttributeList" />
+     <preference for="Magento\Customer\Model\Address\CustomAttributeListInterface"
+                 type="Magento\CustomerCustomAttributes\Model\Quote\Address\CustomAttributeList" />
++    <preference for="Magento\CustomerCustomAttributes\Model\Customer\TemporaryFileStorageInterface"
++                type="Magento\CustomerCustomAttributes\Model\Customer\TemporaryFileSessionStorage" />
+     <type name="Magento\CustomerCustomAttributes\Helper\Data">
+         <arguments>
+             <argument name="customerAddress" xsi:type="object">Magento\CustomerCustomAttributes\Helper\Address\Proxy</argument>
+@@ -84,4 +86,64 @@
+     <type name="Magento\CustomAttributeManagement\Block\Form">
+         <plugin name="set_customer_custom_attribute_for_company" type="Magento\CustomerCustomAttributes\Plugin\Customer\Block\Form\CustomerCustomAttributePlugin" />
+     </type>
++    <type name="Magento\CustomerCustomAttributes\Model\CustomerAddressCustomAttributesProcessor">
++        <arguments>
++            <argument name="processors" xsi:type="array">
++                <item name="array_type_of_value" xsi:type="object">
++                    Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\Processors\ArrayTypeOfValue
++                </item>
++            </argument>
++        </arguments>
++    </type>
++    <virtualType name="CustomerFileAttribute" type="Magento\CustomerCustomAttributes\ViewModel\FileAttribute">
++        <arguments>
++            <argument name="uploadUrl" xsi:type="string">customer_custom_attributes/customer_file/upload</argument>
++            <argument name="entityType" xsi:type="string">customer</argument>
++            <argument name="downloadUrl" xsi:type="string">customer_custom_attributes/index/viewfile</argument>
++        </arguments>
++    </virtualType>
++    <virtualType name="AddressFileAttribute" type="Magento\CustomerCustomAttributes\ViewModel\FileAttribute">
++        <arguments>
++            <argument name="uploadUrl" xsi:type="string">customer_custom_attributes/address_file/upload</argument>
++            <argument name="entityType" xsi:type="string">customer_address</argument>
++            <argument name="downloadUrl" xsi:type="string">customer_custom_attributes/address_file/viewfile</argument>
++        </arguments>
++    </virtualType>
++    <virtualType name="CustomerFileDownload" type="Magento\CustomerCustomAttributes\Model\Customer\FileDownload">
++        <arguments>
++            <argument name="entityType" xsi:type="string">customer</argument>
++        </arguments>
++    </virtualType>
++    <virtualType name="AddressFileDownload" type="Magento\CustomerCustomAttributes\Model\Customer\FileDownload">
++        <arguments>
++            <argument name="entityType" xsi:type="string">customer_address</argument>
++        </arguments>
++    </virtualType>
++    <type name="Magento\CustomerCustomAttributes\Controller\Index\Viewfile">
++        <arguments>
++            <argument name="fileDownload" xsi:type="object">CustomerFileDownload</argument>
++        </arguments>
++    </type>
++    <type name="Magento\CustomerCustomAttributes\Controller\Address\File\Viewfile">
++        <arguments>
++            <argument name="fileDownload" xsi:type="object">AddressFileDownload</argument>
++        </arguments>
++    </type>
++    <type name="Magento\Checkout\Api\PaymentInformationManagementInterface">
++        <plugin name="process_billing_custom_customer_attributes" type="Magento\CustomerCustomAttributes\Model\Plugin\ProcessCustomerBillingAddressCustomAttributes"/>
++    </type>
++    <type name="Magento\Checkout\Api\ShippingInformationManagementInterface">
++        <plugin name="process_shipping_custom_customer_attributes" type="Magento\CustomerCustomAttributes\Model\Plugin\ProcessCustomerShippingAddressCustomAttributes"/>
++    </type>
++    <type name="Magento\Checkout\Api\GuestPaymentInformationManagementInterface">
++        <plugin name="process_billing_custom_guest_attributes" type="Magento\CustomerCustomAttributes\Model\Plugin\ProcessGuestBillingAddressCustomAttributes"/>
++    </type>
++    <type name="Magento\Checkout\Api\GuestShippingInformationManagementInterface">
++        <plugin name="process_shipping_custom_guest_attributes" type="Magento\CustomerCustomAttributes\Model\Plugin\ProcessGuestShippingAddressCustomAttributes"/>
++    </type>
++    <type name="Magento\CustomerCustomAttributes\Model\Customer\TemporaryFileSessionStorage">
++        <arguments>
++            <argument name="session" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
++        </arguments>
++    </type>
+ </config>
+diff --git a/vendor/magento/module-customer-custom-attributes/etc/frontend/di.xml b/vendor/magento/module-customer-custom-attributes/etc/frontend/di.xml
+index a3e2e5b6684..109d7bad265 100644
+--- a/vendor/magento/module-customer-custom-attributes/etc/frontend/di.xml
++++ b/vendor/magento/module-customer-custom-attributes/etc/frontend/di.xml
+@@ -13,4 +13,10 @@
+             </argument>
+         </arguments>
+     </type>
++    <type name="Magento\Customer\Model\FileProcessor">
++        <arguments>
++            <argument name="customerFileUrlPath" xsi:type="string">customer_custom_attributes/index/viewfile</argument>
++            <argument name="customerAddressFileUrlPath" xsi:type="string">customer_custom_attributes/address_file/viewfile</argument>
++        </arguments>
++    </type>
+ </config>
+diff --git a/vendor/magento/module-customer-custom-attributes/etc/frontend/routes.xml b/vendor/magento/module-customer-custom-attributes/etc/frontend/routes.xml
+new file mode 100644
+index 00000000000..9560e0d51ca
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/etc/frontend/routes.xml
+@@ -0,0 +1,14 @@
++<?xml version="1.0"?>
++<!--
++/**
++* Copyright © Magento, Inc. All rights reserved.
++* See COPYING.txt for license details.
++*/
++-->
++<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
++    <router id="standard">
++        <route id="customer_custom_attributes" frontName="customer_custom_attributes">
++            <module name="Magento_CustomerCustomAttributes" />
++        </route>
++    </router>
++</config>
+diff --git a/vendor/magento/module-customer-custom-attributes/etc/webapi_rest/di.xml b/vendor/magento/module-customer-custom-attributes/etc/webapi_rest/di.xml
+new file mode 100644
+index 00000000000..16267c08d9e
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/etc/webapi_rest/di.xml
+@@ -0,0 +1,18 @@
++<?xml version="1.0"?>
++<!--
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++-->
++<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
++    <type name="Magento\CustomerCustomAttributes\Model\CustomerAddressCustomAttributesProcessor">
++        <arguments>
++            <argument name="processors" xsi:type="array">
++                <item name="file_type_of_frontend_input" xsi:type="object">
++                    Magento\CustomerCustomAttributes\Model\Customer\Address\Attributes\Processors\FileTypeOfFrontendInput
++                </item>
++            </argument>
++        </arguments>
++    </type>
++</config>
+diff --git a/vendor/magento/module-customer-custom-attributes/i18n/en_US.csv b/vendor/magento/module-customer-custom-attributes/i18n/en_US.csv
+index 172eb42ccb3..470f173ace4 100644
+--- a/vendor/magento/module-customer-custom-attributes/i18n/en_US.csv
++++ b/vendor/magento/module-customer-custom-attributes/i18n/en_US.csv
+@@ -140,3 +140,4 @@ Password,Password
+ Back,Back
+ "Customer Address","Customer Address"
+ "Default Values","Default Values"
++"Something went wrong.","Something went wrong."
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_create.xml b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_create.xml
+index 31dd962dad1..e5e261aadc5 100644
+--- a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_create.xml
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_create.xml
+@@ -22,6 +22,9 @@
+                 <action method="setEntityModelClass">
+                     <argument name="code" xsi:type="string">Magento\Customer\Model\Customer</argument>
+                 </action>
++                <arguments>
++                    <argument name="view_model" xsi:type="object">CustomerFileAttribute</argument>
++                </arguments>
+             </block>
+             <block class="Magento\CustomerCustomAttributes\Block\Form" template="Magento_CustomerCustomAttributes::form/userattributes.phtml" name="customer_form_address_user_attributes">
+                 <action method="setFormCode">
+@@ -30,6 +33,9 @@
+                 <action method="setEntityModelClass">
+                     <argument name="code" xsi:type="string">Magento\Customer\Model\Address</argument>
+                 </action>
++                <arguments>
++                    <argument name="view_model" xsi:type="object">AddressFileAttribute</argument>
++                </arguments>
+             </block>
+         </referenceBlock>
+     </body>
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_edit.xml b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_edit.xml
+index 07e85fdeb82..7824cbd9118 100644
+--- a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_edit.xml
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_account_edit.xml
+@@ -22,6 +22,9 @@
+                 <action method="setEntityModelClass">
+                     <argument name="code" xsi:type="string">Magento\Customer\Model\Customer</argument>
+                 </action>
++                <arguments>
++                    <argument name="view_model" xsi:type="object">CustomerFileAttribute</argument>
++                </arguments>
+             </block>
+         </referenceBlock>
+     </body>
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_address_form.xml b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_address_form.xml
+index 8e77b8bae27..35760389161 100644
+--- a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_address_form.xml
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/customer_address_form.xml
+@@ -25,6 +25,9 @@
+                 <action method="setEntityModelClass">
+                     <argument name="code" xsi:type="string">Magento\Customer\Model\Address</argument>
+                 </action>
++                <arguments>
++                    <argument name="view_model" xsi:type="object">AddressFileAttribute</argument>
++                </arguments>
+             </block>
+         </referenceBlock>
+     </body>
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/multishipping_checkout_customer_address.xml b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/multishipping_checkout_customer_address.xml
+index b373c8da7de..9428a514d1c 100644
+--- a/vendor/magento/module-customer-custom-attributes/view/frontend/layout/multishipping_checkout_customer_address.xml
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/layout/multishipping_checkout_customer_address.xml
+@@ -19,6 +19,9 @@
+                 <action method="setEntityModelClass">
+                     <argument name="code" xsi:type="string">Magento\Customer\Model\Address</argument>
+                 </action>
++                <arguments>
++                    <argument name="view_model" xsi:type="object">AddressFileAttribute</argument>
++                </arguments>
+             </block>
+         </referenceBlock>
+     </body>
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/renderer/file.phtml b/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/renderer/file.phtml
+index fdcb72e0872..67918ed2560 100644
+--- a/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/renderer/file.phtml
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/renderer/file.phtml
+@@ -17,12 +17,7 @@ $fieldCssClass .= $block->isRequired() ? ' required' : '';
+ ?>
+ <div class="<?= /* @noEscape */ $fieldCssClass ?>">
+     <label class="label" for="<?= $block->getHtmlId() ?>"><span><?= $block->escapeHtml($block->getLabel()) ?></span></label>
+-    <div class="control">
+-        <input type="file" id="<?= $block->getHtmlId() ?>" name="<?= $block->escapeHtmlAttr($block->getFieldName()) ?>" value="" class="input-file">
+-        <input type="hidden" id="<?= $block->getHtmlId() ?>_value" name="<?= $block->escapeHtmlAttr($block->getFieldName()) ?>_value" value="<?= $block->escapeHtmlAttr($block->getEscapedValue()) ?>" <?php if ($block->isRequired()) :
+-            ?>data-validate="{required:true}" <?php endif;?>/>
+-        <?php if ($_message = $block->getAdditionalDescription()) : ?>
+-        <div class="note"><?= /* @noEscape */ $_message ?></div>
+-        <?php endif; ?>
++    <div class="control" data-bind="scope:'<?= $block->escapeHtml($block->getAttributeObject()->getAttributeCode()) ?>'">
++        <!-- ko template: getTemplate() --><!-- /ko -->
+     </div>
+ </div>
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/userattributes.phtml b/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/userattributes.phtml
+index 827b9c60b63..85a9e5eb962 100644
+--- a/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/userattributes.phtml
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/templates/form/userattributes.phtml
+@@ -15,14 +15,28 @@
+ <?php if ($block->hasUserDefinedAttributes()) : ?>
+     <?php if ($block->isShowContainer()) : ?>
+     <fieldset class="fieldset">
+-    <?php endif;?>
+-    <?php foreach ($block->getUserDefinedAttributes() as $attribute) :?>
+-        <?php $attributeContent = $block->getAttributeHtml($attribute);?>
+-        <?php if ($attributeContent) : ?>
+-            <?= /* @noEscape */ $attributeContent ?>
+         <?php endif;?>
+-    <?php endforeach;?>
+-    <?php if ($block->isShowContainer()) : ?>
++        <?php
++        $userAttributes = $block->getUserDefinedAttributes();
++        $entity = $block->getEntity();
++        ?>
++        <?php foreach ($userAttributes as $attribute) :?>
++            <?php $attributeContent = $block->getAttributeHtml($attribute);?>
++            <?php if ($attributeContent) : ?>
++                <?= /* @noEscape */ $attributeContent ?>
++            <?php endif;?>
++        <?php endforeach;?>
++        <?php if ($block->isShowContainer()) : ?>
+     </fieldset>
+-    <?php endif;?>
++<?php endif;?>
++
++    <script type="text/x-magento-init">
++        {
++            "*": {
++                "Magento_Ui/js/core/app": {
++                    "components": <?= /* @noEscape */ $block->getViewModel()->getJsComponentsDefinitions($userAttributes, $entity); ?>
++                }
++            }
++        }
++    </script>
+ <?php endif; ?>
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/web/js/component/file-uploader.js b/vendor/magento/module-customer-custom-attributes/view/frontend/web/js/component/file-uploader.js
+new file mode 100644
+index 00000000000..f796b93a977
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/web/js/component/file-uploader.js
+@@ -0,0 +1,50 @@
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++
++define([
++    'jquery',
++    'Magento_Ui/js/form/element/file-uploader'
++], function ($, Element) {
++    'use strict';
++
++    return Element.extend({
++
++        /**
++         * Handler of the file upload complete event.
++         *
++         * @param {Event} e
++         * @param {Object} data
++         */
++        onFileUploaded: function (e, data) {
++            var textInput = $('input[name="' + e.target.name + '_uploaded"]'),
++                filePath = data.result.file;
++
++            this._super(e, data);
++            textInput.val(filePath);
++        },
++
++        /**
++         * Removes provided file from thes files list.
++         *
++         * @param {Object} file
++         * @returns {FileUploader} Chainable.
++         */
++        removeFile: function (file) {
++            var deleteAttributeValue = $('input[name="delete_attribute_value"]').val();
++
++            if (!this.validation.required) {
++                if (deleteAttributeValue === '') {
++                    $('input[name="delete_attribute_value"]').val(deleteAttributeValue + this.name);
++                } else {
++                    $('input[name="delete_attribute_value"]').val(deleteAttributeValue + ',' + this.name);
++                }
++            }
++
++            this.value.remove(file);
++
++            return this;
++        }
++    });
++});
+diff --git a/vendor/magento/module-customer-custom-attributes/view/frontend/web/template/form/element/uploader/uploader.html b/vendor/magento/module-customer-custom-attributes/view/frontend/web/template/form/element/uploader/uploader.html
+new file mode 100644
+index 00000000000..408d8617c77
+--- /dev/null
++++ b/vendor/magento/module-customer-custom-attributes/view/frontend/web/template/form/element/uploader/uploader.html
+@@ -0,0 +1,42 @@
++<!--
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++-->
++
++<div class="admin__field" visible="visible" css="$data.additionalClasses">
++    <div class="admin__field-control" css="'_with-tooltip': $data.tooltip">
++        <div class="file-uploader" data-role="drop-zone" css="_loading: isLoading">
++            <div class="file-uploader-area">
++                <input type="hidden" attr="name: inputName + '_uploaded'" />
++                <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled" />
++                <input type="hidden" attr="name: 'delete_attribute_value'" />
++                <label class="file-uploader-button action-default" attr="for: uid" translate="'Upload'"/>
++
++                <span class="file-uploader-spinner"/>
++                <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"/>
++            </div>
++
++            <render args="tooltipTpl" if="$data.tooltip"/>
++
++            <div class="admin__field-note" if="$data.notice" attr="id: noticeId">
++                <span text="notice"/>
++            </div>
++
++            <label class="admin__field-error" if="error" attr="for: uid" text="error"/>
++
++            <each args="data: value, as: '$file'" render="$parent.getPreviewTmpl($file)"/>
++
++            <div if="isMultipleFiles" class="file-uploader-summary">
++                <label attr="for: uid"
++                       class="file-uploader-placeholder"
++                       css="'placeholder-' + placeholderType">
++                    <span class="file-uploader-placeholder-text"
++                          translate="'Click here or drag and drop to add files.'"/>
++                </label>
++            </div>
++        </div>
++        <render args="$data.service.template" if="$data.hasService()"/>
++    </div>
++</div>

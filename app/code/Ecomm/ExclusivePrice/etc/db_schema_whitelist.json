@@ -1,0 +1,31 @@
+{
+    "ecomm_contract_extn": {
+        "column": {
+            "entity_id": true,
+            "contract_id": true,
+            "contract_type": true,
+            "name": true,
+            "gpo_name": true,
+            "group_id": true,
+            "is_dsh": true,
+            "status": true,
+            "start_date": true,
+            "end_date": true,
+            "deleted": true,
+            "created_by": true,
+            "created_at": true,
+            "updated_at": true,
+            "import_hash": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "ecomm_gpo_price": {
+        "column": {
+            "rca_price": true,
+            "sub_wac_price": true,
+            "phs_indirect_price": true
+        }
+    }
+}

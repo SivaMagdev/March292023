@@ -1,0 +1,49 @@
+<?php 
+    $objmanager = \Magento\Framework\App\ObjectManager::getInstance();
+    $session =  $objmanager->get("Magento\Checkout\Model\Session");
+    $quote =$session->getQuote();
+    $qty =  $quote->getItemsSummaryQty();
+?>
+<?php if($qty>0) { ?>
+<!-- <div class="drl-view-cart-steps">
+<div class="steps sw sw-justified sw-theme-dots clearfix">
+    <ul class="nav">
+        <li class="nav-item first current">
+            <a class="nav-link" href="#">
+   				<br>
+                <span class="title">My Cart</span>
+            </a>
+        </li>
+        <li class="nav-item disabled">
+            <a class="nav-link" href="#">
+                <br>
+                <span class="title">Address & Delivery type</span>
+            </a>
+        </li>
+        <li class="nav-item disabled">
+            <a class="nav-link" href="#">
+                <br>
+                <span class="title">Review & Place Order</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</div> -->
+<ul class="opc-progress-bar">
+        <li class="opc-progress-bar-item _active" >
+            <span >My cart</span>
+        </li>
+    
+        <li class="opc-progress-bar-item">
+            <span>Address &amp; Delivery</span>
+        </li>
+    
+        <li class="opc-progress-bar-item" >
+            <span >Review &amp; Place Order</span>
+        </li>
+</ul>
+
+<div class="opc-border-bottom"></div>
+
+<?php } ?>
+

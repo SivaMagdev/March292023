@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ecomm_notification>
+            <general>
+                <email_template>ecomm_notification_general_price_expiry_email_template</email_template>
+                <email_template>ecomm_notification_general_licence_expiry_email_template</email_template>
+                <email_template>ecomm_notification_general_licence_expiry_customer_email_template</email_template>
+                <email_template>ecomm_notification_general_order_processing_failed_email_template</email_template>
+                <email_template>ecomm_notification_general_ack_failed_email_template</email_template>
+                <email_template>ecomm_notification_general_ack_duplicate_email_template</email_template>
+            </general>
+        </ecomm_notification>
+    </default>
+</config>

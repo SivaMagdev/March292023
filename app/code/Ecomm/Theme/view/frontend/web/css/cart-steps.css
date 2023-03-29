@@ -1,0 +1,168 @@
+/* Steps start */
+.drl-view-cart-steps .steps {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav {
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: -4%;
+    margin-right: -4%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    list-style: none;
+    padding: 0;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav::before {
+    background-color: #eee;
+    border-radius: 3px;
+    z-index: 1;
+    top: 16%;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 67%;
+    height: 1px;
+    border: 1px dashed #434861;
+    opacity: 0.5;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    left: 16%;
+}
+
+.drl-view-cart-steps .sw.sw-justified>.nav>li,
+.drl-view-cart-steps .sw.sw-justified>.nav .nav-link {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.drl-view-cart-steps .steps>ul>li,
+.drl-view-cart-steps .actions>ul>li {
+    float: left;
+}
+
+.drl-view-cart-steps .steps>ul>li {
+    width: 25%;
+}
+
+.drl-view-cart-steps .steps ul>li,
+.tabcontrol ul>li {
+    display: block;
+    padding: 0;
+}
+
+.drl-view-cart-steps .steps .current a,
+.drl-view-cart-steps .steps .current a:hover,
+.drl-view-cart-steps .steps .current a:active {
+    letter-spacing: 0px;
+    color: #6B45C0;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'DRL Circular Book';
+    opacity: 1;
+    cursor: default;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav .nav-link {
+    position: relative;
+    margin-top: 20px;
+}
+
+.drl-view-cart-steps .sw>.nav .nav-link {
+    display: block;
+    padding: 0px;
+    text-decoration: none;
+}
+
+.drl-view-cart-steps .steps a,
+.drl-view-cart-steps .steps a:hover,
+.drl-view-cart-steps .steps a:active {
+    margin: 20px 0px 0px 0px;
+}
+
+.drl-view-cart-steps .steps a,
+.drl-view-cart-steps .steps a:hover,
+.drl-view-cart-steps .steps a:active {
+    width: auto;
+    border-radius: 5px;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav .current .nav-link::before {
+    content: url("../images/drl-dots.png");
+    border: unset;
+    width: 23px;
+    height: 23px;
+    top: -18px;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav .nav-link::before {
+    content: " ";
+    position: absolute;
+    display: block;
+    top: -16px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    text-decoration: none;
+    z-index: 1;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav .nav-link::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    top: -28px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    z-index: 99;
+}
+
+.drl-view-cart-steps .steps .disabled a,
+.drl-view-cart-steps .steps .disabled a:hover,
+.drl-view-cart-steps .steps .disabled a:active {
+    background: none;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'DRL Circular Book';
+    cursor: default;
+}
+
+.drl-view-cart-steps .sw-theme-dots>.nav .nav-link::before {
+    content: " ";
+    position: absolute;
+    display: block;
+    top: -11px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: solid 1px #434861;
+    background: #ffffff;
+    text-decoration: none;
+    z-index: 1;
+}
+
+/* Steps End */

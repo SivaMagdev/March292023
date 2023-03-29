@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+	   	 <css src="Ecomm_Theme::css/cart-steps.css" rel="stylesheet" type="text/css"  />
+    </head>
+	<body>
+		<referenceBlock name="content">
+			<block class="Magento\Framework\View\Element\Template" before="-" name="viewcart" template="Ecomm_Theme::viewcart.phtml"/>
+		</referenceBlock>
+		<referenceBlock name="page.main.title" remove="true"/>
+		<referenceBlock name="checkout.cart.totals">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <!-- UI component customizations -->
+                    <item name="components" xsi:type="array">
+                        <item name="block-totals" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="grand-total" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="title" xsi:type="string" translate="true">Total</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="checkout.cart.totals.container">
+            <referenceBlock name="checkout.cart.totals">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="block-totals" xsi:type="array">
+                                <item name="children" xsi:type="array">
+                                    <item name="shipping" xsi:type="array">
+                                        <item name="config" xsi:type="array">
+                                            <item name="title" xsi:type="string" translate="true">Handling Fee</item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </referenceBlock>
+        </referenceContainer>
+	</body>
+</page>

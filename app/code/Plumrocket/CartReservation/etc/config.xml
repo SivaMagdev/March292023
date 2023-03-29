@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_CartReservation
+ * @copyright   Copyright (c) 2020 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <prcr>
+            <general>
+                <serial></serial>
+                <timer_mode>1</timer_mode>
+                <user_type>1</user_type>
+            </general>
+            <cart>
+                <reservation_type>1</reservation_type>
+                <end_action>1</end_action>
+                <time>0,0,10,0</time>
+            </cart>
+            <checkout>
+                <start_action>1</start_action>
+                <time>0,0,15,0</time>
+                <timer_display>1</timer_display>
+            </checkout>
+            <popup_reminder>
+                <alert_template><![CDATA[<h2 style="font-size: 24px; margin: 0; font-weight: bold;">Your Shopping Cart Items Will Expire Soon</h2>
+<p><br>Your shopping cart reservation will expire soon and your product(s) will become available to other store members immediately</p>
+<p>Please complete your order ASAP before it's too late!<br><br>Your shopping cart contents: <br>{{var product_list}}</p>]]>
+				</alert_template>
+            </popup_reminder>
+            <timer>
+                <format_global><![CDATA[<strong>Cart Reserved For:</strong> {hnn} {hl} {mnn}:{snn} {ml}]]></format_global>
+                <format_separate><![CDATA[<span class="pcr-strong">Reserved For:</span> {hnn} {hl} {mnn}:{snn} {ml}]]></format_separate>
+                <format_on_product>Product will become available in: {hnn} {hl} {mnn}:{snn} {ml}</format_on_product>
+                <auto_refresh_enable>0</auto_refresh_enable>
+                <auto_refresh_interval>10</auto_refresh_interval>
+            </timer>
+        </prcr>
+    </default>
+</config>

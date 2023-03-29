@@ -1,0 +1,22 @@
+<!--@subject {{trans "Duplicate-Acknowledgement Received"}} @-->
+<!--@vars {
+"var itemsHtml":"Items data"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<p class="greeting">{{trans " Dear Admin,"}}</p>
+<p>Duplicate Acknowledgement Received from SAP for the following order(s)</p>
+
+Magento Order ID:  {{var magento_order_id}}<br/>
+SAP Order ID:  {{var sap_order_id}}<br/>
+Error Message:  {{var error_msg}}<br/>
+
+<p>{{trans "- %store_name Team" store_name=$store.frontend_name}}</p>
+<p>Please add {{config path="trans_email/ident_support/email"}} to your address book to ensure that our emails reach your inbox.</p>
+
+<p><strong>{{trans "Disclaimer" }}</strong></p>
+<p>{{trans "This message may contains legally privileged and/or confidential information. If you are not the intended recipient(s), or employee or agent responsible for delivery of this message to the intended recipient(s), you are hereby notified that any dissemination, distribution or copying of this e-mail message is strictly prohibited. If you have received this message in error, please immediately notify the sender and delete this e-mail message from your computer."}}<br/>
+{{trans "WARNING: Computer viruses can be transmitted via email. The recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email."}}
+</p>
+
+{{template config_path="design/email/footer_template"}}

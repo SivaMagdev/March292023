@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket Cart Reservation v2.x.x
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="core_collection_abstract_load_after">
+        <observer name="prcr_observer" instance="Plumrocket\CartReservation\Observer\CollectionLoadAfter" />
+    </event>
+    <event name="sales_quote_add_item">
+        <observer name="prcr_observer" instance="Plumrocket\CartReservation\Observer\QuoteAddItem" />
+    </event>
+    <event name="sales_quote_remove_item">
+        <observer name="prcr_observer" instance="Plumrocket\CartReservation\Observer\QuoteRemoveItem" />
+    </event>
+    <event name="sales_quote_item_qty_set_after">
+        <observer name="prcr_observer" instance="Plumrocket\CartReservation\Observer\QuoteItemQtySetAfter" />
+    </event>
+    <event name="customer_login">
+        <observer name="prcr_observer" instance="Plumrocket\CartReservation\Observer\CustomerLogin" />
+    </event>
+    <event name="catalog_category_collection_add_is_active_filter">
+        <observer name="prcr_observer" instance="Plumrocket\CartReservation\Observer\CategoryCollectionAddIsActiveFilter"/>
+    </event>
+</config>

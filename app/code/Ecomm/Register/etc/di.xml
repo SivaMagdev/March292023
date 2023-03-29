@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Model\Url" type="Ecomm\Register\Model\Url" />
+    <preference for="Magento\Customer\Controller\Address\Edit" type="Ecomm\Register\Controller\Address\Edit" />
+
+    <type name="Magento\OrderHistorySearch\Model\Filter\FilterPool">
+        <arguments>
+            <argument name="filtersClassMap" xsi:type="array">
+                <item name="po-number" xsi:type="string">Ecomm\Register\Model\Filter\PoNumber</item>
+                <item name="sap-id" xsi:type="string">Ecomm\Register\Model\Filter\SapId</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,14 @@
+<?php
+/* you can customize the wishlist here */
+?>
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$storeManager->getStore()->getBaseUrl();
+if($customerSession->isLoggedIn()) { ?>
+  <div class="map-view-wrap wishlist-add ui-menu-item">
+    <a href="<?php $storeManager?>/restriction" class="fa fa-address-card-o location-address">
+    </a>
+</div>
+<?php }?>

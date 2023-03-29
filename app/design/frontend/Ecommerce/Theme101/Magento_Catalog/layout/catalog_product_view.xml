@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body> 
+        <container name="customattributes.block.sec" htmlTag="div" htmlClass="customattributes-class" before="-">
+	        <block class="Magento\Catalog\Block\Product\View\Attributes" name="customattributes" template="Magento_Catalog::product/view/customattributes.phtml" />
+	    </container>
+	    <container name="customattributesshortdated.block.sec" htmlTag="div" htmlClass="customattributesshortdated-class" before="-">
+	        <block class="Magento\Catalog\Block\Product\View\Attributes" name="customattributesshortdated" template="Magento_Catalog::product/view/customattributesshortdated.phtml" />
+	    </container>
+
+	    <!-- add custom tab -->
+	    	<referenceBlock name="product.info.details">
+	          	<block class="Magento\Catalog\Block\Product\View" name="additionalproductinfo.tab" as="additionalproductinfo" template="Magento_Catalog::product/view/tab/additionalproductinfo.phtml" group="detailed_info" >
+	             	<arguments>
+	                	<argument translate="true" name="title" xsi:type="string">Supportive documents</argument>
+	             	</arguments>
+	          </block>
+	        </referenceBlock>
+	        <referenceBlock name="product.info.details">
+	          	<block class="Magento\Catalog\Block\Product\View" name="wholesaleritem.tab" as="wholesaleritem" template="Magento_Catalog::product/view/tab/wholesaleritem.phtml" group="detailed_info" >
+	             	<arguments>
+	                	<argument translate="true" name="title" xsi:type="string">Wholesaler item number</argument>
+	             	</arguments>
+	          </block>
+	        </referenceBlock>
+	        <!--<referenceBlock name="product.info.details">
+	          	<block class="Magento\Catalog\Block\Product\View" name="supportive.tab" as="supportive" template="Magento_Catalog::product/view/tab/supportive.phtml" group="detailed_info" >
+	             	<arguments>
+	                	<argument translate="true" name="title" xsi:type="string">Additional product information</argument>
+	             	</arguments>
+	          </block>
+	        </referenceBlock>-->
+	    <!-- add custom tab -->
+
+        <move element="product.info" destination="content" after="product.info.media"/>
+        <move element="product.info.extrahint" destination="product.info.form.options" after="product.info.options.wrapper.bottom"/>
+        <move element="customattributes.block.sec" destination="product.info.main" after="product.price.tier"/>
+        <move element="customattributesshortdated.block.sec" destination="content" after="product.info"/>
+        <!--<move element="product.info.options.wrapper" destination="product.info.form.options" after="product.info.options.wrapper.bottom"/>-->
+
+        <referenceBlock name="product.info.stock.sku" remove="true" />
+        <referenceBlock name="product.info.social" remove="true" />
+        <referenceBlock name="product.info.review" remove="true" />
+        <referenceBlock name="reviews.tab" remove="true" />
+        <referenceBlock name="product.attributes" remove="true" />
+        <referenceBlock name="product.info.overview" remove="true" />
+        <!--<referenceBlock name="product.info.options.wrapper" remove="true" />-->
+        <referenceBlock name="product.info.options" remove="true" />
+        <referenceBlock name="product.info.description" remove="true" />
+	<!--Removing Related Product Block-->	
+	<referenceBlock name="catalog.product.related" remove="true" />
+    </body>
+</page>

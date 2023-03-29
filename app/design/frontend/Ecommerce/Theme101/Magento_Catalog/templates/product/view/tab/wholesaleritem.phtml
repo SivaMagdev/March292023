@@ -1,0 +1,34 @@
+<?php 
+	$_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+	$_product = $block->getProduct(); 
+	echo $_product->getDescription();
+?>
+<div class="drl-wholesale">
+<table>
+<?php if($_helper->productAttribute($_product, $_product->getAmerisourceBergen(), 'amerisource_bergen')): ?>
+	<tr>
+		<td>Amerisource Bergen (8): </td>
+		<td><?php echo $_helper->productAttribute($_product, $_product->getAmerisourceBergen(), 'amerisource_bergen') ?></td>
+	</tr>
+<?php endif; ?>
+<?php if($_helper->productAttribute($_product, $_product->getCardinal(), 'cardinal')): ?>
+	<tr>
+		<td>Cardinal: </td> 
+		<td><?php echo $_helper->productAttribute($_product, $_product->getCardinal(), 'cardinal') ?></td>
+	</tr>
+<?php endif; ?>
+<?php if($_helper->productAttribute($_product, $_product->getMckesson(), 'mckesson')): ?>
+	<tr>
+		<td>McKesson: </td>
+		<td><?php echo $_helper->productAttribute($_product, $_product->getMckesson(), 'mckesson') ?></td>
+	</tr>
+<?php endif; ?>
+<?php if($_helper->productAttribute($_product, $_product->getMD(), 'm_d')): ?>
+	<tr>
+		<td>M & D: </td>
+		<td><?php echo $_helper->productAttribute($_product, $_product->getMD(), 'm_d') ?></td>
+	</tr>
+<?php endif; ?>
+</table>
+</div>

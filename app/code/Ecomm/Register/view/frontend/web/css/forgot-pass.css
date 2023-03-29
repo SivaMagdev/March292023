@@ -1,0 +1,582 @@
+form.form.password.forget.forgot-pass-inner fieldset.fieldset {
+    margin: 0;
+}
+
+.cus-title {
+    margin-bottom: 15px;
+}
+
+strong.cus-login-title {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.cus-title-below {
+    width: 100%;
+    height: 71px;
+    margin-bottom: 0px;
+}
+
+span.cus-login-title-below {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 40px;
+    font: normal normal 300 30px/40px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+span.cus-log-tlt-sec {
+    font: normal normal bold 30px/40px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+.cus-in-news-cont {
+    padding: 20px 20px;
+    width: 502px;
+    height: 257px;   
+    border-radius: 5px;
+    height: auto;
+}
+
+.news-cont-title {
+    color: #ffffff;
+    text-align: left;
+    font: normal normal bold 20px/29px DRL Circular;
+    font-family: 'DRL Circular Light';
+    height: 26px;
+    margin-bottom: 18px;
+}
+
+.news-cont-one {
+    font-size: 14px;
+    margin-bottom: 1px;
+    color: #ffffff;
+    font: normal normal normal 16px/29px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+span.news-cont-bold {
+    color: #ffffff;
+    font-weight: 700;
+    font-family: 'DRL Circular Bold';
+}
+
+.news-cont-two {
+    font-size: 14px;
+    margin-bottom: 7px;
+    color: #ffffff;
+    font: normal normal normal 16px/29px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+.forgot-company-title {
+    font-size: 28px;
+    text-align: left;
+    font: normal normal normal 20px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-weight: bold;
+    font-family: 'DRL Circular Bold';
+}
+
+a.action.forgot-back.back {
+    color: #4e3d91;
+}
+
+.forgot-company--below-title {
+    margin-top: 10px;
+    text-align: left;
+    font: normal normal normal 20px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-weight: bold;
+    font-family: 'DRL Circular Bold';
+}
+
+.forgot-red-msg {
+    color: #b3b3b3;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-align: left;
+    font: normal normal normal 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    font-family: 'DRL Circular Light';
+}
+
+.customer-login-email label.label {
+    text-align: left;
+    font: normal normal normal 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #434861;
+    font-family: 'DRL Circular Light';
+    width: 126px;
+    height: 15px;
+    font-weight: normal !important;
+}
+
+.customer-login-email .control .customer-login-input {
+    background: #FAF9FA 0% 0% no-repeat padding-box;
+    background-clip: padding-box;
+    border: 1px solid #5225B533;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 48px;
+    line-height: 1.42857143;
+    padding: 0px 9px;
+    vertical-align: baseline;
+    /* width: 100%; */
+    width: 348px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font: normal normal normal 14px/21px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+
+.customer-login-button .action.primary {
+    background-image: none;
+    background: #5225B5;
+    border: 1px solid #5225B5;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    padding: 13px 8px;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border-radius: 30px;
+    /* width:100%; */
+    width: 349px;
+    text-transform: none;
+    font: normal normal normal 14px/21px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+.customer-login-button {
+    width: 100%;
+    margin-top: 36px;
+}
+
+.customer-dont-account {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.customer-d-acc {
+    text-align: center;
+    margin-right: 10px;
+    color: #303030;
+    font-weight: 600;
+}
+
+.customer-d-signup {
+    text-align: center;
+    color: #4e3d91;
+}
+
+.customer-d-signup>a {
+    color: #4e3d91;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.block-customer-forgot-containter {
+    /* border: 1px solid #4e3d91;   
+    box-shadow: 2px 8px 18px 19px #f6f6f6;
+    border-radius: 10px; */
+}
+
+.forgot-pass-inner {
+    /*  padding: 16px 40px; */
+    padding: 16px 110px;
+}
+
+.login-container .fieldset>.field>.control {
+    width: 100%;
+}
+
+.form.password.forget .fieldset:after {
+    display: none;
+}
+
+
+.customer-account-forgotpassword .page-main>.page-title-wrapper .page-title {
+    display: none;
+}
+
+.customer-account-forgotpassword .page-main {
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: none;
+}
+
+
+.customer-account-forgotpassword .block.block-customer-login-container {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    opacity: 1;
+    top: 0px;
+    left: 0px;
+    width: 45%;
+    padding-top: 49px;
+    padding-left: 70px;
+    padding-right: 63px;
+    /* padding-top: 156px;
+    padding-left: 116px;
+    padding-right: 62px; */
+}
+
+.customer-account-forgotpassword .cus-in-carousel .slick-dots li.slick-active button {
+    width: 15px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 4px;
+    opacity: 1;
+    padding: 3px 4px;
+}
+
+.customer-account-forgotpassword .slick-dots li button {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    opacity: 0.5;
+    padding: 3px;
+}
+
+.customer-account-forgotpassword .block.block-customer-forgot-containter {
+    padding-top: 49px;
+    padding-left: 60px;
+    width: 55%;
+    background: #fff;
+}
+
+.customer-account-forgotpassword .columns .column.main {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    padding-bottom: 0px;
+}
+
+.customer-account-forgotpassword .page-main .block {
+    margin-bottom: 0px;
+}
+
+.customer-account-forgotpassword .block-content-under {
+    right: 0px;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.customer-account-forgotpassword .block-content-under img {
+    right: 0px;
+    width: 235px;
+    height: 259px;
+}
+
+
+.customer-account-forgotpassword .field.captcha>label.label {
+    text-align: left;
+    font: normal normal normal 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #434861;
+    font-family: 'DRL Circular Light';
+    height: 15px;
+}
+
+.customer-account-forgotpassword .control.captcha>.input-text {
+    background: #FAF9FA 0% 0% no-repeat padding-box;
+    background-clip: padding-box;
+    border: 1px solid #5225B533;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 48px;
+    line-height: 1.42857143;
+    padding: 0px 9px;
+    vertical-align: baseline;
+    /* width: 100%; */
+    width: 348px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font: normal normal normal 14px/21px DRL Circular;
+    font-family: 'DRL Circular Light';
+}
+
+
+.customer-account-forgotpassword button.action.reload.captcha-reload {
+    background-image: none;
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border: 1px solid #4e3d91;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    padding: 13px 8px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border-radius: 30px;
+    /* width: 100%; */
+    width: 135px;
+    text-transform: none;
+    font: normal normal normal 14px/21px DRL Circular;
+    font-family: 'DRL Circular Light';
+    box-shadow: none;
+}
+
+
+.forgot-success-block-inner {
+    text-align: center;
+    border-bottom: 1px dotted;
+    width: 330px;
+    margin: 0px auto;
+}
+
+strong.cus-login-title img {
+    text-align: center;
+}
+
+.cus-email-send {
+    height: 19px;
+}
+
+.cus-email-send>.email-success {
+    font: normal normal bold 18px/26px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Bold';
+}
+
+.cus-email-visible {
+    height: 16px;
+    margin-top: 10px;
+}
+
+.cus-email-visible>.email-visible {
+    font: normal normal normal 16px/23px DRL Circular;
+    letter-spacing: 0px;
+    color: #5225B5;
+    font-family: 'DRL Circular Light';
+}
+
+
+.cus-password-inbox {
+    width: 215px;
+    height: 50px;
+    text-align: center;
+    font: normal normal 300 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Light';
+    margin: 0px auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+
+.cus-password-inbox>.password-inbox {
+    text-align: center;
+    font: normal normal 300 14px/21px DRL Circular;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Light';
+}
+
+
+.forgot-resend-link {
+    margin: 0px auto;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.forgot-resend-link>a {
+    color: #5225B5;
+    font-family: 'DRL Circular Book';
+    margin: 0px auto;
+    text-align: center;
+}
+
+
+@media (min-width: 768px) {
+    .nav-sections {
+        -webkit-flex-shrink: 0;
+        flex-shrink: 0;
+        -webkit-flex-basis: auto;
+        flex-basis: auto;
+        margin-bottom: 0px;
+    }
+}
+
+@media only screen and (min-width : 320px) and (max-width: 767px) {
+
+
+    .customer-account-forgotpassword .block.block-customer-login-container {
+        background: #5225B5 0% 0% no-repeat padding-box;
+        opacity: 1;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        padding-top: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .cus-title-below {
+        width: 100%;
+        height: auto;
+        margin-bottom: 60px;
+    }
+
+    .customer-account-forgotpassword .block.block-customer-forgot-containter {
+        padding-top: 20px;
+        padding-left: 0px;
+        padding-right: 0px;
+        width: 100%;
+        background: #594db5;
+    }
+
+    .forgot-pass-inner {
+        padding-top: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 20px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border-radius: 4px;
+    }
+
+    .customer-account-forgotpassword .control.captcha>.input-text {
+        background: #FAF9FA 0% 0% no-repeat padding-box;
+        background-clip: padding-box;
+        border: 1px solid #5225B533;
+        border-radius: 4px;
+        font-size: 14px;
+        height: 48px;
+        line-height: 1.42857143;
+        padding: 0px 9px;
+        vertical-align: baseline;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 5px;
+        font: normal normal normal 14px/21px DRL Circular;
+        font-family: 'DRL Circular Light';
+    }
+
+    .customer-login-email .control .customer-login-input {
+        background: #FAF9FA 0% 0% no-repeat padding-box;
+        background-clip: padding-box;
+        border: 1px solid #5225B533;
+        border-radius: 4px;
+        font-size: 14px;
+        height: 48px;
+        line-height: 1.42857143;
+        padding: 0px 9px;
+        vertical-align: baseline;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 5px;
+        font: normal normal normal 14px/21px DRL Circular;
+        font-family: 'DRL Circular Light';
+    }
+
+    .customer-account-forgotpassword button.action.reload.captcha-reload {
+        background-image: none;
+        background: #5225B5 0% 0% no-repeat padding-box;
+        border: 1px solid #4e3d91;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 600;
+        padding: 13px 8px;
+        box-sizing: border-box;
+        vertical-align: middle;
+        border-radius: 30px;
+        width: 100%;
+        text-transform: none;
+        font: normal normal normal 14px/21px DRL Circular;
+        font-family: 'DRL Circular Light';
+        box-shadow: none;
+    }
+
+    .customer-login-button .action.primary {
+        background-image: none;
+        background: #5225B5;
+        border: 1px solid #5225B5;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 600;
+        padding: 13px 8px;
+        font-size: 1.4rem;
+        box-sizing: border-box;
+        vertical-align: middle;
+        border-radius: 30px;   
+        width: 100%;
+        text-transform: none;
+        font: normal normal normal 14px/21px DRL Circular;
+        font-family: 'DRL Circular Light';
+    }
+
+
+    .login-container .fieldset>.field>.control {
+        width: 100%;
+        margin: 0px 0px 35px;
+    }
+
+
+}
+
+/* ipad view */
+
+@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
+
+.customer-account-forgotpassword .block.block-customer-login-container {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    opacity: 1;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding-top: 49px;
+    padding-left: 70px;
+    padding-right: 63px;
+}
+
+.customer-account-forgotpassword .block.block-customer-forgot-containter {
+    padding-top: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+.form.password.forget{
+    width: 100%;
+}
+
+}
+
+
+
+
+
+
+/* nexus phone */
+
+@media only screen and (device-width : 800px) and (orientation: portrait) {
+
+    .customer-account-forgotpassword .block.block-customer-login-container {
+        background: #5225B5 0% 0% no-repeat padding-box;
+        opacity: 1;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        padding-top: 49px;
+        padding-left: 70px;
+        padding-right: 63px;
+    }
+
+    .customer-account-forgotpassword .block.block-customer-forgot-containter {
+        padding-top: 49px;
+        padding-left: 60px;
+        width: 100%;
+        background: #fff;
+    }
+
+}

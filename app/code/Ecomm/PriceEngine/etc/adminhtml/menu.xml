@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ecomm_PriceEngine::priceengine" title="Excel Uploads" module="Ecomm_PriceEngine" sortOrder="20" resource="Ecomm_PriceEngine::priceengine"/>
+
+        <!--<add id="Ecomm_PriceEngine::exclusiveprice" title="Exclusive Price List" module="Ecomm_PriceEngine" sortOrder="0" action="ecomm_priceengine/exclusiveprice/index" resource="Ecomm_PriceEngine::exclusiveprice" parent="Ecomm_PriceEngine::priceengine"/>-->
+
+        <add id="Ecomm_PriceEngine::regularprice" title="Price List" module="Ecomm_PriceEngine" sortOrder="1" action="ecomm_priceengine/regularprice/index" resource="Ecomm_PriceEngine::regularprice" parent="Ecomm_PriceEngine::priceengine"/>
+
+        <add id="Ecomm_PriceEngine::shortdatedprice" title="Shortdated List" module="Ecomm_PriceEngine" sortOrder="2" action="ecomm_priceengine/shortdatedprice/index" resource="Ecomm_PriceEngine::shortdatedprice" parent="Ecomm_PriceEngine::priceengine"/>
+
+        <add id="Ecomm_PriceEngine::stock" title="Inventory List" module="Ecomm_PriceEngine" sortOrder="3" action="ecomm_priceengine/stock/index" resource="Ecomm_PriceEngine::stock" parent="Ecomm_PriceEngine::priceengine"/>
+
+        <add id="Ecomm_PriceEngine::priceengineimport" title="Transaction Excels" module="Ecomm_PriceEngine" sortOrder="22" resource="Ecomm_PriceEngine::priceengineimport"  parent="Ecomm_PriceEngine::priceengine"/>
+
+        <!--<add id="Ecomm_PriceEngine::exclusiveprice_import" title="Import Exclusive Price" module="Ecomm_PriceEngine" sortOrder="0" action="ecomm_priceengine/exclusiveprice/import" resource="Ecomm_PriceEngine::exclusiveprice_import" parent="Ecomm_PriceEngine::priceengineimport"/>-->
+
+        <add id="Ecomm_PriceEngine::regularprice_import" title="Price" module="Ecomm_PriceEngine" sortOrder="1" action="ecomm_priceengine/regularprice/import" resource="Ecomm_PriceEngine::regularprice_import" parent="Ecomm_PriceEngine::priceengineimport"/>
+
+        <add id="Ecomm_PriceEngine::shortdatedprice_import" title="Shortdated" module="Ecomm_PriceEngine" sortOrder="2" action="ecomm_priceengine/shortdatedprice/import" resource="Ecomm_PriceEngine::shortdatedprice_import" parent="Ecomm_PriceEngine::priceengineimport"/>
+
+        <add id="Ecomm_PriceEngine::stock_import" title="Inventory" module="Ecomm_PriceEngine" sortOrder="3" action="ecomm_priceengine/stock/import" resource="Ecomm_PriceEngine::stock_import" parent="Ecomm_PriceEngine::priceengineimport"/>
+
+         <add id="Ecomm_PriceEngine::priceengineimportmaster" title="Master Excels" module="Ecomm_PriceEngine" sortOrder="24" resource="Ecomm_PriceEngine::priceengineimportmaster"  parent="Ecomm_PriceEngine::priceengine"/>
+
+        <add id="Ecomm_PriceEngine::product_import" title="Product" module="Ecomm_PriceEngine" sortOrder="4" action="ecomm_priceengine/product/import" resource="Ecomm_PriceEngine::product_import" parent="Ecomm_PriceEngine::priceengineimportmaster"/>
+
+        <add id="Ecomm_PriceEngine::customer_import" title="Customer" module="Ecomm_PriceEngine" sortOrder="5" action="ecomm_priceengine/customer/import" resource="Ecomm_PriceEngine::customer_import" parent="Ecomm_PriceEngine::priceengineimportmaster"/>
+
+    </menu>
+</config>

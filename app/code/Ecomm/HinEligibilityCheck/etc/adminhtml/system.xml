@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="hin_eligibility" translate="label" sortOrder="5100000">
+            <label>HIN Settings</label>
+        </tab>
+        <section id="hin_settings" translate="label" sortOrder="350" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>General</label>
+            <tab>hin_eligibility</tab>
+            <resource>Ecomm_HinEligibilityCheck::general</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="hin_url" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>URL</label>
+                    <comment>340B Eligibility Check URL</comment>
+                </field>
+                <field id="hin_username" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Username</label>
+                </field>
+                 <field id="hin_password" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Password</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

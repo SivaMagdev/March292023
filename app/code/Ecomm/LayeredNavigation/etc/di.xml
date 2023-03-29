@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+  <!--<type name="Magento\Catalog\Model\Layer">
+    <plugin name="custom_get_product_collection" type="Ecomm\LayeredNavigation\Plugin\Model\Layer"/>
+  </type>
+ <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="custom_product_toolbar" type="Ecomm\LayeredNavigation\Plugin\Model\Toolbar" />
+    </type>
+    <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
+      <plugin name="customLayernavigation"
+      type="Ecomm\LayeredNavigation\Plugin\Model\IndexBuilder" />
+     </type>-->
+
+  
+
+    <preference for="Magento\LayeredNavigation\Block\Navigation\State" type="Ecomm\LayeredNavigation\Plugin\Block\Navigation\State"/>
+
+    <preference for="Mageplaza\LayeredNavigationPro\Model\Layer\Filter\State" type="Ecomm\LayeredNavigation\Plugin\Model\Filter\State" />
+
+    <preference for="Mageplaza\LayeredNavigation\Plugin\Model\Layer\Filter\Item" type="Ecomm\LayeredNavigation\Plugin\Model\Layer\Filter\Item"/>
+</config>

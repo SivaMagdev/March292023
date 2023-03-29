@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.colan.com/LICENSE.txt
+ *
+ * ==============================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * ==============================================================
+ * This package designed for Magento COMMUNITY edition
+ * PWC does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * PWC does not provide extension support in case of
+ * incorrect edition usage.
+ * ==============================================================
+ *
+ * @category    PWC
+ * @package     Ecomm_Supportdocument
+ * @version     1.2
+ * @author      PWC Team
+ *
+ */
+! -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">ecomm_supportdocument_form.entity_listing_supportdocument</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Support Document Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="Ecomm\Supportdocument\Block\Adminhtml\Supportdocument\Edit\Buttons\Back" />
+            <button name="delete" class="Ecomm\Supportdocument\Block\Adminhtml\Supportdocument\Edit\Buttons\Delete" />
+            <button name="reset" class="Ecomm\Supportdocument\Block\Adminhtml\Supportdocument\Edit\Buttons\Reset" />
+            <button name="save" class="Ecomm\Supportdocument\Block\Adminhtml\Supportdocument\Edit\Buttons\Save" />
+            <button name="save_and_continue" class="Ecomm\Supportdocument\Block\Adminhtml\Supportdocument\Edit\Buttons\SaveAndContinue" />
+        </buttons>
+        <namespace>supportdocument_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>ecomm_supportdocument_form.entity_listing_supportdocument</dep>
+        </deps>
+    </settings>
+    <dataSource name="entity_listing_supportdocument">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="Ecomm\Supportdocument\Model\SupportdocumentProvider" name="entity_listing_supportdocument">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="data_details">
+        <settings>
+            <label/>
+        </settings>
+        <field name="id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>id</dataScope>
+            </settings>
+        </field>
+        <field name="status" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable</label>
+                <dataScope>status</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="is_logged_in" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Show only after login</label>
+                <dataScope>is_logged_in</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="product_id" formElement="select">
+            <argument name="data" xsi:type="array">
+            <item name="options" xsi:type="object">Ecomm\Supportdocument\Ui\Component\Create\Form\Product</item>
+            <item name="config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+                <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                <item name="filterOptions" xsi:type="boolean">true</item>
+                <item name="showCheckbox" xsi:type="boolean">true</item>
+                <item name="chipsEnabled" xsi:type="boolean">true</item>
+                <item name="multiple" xsi:type="boolean">false</item>
+                <item name="disableLabel" xsi:type="boolean">true</item>
+            </item>
+            </argument>
+            <settings>
+             <label translate="true">Product</label>
+             <validation>
+                <rule name="required-entry" xsi:type="boolean">true</rule>
+             </validation>
+            </settings>
+        </field>
+
+
+        <field name="link_title" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Link Title</label>
+                <dataScope>link_title</dataScope>
+            </settings>
+        </field>
+
+        <field name="link" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Link</label>
+                <dataScope>link</dataScope>
+            </settings>
+        </field>
+
+        <field name="hide_leave_popup" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Show Notification Popup</label>
+                <dataScope>hide_leave_popup</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <field name="attachment" sortOrder="40" formElement="fileUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Supportdocument</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/uploader</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Attachment (Max Size: 3MB) Allowed file types: PDF, JPG, JPEG and PNG</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <fileUploader>
+                    <settings>
+                        <required>false</required>
+                        <allowedExtensions>jpg jpeg png pdf</allowedExtensions>
+                        <maxFileSize>3145728</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="supportdocumentadmin/supportdocument/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Ecomm_Supportdocument/image-preview</previewTmpl>
+                    </settings>
+                </fileUploader>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

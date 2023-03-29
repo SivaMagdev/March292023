@@ -1,0 +1,23 @@
+{
+    "name": "rage/delivery-date",
+    "description": "Customer Can choose Order Delivery Date and also add delivery notes during checkout",
+    "type": "magento2-module",
+    "license": "MIT",
+    "version": "1.0.1",
+    "authors": [
+        {
+            "email": "magento.support@whatarage.com",
+            "name": "RAGE COMMUNICATIONS PVT LTD"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Rage\\DeliveryDate\\": ""
+        }
+    }
+}

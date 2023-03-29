@@ -1,0 +1,22 @@
+{
+    "quote": {
+        "column": {
+            "rgdd_delivery_date": true,
+            "rgdd_delivery_comment": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "rgdd_delivery_date": true,
+            "rgdd_delivery_comment": true
+        }
+    },
+    "sales_order_grid": {
+        "column": {
+            "rgdd_delivery_date": true
+        },
+        "index": {
+            "SALES_ORDER_GRID_RGDD_DELIVERY_DATE": true
+        }
+    }
+}

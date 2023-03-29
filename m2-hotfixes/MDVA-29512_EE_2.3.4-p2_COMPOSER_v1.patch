@@ -1,0 +1,120 @@
+diff --git a/vendor/magento/module-company/Model/Company/ReservedAttributeList.php b/vendor/magento/module-company/Model/Company/ReservedAttributeList.php
+new file mode 100644
+index 000000000..09e1bf4a3
+--- /dev/null
++++ b/vendor/magento/module-company/Model/Company/ReservedAttributeList.php
+@@ -0,0 +1,50 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\Company\Model\Company;
++
++use Magento\Eav\Model\Entity\Attribute;
++use Magento\Company\Model\Company;
++
++/**
++ * Reserved attribute list by company module
++ */
++class ReservedAttributeList
++{
++    /**
++     * @var array
++     */
++    private $reservedAttributes;
++
++    /**
++     * @param Company $companyModel
++     * @param array $reservedAttributes
++     */
++    public function __construct(Company $companyModel, array $reservedAttributes = [])
++    {
++        $methods = get_class_methods($companyModel);
++        foreach ($methods as $method) {
++            if (preg_match('/^get([A-Z]{1}.+)/', $method, $matches)) {
++                $method = $matches[1];
++                $tmp = strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $method));
++                $reservedAttributes[] = $tmp;
++            }
++        }
++        $this->reservedAttributes = $reservedAttributes;
++    }
++
++    /**
++     * Check whether attribute is reserved by system
++     *
++     * @param Attribute $attribute
++     * @return bool
++     */
++    public function isReservedAttribute(Attribute $attribute): bool
++    {
++        return $attribute->getIsUserDefined() && in_array($attribute->getAttributeCode(), $this->reservedAttributes);
++    }
++}
+diff --git a/vendor/magento/module-company/Plugin/Catalog/Model/Product/ReservedAttributeListPlugin.php b/vendor/magento/module-company/Plugin/Catalog/Model/Product/ReservedAttributeListPlugin.php
+new file mode 100644
+index 000000000..11376820b
+--- /dev/null
++++ b/vendor/magento/module-company/Plugin/Catalog/Model/Product/ReservedAttributeListPlugin.php
+@@ -0,0 +1,46 @@
++<?php
++/**
++ * Copyright © Magento, Inc. All rights reserved.
++ * See COPYING.txt for license details.
++ */
++declare(strict_types=1);
++
++namespace Magento\Company\Plugin\Catalog\Model\Product;
++
++use Magento\Catalog\Model\Product\ReservedAttributeList;
++use Magento\Company\Model\Company\ReservedAttributeList as CompanyReservedAttributeList;
++use Magento\Eav\Model\Entity\Attribute;
++
++/**
++ * Plugin for reserved attribute list class
++ *
++ */
++class ReservedAttributeListPlugin
++{
++    /**
++     * @var CompanyReservedAttributeList
++     */
++    private $companyReservedAttributes;
++
++    /**
++     * @param CompanyReservedAttributeList $companyReservedAttributes
++     */
++    public function __construct(CompanyReservedAttributeList $companyReservedAttributes)
++    {
++        $this->companyReservedAttributes = $companyReservedAttributes;
++    }
++
++    /**
++     * Check whether attribute code is reserved by company module
++     *
++     * @param ReservedAttributeList $subject
++     * @param bool $result
++     * @param Attribute $attribute
++     * @return bool
++     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
++     */
++    public function afterIsReservedAttribute(ReservedAttributeList $subject, bool $result, Attribute $attribute): bool
++    {
++        return $result ?: $this->companyReservedAttributes->isReservedAttribute($attribute);
++    }
++}
+diff --git a/vendor/magento/module-company/etc/adminhtml/di.xml b/vendor/magento/module-company/etc/adminhtml/di.xml
+index 680ab9260..2f4b30157 100644
+--- a/vendor/magento/module-company/etc/adminhtml/di.xml
++++ b/vendor/magento/module-company/etc/adminhtml/di.xml
+@@ -32,4 +32,7 @@
+             </argument>
+         </arguments>
+     </type>
++    <type name="Magento\Catalog\Model\Product\ReservedAttributeList">
++        <plugin name="reservedAttributeListPlugin" type="Magento\Company\Plugin\Catalog\Model\Product\ReservedAttributeListPlugin"/>
++    </type>
+ </config>

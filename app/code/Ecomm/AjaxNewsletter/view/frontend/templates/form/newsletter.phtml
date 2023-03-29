@@ -1,0 +1,118 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Newsletter $block */
+?>
+<?=$block->getChildHtml("form_before") ?>
+<?php
+$helper = $this->helper("Ecomm\AjaxNewsletter\Helper\Agreement");
+$values = $helper->getEnable();
+?>
+
+<div id="modal">
+    <div class="modal-body-content">
+      <?php echo $values; ?>
+    </div>
+</div>
+<?php
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->get("Magento\Customer\Model\Session");
+$email = $customerSession->getCustomer()
+    ->getEmail();
+$subscriber = $om->create("Magento\Newsletter\Model\SubscriberFactory");
+$subscribed = 0;
+$status_id = $subscriber->create()
+    ->loadByEmail($email)->getSubscriberStatus();
+if ($subscriber->create()
+    ->loadByEmail($email)->getSubscriberStatus() == \Magento\Newsletter\Model\Subscriber::STATUS_SUBSCRIBED)
+{
+    $subscribed = 1;
+}
+?>
+    <form class="form form-newsletter-manage" action="<?=$this->getBaseUrl() . "managenewsletter/index/managenewsletter"
+?>" method="post" id="form-validate">
+        <fieldset class="fieldset">
+            <?=$block->getBlockHtml("formkey") ?>
+           <!-- <legend class="legend"><span><?=$block->escapeHtml(__("Promotional Subscription")) ?></span></legend>--><br>
+            <?php if ($status_id == "3")
+{ ?>
+            <div class="field choice">
+                <input type="radio" name="is_subscribed" required  id="subscription" value="1" title="<?=$block->escapeHtmlAttr(__("Subscribe to Promotional Emails")) ?>"<?php if ($subscribed): ?> checked="checked"<?php
+    endif; ?> class="checkbox">
+                <label for="subscription" class="label"><span><?=$block->escapeHtml(__("Subscribe to Promotional Emails")) ?></span></label>
+            </div>
+            <div id="button">
+             <p><input id="checkbox" type="checkbox" required name="terms">
+             <b><label for="checkbox">I accept the <u>Terms and Conditions of Promotional Subscription</u></label></p></b>
+              </div>
+              <?php
+} ?>
+ <?php if (empty($status_id))  
+{ ?>
+            <div class="field choice">
+                <input type="radio" name="is_subscribed" required  id="subscription" value="1" title="<?=$block->escapeHtmlAttr(__("Subscribe to Promotional Emails")) ?>"<?php if ($subscribed): ?> checked="checked"<?php
+    endif; ?> class="checkbox">
+                <label for="subscription" class="label"><span><?=$block->escapeHtml(__("Subscribe to Promotional Emails")) ?></span></label>
+            </div>
+            <div id="button">
+             <p><input id="checkbox" type="checkbox" required name="terms">
+             <b><label for="checkbox">I accept the <u>Terms and Conditions of Promotional Subscription</u></label></p></b>
+              </div>
+              <?php
+} ?>
+            <?php if ($status_id == "1")
+{ ?>
+            <div class="field choice">
+                <input type="radio" name="is_subscribed"  required  id="unsubscription" value="0" title="<?=$block->escapeHtmlAttr(__("Unsubscribe to Promotional Emails")) ?>"<?php if (!$subscribed): ?> checked="checked"<?php
+    endif; ?> class="checkbox">
+                <label for="unsubscription" class="label"><span><?=$block->escapeHtml(__("Unsubscribe to Promotional Emails")) ?></span></label>
+            </div>
+
+
+
+              <?php
+} ?>
+            <?=$block->getChildHtml("customer.form.newsletter.extra") ?>
+        </fieldset>
+
+        <div class="actions-toolbar">
+            <div class="primary"><button type="submit" title="<?=$block->escapeHtmlAttr(__("Save")) ?>" class="action save primary"><span><?=$block->escapeHtml(__("Save")) ?></span></button></div>
+            <div class="secondary"><a class="action back" href="<?=$block->escapeUrl($block->getBackUrl()) ?>"><span><?=$block->escapeHtml(__("Back")) ?></span></a></div>
+        </div>
+    </form>
+<?php
+/* Extensions placeholder */
+?>
+<?=$block->getChildHtml("customer.form.newsletter.extra2") ?>
+<style type="text/css">
+input[type="checkbox"]:required:invalid + label { color: red; }
+  input[type="checkbox"]:required:valid + label { color: green; }
+</style>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "Magento_Ui/js/modal/modal"
+    ],function($, modal) {
+
+        var options = {
+            type: 'popup',
+            responsive: true,
+            buttons: [{
+                text: $.mage.__('close'),
+                class: 'submit',
+                id:'submit',
+                click: function () {
+                    this.closeModal();
+                }
+            }]
+        };
+
+        var popup = modal(options, $('#modal'));
+        $("#button").click(function() {
+            $('#modal').modal('openModal');
+        });
+    });
+</script>

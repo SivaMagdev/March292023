@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ecomm_ExclusivePrice::vistex" title="Vistex" module="Ecomm_ExclusivePrice" sortOrder="20" resource="Ecomm_ExclusivePrice::vistex" parent="Ecomm_PriceEngine::priceengine"/>
+
+        <add id="Ecomm_PriceEngine::exclusiveprice" title="Exclusive Price List" module="Ecomm_PriceEngine" sortOrder="0" action="ecomm_priceengine/exclusiveprice/index" resource="Ecomm_PriceEngine::exclusiveprice" parent="Ecomm_ExclusivePrice::vistex"/>
+        <add id="Ecomm_ExclusivePrice::contractprice" title="Contract List" module="Ecomm_ExclusivePrice" sortOrder="1" action="ecomm_exclusiveprice/contractprice/index" resource="Ecomm_ExclusivePrice::contractprice" parent="Ecomm_ExclusivePrice::vistex"/>
+        <add id="Ecomm_ExclusivePrice::gpocontractprice" title="GPO Contract List" module="Ecomm_PriceEngine" sortOrder="2" action="ecomm_priceengine/gpocontractprice/index" resource="Ecomm_ExclusivePrice::gpocontractprice" parent="Ecomm_ExclusivePrice::vistex"/>
+
+    </menu>
+</config>

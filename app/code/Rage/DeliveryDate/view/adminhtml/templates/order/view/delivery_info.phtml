@@ -1,0 +1,69 @@
+<?php
+    $_order = $block->getOrder();
+    $delivery_info = $block->getDeliveryInfo($_order);
+?>
+<?php if ($delivery_info): ?>
+<section class="admin__page-section order-view-billing-shipping">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Customer Delivery Notes') ?></span>
+    </div>
+    <div class="admin__page-section-content">
+    <div class="delivery-date">
+    <strong><?php echo __('Delivery Date') ?> : </strong><?=$delivery_info['date'] ?></div>
+    <div id="delivery-comment">
+    <strong><?php echo __('Delivery Notes') ?> : </strong>
+    <br/>
+    <span class="comments"><?=$delivery_info['note'] ?></span>
+    </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- Order HIN Details-->
+<?php 
+$orderId = $_order->getIncrementId();
+    $hinObject = $block->getLayout()->createBlock('Ecomm\OrderHin\Block\HinDataCollection');
+    $hinCollection = $hinObject->getHinCollection();
+    $hinCollection->addFieldToFilter('order_id', ['eq' => $orderId])
+               ->load(); 
+
+    $hinId = '';
+    $hinStatus = '';
+    $hinStartDate = '';
+    $hinEndDate = '';
+    $memberId = '';
+    $threeFourtyId = '';
+    $threeFourtyStartDate = '';
+    $threeFourtyEndDate = '';
+    $hinDataInfo = '';
+    foreach ($hinCollection as $hinDataInfo) {
+            $hinId = $hinDataInfo->getHinId();
+            $hinStatus = $hinDataInfo->getHinStatus();
+            $hinStartDate = $hinDataInfo->getHinStart();
+            $hinEndDate = $hinDataInfo->getHinEnd();
+            $memberId = $hinDataInfo->getMemberId();
+            $threeFourtyId = $hinDataInfo->getThreeFourBId();
+            $threeFourtyStartDate = $hinDataInfo->getThreeFourBStart();
+            $threeFourtyEndDate = $hinDataInfo->getThreeFourBEnd();
+        }
+?>
+<?php if ($hinStatus == '1') {
+        $hinStatus = "Valid";
+    } else {
+        $hinStatus = "Invalid";
+    }
+?>
+<?php if ($hinDataInfo) { ?>
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Order HIN Details') ?></span>
+    </div>
+    <p></p>
+    <div><strong><?php echo __('HIN ID') ?> : </strong><?= $hinId ?></div>
+    <div><strong><?php echo __('HIN Status') ?> : </strong><?= $hinStatus ?></div>
+    <div><strong><?php echo __('HIN Start Date') ?> : </strong><?= $hinStartDate ?></div>
+    <div><strong><?php echo __('HIN End Date') ?> : </strong><?= $hinEndDate ?></div>
+    <div><strong><?php echo __('Member ID') ?> : </strong><?= $memberId ?></div>
+    <div><strong><?php echo __('340B ID') ?> : </strong><?= $threeFourtyId ?></div>
+    <div><strong><?php echo __('340B Start Date') ?> : </strong><?= $threeFourtyStartDate ?></div>
+    <div><strong><?php echo __('340B End Date') ?> : </strong><?= $threeFourtyEndDate ?></div>
+<?php } ?>

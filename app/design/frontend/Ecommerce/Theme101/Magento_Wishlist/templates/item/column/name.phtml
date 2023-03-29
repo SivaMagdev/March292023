@@ -1,0 +1,98 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Info $block */
+
+/** @var \Magento\Wishlist\Model\Item $item */
+$item = $block->getItem();
+$product = $item->getProduct();
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$StockState = $objectManager->get('\Magento\InventorySalesApi\Api\GetProductSalableQtyInterface');
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+$custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+
+$application_verified_status = false;
+
+ if ($customerSession->isLoggedIn()) {
+
+    $customerRepository = $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+    $_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+
+    if($customerSession->getId()) {
+
+        $customerData= $customerRepository->getById($customerSession->getId());
+
+        $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+        $options = $attribute->getSource()->getAllOptions();
+        $application_statuses = [];
+        foreach ($options as $option) {
+            if ($option['value'] > 0) {
+                $application_statuses[$option['value']] = $option['label'];
+            }
+        }
+        $application_status = 0;
+        $approved_id = array_search("Approved",$application_statuses);
+        if($customerData->getCustomAttribute('application_status')){
+            $application_status = $customerData->getCustomAttribute('application_status')->getValue();
+        }
+
+        if($approved_id == $application_status){
+            $application_verified_status = true;
+        }
+    }
+}
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+//$StockState = $objectManager->get('\Magento\InventorySalesApi\Api\GetProductSalableQtyInterface');
+$StockState = $objectManager->get('\Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku');
+?>
+<?php
+    $_productNameLength = strlen($block->escapeHtml($product->getName()));
+
+    if($_productNameLength < 57){
+        $_productName = $block->escapeHtml($product->getName());
+    } else {
+        $_productName = substr($block->escapeHtml($product->getName()), 0, 55).'...';
+    }
+?>
+<strong class="product-item-name">
+    <a href="<?= $block->escapeUrl($block->getProductUrl($item)) ?>" title="<?= $block->escapeHtmlAttr($product->getName()) ?>" class="product-item-link">
+        <?= $_productName ?>
+    </a>
+</strong>
+<div class="drl-sku-cashback-attribute"><?= $block->escapeHtml(__('NDC #:')) ?>
+<span class="drl-sku-product product-attribute-sku-28"><?php echo $product->getSku() ?></span><br>
+</div>
+<?php if($application_verified_status){ ?>
+
+    <div>
+    <?php
+        $stockstatus=$custom_helper->getConfigVal('cataloginventory/options/display_product_stock_status');
+        if($stockstatus)
+        {
+            /*Checking the whether instock or out of stock*/
+            $stockval=$custom_helper->getStockCheck($product->getSku(),$product->getId());
+            $instock=$stockval['instock'];
+            $custominstock=$stockval['custominstock'];
+            $_productStock = $custom_helper->getStockItem($product->getId());
+    ?>
+
+        <?php if (($instock && $_productStock->getQty() > 0) || $custominstock){?>
+            <div class="stock stock-available">
+                <span><?= $escaper->escapeHtml(__('In stock')) ?></span>
+            </div>
+        <?php }else{?>
+            <div class="stock stock-unavailable">
+                <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
+            </div>
+    <?php   }
+        } 
+    ?>
+    </div>
+<?php } ?>

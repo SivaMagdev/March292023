@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/ecomm-sap/get-access-token/" method="POST">
+        <service class="Ecomm\Sap\Api\AccessTokenInterface" method="getAccessToken"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/salesorder-master-sync" method="GET">
+        <service class="Ecomm\Sap\Api\SalesorderInterface" method="getOrderDetails"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/order-ack/" method="POST">
+        <service class="Ecomm\Sap\Api\OrderAckInterface" method="updateAck"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/order-asn/" method="POST">
+        <service class="Ecomm\Sap\Api\OrderAsnInterface" method="updateAsn"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/order-asn-print/" method="POST">
+        <service class="Ecomm\Sap\Api\OrderAsnPrintInterface" method="updateAsn"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/order-invoice/" method="POST">
+        <service class="Ecomm\Sap\Api\OrderInvoiceInterface" method="updateInvoice"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/order-pod-status/" method="POST">
+        <service class="Ecomm\Sap\Api\OrderPodStatusInterface" method="getPayload"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/order-invoice-status/" method="POST">
+        <service class="Ecomm\Sap\Api\OrderInvoiceStatusInterface" method="updateInvoice"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/article-delta-sync/" method="POST">
+        <service class="Ecomm\Sap\Api\ArticleDeltaInterface" method="getArticleDelta"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/customer-delta-sync/" method="POST">
+        <service class="Ecomm\Sap\Api\CustomerDeltaInterface" method="getCustomerDelta"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/article-master-sap/" method="POST">
+        <service class="Ecomm\Sap\Api\ProductMasterInterface" method="getArticleDetails"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/article-stock-sap/" method="POST">
+        <service class="Ecomm\Sap\Api\ProductStockOutInterface" method="getStockDetails"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-sap/article-price-sap/" method="POST">
+        <service class="Ecomm\Sap\Api\ProductPriceMasterInterface" method="getPriceDetails"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+</routes>

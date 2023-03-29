@@ -1,0 +1,184 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Contact\Block\ContactForm $block */
+/** @var \Magento\Contact\ViewModel\UserDataProvider $viewModel */
+
+$viewModel = $block->getViewModel();
+?>
+
+<?php
+echo $this->getLayout()
+->createBlock('Magento\Cms\Block\Block')
+->setBlockId('contact-us')
+->toHtml();
+?>
+<form class="form contact drl-contact-form"
+      action="<?= $block->escapeUrl($block->getFormAction()) ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset drl-contactus">
+        <legend class="drl-contact-legend"><span><?= $block->escapeHtml(__('Contact Us')) ?></span><br />
+          <div class="field note no-label">
+            <?= $block->escapeHtml(_('Speak to our Dr. Reddy’s expert')) ?>
+        </div>
+        </legend>
+        <div class="drl-flex">
+        <div class="field name required">
+            <label class="label drl-required-astr" for="name"><span><?= $block->escapeHtml(__('Name')) ?></span></label>
+            <div class="control">
+                <input name="name" 
+                       id="name" 
+                       title="<?= $block->escapeHtmlAttr(__('Name')) ?>" 
+                       value="<?= $block->escapeHtmlAttr($viewModel->getUserName()) ?>" 
+                       class="input-text" 
+                       type="text" 
+                       data-validate="{required:true}"
+                       placeholder="Enter Name"/>
+            </div>
+        </div>
+        <div class="field telephone">
+            <label class="label" for="telephone"><span><?= $block->escapeHtml(__('Phone Number')) ?></span></label>
+            <div class="control">
+                <input name="telephone" 
+                       id="telephone" 
+                       title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" 
+                       value="<?= $block->escapeHtmlAttr($viewModel->getUserTelephone()) ?>" 
+                       class="drl-with-coun input-text validate-digits" 
+                       type="tel" 
+                       placeholder="Enter 10 Digit Number"
+                       minlength="10" maxlength="10"/>
+            </div>
+        </div>
+        <div class="field email required">
+            <label class="label drl-required-astr" for="email"><span><?= $block->escapeHtml(__('Email ID')) ?></span></label>
+            <div class="control">
+                <input name="email" 
+                       id="email" 
+                       title="<?= $block->escapeHtmlAttr(__('Email')) ?>" 
+                       value="<?= $block->escapeHtmlAttr($viewModel->getUserEmail()) ?>" 
+                       class="input-text" 
+                       type="email" 
+                       data-validate="{required:true, 'validate-email':true}"
+                       placeholder="Enter Email ID"/>
+            </div>
+        </div>
+
+      </div>
+        <div class="field comment required">
+            <label class="label drl-required-astr" for="comment">
+                <span><?= $block->escapeHtml(__('Question/Comments')) ?></span>
+            </label>
+            <div class="control">
+                <textarea name="comment" 
+                     id="comment"
+                     title="<?= $block->escapeHtmlAttr(__('What’s on your mind?')) ?>"
+                     class="input-text"
+                     cols="5"
+                     rows="3"
+                     data-validate="{required:true}"
+                     placeholder="Type your query here"><?= $block->escapeHtml($viewModel->getUserComment()) ?></textarea>
+            </div>
+        </div>
+        <!-- Terms and Condition Checkbox -->
+        <div class="tacbox field required">
+            <div class="control">
+                <input type="checkbox" data-validate="{required:true}" name="custom-terms" title="<?php /* @escapeNotVerified */ echo __('Terms and contitions') ?>" id="agree-term-cond" class="checkbox">
+                    <label for="agree-term-cond" class="term-hyper">
+
+                      <span class="termcon"><?php /* @escapeNotVerified */ echo __('I agree and accept the') ?> 
+                      <a href="https://www.drreddys.com/privacy-notice.aspx" target="_blank">Privacy Notice</a> and 
+                      <a href="https://www.drreddys.com/terms-of-use/" target="_blank">Terms of Use</a> of this website</span>
+
+                    </label> 
+            </div>
+        </div>
+        <!-- T&C ends here -->
+        <?= $block->getChildHtml('form.additional.info') ?>
+    </fieldset>
+    <!-- Terms and Condition Pop Up Content-->
+    <div id="popup-modal" class="terms-conditon-drl" style="display:none;">
+        <p class="drl-terms-word">By clicking submit below, I hereby represent that I am authorized to submit this application and bind the business identified in this application, and that the information provided is for the purpose of obtaining credit and is warranted to be true. 
+        </p>
+        <p class="drl-terms-word">
+        The business identified in this application acknowledges that this request is for the extension of credit for commercial purposes only and is not intended for the extension of credit for personal, family or household purposes. 
+        </p>
+        <p class="drl-terms-word">
+        In order to protect individual identities, unless an individual is intending to act as a guarantor for purposes of securing credit and is required to provide guarantor information on this application, no personally identifying information (i.e. Social Security #, driver’s license #, bank account information, etc.) should be provided.
+        </p>
+        <p class="drl-terms-word">
+        The business identified in this application hereby authorizes all banks, financial institutions, trade reference sources, credit reporting agencies and others to release credit information.
+        </p>
+        <p class="drl-terms-word">
+        In the event of a conflict, the terms and conditions set forth above shall control over any terms and conditions set forth below.
+        </p>
+    </div>
+    <!-- terms and condition Pop Up Content ends -->
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary drl-contact-us">
+                <span><?= $block->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<hr class="drl-slashed-contact">
+
+<!-- <span class="drl-contact-faq">Haven’t found what you are looking for? Find your enquiry in our FAQ page<a target="_blank" href="<?php echo $this->getBaseUrl()."help-support"; ?>" class="drl-faq-redi">&nbsp;&nbsp;View FAQ's</a></span> -->
+
+<!-- Script for Terms and Condition Pop Up -->
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Terms and Conditions',
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: 'drl-term-condition',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-modal'));
+            $("#termcon").on('click',function(){ 
+                $("#popup-modal").modal("openModal");
+            });
+
+        }
+    );
+</script>
+
+<!-- Script for T&C ends here -->
+<script>
+   require([
+       'jquery',
+       'drlnumberjs'
+   ], function($, url, modal) {
+
+     $(document).ready(function(){
+        $(".drl-with-coun").intlTelInput({
+          initialDialCode: true,
+          americaMode: false,
+          onlyCountries: ["us"]
+        });
+      });
+    });
+</script>

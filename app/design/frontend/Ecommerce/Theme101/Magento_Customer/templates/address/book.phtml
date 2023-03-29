@@ -1,0 +1,101 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Address\Book $block */
+?>
+<?php $address_status = $block->getAddressStatus(); ?>
+<?php $getSlThreshold = $block->getSlThreshold(); ?>
+<?php $getDeaThreshold = $block->getDeaThreshold(); ?>
+<div class="block block-addresses-default">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Default Addresses')) ?></strong></div>
+    <div class="block-content">
+        <?php if ($_pAddsses = $block->getDefaultBilling()) : ?>
+            <div class="box box-address-billing">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Default Billing Address')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?>
+                        <?php $paddress_data = $block->getAddressById($_pAddsses); ?>
+                    </address>
+                </div>
+                <div class="box-actions">
+                    <span class="drl-need-mod">Need modification? <a class="drl-need-mod-hyp" href="<?php echo $this->getBaseUrl()."help-support";?>"> Click here</a></span>
+                </div>
+            </div>
+        <?php else : ?>
+            <div class="box box-billing-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Default Billing Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default billing address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+
+        <?php if ($_pAddsses = $block->getDefaultShipping()) : ?>
+            <div class="box box-address-shipping">
+                <strong class="box-title">
+                    <?php $paddress_data = $block->getAddressById($_pAddsses); ?>
+                    <span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span><span><?= " ( ".$address_status[$paddress_data->getCustomAttribute("address_status")->getValue()]." )" ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?>
+                        <?php if (!empty($paddress_data->getCustomAttribute("state_license_upload"))) { ?><br />
+                            <a href="<?php echo $block->getBaseUrl(); ?><?php echo 'media/customer_address'.$paddress_data->getCustomAttribute("state_license_upload")->getValue(); ?>" download>State license</a>
+                        <?php } ?>
+                        <?php if (!empty($paddress_data->getCustomAttribute("dea_license_upload"))) { ?><br />
+                            <a href="<?php echo $block->getBaseUrl(); ?><?php echo 'media/customer_address'.$paddress_data->getCustomAttribute("dea_license_upload")->getValue(); ?>" download>DEA license</a>
+                        <?php } ?>
+                    </address>
+                </div>
+                <div class="box-actions">
+                    <?php
+                    if($block->getApprovelPendingOprionId() != $paddress_data->getCustomAttribute("address_status")->getValue()){
+                        $now = new DateTime();
+                        // state license expiry logic
+                        $diff_state_status = false;
+                        if(!empty($paddress_data->getCustomAttribute("state_license_expiry"))){
+                            $state_license_expiry = new DateTime($paddress_data->getCustomAttribute("state_license_expiry")->getValue());
+                            $diff_state = $state_license_expiry->diff($now);
+
+                            if($diff_state->invert && $diff_state->days <= $getSlThreshold || $diff_state->invert == 0){
+                                $diff_state_status = true;
+                            }
+                        }
+
+                        // DEA license expiry logic
+                        $diff_dea_status = false;
+                        if(!empty($paddress_data->getCustomAttribute("dea_license_expiry"))){
+                            $dea_license_expiry = new DateTime($paddress_data->getCustomAttribute("dea_license_expiry")->getValue());
+                            $diff_dea = $dea_license_expiry->diff($now);
+
+                            if($diff_dea->invert && $diff_dea->days <= $getDeaThreshold || $diff_dea->invert == 0){
+                                $diff_dea_status = true;
+                            }
+                        }
+
+                        if($diff_state_status || $diff_dea_status){
+                        ?>
+                            <a class="action edit" href="<?= $block->escapeUrl($block->getAddressEditUrl($_pAddsses)) ?>">
+                                <span><?= $block->escapeHtml(__('Change Shipping Address')) ?></span>
+                            </a>
+                        <?php  } ?>
+                    <?php } ?>
+                    <span class="drl-need-mod">Need modification? <a class="drl-need-mod-hyp" href="<?php echo $this->getBaseUrl()."help-support";?>"> Click here</a></span>
+                </div>
+            </div>
+        <?php else : ?>
+            <div class="box box-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default shipping address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ecomm\HtmlToPdf\Api\ShippingPdfInterface" type="Ecomm\HtmlToPdf\Model\ShippingPdf" />
+    <preference for="Ecomm\HtmlToPdf\Api\InvoicePdfInterface" type="Ecomm\HtmlToPdf\Model\InvoicePdf" />
+
+    <preference for="Ecomm\HtmlToPdf\Api\TestPdfInterface" type="Ecomm\HtmlToPdf\Model\TestPdf" />
+</config>

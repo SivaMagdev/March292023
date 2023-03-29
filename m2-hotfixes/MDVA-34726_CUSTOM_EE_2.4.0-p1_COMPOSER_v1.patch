@@ -1,0 +1,18 @@
+diff --git a/vendor/magento/theme-adminhtml-backend/Magento_Catalog/web/css/source/_module.less b/vendor/magento/theme-adminhtml-backend/Magento_Catalog/web/css/source/_module.less
+index 650fe6177d0..0bd7264a238 100644
+--- a/vendor/magento/theme-adminhtml-backend/Magento_Catalog/web/css/source/_module.less
++++ b/vendor/magento/theme-adminhtml-backend/Magento_Catalog/web/css/source/_module.less
+@@ -99,6 +99,13 @@
+         .admin__field + .admin__field {
+             margin-left: @indent__s;
+             margin-top: 0;
++            .admin__field-control {
++                .admin__control-addon {
++                    .admin__control-text {
++                        min-width: 8rem;
++                    }
++                }
++            }
+         }
+     }
+ }

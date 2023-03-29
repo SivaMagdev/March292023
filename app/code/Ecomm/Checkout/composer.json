@@ -1,0 +1,22 @@
+{
+    "name": "ecomm/module-checkout",
+    "description": "Checkout Page Customization of DRL",
+    "type": "magento2-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Siva",
+            "email": "sivakumar.thimmakondu@pwc.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Ecomm\\Checkout\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_VideoList
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+ <preference for="Ecomm\VideoList\Api\GetVideoListInterface" type="Ecomm\VideoList\Model\GetVideoList" />
+  <!-- <preference for="Ecomm\VideoList\Api\Data\GetVideoDataListInterface" type="Ecomm\VideoList\Model\GetVideoListModel" />	 -->
+
+	<virtualType name="EcommVideoListGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+				<item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+			</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="EcommVideoListGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+		<arguments>
+			<argument name="collection" xsi:type="object" shared="false">Ecomm\VideoList\Model\ResourceModel\VideoList\Collection</argument>
+			<argument name="filterPool" xsi:type="object" shared="false">EcommVideoListGridFilterPool</argument>
+		</arguments>
+	</virtualType>
+	<virtualType name="Ecomm\VideoList\Model\ResourceModel\VideoList\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">drl_video_list</argument>
+			<argument name="resourceModel" xsi:type="string">Ecomm\VideoList\Model\ResourceModel\VideoList</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="drlvideo_index_listing_data_source" xsi:type="string">Ecomm\VideoList\Model\ResourceModel\VideoList\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+		<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="drlvideo_index_form_data_source" xsi:type="string">Ecomm\VideoList\Model\ResourceModel\VideoList\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<virtualType name="VideoThumbnail" type="Magento\Catalog\Model\ImageUploader">
+	   <arguments>
+	      <argument name="baseTmpPath" xsi:type="string">logo/image</argument>
+	      <argument name="basePath" xsi:type="string">logo/image</argument>
+	      <argument name="allowedExtensions" xsi:type="array">
+	         <item name="jpg" xsi:type="string">jpg</item>
+	         <item name="jpeg" xsi:type="string">jpeg</item>
+	         <item name="gif" xsi:type="string">gif</item>
+	         <item name="png" xsi:type="string">png</item>
+	      </argument>
+	   </arguments>
+	</virtualType>
+	<type name="Ecomm\VideoList\Controller\Adminhtml\Index\Uploader">
+	   <arguments>
+	      <argument name="imageUploader" xsi:type="object">VideoThumbnail</argument>
+	   </arguments>
+	</type>
+</config>

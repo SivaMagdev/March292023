@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+	    <resources>
+	        <resource id="Magento_Backend::admin">
+	        	<resource id="Ecomm_PriceEngine::priceengine" title="Excel Uploads" sortOrder="10">
+	        		<resource id="Ecomm_PriceEngine::regularprice" title="Price List" sortOrder="10" />
+	        		<resource id="Ecomm_PriceEngine::shortdatedprice" title="Shortdated List" sortOrder="10" />
+	        		<resource id="Ecomm_PriceEngine::stock" title="Inventory List" sortOrder="10" />
+        	        <resource id="Ecomm_PriceEngine::priceengineimport" title="Transaction Excels" sortOrder="10" >
+        	            <resource id="Ecomm_PriceEngine::regularprice_import" title="Price" sortOrder="10" />
+        	            <resource id="Ecomm_PriceEngine::shortdatedprice_import" title="Shortdated" sortOrder="10" />
+        	            <resource id="Ecomm_PriceEngine::stock_import" title="Inventory" sortOrder="10" />
+        	        </resource>
+        	        <resource id="Ecomm_PriceEngine::priceengineimportmaster" title="Master Excels" sortOrder="10" >
+        	            <resource id="Ecomm_PriceEngine::product_import" title="Product" sortOrder="10" />
+        	            <resource id="Ecomm_PriceEngine::customer_import" title="Customer" sortOrder="10" />
+        	        </resource>
+					  <resource id="Ecomm_PriceEngine::vistex" title="Vistex" sortOrder="10" >
+        	            <resource id="Ecomm_PriceEngine::exclusiveprice" title="Exclusive List" sortOrder="10" />
+						<resource id="Ecomm_PriceEngine::gpocontractprice" title="GPO Contract Price List" sortOrder="10" />
+        	        </resource>
+	        	</resource>
+	            <resource id="Magento_Backend::stores">
+	                <resource id="Magento_Backend::stores_settings">
+	                    <resource id="Magento_Config::config">
+	                        <resource id="Ecomm_PriceEngine::config_priceengine" title="Excel Uploads" />
+	                    </resource>
+	                </resource>
+	            </resource>
+	        </resource>
+	    </resources>
+	</acl>
+</config>

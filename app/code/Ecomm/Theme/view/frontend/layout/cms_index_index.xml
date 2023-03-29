@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="3columns" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   <update handle="default_head_blocks" />
+   <body>
+        <referenceContainer name="content">
+        	<block class="Ecomm\Theme\Block\Home" name="customer_order" template="Ecomm_Theme::home/home_design.phtml"/>
+        	<!-- <block class="Ecomm\Theme\Block\AwardsSection" name="awards_section" template="Ecomm_Theme::home/awards_section.phtml"></block> -->
+        	<!-- <block class="Ecomm\Theme\Block\Home" name="afterlogin_banner_slider" template="Ecomm_Theme::home/afterlogin_banner_slider.phtml"></block> -->
+        	<!-- <block class="Ecomm\Theme\Block\Home" name="beforelogin_banner_slider" template="Ecomm_Theme::home/beforelogin_banner_slider.phtml"></block> -->
+        </referenceContainer>
+   </body>
+</page>

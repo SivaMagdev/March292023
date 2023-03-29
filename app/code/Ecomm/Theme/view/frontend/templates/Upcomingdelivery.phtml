@@ -1,0 +1,70 @@
+<?php
+$customerName = $block->getLoggedinCustomerName();
+$orderStatus = $block->getOrderStatus();
+// echo count($orderStatus);
+?>
+<div class="upcoming-title-outer">
+   <div class="upcoming-title-inner">
+      Upcoming Delivery
+   </div>
+</div>
+<div class="upcoming-delivery-outer">
+   <div class="upcoming-deliver-inner">
+        <div class="upcoming-d-first-inner">
+        <?php if ($orderStatus && count($orderStatus) > 0) { ?>
+        <?php foreach ($orderStatus as $status) : ?>
+            <div class="upcoming-expected-delivery">
+                Expected Delivery by <span><?php echo $status->getRgddDeliveryDate(); ?></span>
+            </div><br>
+                <div>
+                    <div class="order-value">
+                        <div class="order-v-first">
+                            <span class="order-t">Order Value</span>
+                            <span class="order-d"><?php echo number_format((float)$status->getGrandTotal(), 2, '.', '');?></span>
+                        </div>
+                        <div class="order-v-sec">
+                            <span class="order-t">Order ID</span>
+                            <span class="order-d"><?php echo $status->getIncrementId();?></span>
+                        </div>
+                    </div>
+                </div>
+                <?php foreach ($status->getAllItems() as $key1 => $items) : ?>
+                    <div class="recent-order-img">
+                        <?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                        $product = [];
+                        $image_url = '';
+                        if(null!==($items->getProduct())){
+                        $product = $objectManager->create('Magento\Catalog\Model\Product')->load($items->getProduct()->getId());
+                        // echo $product->getThumbnail();
+                        }?>
+                        <?php
+                            $imagewidth=180;
+                            $imageheight=180;
+                            $imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+                            if($product) {
+                            $image_url = $imageHelper->init($product, 'product_page_image_small')->setImageFile($product->getFile())->resize($imagewidth, $imageheight)->getUrl();
+                            }
+                        //  echo $image_url;
+                        ?>
+                        <img src="<?php echo $image_url; ?>">
+                    </div>
+                    <?php break; ?>
+                <?php endforeach; ?>
+
+            <?php endforeach; ?>
+        <?php } else { ?>
+            <span>
+                <?php echo '<h4 class="order-t">There is no records in your upcoming delivery.</h4>'?>
+            </span>
+        <?php } ?>
+            </div>
+        
+    </div>
+    
+        <div class="order-track-outer">
+           <?php if ($orderStatus && count($orderStatus) > 0) { ?> 
+            <a href="<?php echo $this->getBaseUrl()."sales/order/history/"; ?>" class="order-track-btn">View in detail</a>
+            <?php } ?>
+        </div>
+    
+</div>

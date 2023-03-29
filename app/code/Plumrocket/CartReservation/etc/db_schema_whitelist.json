@@ -1,0 +1,11 @@
+{
+  "quote_item": {
+    "column": {
+      "timer_expire_at": true,
+      "original_cart_expire_at": true,
+      "original_checkout_expire_at": true,
+      "cart_time": true,
+      "checkout_time": true
+    }
+  }
+}

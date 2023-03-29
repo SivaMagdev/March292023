@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ecomm_salesrepemail>
+            <order>
+                <enabled>1</enabled>
+                <template>ecomm_salesrepemail_order_template</template>
+                <identity>sales</identity>
+                <copy_to>bcc</copy_to>
+            </order>
+
+            <shipment>
+                <enabled>1</enabled>
+                <template>ecomm_salesrepemail_shipment_template</template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </shipment>
+        </ecomm_salesrepemail>
+
+    </default>
+</config>

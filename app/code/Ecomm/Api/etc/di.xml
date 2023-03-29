@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+@copyright: Copyright © 2017 mediaman GmbH. All rights reserved.
+@see LICENSE.txt
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ecomm\Api\Api\AccessTokenInterface" type="Ecomm\Api\Model\AccessToken" />
+    <preference for="Ecomm\Api\Api\Data\AccessTokendataInterface" type="Ecomm\Api\Model\AccessTokenmodel" />
+
+    <preference for="Ecomm\Api\Api\ProductAttributesInterface" type="Ecomm\Api\Model\ProductAttributes" />
+    <preference for="Ecomm\Api\Api\Data\ProductAttributesItemsdataInterface" type="Ecomm\Api\Model\ProductAttributesItemsmodel" />
+    <preference for="Ecomm\Api\Api\Data\AttributeItemsdataInterface" type="Ecomm\Api\Model\AttributeItemsmodel" />
+    <preference for="Ecomm\Api\Api\Data\AttributeOptionsdataInterface" type="Ecomm\Api\Model\AttributeOptionsmodel" />
+
+    <preference for="Ecomm\Api\Api\VersionInfoInterface" type="Ecomm\Api\Model\VersionInfo" />
+    <preference for="Ecomm\Api\Api\Data\VersionInfodataInterface" type="Ecomm\Api\Model\VersionInfomodel" />
+
+    <preference for="Ecomm\Api\Api\PolicyTrackRepositoryInterface" type="Ecomm\Api\Model\Api\PolicyTrack"/>
+    <preference for="Ecomm\Api\Api\PolicyTrack\PolicyTrackInterface" type="Ecomm\Api\Model\PolicyTrack"/>
+
+    <preference for="Ecomm\Api\Api\WishlistRepositoryInterface" type="Ecomm\Api\Model\WishlistRepository"/>
+    <preference for="Ecomm\Api\Api\WishlistInterface" type="Ecomm\Api\Model\Wishlist"/>
+    <preference for="Ecomm\Api\Api\ItemInterface" type="Ecomm\Api\Model\Item"/>
+    <preference for="Ecomm\Api\Api\ContactusManagementInterface" type="Ecomm\Api\Model\ContactusManagement"/>
+    <preference for="Ecomm\Api\Api\Getorderstatus" type="Ecomm\Api\Model\GetorderstatusModel" />
+    <preference for="Ecomm\Api\Api\ReorderInterface" type="Ecomm\Api\Model\Reorder" />
+
+    <!-- reorder api -->
+    <preference for="Ecomm\Api\Api\ReorderRepositoryInterface" type="Ecomm\Api\Model\ReorderRepository" />
+    <preference for="Ecomm\Api\Api\Data\ApiResponseDataInterface" type="Ecomm\Api\Model\ApiResponseMessage" />
+    <!-- reorder api -->
+
+    <!-- address document upload -->
+    <preference for="Ecomm\Api\Api\AddressUploadDocumentInterface" type="Ecomm\Api\Model\AddressUploadDocument" />
+    <preference for="Ecomm\Api\Api\Data\AddressUploadInterface" type="Ecomm\Api\Model\AddressUpload"/>
+    <!-- address document upload -->
+    <type name="Magento\Catalog\Model\Product\Option\ReadHandler">
+        <plugin name="updateProductCustomOptionsValue" type="Ecomm\Api\Plugin\ProductCustomOptionsValue"/>
+    </type>
+    <!-- <type name="Magento\Catalog\Api\ProductCustomOptionRepositoryInterface">
+        <plugin name="updateProductCustomOptionsValue" type="Ecomm\Api\Plugin\ProductCustomOptionsValue"/>
+    </type> -->
+    <type name="Magento\Quote\Api\CartRepositoryInterface">
+        <plugin name="add_more_info" type="Ecomm\Api\Plugin\QuotePlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Api\CartItemRepositoryInterface">
+        <plugin name="add_more_info" type="Ecomm\Api\Plugin\AfterQuote" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="change_price_plugin" type="Ecomm\Api\Plugin\CustomPricePlugin" sortOrder="10" disabled="false"/>
+    </type>
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="add_image_order_api" type="Ecomm\Api\Plugin\OrderRepositoryPlugin" />
+    </type>
+    <type name="Magento\Sales\Api\ShipmentRepositoryInterface">
+        <plugin name="add_shipment_extension_attributes" type="Ecomm\Api\Plugin\ShipmentRepositoryPlugin" />
+    </type>
+    <type name="Magento\Sales\Api\InvoiceRepositoryInterface">
+        <plugin name="add_invoice_extension_attributes" type="Ecomm\Api\Plugin\InvoiceRepositoryPlugin" />
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="projectname_modulename_catalog_product_plugin" type="Ecomm\Api\Plugin\ProductDetail"/>
+    </type>
+    <type name="Magento\Catalog\Api\ProductRepositoryInterface">
+        <plugin name="add_more_info_in_product" type="Ecomm\Api\Plugin\ProductList" sortOrder="15" />
+    </type>
+    <type name="Magento\Framework\Webapi\Rest\Response\RendererFactory">
+        <arguments>
+            <argument name="renders" xsi:type="array">
+                <item name="application_pdf" xsi:type="array">
+                    <item name="type" xsi:type="string">application/pdf</item>
+                    <item name="model" xsi:type="string">\Ecomm\Api\Response\Renderer\PdfRenderer</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- get invoice pdf -->
+    <preference for="Ecomm\Api\Api\PromotionalConsentInterface" type="Ecomm\Api\Model\PromotionalConsent"/>
+    <preference for="Ecomm\Api\Api\SetShippingAddressManagementInterface" type="Ecomm\Api\Model\SetShippingAddressManagement"/>
+    <!-- <type name="Magento\Catalog\Api\ProductRepositoryInterface">
+        <plugin name="add_custom_price_product_api" type="Ecomm\Api\Plugin\ProductCustomPrice"/>
+    </type> -->
+</config>

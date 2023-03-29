@@ -1,0 +1,28 @@
+<?php 
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$searchCriteriaBuilder = $objectManager->create('\Magento\Framework\Api\SearchCriteriaInterface');
+$rewards = $objectManager->create('Ecomm\Rewards\Api\RewardsRepositoryInterface')->getList($searchCriteriaBuilder);
+$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+$currentStore = $storeManager->getStore();
+?>
+<div class="carousel2-1">
+	<div class="carousel lightbox">
+		<?php
+		foreach($rewards->getItems() as $rewardsItem){
+
+			if($rewardsItem['status']){
+			?>
+			    <div class="card">        
+					<div class="card-icon"><img src="<?= $rewardsItem['rewards_image_url'] ?>" alt="" /></div>
+					<div class="card-head"><span class="card-head-title"><?= $rewardsItem['title'] ?></span> <span class="card-head-link"><a href="#"><img src='<?php echo $this->getViewFileUrl('Ecomm_Theme::images/center-arrow.png'); ?>' alt="Error" /></a></span></div>
+					<div class="card-bottom-head">
+						<?= $rewardsItem['description'] ?>
+					</div>
+			    </div> 
+			<?php
+			}
+		}
+		?>
+	</div>
+</div>

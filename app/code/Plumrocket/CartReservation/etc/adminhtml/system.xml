@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket Cart Reservation v2.x.x
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="prcr" translate="label" type="text" sortOrder="1243189" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Cart Reservation</label>
+            <tab>plumrocket</tab>
+            <resource>Plumrocket_CartReservation::config_prcr</resource>
+
+            <group id="toolbox" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Plumrocket\Base\Block\Adminhtml\System\Config\Form\ToolbarFieldset</frontend_model>
+                <field id="version" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Plumrocket\Base\Block\Adminhtml\System\Config\Form\Version</frontend_model>
+                    <attribute type="pr_extension_name">CartReservation</attribute>
+                </field>
+            </group>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <attribute type="expanded">1</attribute>
+
+                <field id="enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="serial" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Serial Key</label>
+                    <frontend_model>Plumrocket\Base\Block\Adminhtml\System\Config\Form\Serial</frontend_model>
+                    <attribute type="pr_extension_name">CartReservation</attribute>
+                </field>
+                <field id="timer_mode" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Timer Mode</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\TimerMode</source_model>
+                    <comment><![CDATA[Specify if user should have global (1) timer for cart and checkout or two (2) separate timers. See example <a href="https://plumrocket.com/docs/magento-cart-reservation/v2/configuration#store-timer-modes" target="_blank">here</a>.]]></comment>
+                </field>
+                <field id="user_type" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Reservation For</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\UserType</source_model>
+                </field>
+                <field id="reservation_for_virtual_products" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Reservation For Virtual Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="cart" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shopping Cart Timer</label>
+
+                <field id="reservation_type" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shopping Cart Timer Mode</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\TimerType</source_model>
+                    <comment><![CDATA[Specify if user should have global (1) timer for all items in cart or separate timer for each item. See example <a href="https://plumrocket.com/docs/magento-cart-reservation/v2/configuration#shopping-cart-timer-modes" target="_blank">here</a>.]]></comment>
+                </field>
+                <field id="end_action" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>When Countdown Timer Ends</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\EndAction</source_model>
+                </field>
+                <field id="time" translate="label" type="time" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Cart Reservation Time</label>
+                    <frontend_model>Plumrocket\CartReservation\Block\Adminhtml\System\Config\Form\Time</frontend_model>
+                    <comment><![CDATA[Time format: <u>Days</u>, <u>Hours</u>, <u>Minutes</u>, <u>Seconds</u>. Select "00" in all fields to set unlimited reservation time &amp; hide timer]]></comment>
+                </field>
+                <field id="customer_group_time" translate="label" type="text" sortOrder="40" showInStore="1" showInWebsite="1" showInDefault="1">
+                    <label>Cart Reservation Time by Customer Group</label>
+                    <frontend_model>Plumrocket\CartReservation\Block\Adminhtml\System\Config\Form\DatePeriod</frontend_model>
+                    <backend_model>Plumrocket\CartReservation\Model\Backend\DatePeriod</backend_model>
+                    <comment>You can set custom cart reservation times for each customer group. Otherwise, default cart reservation time will be used.</comment>
+                </field>
+            </group>
+
+            <group id="checkout" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Checkout Timer</label>
+
+                <field id="start_action" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout Timer Behavior</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\StartAction</source_model>
+                    <comment><![CDATA[If "Restart Countdown" is selected, each time user visits the "Checkout Page", the checkout timer will restart from the beginning. If "Continue Countdown" option is selected, the checkout timer will continue countdown from the same timing where it was left. See example <a href="http://wiki.plumrocket.com/Magento_2_Cart_Reservation_v2.x_Configuration#chekout1" target="_blank">here</a>.]]></comment>
+                    <depends>
+                        <field id="prcr/general/timer_mode">2</field>
+                    </depends>
+                </field>
+                <field id="time" translate="label" type="time" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Checkout Reservation Time</label>
+                    <frontend_model>Plumrocket\CartReservation\Block\Adminhtml\System\Config\Form\Time</frontend_model>
+                    <comment><![CDATA[Time format: <u>Days</u>, <u>Hours</u>, <u>Minutes</u>, <u>Seconds</u>. Select "00" in all fields to set unlimited reservation time &amp; hide timer]]></comment>
+                    <depends>
+                        <field id="prcr/general/timer_mode">2</field>
+                    </depends>
+                </field>
+                <field id="customer_group_time" translate="label" type="text" sortOrder="30" showInStore="1" showInWebsite="1" showInDefault="1">
+                    <label>Checkout Reservation Time by Customer Group</label>
+                    <frontend_model>Plumrocket\CartReservation\Block\Adminhtml\System\Config\Form\DatePeriod</frontend_model>
+                    <backend_model>Plumrocket\CartReservation\Model\Backend\DatePeriod</backend_model>
+                    <depends>
+                        <field id="prcr/general/timer_mode">2</field>
+                    </depends>
+                    <comment>You can set custom checkout reservation times for each customer group. Otherwise, default cart reservation time will be used.</comment>
+                </field>
+                <field id="timer_display" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout Timer Display</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\Display</source_model>
+                    <comment>Please note: countdown will continue even if timer is hidden</comment>
+                </field>
+            </group>
+
+            <group id="popup_reminder" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Reminder Popup</label>
+
+                <field id="reservation_alert" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Reminder Popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Display pop-up message prior to reservation expiration.]]></comment>
+                </field>
+                <field id="alert_reminder_time" translate="label" type="time" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup Display Time</label>
+                    <frontend_model>Plumrocket\CartReservation\Block\Adminhtml\System\Config\Form\Time</frontend_model>
+                    <comment><![CDATA[Time format: <u>Days</u>, <u>Hours</u>, <u>Minutes</u>, <u>Seconds</u>.<br/> Show reminder popup "x" amount of time before the cart reservation ends. If there are several products in cart with separate timers, the popup shows up depending on the timer that expires first.]]></comment>
+                </field>
+                <field id="show_overlay" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Popup Overlay</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="alert_template" translate="label" type="editor" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup Template</label>
+                    <frontend_model>Plumrocket\ExtendedAdminUi\Block\Adminhtml\System\Config\Form\Editor</frontend_model>
+                    <comment><![CDATA[Use "{{var product_list}}" to insert list of products]]></comment>
+                </field>
+            </group>
+
+            <group id="timer" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Timer Settings</label>
+
+                <field id="auto_refresh_enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Auto Refresh</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Automatically refresh timers on page without page reload (via Ajax) with selected time intervals. This option can dynamically show timer, disable the product "add to cart" button and display a "reserved" label if another customer added product to cart.</comment>
+                </field>
+
+                <field id="auto_refresh_interval" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Refresh Interval, every</label>
+                    <source_model>Plumrocket\CartReservation\Model\Config\Source\Interval</source_model>
+                    <depends>
+                        <field id="prcr/timer/auto_refresh_enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="format_global" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Global Timer Format</label>
+                    <comment><![CDATA[Format of minicart, shopping cart and checkout page global timers. See example <a href="https://plumrocket.com/docs/magento-cart-reservation/v2/configuration#global-timer-format" target="_blank">here</a>.]]></comment>
+                </field>
+
+                <field id="format_separate" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Separate Timer Format</label>
+                    <comment><![CDATA[Format of minicart and shopping cart timer for each individual item. See example <a href="https://plumrocket.com/docs/magento-cart-reservation/v2/configuration#separate-timer-format" target="_blank">here</a>.]]></comment>
+                    <backend_model>Plumrocket\CartReservation\Model\Config\Backend\TagReplace</backend_model>
+                    <depends>
+                        <field id="prcr/cart/reservation_type">2</field>
+                    </depends>
+                </field>
+
+                <field id="format_on_product" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page Timer Format</label>
+                    <comment><![CDATA[Format of timers on product page and product list page. See example <a href="https://plumrocket.com/docs/magento-cart-reservation/v2/configuration#product-page-timer-format" target="_blank">here</a>.]]></comment>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

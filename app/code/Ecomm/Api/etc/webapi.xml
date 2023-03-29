@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/ecomm-api/get-access-token/" method="POST">
+        <service class="Ecomm\Api\Api\AccessTokenInterface" method="getAccessToken"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-api/get-attributes-with-product-count/" method="POST">
+        <service class="Ecomm\Api\Api\ProductAttributesInterface" method="getAttributes"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/wishlist" method="GET">
+        <service class="Ecomm\Api\Api\WishlistRepositoryInterface" method="getWishlistForCustomer"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/wishlist/:sku" method="POST">
+        <service class="Ecomm\Api\Api\WishlistRepositoryInterface" method="addItem"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/wishlist/:itemId" method="DELETE">
+        <service class="Ecomm\Api\Api\WishlistRepositoryInterface" method="removeItem"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/wishlist/:itemId/qty/:qty" method="PUT">
+        <service class="Ecomm\Api\Api\WishlistRepositoryInterface" method="updateItem"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/contactus" method="POST">
+        <service class="Ecomm\Api\Api\ContactusManagementInterface" method="submitForm"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/getorderstatus" method="GET">
+        <service class="Ecomm\Api\Api\Getorderstatus" method="getorderstatusarray"/>
+        <resources>
+            <resource ref="admin"/>
+        </resources>
+    </route>
+   <!--  <route url="/V1/reorder/:orderId" method="POST">
+        <service class="Ecomm\Api\Api\ReorderInterface" method="createReorder"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="cartId" force="true">%cart_id%</parameter>
+        </data>
+    </route> -->
+    <route url="/V1/reorder/:orderId" method="POST">
+        <service class="Ecomm\Api\Api\ReorderRepositoryInterface" method="reorderItem"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route method="POST" url="/V1/address/upload/document">
+        <service class="Ecomm\Api\Api\AddressUploadDocumentInterface" method="save"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/ecomm-api/version-info/" method="GET">
+        <service class="Ecomm\Api\Api\VersionInfoInterface" method="getVersionInfo"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route method="POST" url="/V1/ecomm-api/policy-track">
+        <service class="Ecomm\Api\Api\PolicyTrackRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/ecomm-api/promotion-consent">
+        <service class="Ecomm\Api\Api\PromotionalConsentInterface" method="getPromotionalConsent"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route method="POST" url="/V1/ecomm-api/setshippingaddress">
+        <service class="Ecomm\Api\Api\SetShippingAddressManagementInterface" method="setCustomerShippingAddress"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/ecomm-api/products" method="GET">
+        <service class="Magento\Catalog\Api\ProductRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/ecomm-api/products/:sku" method="GET">
+        <service class="Magento\Catalog\Api\ProductRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+</routes>

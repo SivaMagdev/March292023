@@ -1,0 +1,75 @@
+<?php
+$customerName = $block->getLoggedinCustomerName();
+$orderStatus = $block->getOrderCollection();
+//echo count($orderStatus);
+?>
+<div class="upcoming-title-outer recent-orders-block">
+   <div class="upcoming-title-inner">
+     Recent Orders
+   </div>
+   <div class="upcoming-viewall-title">
+        <a href="<?php echo $this->getBaseUrl()."sales/order/history/"; ?>" class="view-all-order">View all orders ></a>
+   </div>   
+</div>
+
+<div class="">
+
+<div class="upcoming-delivery-outer">
+   <div class="upcoming-deliver-inner recent-orders-inner">
+   <?php if ($orderStatus && count($orderStatus) > 0) { ?>
+        <?php foreach ($orderStatus as $order) : ?>
+            <div class="upcoming-d-first-inner recent-orders-padding">
+                <div class="upcoming-expected-delivery">
+                    Order Status: <span><?php echo $order->getStatusLabel(); ?></span>
+                </div><br>
+                <div>
+                    <div class="order-value">
+                        <div class="order-v-first">
+                            <span class="order-t">Order Value</span>
+                            <span class="order-d"><?php echo number_format((float)$order->getGrandTotal(), 2, '.', '');?></span>
+                        </div>
+                        <div class="order-v-sec">
+                            <span class="order-t">Order ID</span>
+                            <span class="order-d"><?php echo $order->getIncrementId();?></span>
+                        </div>
+                    </div>
+                </div>
+                <?php //echo count($order->getAllItems()); ?>
+                <?php foreach ($order->getAllItems() as $key1 => $items) : ?>
+                    <div class="recent-order-img">
+                        <?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                        $product = [];
+                        $image_url = '';
+                        if(null!==($items->getProduct())){
+                        $product = $objectManager->create('Magento\Catalog\Model\Product')->load($items->getProduct()->getId());
+                        // echo $product->getThumbnail();
+                        }?>
+                        <?php
+                            $imagewidth=180;
+                            $imageheight=180;
+                            $imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+                            if($product) {
+                            $image_url = $imageHelper->init($product, 'product_page_image_small')->setImageFile($product->getFile())->resize($imagewidth, $imageheight)->getUrl();
+                            }
+                        //  echo $image_url;
+                        ?>
+                        <img src="<?php echo $image_url; ?>">
+                    </div>
+                    <?php break; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+        <?php } else { ?>
+            <span>
+                <?php echo '<h4 class="order-t">There is no records in your recent orders.</h4>'?>
+            </span>
+        <?php } ?>
+    </div>
+    <div class="order-track-outer">
+        <?php if ($orderStatus && count($orderStatus) > 0) { ?>
+            <a href="<?php echo $this->getBaseUrl()."sales/order/history/"; ?>" class="order-track-btn">View in detail</a>
+        <?php } ?>
+     </div>
+</div>
+
+</div>

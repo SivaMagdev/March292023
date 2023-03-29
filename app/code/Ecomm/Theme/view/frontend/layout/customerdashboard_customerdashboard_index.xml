@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceContainer name="main.content" htmlTag="main" htmlClass="page-main-full-width">
+			<block class="Ecomm\Theme\Block\CustomerDashboard" name="customer.dashboard" before="-" template="Ecomm_Theme::CustomerDashboard/index.phtml" cacheable="false"/>
+		</referenceContainer>
+		<referenceContainer name="content" htmlTag="div" htmlClass="page-main">
+			<block class="Ecomm\Theme\Block\CustomerDashboard" name="customer.dashboard.content" template="Ecomm_Theme::CustomerDashboard/content.phtml" cacheable="false"/>
+		</referenceContainer>
+	</body>
+</page>

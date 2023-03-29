@@ -1,0 +1,41 @@
+<?php
+$notificationDatas = $block->getNotificationCollection();
+$notification_count = count($notificationDatas);
+?>
+<span class="base drl-head-serivce">Notification</span>
+<div class="block block-dashboard-info">
+    <div class="block-content">
+        <?php if($notification_count > 0) { ?>
+        <ul class="notification-ul">
+            <?php foreach ($notificationDatas as $notify) { ?>
+                <li class="starbucks success" data_id="<?php echo $notify['id']; ?>">
+                    <div class="notify_data">
+                        <!-- <div class="title">
+                            <?php echo $notify['type'] ?>
+                        </div> -->
+                        <div class="sub_title">
+                            <?php echo $notify['comment'] ?>
+                        </div>
+                    </div>
+                </li>
+            <?php } ?>
+        </ul>
+        <?php } else { ?>
+            <div class="notification-empty">No Notification yet</div>
+        <?php } ?>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "customer": {
+                        "component": "Magento_Customer/js/view/customer"
+                    }
+                }
+            }
+        }
+    }
+</script>

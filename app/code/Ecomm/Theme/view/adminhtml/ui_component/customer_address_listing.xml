@@ -1,0 +1,32 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="customer_address_columns">
+        <column name="company">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Company</item>
+                    <item name="sortOrder" xsi:type="number">94</item>
+                </item>
+            </argument>
+        </column>
+	   <column name="address_status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Address Status</item>
+                    <item name="sortOrder" xsi:type="number">95</item>
+                </item>
+            </argument>
+        </column>
+	<!--<column name="address_status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Ecomm\Theme\Model\Addressbook\Source\addressstatus</item>
+                <item name="config" xsi:type="array">
+		        <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Address Status</item>
+                </item>
+            </argument>
+        </column>-->
+    </columns>
+</listing>

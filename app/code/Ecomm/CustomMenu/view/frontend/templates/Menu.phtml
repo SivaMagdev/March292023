@@ -1,0 +1,197 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+<?php
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$_eavConfig= $_objectManager->get('Magento\Catalog\Model\Config');
+
+//$attribute_codes = ['dosage_form', 'theraputic_cat'];
+$attribute_codes = ['dosage_form'];
+
+$shop_by_list = [];
+
+//echo count($block->getProductBySku());
+
+foreach($attribute_codes as $attribute_code){
+
+    //echo '<pre>'.print_r($_eavConfig->getAttribute('catalog_product', $attribute_code)->getFrontend()->getLabel(), true).'</pre>';
+
+    $all_options = $_eavConfig->getAttribute('catalog_product', $attribute_code)->getSource()->getAllOptions();
+    $attribute_options = [];
+    foreach ($all_options as $option) {
+        if ($option['value'] != '') {
+            $attribute_options[$option['value']] = $option['label'];
+        }
+    }
+    $shop_by_list[] = [
+        'attribute_code' => $attribute_code,
+        'lable' => $_eavConfig->getAttribute('catalog_product', $attribute_code)->getFrontend()->getLabel(),
+        'options' => $attribute_options
+    ];
+
+}
+
+//echo '<pre>'.print_r($shop_by_list, true).'</pre>';
+
+
+?>
+
+    <li class="level0 nav-2  level-top parent ui-menu-item" role="presentation">
+        <a  class="drl-main-menu level-top ui-corner-all" href="javascript:;" role="menuitem">
+            <span class="ui-menu-icon ui-icon ui-icon-carat-1-e drl-icon-left"></span>
+            <span class="drl-head-main">
+                <?= __("Shop by Category")?></span>
+        </a>
+        <ul class="level0 submenu ui-menu ui-widget ui-widget-content ui-corner-all drl-left-cat-main" role="menu" aria-expanded="true">
+            <?php foreach($shop_by_list as $shop_by){ ?>
+                <li class="level1 nav-2-1  first parent ui-menu-item" role="presentation">
+                    <a  href="javascript:;" class="drl-main-cat level-top ui-corner-all">
+                        <span class="ui-menu-icon ui-icon ui-icon-carat-1-e"></span>
+                        <span><?php echo $shop_by['lable']; ?></span>
+                    </a>
+                    <ul class="level1 submenu ui-menu ui-widget ui-widget-content ui-corner-all expanded drl-side-menu first-sub-child-menu">
+
+                     <!--   <li class="item product product-item drl-item-right">
+                            <section class="drl-img-product">
+                                <div class="drl-image-section align-items-center">
+                                    <div class="drl-col-25">
+                                        <img class="mega-drl-image" src="<?php echo $this->getViewFileUrl('Ecomm_CustomMenu::img/product1.png'); ?>" alt="image">
+                                    </div>
+                                    <div class="drl-col-50">
+                                        <article class="megamenu-product-full">
+                                            <h1 class="megamenu-heading-drl">DOXOrubicin HCI Liposome Injection</h1>
+                                            <p class="drl-sub-words-f"><img src="<?php echo $this->getViewFileUrl('Ecomm_CustomMenu::img/phone-mega-drl.png'); ?>"/>250 mg/vial</p>
+                                            <p class="drl-sub-words-s">AP-rated to Angiomax®</p>
+                                            <p class="drl-sub-words-t">Preservative Free</p>
+                                            <p class="drl-sub-words-fo">Not made with natural rubber latex</p>
+                                        </article>
+                                    </div>
+                                </div>
+                            </section>
+                        </li> -->
+                        <div class="drl-side-sub">
+                            <?php foreach($shop_by['options'] as $id=>$option){ ?>
+                                <li class="drl-menu-wid level2 nav-2-1-1  first ui-menu-item">
+                                    <a href="<?= $block->escapeUrl($block->getUrl('/')) ?>products.html?<?php echo $shop_by['attribute_code']; ?>=<?php echo $id; ?>" class="ui-corner-all">
+                                        <span><?php echo $option; ?></span>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        </div>
+                    </ul>
+                </li>
+
+            <?php } ?>
+            <li class="level1 nav-2-1  first parent ui-menu-item" role="presentation">
+                <a  href="javascript:;" class="drl-main-cat level-top ui-corner-all">
+                    <span class="ui-menu-icon ui-icon ui-icon-carat-1-e"></span>
+                    <span><?= $block->escapeHtml(__('By NDC')) ?></span>
+                </a>
+                <ul class="level1 submenu ui-menu ui-widget ui-widget-content ui-corner-all expanded drl-side-menu">
+                    <div class="drl-side-sub-second">
+                        <?php foreach($block->getProductBySku() as $id=>$_product){ ?>
+                            <?php if($_product->getTypeId() == 'configurable') { ?>
+                                <?php $_children = $_product->getTypeInstance()->getUsedProducts($_product); ?>
+                                <?php foreach ($_children as $child){ ?>
+                                    <li class="drl-menu-wid level2 nav-2-1-1  first ui-menu-item">
+                                    <a href="<?= $_product->getProductUrl() ?>" class="ui-corner-all drl-rem-he">
+                                        <span><?= $child->getSku(); ?></span>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <li class="drl-menu-wid level2 nav-2-1-1  first ui-menu-item">
+                                    <a href="<?= $_product->getProductUrl() ?>" class="ui-corner-all drl-rem-he">
+                                        <span><?= $_product->getSku(); ?></span>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                </ul>
+            </li>
+            <li class="level1 nav-2-1  first parent ui-menu-item" role="presentation">
+                <a  href="javascript:;" class="drl-main-cat level-top ui-corner-all">
+                    <span class="ui-menu-icon ui-icon ui-icon-carat-1-e"></span>
+                    <span>By Product</span>
+                </a>
+                <ul class="level1 submenu ui-menu ui-widget ui-widget-content ui-corner-all expanded drl-side-menu">
+                    <div class="drl-side-sub-second">
+                        <?php foreach($block->getProductByName() as $id=>$_product){ ?>
+                            <?php if($_product->getTypeId() == 'configurable') { ?>
+                                <?php $_children = $_product->getTypeInstance()->getUsedProducts($_product); ?>
+                                <?php foreach ($_children as $child){ ?>
+                                    <li class="drl-menu-wid level2 nav-2-1-1  first ui-menu-item">
+                                    <a href="<?= $_product->getProductUrl() ?>" class="ui-corner-all">
+                                        <span><?= $child->getName(); ?></span>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <li class="drl-menu-wid level2 nav-2-1-1  first ui-menu-item">
+                                    <a href="<?= $_product->getProductUrl() ?>" class="ui-corner-all">
+                                        <span><?= $_product->getName(); ?></span>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                </ul>
+            </li>
+
+        </ul>
+
+    </li>
+    <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."featured-products.html"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("Featured")?></span>
+        </a>
+    </li>
+    <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."products.html"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("Our Products")?></span>
+        </a>
+    </li>
+          <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."resources"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("Resources")?></span>
+        </a>
+    </li>
+        <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."sales/order/history"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("Dashboard")?></span>
+        </a>
+    </li>
+      <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."about-us"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("About Us")?></span>
+        </a>
+    </li>
+
+<!--     <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."news-media"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("News & Media")?></span>
+        </a>
+    </li> -->
+    <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."help-support"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("Help & Support")?></span>
+        </a>
+    </li>
+    <li class="level0 level-top ui-menu-item">
+        <a href="<?php echo $this->getBaseUrl()."contact"; ?>" class="drl-sub-menu level-top ui-corner-all" role="menuitem">
+            <span>
+                <?= __("Contact Us")?></span>
+        </a>
+    </li>
+  

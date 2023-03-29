@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/htmltopdf/shipping/:shipment_id" method="GET">
+        <service class="Ecomm\HtmlToPdf\Api\ShippingPdfInterface" method="getPdf"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/htmltopdf/shipping/all/:order_id" method="GET">
+        <service class="Ecomm\HtmlToPdf\Api\ShippingPdfInterface" method="getPdfAll"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+
+    <route url="/V1/htmltopdf/invoice/:invoice_id" method="GET">
+        <service class="Ecomm\HtmlToPdf\Api\InvoicePdfInterface" method="getPdf"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <route url="/V1/htmltopdf/invoice/all/:order_id" method="GET">
+        <service class="Ecomm\HtmlToPdf\Api\InvoicePdfInterface" method="getPdfAll"/>
+        <resources>
+            <resource ref="token"/>
+        </resources>
+    </route>
+    <!--<route url="/V1/htmltopdf/testpdf/:order_id" method="GET">
+        <service class="Ecomm\HtmlToPdf\Api\TestPdfInterface" method="getPdf"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>-->
+</routes>

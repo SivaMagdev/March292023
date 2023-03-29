@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="ecomm_exclusive_price">
+        <column xsi:type="varchar" name="import_hash" length="32" nullable="true" comment="Hash value of imported row"/>
+    </table>
+    <table name="ecomm_gpo_contract_price" resource="default" engine="innodb" comment="GPO Contract Price for SKU">
+        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" comment="ID" identity="true" />
+        <column xsi:type="varchar" name="contract_id" nullable="false" length="15" comment="Contract ID" />
+        <column xsi:type="varchar" name="material" nullable="false" length="255" comment="Material code" />
+        <column xsi:type="varchar" name="sku" nullable="false" length="255" comment="SKU" />
+        <column xsi:type="decimal" name="price" nullable="false" scale="2" precision="10" comment="Price" />
+        <column xsi:type="tinyint" name="status" nullable="false"  comment="Status" default="1" />
+        <column xsi:type="date" name="start_date" nullable="false" comment="Start Date" />
+        <column xsi:type="date" name="end_date" nullable="false" comment="End Date" />
+        <column xsi:type="timestamp" name="created_at" nullable="false"  comment="Created At" default="CURRENT_TIMESTAMP" on_update="false" />
+        <column xsi:type="timestamp" name="updated_at" nullable="false" comment="Updated At" default="CURRENT_TIMESTAMP" on_update="true" />
+        <column xsi:type="varchar" name="import_hash" length="32" nullable="true" comment="Hash value of imported row"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+    </table>
+    <table name="catalog_product_entity">
+        <column xsi:type="varchar" name="import_hash" length="32" nullable="true" comment="Hash value of imported row"/>
+    </table>
+    <table name="quote_item" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="price_type" nullable="true" length="40" comment="Price Type"/>
+    </table>
+    <table name="sales_order_item" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="price_type" nullable="true" length="40" comment="Price Type"/>
+    </table>
+    <table name="sales_invoice_item" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="price_type" nullable="true" length="40" comment="Price Type"/>
+    </table>
+</schema>

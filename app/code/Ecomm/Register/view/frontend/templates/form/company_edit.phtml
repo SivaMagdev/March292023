@@ -1,0 +1,214 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Customer\Block\Widget\Name;
+
+/** @var \Magento\Customer\Block\Form\Edit $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+  <div class="drl-badge"><span class="drl-need-mod-white">Need modification? <a class="drl-need-mod-hyp-white" href="<?php echo $this->getBaseUrl()."help-support";?>"> Click here</a></span></div>
+<form class="form form-edit-account account-drl-heading"
+      action="<?= $block->escapeUrl($block->getUrl('customer/company/editPost')) ?>"
+      method="post" id="form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      autocomplete="off">
+    <fieldset class="fieldset info drl-info-account">
+        <?= $block->getBlockHtml('formkey') ?>
+        <legend class="drl-legend"><span>
+           <?= $block->escapeHtml(__('Company Legal Information')) ?></span>
+        </legend>
+        <br>
+        <div class="drl-heading-space">
+           <legend class="drl-legends-second"><span>
+              <?= $block->escapeHtml(__('Corporate')) ?></span>
+           </legend>
+           <legend class="drl-legends-third"><span>
+              <?= $block->escapeHtml(__('Please enter the contact details of Corporate')) ?></span>
+           </legend>
+        </div>
+        <div class="drl-register">
+           <div class="field field-corporate_contact_name drl-width-input">
+              <label class="drl-required-astr label" for="corporate_contact_name"><span>Corporate Contact Name </span></label>
+              <div class="control">
+                 <input type="text" id="corporate_contact_name" name="corporate_contact_name" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("corporate_contact_name"))) { echo $block->getCustomer()->getCustomAttribute("corporate_contact_name")->getValue(); } ?>" class="input-text drl-register-input required" placeholder="Enter Corporate Contact Name" disabled>
+              </div>
+           </div>
+           <div class="field field-corporate_contact_phone_number drl-width-input">
+              <label class="drl-required-astr label" for="corporate_contact_phone_number"><span>Corporate Contact Phone Number </span></label>
+              <div class="control">
+                 <input type="text" id="corporate_contact_phone_number" name="corporate_contact_phone_number" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("corporate_contact_phone_number"))) { echo $block->getCustomer()->getCustomAttribute("corporate_contact_phone_number")->getValue(); } ?>" class="drl-with-coun drl-register-input-number input-text validate-digits required" minlength="10" maxlength="10" placeholder="345 - 345 - 6545" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-corporate_contact_email_address drl-width-input-half">
+              <label class="drl-required-astr label" for="corporate_contact_email_address"><span>Corporate Contact E-mail Address </span></label>
+              <div class="control">
+                 <input type="text" id="corporate_contact_email_address" name="corporate_contact_email_address" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("corporate_contact_email_address"))) { echo $block->getCustomer()->getCustomAttribute("corporate_contact_email_address")->getValue(); } ?>" class="drl-register-input input-text validate-email required" placeholder="Enter Corporate Email ID" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-hr-line"></div>
+        <div class="drl-heading-space">
+           <legend class="drl-legends-second"><span>
+              <?= $block->escapeHtml(__('Purchasing')) ?></span>
+           </legend>
+           <legend class="drl-legends-third"><span>
+              <?= $block->escapeHtml(__('Please enter the contact details of Purchasing')) ?></span>
+           </legend>
+        </div>
+        <div class="drl-register">
+           <div class="field field-purchasing_contact_name drl-width-input">
+              <label class="drl-required-astr label" for="purchasing_contact_name"><span>Purchasing Contact Name </span></label>
+              <div class="control">
+                 <input type="text" id="purchasing_contact_name" name="purchasing_contact_name" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("purchasing_contact_name"))) { echo $block->getCustomer()->getCustomAttribute("purchasing_contact_name")->getValue(); } ?>" class="input-text drl-register-input required" placeholder="Enter Purchasing Contact Name" disabled>
+              </div>
+           </div>
+           <div class="field field-purchasing_contact_phone_number drl-width-input">
+              <label class="drl-required-astr label" for="purchasing_contact_phone_number"><span>Purchasing Contact Phone Number </span></label>
+              <div class="control">
+                 <input type="text" id="purchasing_contact_phone_number" name="purchasing_contact_phone_number" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("purchasing_contact_phone_number"))) { echo $block->getCustomer()->getCustomAttribute("purchasing_contact_phone_number")->getValue(); } ?>" class="drl-with-coun drl-register-input-number input-text validate-digits required" minlength="10" maxlength="10" placeholder="345 - 345 - 6545" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-purchasing_contact_email_address drl-width-input-half">
+              <label class="drl-required-astr label" for="purchasing_contact_email_address"><span>Purchasing Contact E-mail Address </span></label>
+              <div class="control">
+                 <input type="text" id="purchasing_contact_email_address" name="purchasing_contact_email_address" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("purchasing_contact_email_address"))) { echo $block->getCustomer()->getCustomAttribute("purchasing_contact_email_address")->getValue(); } ?>" class="drl-register-input input-text validate-email required" placeholder="Enter Contact Email ID" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-hr-line"></div>
+        <div class="drl-heading-space">
+           <legend class="drl-legends-second"><span>
+              <?= $block->escapeHtml(__('Account payable')) ?></span>
+           </legend>
+           <legend class="drl-legends-third"><span>
+              <?= $block->escapeHtml(__('Please enter the contact details of payable Account')) ?></span>
+           </legend>
+        </div>
+        <div class="drl-register">
+           <div class="field field-accounts_payable_contact_name drl-width-input">
+              <label class="drl-required-astr label" for="accounts_payable_contact_name"><span>Accounts Payable Contact Name </span></label>
+              <div class="control">
+                 <input type="text" id="accounts_payable_contact_name" name="accounts_payable_contact_name" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("accounts_payable_contact_name"))) { echo $block->getCustomer()->getCustomAttribute("accounts_payable_contact_name")->getValue(); } ?>" class="drl-register-input input-text drl-register-input required" placeholder="Enter Account payable Contact Name" disabled>
+              </div>
+           </div>
+           <div class="field field-ap_contact_phone_number drl-width-input">
+              <label class="drl-required-astr label" for="ap_contact_phone_number"><span>AP Contact Phone Number </span></label>
+              <div class="control">
+                 <input type="text" id="ap_contact_phone_number" name="ap_contact_phone_number" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("ap_contact_phone_number"))) { echo $block->getCustomer()->getCustomAttribute("ap_contact_phone_number")->getValue(); } ?>" class="drl-with-coun input-text validate-digits drl-register-input-number required" minlength="10" maxlength="10" placeholder="345 - 345 - 6545" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-ap_email_address drl-width-input-half">
+              <label class="drl-required-astr label" for="ap_email_address"><span>AP E-mail Address </span></label>
+              <div class="control">
+                 <input type="text" id="ap_email_address" name="ap_email_address" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("ap_email_address"))) { echo $block->getCustomer()->getCustomAttribute("ap_email_address")->getValue(); } ?>" class="input-text validate-email drl-register-input required" placeholder="Enter Account payable Contact Email ID" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-hr-line"></div>
+        <div class="drl-heading-space">
+           <legend class="drl-legends-second"><span>
+              <?= $block->escapeHtml(__('Electronic Data Interchange (EDI)')) ?></span>
+           </legend>
+           <legend class="drl-legends-third"><span>
+              <?= $block->escapeHtml(__('Please enter the contact details of EDI')) ?></span>
+           </legend>
+        </div>
+        <div class="drl-register">
+           <div class="field field-edi_contact_name drl-width-input">
+              <label class="label" for="edi_contact_name"><span>EDI Contact Name </span></label>
+              <div class="control">
+                 <input type="text" id="edi_contact_name" name="edi_contact_name" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("edi_contact_name"))) { echo $block->getCustomer()->getCustomAttribute("edi_contact_name")->getValue(); } ?>" class="input-text drl-register-input" placeholder="Enter EDI Contact Name" disabled>
+              </div>
+           </div>
+           <div class="field field-edi_contact_phone drl-width-input">
+              <label class=" label" for="edi_contact_phone"><span>EDI Contact Phone Number </span></label>
+              <div class="control">
+                 <input type="text" id="edi_contact_phone" name="edi_contact_phone" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("edi_contact_phone"))) { echo $block->getCustomer()->getCustomAttribute("edi_contact_phone")->getValue(); } ?>" class="input-text validate-digits drl-register-input-number drl-with-coun" minlength="10" maxlength="10" placeholder="345 - 345 - 6545" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-edi_contact_email drl-width-input-half">
+              <label class="label" for="edi_contact_email"><span>EDI Contact E-mail Address </span></label>
+              <div class="control">
+                 <input type="text" id="edi_contact_email" name="edi_contact_email" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("edi_contact_email"))) { echo $block->getCustomer()->getCustomAttribute("edi_contact_email")->getValue(); } ?>" class="input-text validate-email drl-register-input" placeholder="Enter EDI Contact Email ID" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-hr-line"></div>
+        <div class="drl-heading-space">
+           <legend class="drl-legends-second"><span>
+              <?= $block->escapeHtml(__('Shipment Contact')) ?></span>
+           </legend>
+           <legend class="drl-legends-third"><span>
+              <?= $block->escapeHtml(__('Please enter the contact details of Shipment Contact')) ?></span>
+           </legend>
+        </div>
+        <div class="drl-register">
+           <div class="field field-ship_contact_name drl-width-input">
+              <label class="label" for="ship_contact_name"><span>Shipment Contact Name</span></label>
+              <div class="control">
+                 <input type="text" id="ship_contact_name" name="ship_contact_name" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("ship_contact_name"))) { echo $block->getCustomer()->getCustomAttribute("ship_contact_name")->getValue(); } ?>" class="input-text drl-register-input" placeholder="Enter Shipment Contact Name" disabled>
+              </div>
+           </div>
+           <div class="field field-ship_contact_phone drl-width-input">
+              <label class="label" for="ship_contact_phone"><span>Shipment Contact Phone Number</span></label>
+              <div class="control">
+                 <input type="text" id="ship_contact_phone" name="ship_contact_phone" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("ship_contact_phone"))) { echo $block->getCustomer()->getCustomAttribute("ship_contact_phone")->getValue(); } ?>" class="drl-register-input-number input-text validate-digits drl-with-coun" minlength="10" maxlength="10" placeholder="Enter Shipment Phone Name" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-ship_contact_email drl-width-input-half">
+              <label class="label" for="ship_contact_email"><span>Shipment Contact E-mail Address</span></label>
+              <div class="control">
+                 <input type="text" id="ship_contact_email" name="ship_contact_email" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("ship_contact_email"))) { echo $block->getCustomer()->getCustomAttribute("ship_contact_email")->getValue(); } ?>" class="drl-register-input input-text validate-email" placeholder="Enter Shipment Contact E-mail Address" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-hr-line"></div>
+    </fieldset>
+
+    <?= $block->getChildHtml('form_additional_info') ?>
+<!--     <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                <span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $block->escapeHtml(__('Go back')) ?></span>
+            </a>
+        </div>
+    </div> -->
+</form>
+<script>
+   require([
+       'jquery',
+       'mage/url',
+       'Magento_Ui/js/modal/modal',
+       'drlnumberjs'
+   ], function($, url, modal) {
+   
+
+     $(document).ready(function(){
+        $(".drl-with-coun").intlTelInput({
+          initialDialCode: true,
+          americaMode: false,
+          onlyCountries: ["us"]
+
+        });
+      });
+    });
+</script>

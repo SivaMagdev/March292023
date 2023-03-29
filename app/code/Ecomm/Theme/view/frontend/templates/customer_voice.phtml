@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="<?php echo $block->getViewFileUrl('Ecomm_Theme::css/slickslider.css')?>">
+<!-- Slider -->
+<div class="specialities-slider slider">
+
+	<!-- Slider Item -->
+	<div class="speicality-item text-center">
+		<div class="speicality-img">
+			<img src="assets/img/specialities/specialities-01.png" class="img-fluid" alt="Speciality">
+			<span><i class="fa fa-circle" aria-hidden="true"></i></span>
+		</div>
+		<p>Urology</p>
+	</div>	
+	<!-- /Slider Item -->
+	
+	<!-- Slider Item -->
+	<div class="speicality-item text-center">
+		<div class="speicality-img">
+			<img src="assets/img/specialities/specialities-02.png" class="img-fluid" alt="Speciality">
+			<span><i class="fa fa-circle" aria-hidden="true"></i></span>
+		</div>
+		<p>Neurology</p>	
+	</div>							
+	<!-- /Slider Item -->
+	
+	<!-- Slider Item -->
+	<div class="speicality-item text-center">
+		<div class="speicality-img">
+			<img src="assets/img/specialities/specialities-03.png" class="img-fluid" alt="Speciality">
+			<span><i class="fa fa-circle" aria-hidden="true"></i></span>
+		</div>	
+		<p>Orthopedic</p>	
+	</div>							
+	<!-- /Slider Item -->
+	
+	<!-- Slider Item -->
+	<div class="speicality-item text-center">
+		<div class="speicality-img">
+			<img src="assets/img/specialities/specialities-04.png" class="img-fluid" alt="Speciality">
+			<span><i class="fa fa-circle" aria-hidden="true"></i></span>
+		</div>	
+		<p>Cardiologist</p>	
+	</div>							
+	<!-- /Slider Item -->
+	
+	<!-- Slider Item -->
+	<div class="speicality-item text-center">
+		<div class="speicality-img">
+			<img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">
+			<span><i class="fa fa-circle" aria-hidden="true"></i></span>
+		</div>	
+		<p>Dentist</p>
+	</div>							
+	<!-- /Slider Item -->
+	
+</div>
+<!-- /Slider -->
+<script>
+require([
+    'jquery',
+    'Magento_PageBuilder/js/resource/slick/slick'
+], function($, slick){
+  $(document).ready(function(){
+  	if($('.specialities-slider').length > 0) {
+		$('.specialities-slider').slick({
+			dots: false,
+			autoplay:false,
+			infinite: true,
+			variableWidth: false,
+			prevArrow: true,
+			nextArrow: true,
+			slidesToShow: 4,
+			slidesToScroll: 1
+		});
+	}
+
+  });
+
+});
+</script>

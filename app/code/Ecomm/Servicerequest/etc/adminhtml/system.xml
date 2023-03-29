@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ecomm_servicerequest_extensions" sortOrder="4000000">
+            <label>Service Request</label>
+        </tab>
+        <section id="ecomm_servicerequest" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configuration</label>
+            <tab>ecomm_servicerequest_extensions</tab>
+            <resource>Ecomm_Servicerequest::config_servicerequest</resource>
+            <group id="general" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="general_support_email" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>General Inquiries</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+                <field id="complaints_support_email" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Complaints</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+                <field id="inquiries_support_email" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Inquiries</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+                <field id="order_support_email" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Upcoming Order</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+                <field id="retrun_support_email" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Returns / Cancellation</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+                <field id="damage_support_email" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Damage / Shortages</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+                <field id="profile_support_email" type="textarea" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Profile Update</label>
+                    <comment>Note: Please enter the email address by comma seperated without space</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>            

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_GcpIntegration
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="drl_gcs_extn" sortOrder="4000000">
+            <label>GCS</label>
+        </tab>
+        <section id="drl_gcs" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configuration</label>
+            <tab>drl_gcs_extn</tab>
+            <resource>Ecomm_GcpIntegration::config_gcp</resource>
+            <group id="general" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="gcs_bucket_name" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bucket Name</label>
+                </field>
+                <field id="gcs_location" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Location</label>
+                </field>
+                <field id="gcs_project" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Project</label>
+                </field>
+                <field id="gcs_key" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Authentication Key(JSON)</label>
+                </field>
+            </group>
+            <group id="gcp_cron" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Cron Settings</label>
+                <field id="frequency" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Frequency</label>
+                    <source_model>Magento\Cron\Model\Config\Source\Frequency</source_model>
+                    <backend_model>Ecomm\GcpIntegration\Model\Config\GcpCronConfig</backend_model>
+                </field>
+                <field id="time" translate="label comment" sortOrder="2" type="time" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Start Time</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

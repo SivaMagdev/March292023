@@ -1,0 +1,320 @@
+<?php
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+    $_product = $block->getProduct();
+    $priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+
+    //$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    //$listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+    $listBlock= $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+    $addToCartUrl =  $listBlock->getAddToCartUrl($_product);
+?>
+<?php
+//$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+//$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+$customerSession = $listBlock->customerSession;
+
+$application_verified_status = false;
+
+ if ($customerSession->isLoggedIn()) {
+
+    //$customerRepository = $objectManager->get('\Magento\Customer\Api\CustomerRepositoryInterface');
+    $customerRepository = $listBlock->customerRepository;
+    //$_eavConfig = $objectManager->get('\Magento\Eav\Model\Config');
+    $_eavConfig = $listBlock->eavConfig;
+
+    if($customerSession->getId()) {
+
+        $customerData= $customerRepository->getById($customerSession->getId());
+        /* Code to set DRD Short Data Flag Start */
+        $customerGroupId = $customerData->getGroupId();
+        $storeShortDatedGroupIds = $listBlock->getConfigValue('drd_short_dated/drd_short_dated_group/customer_group_id');
+        //echo $storeShortDatedGroupIds;die;
+        if(!empty($storeShortDatedGroupIds) || (!$storeShortDatedGroupIds)){
+            $storeShortDatedGroupIds = explode(',', $storeShortDatedGroupIds);
+        }
+        $shortdatedFlag = false;
+        if(in_array($customerGroupId, $storeShortDatedGroupIds)){
+            $shortdatedFlag = true;
+        }
+        /* Code to set DRD Short Data Flag End */
+
+
+        $attribute = $_eavConfig->getAttribute('customer', 'application_status');
+        $options = $attribute->getSource()->getAllOptions();
+        $application_statuses = [];
+        foreach ($options as $option) {
+            if ($option['value'] > 0) {
+                $application_statuses[$option['value']] = $option['label'];
+            }
+        }
+        $application_status = 0;
+        $approved_id = array_search("Approved",$application_statuses);
+        if($customerData->getCustomAttribute('application_status')){
+            $application_status = $customerData->getCustomAttribute('application_status')->getValue();
+        }
+
+        if($approved_id == $application_status){
+            $application_verified_status = true;
+        }
+    }
+}
+?>
+<?php if($_product->getOptions()) { ?>
+<?php if (($customerSession->isLoggedIn()) && ($shortdatedFlag)) { ?>
+<div class="shortdated-accordion">
+    <div class="short-accordion">
+      
+
+        <div class="short-accordion-head ">
+           <div class="checkbox-header">              
+                <label class="shortdated-container"><?= $block->escapeHtml(__('Shortdated')) ?>
+                  <input type="checkbox" checked="checked" id="short-container">
+                  <span class="checkmark"></span>
+                </label>
+            </div>   
+             <div class="la-short-header">
+                     <i class="arrow-open"></i>
+            </div>
+
+         <!--    <p><label class="shortdated-container">Shortdated
+                  <input type="checkbox" checked="" id="short-container">
+                  <span class="checkmark"></span>
+                </label></p>  <i class="arrow-open short-open"></i> -->
+        </div>
+
+        <div class="short-accordion-body default">
+            <div class="wrapper">
+                <div class="shortdated-table">
+                    <table>
+                    <?php 
+                    foreach ($_product->getOptions() as $o) {
+                        /*if ($o->getTitle() != 'Shortdated') { // or another title of option
+                            continue;
+                        }*/
+                        $i = 0; $inc = 0;
+                        foreach ($o->getValues() as $value) {
+                        ?>
+                        <form data-role=custom-tocart-form
+                                    data-product-sku="<?= $block->escapeHtml($_product->getSku()) ?>"
+                                    action="<?php echo $addToCartUrl; ?>" method="post"
+                                    id="custom_product_addtocart_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                            <input type="hidden" name="product" value="<?= /* @escapeNotVerified */ $_product->getId() ?>" />
+                                <?= $block->getBlockHtml('formkey') ?>
+                            <input type="hidden" class="radio admin__control-radio product-custom-option" name="options[<?= $value->getOptionId(); ?>]" id="options_<?= $value->getOptionId(); ?>_<?= $value->getOptionId(); ?>" value="<?= $value->getOptionTypeId(); ?>" data-selector="options[<?= $value->getOptionId(); ?>]" price="<?= $value->getPrice(); ?>">
+                            <?php if($i == 0): ?>
+
+                                 <thead class="rowheader">
+                                    <tr>
+                                      <th scope="col" class="empty-head">head checkbox</th>
+                                      <th scope="col">Batch No</th>
+                                      <th scope="col">Expiration Date</th>
+                                      <th scope="col">Total Content</th>
+                                      <th scope="col">Pack Size </th>
+                                    <!--  <th scope="col">Case Pack </th> -->
+                                       <?php if($application_verified_status){ ?>
+                                     <!--  <th scope="col">Price </th> -->
+                                      <th scope="col">Quantity in Packs</th>
+                                      <th scope="col" class="empty-head">empty</th>
+                                      <?php } ?>
+                                    </tr>
+                                  </thead>
+                                <?php endif; ?>
+
+                            <?php
+                                $current_date = strtotime(date('Y-m-d'));
+                                $expire_date = strtotime($value->getExpiryDate());
+                            ?>
+                            <?php if($expire_date > $current_date) { ?>
+                                <tbody class="<?php echo ($inc % 2 === 0)? 'even-row' : '' ; ?>">
+
+                                    <tr>
+                              <td data-label="head checkbox" class="cell">
+                                <label class="container">
+                                       <input type="checkbox" checked="checked">
+                                       <span class="checkmark"></span>
+                                 </label>
+                             </td>
+                              <td data-label="Batch No"><?= $value->getTitle(); ?></td>
+                              <td data-label="Expiration Date">
+                                  <?php 
+
+                                            $diffmonth = 0;
+                                            //calculate month
+                                            $date1 = date('Y/m/d'); //current date or any date
+                                            $date2 = $value->getExpiryDate(); //Future date
+
+                                            $ts1 = strtotime($date1);
+                                            $ts2 = strtotime($date2);
+
+                                            $year1 = date('Y', $ts1);
+                                            $year2 = date('Y', $ts2);
+
+                                            $month1 = date('m', $ts1);
+                                            $month2 = date('m', $ts2);
+
+                                            $month = (($year2 - $year1) * 12) + ($month2 - $month1);
+
+                                            $final_month = $diffmonth.' Month ';
+
+                                            //calculate days
+                                            $date1 = new DateTime(date('Y/m/d'));  //current date or any date
+                                            $date2 = new DateTime($value->getExpiryDate()); //Future date
+                                            $diffday = $date2->diff($date1)->format("%a");  //find difference
+                                            $days = intval($diffday);   //rounding days
+
+                                            if($diffmonth){
+                                                $final_data = $final_month.$days.' Day';
+                                            }else{
+                                                $final_data = $days.' Day';   
+                                            }
+                                        ?>
+                                        <span class="minus-date"><?= $value->getExpiryDate(); ?></span>
+                                        <span class="minus-month">~<?php echo $final_data ?></span>
+                              </td>
+                              <?php if ($_additional = $custom_helper->getAdditionalData($_product)): ?>
+                                        <?php foreach ($_additional as $_data): ?>
+                                            <?php if($_data['code'] == 'strength'): ?>
+
+                              <td data-label="Strength">
+                                   <span class="pack-per-gram"><?= $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></span>
+                              </td>
+                               <?php endif; ?>
+                              <?php if($_data['code'] == 'pack_size'): ?>
+
+                              <td data-label="Pack Size">
+                                <span class="short-pack-size"><?= $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></span>
+                              </td>
+                              <?php endif; ?>
+                                            <?php if($_data['code'] == 'case_pack'): ?>
+                             <!--   <td data-label="Case Pack">  -->
+                                  <!-- <span class="pack-size-d"><?= $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></span>     -->                              
+                            <!--  </td>  -->
+                               <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                    <?php if($application_verified_status){ ?>
+                            <!--  <td data-label="Price"> -->
+                                  
+                                 <!-- <span class="pdp-price-value"><?= number_format($value->getPrice(), 2, '.', ''); ?></span> -->
+
+                             <!--   </td>  -->
+                              <td data-label="Quantity in Packs" class="cell last-cell">
+                                   <div class="control">
+                                      <span  class="num-minus decreaseQty"><img class="drl-image-minus-plus" src='<?php echo $this->getViewFileUrl('images/drl-minus.png'); ?>' alt="Drl-Error"></span>
+                                      <input type="number"
+                                             name="qty"
+                                             id="qty"
+                                             value="<?= 1 ?>"
+                                             title="<?= /* @escapeNotVerified */ __('Quantity in Packs') ?>"
+                                             class="input-text qty"
+                                             min="1"
+                                             />
+                                      <span  class="num-add increaseQty" data-id="<?= $inc; ?>"><img class="drl-image-minus-plus" src='<?php echo $this->getViewFileUrl('images/drl-plus.png'); ?>' alt="Drl-Error"></span>
+                                    </div>
+                                    <!--<span class="pdp-avil">Packs Available : <?/*=  $value->getQuantity(); */?></span>-->
+                                <?php
+                                  $stockstatus=$custom_helper->getConfigVal('cataloginventory/options/display_product_stock_status');
+                                  if($stockstatus) {
+                                    /*Getting the config Out Of Stock Threshold value*/
+                                    $config_min_qty = $custom_helper->getDefaultOutOfStockVal();
+
+                                    /*Checking the whether instock or out of stock*/
+                                    $instock=1;
+                                    if($value->getQuantity()<=$config_min_qty){
+                                        $instock=0;
+                                    }
+                                ?>
+                                    <?php if ($instock){?>
+                                    <div class="stock stock-available">
+                                        <span><?= $escaper->escapeHtml(__('In stock')) ?></span></div>
+                                    <?php } else { ?>
+                                        <div class="stock stock-unavailable">
+                                          <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
+                              </td>
+                              <td data-label="empty" class="cell last-cell last-cell-wrap">
+                                  <?php if($value->getPrice()!=0)
+                                  {?>
+                                  <?php if ($instock){?>
+                                   <span class="pdp-total-price">
+                                   <?= $priceHelper->currency($value->getPrice(), true, false); ?></span>
+                                    <button type="submit" title="Add to Cart" class="action primary tocart" id="custom-product-addtocart-button"><span>Add to Cart</span></button>
+                                    <?php } 
+                                    }?>
+                              </td>
+                               <?php } ?>
+                            </tr>
+                                 </tbody>
+                                <?php $inc++; ?>
+                            <?php } ?>
+                        </form>
+                        <?php $i++; } ?>
+                    <?php } ?>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
+<script type="text/x-magento-init">
+{
+    "[data-role=custom-tocart-form], .form.map.checkout": {
+        "catalogAddToCart": {
+            "product_sku": "<?= /* @NoEscape */ $_product->getSku() ?>"
+        }
+    }
+}
+</script>
+
+<script>
+
+require(["jquery"], function($){ 
+
+    jQuery(document).ready(function() {
+        jQuery(".la-short-header").click(function () {
+            if (jQuery(this).next("div").is(":visible")) {
+                jQuery(this).next("div").slideUp("normal");
+                jQuery(this).find('i').removeClass('arrow-open').addClass('arrow-close');
+            } else if ( jQuery(".short-accordion-body").is(":hidden")) {
+                jQuery(".short-accordion-body").slideDown("normal");
+                jQuery(this).find('i').removeClass('arrow-close').addClass('arrow-open');
+            } else {
+                jQuery(".short-accordion-body").slideUp("normal");
+                jQuery(this).next("div").slideToggle("normal");
+                jQuery(this).find('i').removeClass('arrow-open').addClass('arrow-close');
+            }
+        });
+    }); 
+
+
+    jQuery("#short-container").click(function() {
+        if(jQuery(this).is(":checked")) {
+              jQuery(".short-accordion-head").find('i').removeClass('arrow-close').addClass('arrow-open');
+             jQuery(".short-accordion-body").slideDown("normal");
+            
+        } else {
+              jQuery(".short-accordion-head").find('i').removeClass('arrow-open').addClass('arrow-close');         
+              jQuery(".short-accordion-body").slideUp("normal");     
+        }
+    });
+});
+
+
+
+</script>
+
+
+
+
+<?php } ?>
+
+<!--Continue Shopping button -->
+<div class="button-space-equal">
+    <button type="button" class="drl-btn continshop" onClick="location.href='<?php echo $block->getBaseUrl() . 'products.html'; ?>'">Continue Shopping</button>
+</div>

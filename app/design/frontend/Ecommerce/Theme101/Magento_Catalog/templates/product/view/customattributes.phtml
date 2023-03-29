@@ -1,0 +1,94 @@
+<?php
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $custom_helper = $this->helper('Ecomm\Theme\Helper\Output');
+    $_product = $block->getProduct();
+?>
+
+<?php if ($_additional = $custom_helper->getAdditionalData($_product)): ?>
+
+
+<div class="product-price-container">
+	
+	<div class="product-container-number">
+		<div>
+	  		<span class="product-ndc-title"><?= $block->escapeHtml(__('NDC #')) ?></span>
+	    	<span class="product-ndc-name product-attribute-sku-<?php echo $_product->getId(); ?>"><?= /* @NoEscape */ $_product->getSku() ?></span>
+	  	</div>
+		  <div>
+	  		<span class="product-cat-title">Rating</span>
+	    	<span class="product-cat-name product-attribute-fda-<?php echo $_product->getId(); ?>"><?= /* @escapeNotVerified */ $_helper->productAttribute($_product, $_product->getFdaRating(), 'fda_rating') ?></span>
+	  	</div>
+	</div>
+	<div class="product-container-number">
+		<?php 
+			/* Code for displaying product attribute "drd_product_type" having value "Rx" then hide on PDP page based on condition start */
+			$drdProductTypeAttribute = $_product->getAttributeText('drd_product_type');
+			if($drdProductTypeAttribute != "Rx"){
+			?>
+				<div>
+					<span class="product-ndc-title">Concentration</span>
+					<span class="product-ndc-name product-attribute-concentration-<?php echo $_product->getId(); ?>"><?= /* @NoEscape */ $_product->getResource()->getAttribute('concentration')->getFrontend()->getValue($_product) ?></span>
+				</div>
+			<?php
+			}
+			/* Code for displaying product attribute "drd_product_type" having value "Rx" then hide on PDP page based on condition end */
+		?>
+		<div>
+			<span class="product-ndc-title">Container Type</span>
+			<span class="product-ndc-name product-attribute-total-content-<?php echo $_product->getId(); ?>">
+				<?= /* @NoEscape */ $_product->getResource()->getAttribute('drl_division')->getFrontend()->getValue($_product) ?>
+			</span>
+		</div>
+		<div>
+			<span class="product-ndc-title">Closure</span>
+			<span class="product-ndc-name product-attribute-total-content-<?php echo $_product->getId(); ?>">
+				<?= /* @NoEscape */ $_product->getResource()->getAttribute('closure')->getFrontend()->getValue($_product) ?>
+			</span>
+		</div>
+	</div>
+	<div class="product-container-number">
+		<div>
+			<span class="product-ndc-title">Latex Free</span>
+			<span class="product-ndc-name product-attribute-latex-free-<?php echo $_product->getId(); ?>">
+				<?php //if($_product->getResource()->getAttribute('latex_free')->getFrontend()->getValue($_product) == 'Yes'){ ?>
+					<?= /* @NoEscape */ $_product->getResource()->getAttribute('latex_free')->getFrontend()->getValue($_product) ?>
+				<?php //} ?>
+			</span>
+		</div>
+		<div>
+			<span class="product-ndc-title">Preservative Free</span>
+			<span class="product-ndc-name product-attribute-preservative-free-<?php echo $_product->getId(); ?>">
+				<?php //if($_product->getResource()->getAttribute('preservative_free')->getFrontend()->getValue($_product) == 'Yes'){ ?>
+					<?= /* @NoEscape */ $_product->getResource()->getAttribute('preservative_free')->getFrontend()->getValue($_product) ?>
+				<?php //} ?>
+			</span>
+		</div>
+		<div>
+			<span class="product-ndc-title">Bar Coded</span>
+			<span class="product-ndc-name product-attribute-barcoded-<?php echo $_product->getId(); ?>">
+				<?php if($_product->getResource()->getAttribute('bar_coded')->getFrontend()->getValue($_product) == 'Yes'){ ?>
+					<?= /* @NoEscape */ $_product->getResource()->getAttribute('bar_coded')->getFrontend()->getValue($_product) ?>
+				<?php } ?>
+			</span>
+		</div>
+	</div>
+	<div class="product-price-description-container">
+		<div class="desc-equalHM">
+	  		<span class="product-ndc-title">Storage</span>
+	    	<span class="product-ndc-name product-attribute-shs-<?php echo $_product->getId(); ?>"><?= /* @NoEscape */ $_helper->productAttribute($_product, $_product->getSpecialHandlingStorage(), 'special_handling_storage') ?></span>
+	  	</div>
+		<div class="desc-equalHM">
+	  		<span class="product-ndc-title">Short Description</span>
+	    	<span class="product-ndc-name product-attribute-short-desc-<?php echo $_product->getId(); ?>"><?= /* @escapeNotVerified */ $_product->getResource()->getAttribute('short_description')->setStoreId(0)->getFrontend()->getValue($_product) ?></span>
+	  	</div>
+	  	<div class="desc-equalHM">
+			<span class="product-ndc-name product-attribute-black-box-<?php echo $_product->getId(); ?>">
+				<?php if($_product->getResource()->getAttribute('black_box')->getFrontend()->getValue($_product) == 'Yes'){ ?>
+					Please read the package insert for full prescribing information including boxed warning and important safety considerations
+				<?php } ?>
+			</span>
+		</div>
+	</div>
+</div>
+
+<?php endif;?>

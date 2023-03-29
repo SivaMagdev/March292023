@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+ 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\SalesRule\Model\RulesApplier" type="Ecomm\CustomDiscount\Model\RulesApplier" />
+    <!--<preference for="Ecomm\ExpressShipping\Model\Carrier\Shipping" type="Ecomm\CustomDiscount\Model\ExpressShipping" />
+    <preference for="Ecomm\StandardShipping\Model\Carrier\Shipping" type="Ecomm\CustomDiscount\Model\StandardShipping" />-->
+    <preference for="Magento\Checkout\Controller\Cart\CouponPost" type="Ecomm\CustomDiscount\Controller\Cart\CouponPost" />
+
+     <type name="Magento\Quote\Api\CartRepositoryInterface">
+        <plugin name="add_best_discount" type="Ecomm\CustomDiscount\Plugin\BestCouponPlugin" sortOrder="1" />
+    </type>
+</config>

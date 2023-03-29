@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_HinCron
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="hin_cron">
+       <job instance="Ecomm\HinCron\Cron\Cronfile" method="execute" name="drl_hin_validator">
+            <config_path>crontab/hin_cron/jobs/drl_hin_validator/schedule/cron_expr</config_path>
+        </job>
+    </group>
+</config>

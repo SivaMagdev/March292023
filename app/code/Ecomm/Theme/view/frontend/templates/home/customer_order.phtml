@@ -1,0 +1,71 @@
+<?php if($block->getIsApproved()) { ?>
+	<div class="register-with-us-outer">
+		<div class="register-with-inner">
+			<?php if($block->getOrderCount() > 0){ ?>
+				<div class="register-first-one">
+					<div class="register-icon">
+						<img src="<?php echo $this->getViewFileUrl('Ecomm_Theme::images/current-order.png');?>" alt="currentorder"/>
+					</div>
+					<div class="register-current-order">
+						Current Orders - <?php echo $block->getOrderCount(); ?>
+					</div>
+					<!--<div class="register-current-value">
+						<span class="register-value-one">Value: $ 3,000</span>
+						<span class="register-value-two">Since June 12, 2020</span>
+					</div>-->
+				</div>
+				<div class="register-first-two">
+					<div class="register-icon">
+						<img src="<?php echo $this->getViewFileUrl('Ecomm_Theme::images/banner-delivered.png'); ?>" alt="bannerdelivered"/>
+					</div>
+					<div class="register-current-order">
+						Delivered - <?php echo $block->getDeliveredOrderCount(); ?>
+					</div>
+					<!--<div class="register-current-value">
+						<span class="register-value-one">Value: $ 7,500</span>
+						<span class="register-value-two">Since June 12, 2020</span>
+					</div>-->
+				</div>
+				<div class="go-to-btn">
+					<a href="<?php echo $this->getBaseUrl()."customerdashboard/customerdashboard/index"; ?>" class="go-get-started">Go to Dashboard</a>
+				</div>
+			<?php } else { ?>
+				<div class="register-first-two">
+					<div class="register-icon">
+					<img src="<?php echo $this->getViewFileUrl('Ecomm_Theme::images/home-banner-cart.png'); ?>" alt="bannercart" />
+					</div>
+					<div class="register-current-order">
+						You haven't placed any orders till now
+					</div>
+					<div class="exp-products">
+					<a href="<?php echo $this->getBaseUrl()."products.html"; ?>" class="exp-products-btn">Explore Products</a>
+				</div>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+
+<?php } else { ?>
+	<?php $step_number = $block->getStepNumber(); ?>
+	<div class="register-with-us-outer">
+		<div class="regiester-steps-progress">
+			<ul class="StepProgress">
+			  <li class="StepProgress-item <?php if($step_number >=1){ ?>is-done<?php } ?>">General Info</li>
+			  <li class="StepProgress-item <?php if($step_number >=2){ ?>is-done<?php } ?>">Company Info</li>
+			  <li class="StepProgress-item <?php if($step_number >=3){ ?>is-done<?php } ?>">Business Identification</li>
+			  <li class="StepProgress-item <?php if($step_number >=4){ ?>is-done<?php } ?>">Trade Info</li>
+			  <li class="StepProgress-item <?php if($step_number >=5){ ?>is-done<?php } ?>">Bank Details</li>
+			</ul>
+			<div class="company-get-btn-complete">
+				<?php if(($step_number < 5) || ($block->getIsIncomplete())) { ?>
+					<a href="<?php echo $block->getUrl('customer/account/update'); ?>" class="company-get-started">Complete Profile</a>
+				<?php } else { ?>
+					<a href="#" class="company-get-started">Under Review</a>
+				<?php } ?>
+	        </div>
+		</div>
+	</div>
+<?php } ?>
+
+
+

@@ -1,0 +1,18 @@
+/**
+ * @package     Plumrocket_CartReservation
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (https://plumrocket.com)
+ * @license     https://plumrocket.com/license   End-user License Agreement
+ */
+
+#row_prcr_cart_time td.value,
+#row_prcr_checkout_time td.value {white-space: nowrap;}
+#row_prcr_cart_time .note,
+#row_prcr_checkout_time .note {white-space: normal;}
+
+table.data-grid input[type='number'] {
+  width: 100%;
+}
+
+.dateperiod-add {
+  margin-top: 1rem;
+}

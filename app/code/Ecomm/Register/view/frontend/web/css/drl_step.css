@@ -1,0 +1,1634 @@
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .iti.iti--allow-dropdown .iti__flag-container.iti__flag-container ul.iti__country-list,
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .iti.iti--allow-dropdown .iti__flag-container.iti__flag-container ul.iti__country-list {
+    list-style: none !important;
+    width: 200px;
+    padding-left: 5px;
+}
+
+/* Dea licence start */
+.dea-lice-error {
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+}
+
+/* Dea license End */
+div#custom-terms-error {
+    float: right;
+    padding: 3px 0px 0px 5px;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .iti.iti--allow-dropdown,
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .iti.iti--allow-dropdown {
+    width: 100%;
+}
+
+/* Last checkbox start */
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .control.drl-tickbox {
+    font-size: 16px;
+    color: #4F4F4F;
+    font-family: 'DRL Circular Light';
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .control.drl-tickbox input#i_agree {
+    height: 2em;
+    width: 1.3em;
+    vertical-align: text-bottom;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .control.drl-tickbox a.term-hyper {
+    color: #5225B5;
+    text-decoration: underline;
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+}
+
+/* Last Checkbox End */
+select option[data-default] {
+    color: red;
+}
+
+/* Add/Remove Button Start */
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix .drl-add-ship-addres {
+    display: flex;
+    justify-content: flex-end;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix button.add-shipping-address.btn.btn-primary:after {
+    content: '\f055';
+    border: none;
+    color: #5225B5;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-left: 5px;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix .drl-billing-add-form .drl-switch-add-bill .drl-switch-field.drl-switch-field button.remove-address-block.btn.btn-danger,
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix button.add-shipping-address.btn.btn-primary {
+    box-shadow: unset;
+    background-color: unset;
+    color: #4B2A91;
+    font-size: 20px;
+    padding: 0;
+    border: unset;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix .drl-billing-add-form .drl-switch-add-bill .drl-switch-field.drl-switch-field button.remove-address-block.btn.btn-danger:hover,
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix button.add-shipping-address.btn.btn-primary:hover {
+    border: unset;
+}
+
+/* Add Remove Button End */
+/* Phone number +1 Start */
+label#company_phone-error,
+label#shipping_phone-error,
+label#billing_phone-error,
+label#corporate_contact_phone_number-error,
+label#purchasing_contact_phone_number-error,
+label#ap_contact_phone_number-error,
+label#edi_contact_phone-error,
+label#bank_phone-error,
+label#trade_phone-error {
+    position: absolute;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-form-extra {
+
+    display: table;
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+    border: 1px solid #ccc;
+    height: 32px;
+}
+
+.drl-form-extra .drl-addonnumber {
+    position: relative;
+    width: 40px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'DRL Circular Book';
+}
+
+.drl-form-extra .drl-addonnumber::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    right: 0;
+    height: calc(100% - 8px);
+    border-right: 1px solid #434861;
+    opacity: 1;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-form-extra .drl-number-input {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px;
+    background-color: transparent;
+    border: 0;
+}
+
+/* Phone number +1 End */
+/* popup start */
+.customer-account-update .modals-wrapper .modal-popup .modal-inner-wrap {
+    box-shadow: 0px 10px 40px #522E912E;
+    border-radius: 5px;
+    opacity: 1;
+    width: 600px;
+}
+
+.customer-account-update .sucess-over-popup {
+    display: flex;
+}
+
+.customer-account-update .sucess-over-popup .icon-popup-reject {
+    font-size: 35px;
+    color: #FF7069;
+    margin: 2% 2%;
+}
+
+.customer-account-update .sucess-over-popup .icon-popup-sucess {
+    font-size: 35px;
+    color: #38a26e;
+    margin: 2% 2%;
+
+}
+
+.customer-account-update .modal-popup.modal-slide .modal-footer {
+    /* border-top: 1px dashed #d5d6da; */
+    border-top: unset;
+    margin: 10px;
+    padding: 1rem 3rem 1rem 1rem;
+    text-align: center;
+}
+
+.customer-account-update footer.modal-footer button.success-notifications {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    opacity: 1;
+    width: 187px;
+    height: 46px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-family: 'DRL Circular Book';
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.customer-account-update div#register-success .sucess-popup {
+    font-family: 'DRL Circular Bold';
+    font-size: 18px;
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    text-transform: capitalize;
+    flex: 1 1 auto;
+    margin: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* popup end */
+
+/* Steps start */
+
+.wizard>.steps .disabled a,
+.wizard>.steps .disabled a:hover,
+.wizard>.steps .disabled a:active {
+    background: none;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    line-height: 1.8;
+}
+
+.wizard>.steps .current a,
+.wizard>.steps .current a:hover,
+.wizard>.steps .current a:active {
+    background: none;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book'
+}
+
+.wizard>.steps .done a,
+.wizard>.steps .done a:hover,
+.wizard>.steps .done a:active {
+    background: none;
+}
+
+.sw {
+    position: relative;
+}
+
+.sw *,
+.sw *::before,
+.sw *::after {
+    box-sizing: border-box;
+}
+
+.sw>.tab-content {
+    position: relative;
+    overflow: hidden;
+}
+
+.sw .toolbar {
+    padding: .8rem;
+}
+
+.sw .toolbar>.btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    text-transform: none;
+    vertical-align: middle;
+    user-select: none;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    cursor: pointer;
+}
+
+.sw .toolbar>.btn.disabled,
+.sw .toolbar>.btn:disabled {
+    opacity: .65;
+}
+
+.sw>.nav {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 640px) {
+    .sw>.nav {
+        flex-direction: column !important;
+        flex: 1 auto;
+    }
+}
+
+.sw>.nav .nav-link {
+    display: block;
+    /*padding: .5rem 1rem;*/
+    padding: 0px;
+    text-decoration: none;
+}
+
+.sw>.nav .nav-link:hover,
+.sw>.nav .nav-link:active,
+.sw>.nav .nav-link:focus {
+    text-decoration: none;
+}
+
+.sw>.nav .nav-link::-moz-focus-inner {
+    border: 0 !important;
+}
+
+.sw>.nav .nav-link.disabled {
+    color: #ccc !important;
+    pointer-events: none;
+    cursor: default;
+}
+
+.sw>.nav .nav-link.hidden {
+    display: none !important;
+}
+
+.sw.sw-justified>.nav>li,
+.sw.sw-justified>.nav .nav-link {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.sw.sw-dark {
+    color: rgba(255, 255, 255, 0.95);
+    background: #000;
+}
+
+.sw.sw-loading {
+    user-select: none;
+}
+
+.sw.sw-loading::after {
+    content: "";
+    display: block;
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    transition: all .2s ease;
+}
+
+.sw.sw-loading::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 2rem;
+    height: 2rem;
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #3498db;
+    border-radius: 50%;
+    z-index: 10;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* SmartWizard Theme: Default */
+.sw-theme-default {
+    border: 1px solid #eeeeee;
+}
+
+.sw-theme-default>.tab-content>.tab-pane {
+    padding: 10px;
+}
+
+.sw-theme-default .toolbar>.btn {
+    color: #fff;
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    font-weight: 400;
+}
+
+.sw-theme-default>.nav {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.sw-theme-default>.nav .nav-link {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+}
+
+.sw-theme-default>.nav .nav-link::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0;
+    left: 0px;
+    bottom: -1px;
+    background: #999999;
+    transition: all .35s ease .15s;
+}
+
+.sw-theme-default>.nav .nav-item.disabled {
+    color: #999999;
+    cursor: not-allowed;
+}
+
+.sw-theme-default>.nav .nav-item.active {
+    color: #17a2b8 !important;
+    cursor: pointer;
+}
+
+.sw-theme-default>.nav .nav-item.active::after {
+    background: #17a2b8 !important;
+    width: 100%;
+}
+
+.sw-theme-default>.nav .nav-item.done {
+    color: #5cb85c !important;
+    cursor: pointer;
+}
+
+.sw-theme-default>.nav .nav-item.done::after {
+    background: #5cb85c;
+    width: 100%;
+}
+
+.sw-theme-default>.nav .nav-item.disabled {
+    color: #dddddd !important;
+    cursor: not-allowed;
+}
+
+.sw-theme-default>.nav .nav-item.disabled::after {
+    background: #dddddd;
+    width: 100%;
+}
+
+.sw-theme-default>.nav .nav-item.danger {
+    color: #d9534f !important;
+    cursor: pointer;
+}
+
+.sw-theme-default>.nav .nav-item.danger::after {
+    background: #d9534f;
+    width: 100%;
+}
+
+
+/*dot css*/
+
+.sw {
+    position: relative;
+}
+
+.sw *,
+.sw *::before,
+.sw *::after {
+    box-sizing: border-box;
+}
+
+.sw>.tab-content {
+    position: relative;
+    overflow: hidden;
+}
+
+.sw .toolbar {
+    padding: .8rem;
+}
+
+.sw .toolbar>.btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    text-transform: none;
+    vertical-align: middle;
+    user-select: none;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    cursor: pointer;
+}
+
+.sw .toolbar>.btn.disabled,
+.sw .toolbar>.btn:disabled {
+    opacity: .65;
+}
+
+.sw>.nav {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 640px) {
+    .sw>.nav {
+        flex-direction: column !important;
+        flex: 1 auto;
+    }
+}
+
+.sw>.nav .nav-link {
+    display: block;
+    /*padding: .5rem 1rem;*/
+    padding: 0px;
+    text-decoration: none;
+}
+
+.sw>.nav .nav-link:hover,
+.sw>.nav .nav-link:active,
+.sw>.nav .nav-link:focus {
+    text-decoration: none;
+}
+
+.sw>.nav .nav-link::-moz-focus-inner {
+    border: 0 !important;
+}
+
+.sw>.nav .nav-link.disabled {
+    color: #ccc !important;
+    pointer-events: none;
+    cursor: default;
+}
+
+.sw>.nav .nav-link.hidden {
+    display: none !important;
+}
+
+.sw.sw-justified>.nav>li,
+.sw.sw-justified>.nav .nav-link {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.sw.sw-dark {
+    color: rgba(255, 255, 255, 0.95);
+    background: #000;
+}
+
+.sw.sw-loading {
+    user-select: none;
+}
+
+.sw.sw-loading::after {
+    content: "";
+    display: block;
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    transition: all .2s ease;
+}
+
+.sw.sw-loading::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 2rem;
+    height: 2rem;
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #3498db;
+    border-radius: 50%;
+    z-index: 10;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* SmartWizard Theme: Dots */
+.sw-theme-dots>.tab-content>.tab-pane {
+    padding: 10px;
+}
+
+.sw-theme-dots .toolbar>.btn {
+    color: #ffffff;
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    font-weight: 400;
+}
+
+.sw-theme-dots>.nav {
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: -4%;
+    margin-right: -4%;
+}
+
+.sw-theme-dots>.nav::before {
+    content: " ";
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #eee;
+    border-radius: 3px;
+    z-index: 1;
+}
+
+.sw-theme-dots>.nav .nav-link .number {
+    display: none;
+}
+
+.sw-theme-dots>.nav .nav-link {
+    position: relative;
+    margin-top: 20px;
+}
+
+.sw-theme-dots>.nav .nav-link::before {
+    content: " ";
+    position: absolute;
+    display: block;
+    top: -16px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    border: solid 1px #434861;
+    background: #ffffff;
+    text-decoration: none;
+    z-index: 1;
+}
+
+.sw-theme-dots>.nav .current .nav-link::before {
+
+    border: none;
+    background: #6B45c0;
+    box-shadow: 0 0 0 6px #e8dffd;
+}
+
+.wizard>.steps .current a,
+.wizard>.steps .current a:hover,
+.wizard>.steps .current a:active {
+    color: #6B45c0;
+    font-size: 18px;
+    font-family: 'DRL Circular Book';
+    font-weight: bold;
+}
+
+.wizard>.steps a,
+.wizard>.steps a:hover,
+.wizard>.steps a:active {
+    margin: 20px 0px 0px 0px;
+    padding: 0px;
+}
+
+
+.sw-theme-dots>.nav .done .nav-link::before {
+    content: '\f00c';
+    border: none;
+    background: #00A26D;
+    color: #FFF;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    width: 30px;
+    height: 30px;
+    top: -20px;
+    line-height: 2;
+    font-size: 16px;
+}
+
+.wizard>.steps .done a,
+.wizard>.steps .done a:hover,
+.wizard>.steps .done a:active {
+    color: #00A26D;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+}
+
+.sw-theme-dots>.nav .nav-link::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    top: -28px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    z-index: 99;
+}
+
+.sw-theme-dots>.nav .nav-link.inactive {
+    color: #999999;
+    cursor: not-allowed;
+}
+
+.sw-theme-dots>.nav .nav-link.inactive::after {
+    background-color: #999999;
+}
+
+.sw-theme-dots>.nav .nav-link.active {
+    color: #5bc0de !important;
+    cursor: pointer;
+}
+
+.sw-theme-dots>.nav .nav-link.active::after {
+    background-color: #5bc0de !important;
+}
+
+.sw-theme-dots>.nav .nav-link.done {
+    color: #5cb85c;
+    cursor: pointer;
+}
+
+.sw-theme-dots>.nav .nav-link.done::after {
+    background-color: #5cb85c;
+}
+
+.sw-theme-dots>.nav .nav-link.disabled {
+    color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+.sw-theme-dots>.nav .nav-link.disabled::after {
+    background-color: #f9f9f9;
+}
+
+.sw-theme-dots>.nav .nav-link.danger {
+    color: #d9534f;
+    cursor: pointer;
+}
+
+.sw-theme-dots>.nav .nav-link.danger::after {
+    background-color: #d9534f;
+}
+
+.sw-theme-dots.sw-dark {
+    color: rgba(255, 255, 255, 0.95);
+    background: #000;
+}
+
+.sw-theme-dots.sw-dark>.nav::before {
+    background-color: #3c3c3c;
+}
+
+.sw-theme-dots.sw-dark>.nav .nav-link::before {
+    background: #434343;
+    color: black;
+}
+
+/* Steps End */
+/* Input validation start */
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard>.content>.body input.error {
+    background: #FF5046;
+    border: 1px solid #FF5046;
+    color: #FF5046;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard>.content>.body label.error {
+    color: #FF5046;
+    margin-left: 0;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard>.content>.body label.error::before {
+    content: '\f071';
+    font-family: "Font Awesome 5 Free";
+    transform: rotate(-45deg) skewY(0) scaleX(1.866);
+    font-weight: 900;
+    padding-right: 5px;
+}
+
+/* Input validation start  */
+/* Input field Step start */
+.drl-billing-add-form {
+    display: flex;
+
+}
+
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info legend.drl-legends-second .drl-main-middle-head {
+    vertical-align: -webkit-baseline-middle;
+}
+
+.drl-billing-add-form .drl-bill-head {
+    width: 100%;
+}
+
+.drl-billing-add-form span.drl-title-middle-toogle {
+    vertical-align: -webkit-baseline-middle;
+    white-space: nowrap;
+    margin: 5px;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'DRL Circular Light';
+}
+
+/* Radio Button Yes NO start */
+
+.drl-checkbox-y-n .checkbox-tools {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    box-sizing: border-box;
+    padding: 0;
+    overflow: visible;
+}
+
+.drl-checkbox-y-n .checkbox-tools:checked+label {
+    background-color: #6B45C0;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-tools:not(:checked)+label {
+    color: #9D9AA2;
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    width: 110px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'DRL Circular Book';
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    border-radius: 25px;
+    border: 1px solid #9D9AA2;
+    opacity: 1;
+
+}
+
+.drl-checkbox-y-n .checkbox-tools:checked+label {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    width: 110px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    font-family: 'DRL Circular Book';
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    border-radius: 25px;
+    border: 1px solid #9D9AA2;
+    opacity: 1;
+}
+
+.drl-checkbox-y-n .checkbox-tools:checked+label::after,
+.checkbox-tools:not(:checked)+label::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #ffffff;
+    z-index: -1;
+    color: #9D9AA2;
+}
+
+/* Radio Button Yes No End */
+/* Toogle checkbox start */
+.drl-switch-field .switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+.drl-switch-field .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.drl-switch-field .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.drl-switch-field .slider::before {
+    position: absolute;
+    content: "";
+    right: 28px;
+    bottom: 6px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    width: 13px;
+    height: 13px;
+}
+
+.drl-switch-field .toogle-check:checked+.slider {
+    background-color: #5225B5;
+}
+
+.drl-switch-field .toogle-check:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.drl-switch-field .toogle-check:checked+.slider::before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.drl-switch-field .slider.round {
+    border-radius: 34px;
+}
+
+.drl-switch-field .slider.round::before {
+    border-radius: 50%;
+}
+
+/* Toogle Checkbox end */
+
+.drl-heading-space {
+    margin: 0 0 20px;
+}
+
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info.drl-company-legal-info.body.current,
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info.drl-general-info.body.current {
+    margin: 0;
+}
+
+/* Radio Button Toogle Start */
+.drl-switch-add-bill {
+    display: flex;
+    float: right;
+}
+
+.switch-field {
+    display: flex;
+    margin-bottom: 36px;
+    overflow: hidden;
+}
+
+.switch-field input {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.switch-field label {
+    background-color: #e4e4e4;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    padding: 8px 16px;
+    margin-right: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease-in-out;
+}
+
+.switch-field input:checked+label {
+    background-color: #5225B5;
+    box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+    border-radius: 12px;
+}
+
+.switch-field label:last-of-type {
+    border-radius: 12px;
+}
+
+/* Radio Button Toogle End */
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info .drl-hr-line {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border: 1px dashed #434861;
+    margin: 18px 0;
+    opacity: 0.2;
+}
+
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info legend.drl-legends-third {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-family: 'DRL Circular Light';
+}
+
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info legend.drl-legends-second {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+form.form.form-edit-account.form-step-drl fieldset.fieldset.info legend.drl-legend {
+    letter-spacing: 0px;
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 24px;
+    font-family: 'DRL Circular Bold';
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register {
+    display: flex;
+    margin: 0 0 45px;
+    width: 100%;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input {
+    flex-basis: 100%;
+    /* margin: 0 0 20px; */
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half {
+    flex-basis: 50%;
+    /* margin: 0 0 20px; */
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input label.label span,
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half label.label span {
+    color: #434861;
+    font-size: 15px;
+    font-family: "DRL Circular Book";
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .drl-register-textarea {
+    width: 100%;
+    padding: 1rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .drl-register-input-number {
+    width: 65%;
+    padding: 0.5rem 5rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input-number {
+    width: 65%;
+    padding: 0.5rem 5rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input,
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .drl-register-input {
+    width: 85%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input-word {
+    width: 70%;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #FAF9FA;
+    background-clip: padding-box;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    overflow: visible;
+    margin: 0;
+    font-family: 'DRL Circular Bold';
+    box-sizing: unset;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-input-side-word {
+    white-space: nowrap;
+    background: #5225B5;
+    border-radius: 0px 4px 4px 0px;
+    box-shadow: 0px 4px 16px #0000000D;
+    opacity: 1;
+    padding: 1.3rem 1.5rem;
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: bottom;
+    font-size: 13px;
+    font-family: 'DRL Circular Book';
+    cursor: pointer;
+}
+
+.drl-register-input::placeholder,
+.drl-register-input-word::placeholder {
+    color: #9D9AA2;
+    opacity: 1;
+    letter-spacing: 0px;
+    font-family: "DRL Circular Light";
+    font-size: 13px;
+}
+
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-width-input .drl-input-side-word::placeholder {
+    color: #9D9AA2;
+    opacity: 1;
+    letter-spacing: 0px;
+    font-family: "DRL Circular Light";
+    font-size: 13px;
+}
+
+/* Input Field step End */
+/* Step Css Start */
+.customer-account-update h1.drl-page-title {
+    margin-bottom: 0;
+    color: #4F4F4F;
+    font-size: 30px;
+    font-family: 'DRL Circular Bold';
+}
+
+.customer-account-update h3.drl-page-sub-title {
+    color: #4F4F4F;
+    opacity: 1;
+    font-size: 16px;
+    font-family: 'DRL Circular Light';
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix.wizard>.actions {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    padding: 0% 8% 3% 1%;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions .disabled a,
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul>li.previous a {
+    background: unset;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    color: #5225B5;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions .disabled a:hover,
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul>li.previous a:hover {
+    border: unset;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions .disabled a::before,
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul>li.previous a::before {
+    content: '\f30a';
+    border: none;
+    color: #5225B5;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions a {
+    background: #5225B5 0% 0% no-repeat padding-box;
+    border-radius: 25px;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    color: #FFFFFF;
+    letter-spacing: 0px;
+    padding: 0.9em 2em 0.7em 2em;
+}
+
+/* form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions .disabled a {
+    background: unset;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    text-align: left;
+} */
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions a:hover,
+.wizard>.actions a:active {
+    color: #FFFFFF;
+    border: 1px solid #532fb7;
+    background: #532fb7;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul {
+    /* margin: 0% 5% 3%; */
+    text-align: unset;
+    display: block;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul>li.disabled,
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul>li.previous {
+    float: left;
+}
+
+form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul>li {
+    float: right;
+}
+
+form.form.form-edit-account.form-step-drl.wizard>.content>.body {
+    position: unset;
+}
+
+/* form.form.form-edit-account.form-step-drl.wizard>.steps .done a {
+    background: #00A26D;
+    opacity: 1;
+
+}
+
+form.form.form-edit-account.form-step-drl.wizard>.steps .done a:before {
+    color: #FFFFFF;
+    content: '\f00c';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+form.form.form-edit-account.form-step-drl.wizard>.steps a {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    background: #FFFFFF;
+    border: 1px solid #434861;
+    opacity: 1;
+}
+
+form.form.form-edit-account.form-step-drl.wizard.clearfix.wizard>.steps .current a {
+    background: #6B45C0;
+    border: 1px solid #6B45C0;
+} */
+
+/* form.form.form-edit-account.form-step-drl.wizard.clearfix.wizard>.steps>ul>li {
+    width: 20%;
+    position: relative;
+}
+ */
+form.form.form-edit-account.form-step-drl.wizard.clearfix.wizard ul:first-child::before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 80%;
+    height: 1px;
+    border: 1px dashed #707070;
+    opacity: 0.5;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    left: 10%;
+}
+
+form.form.form-edit-account.form-step-drl.wizard.clearfix.wizard>.actions>ul::before {
+    content: unset
+}
+
+form.form.form-edit-account.form-step-drl.wizard>.content {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    min-height: auto;
+    margin: 0
+}
+
+/* Steps Css End */
+/* Oval Css Start */
+.customer-account-update .drl-step-form {
+    display: flex;
+}
+
+div#oval-assit .dotted-slash-drl {
+    border: 1px dashed #707070;
+    opacity: 0.5;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    margin: 18px 18px;
+    width: 85%;
+}
+
+div#oval-assit .oval-sub-first-panel label.oval-one {
+    color: #4F4F4F;
+    font-size: 18px;
+    font-family: 'DRL Circular Bold';
+}
+
+div#oval-assit .oval-sub label.oval-two {
+    color: #5225B5;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+    padding: 10px 0 0 0;
+}
+
+div#oval-assit .oval-sub a.need-asst-faq {
+    text-align: end;
+    color: #5225B5;
+    font-size: 16px;
+    font-family: 'DRL Circular Book';
+    padding: 10px 0 0 0;
+}
+
+div#oval-assit .oval-sub a.need-asst-faq:hover {
+    text-decoration: underline;
+}
+
+div#oval-assit .oval-sub a.need-asst-faq img {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+#oval-assit {
+    /*     right: 3%;
+    top: 40%; */
+    position: sticky;
+    width: 22%;
+    height: 100%;
+    background: #E6F4FF 0% 0% no-repeat padding-box;
+    float: right;
+    margin: 0px 0px 0px 20px;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+div#oval-assit .oval-sub .oval-multi-line {
+    display: flex;
+    align-items: center;
+}
+
+div#oval-assit .oval-sub {
+    display: inline-grid;
+    padding: 8px 30px;
+    font-size: 13px;
+}
+
+div#oval-assit .oval-sub-first-panel {
+    display: inline-grid;
+    padding: 0 30px 0 30px;
+    font-size: 13px;
+}
+
+div#oval-assit .oval-multi-line .fa-round-drl {
+    border-radius: 60px;
+    box-shadow: 0px 0px 2px #888;
+    padding: 0.5em 0.6em;
+    background: #FF7069 0% 0% no-repeat padding-box;
+    opacity: 1;
+    color: #FFFFFF;
+}
+
+div#oval-assit .oval-multi-line .oval-three {
+    color: #4F4F4F;
+    font-size: 12px;
+    font-family: 'DRL Circular Book';
+    margin-bottom: 0;
+}
+
+div#oval-assit .oval-multi-line .oval-tel-drl {
+    color: #5225B5;
+    font-size: 14px;
+    font-family: 'DRL Circular Book';
+}
+
+div#oval-assit .oval-multi-line .oval-drl-help {
+    padding: 0px 0px 0px 10px;
+}
+
+/* Oval Css End */
+.customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix {
+    width: 75%;
+}
+
+.customer-account-update .page-wrapper {
+    background: #F6FBFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.customer-account-update header.page-header,
+.customer-account-update .page-title-wrapper {
+    opacity: 1;
+}
+
+
+/* shipping radio css */
+
+.drl-register-contact-radio {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.drl-register-contact-radio span.yes {
+    padding-right: 10px;
+}
+
+#contact_person input[type=text]:disabled {
+    cursor: not-allowed;
+}
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+    .customer-account-update form.form.form-edit-account label#duns_number-error {
+        top: 9.2%;
+        left: 2%;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input-number {
+        width: 73%;
+    }
+
+    .drl-switch-add-bill .drl-switch-field {
+        float: right;
+    }
+
+    .drl-switch-add-bill {
+        display: block;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-form-extra {
+        width: 100%;
+    }
+
+    form.form.form-edit-account.form-step-drl.wizard>.content>.body {
+        margin: 0;
+    }
+
+    .wizard>.steps .done a,
+    .wizard>.steps .done a:hover,
+    .wizard>.steps .done a:active {
+        font-size: 15px;
+    }
+
+    form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard.clearfix.wizard>.actions {
+        padding: 0% 2% 3% 2%;
+    }
+
+    form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.steps .current a,
+    .wizard>.steps .current a:hover,
+    .wizard>.steps .current a:active {
+        font-size: 15px;
+    }
+
+    form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.steps .disabled a,
+    .wizard>.steps .disabled a:hover,
+    .wizard>.steps .disabled a:active {
+        line-height: 1.5;
+    }
+
+    form.form.form-edit-account.sw.sw-justified.sw-theme-dots.form-step-drl.wizard>.actions>ul {
+        display: block;
+        margin: 0;
+    }
+
+    .customer-account-update .modal-popup.modal-slide {
+        left: 0;
+        top: 28%;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .customer-account-update .modals-wrapper .modal-popup .modal-inner-wrap {
+        width: auto;
+        height: auto;
+        background-color: #ffffff;
+    }
+
+    .customer-account-update .modal-popup .modal-content {
+        padding: 0 3rem 0 3rem;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input-word {
+        width: 80%;
+    }
+
+    .control.drl-flex {
+        display: -webkit-box;
+    }
+
+
+    form.form.form-edit-account.wizard>.actions>ul>li {
+        text-align: center;
+        margin: 1%;
+    }
+
+    .drl-billing-add-form span.drl-title-middle-toogle {
+        font-size: 12px;
+    }
+
+    form.form.form-edit-account.form-step-drl fieldset.fieldset.info legend.drl-legends-second {
+        font-size: 14px;
+    }
+
+    .sw-theme-dots>.nav {
+        display: flow-root;
+    }
+
+    .sw-theme-dots>.nav {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .wizard>.steps>ul>li {
+        width: 20%;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix {
+        width: 100%;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register {
+        display: block;
+        margin: 0;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input,
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .drl-register-input {
+        width: 100%
+    }
+
+    .customer-account-update .drl-step-form {
+        display: block;
+    }
+
+    div#oval-assit {
+        width: 100%;
+    }
+}
+
+/* Mobile Screen End */
+/* Ipad Screen Start */
+
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input-word {
+        width: 90%;
+    }
+
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input .drl-register-input-number {
+        width: 88%;
+    }
+    .customer-account-update form.form.form-edit-account.form-step-drl.wizard.clearfix .drl-register .drl-width-input-half .drl-register-input-number{
+        width: 100%;
+    }
+}
+
+/* Ipad Screen End */

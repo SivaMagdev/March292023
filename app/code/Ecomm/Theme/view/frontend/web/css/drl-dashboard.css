@@ -1,0 +1,656 @@
+.customerdashboard-customerdashboard-index .dashboard-drug {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 127px;
+}
+
+.customerdashboard-customerdashboard-index h4.drl-active-req-error {
+    font-weight: unset;
+    font-size: 16px;
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-view-all::after {
+    content: url("../images/view-all.svg");
+    vertical-align: -webkit-baseline-middle;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-view-all {
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    float: right;
+}
+
+.customerdashboard-customerdashboard-index .drl-btn-contact {
+    padding: 15px 25px 15px 100px;
+}
+
+.customerdashboard-customerdashboard-index .dashboard-drug .drl-dashboard-drug-f {
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 30px;
+    font-family: "DRL Circular Book";
+}
+
+.customerdashboard-customerdashboard-index .dashboard-drug .drl-dashboard-drug-s {
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    text-transform: capitalize;
+    opacity: 1;
+    font-size: 16px;
+    font-family: "DRL Circular Book";
+}
+
+.customerdashboard-customerdashboard-index .contact-us-dashboard {
+    letter-spacing: 0px;
+    color: #5225B5;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    width: 151px;
+    height: 40px;
+    border-radius: 25px;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    -webkit-border-radius: 25px;
+    display: block;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first {
+    background: #5df1c1 0% 0% no-repeat padding-box;
+    opacity: 1;
+    height: 110px;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard {
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    list-style: none none;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-f,
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-s,
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-t {
+    border-top: none;
+    margin: 0 10px 0 0;
+    display: inline-block;
+    position: relative;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-f,
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-s {
+    padding-top: 31px;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-t {
+    padding-top: 23px;
+    float: right;
+    padding-right: 133.5px;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-f {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 20px;
+    font-family: "DRL Circular Book";
+    text-align: center;
+    display: block;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-f a {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-wrapper .drl-dashboard-first ul.drl-ui-menu-dashboard li.drl-menu-item-dashboard-f a {
+    border: 1px solid #434861;
+    border-radius: 25px;
+    opacity: 1;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    width: 120px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 10px 10px 10px 10px;
+}
+
+.customerdashboard-customerdashboard-index .drl-track-slider {
+    display: block;
+    margin: 0 auto;
+    width: 1134px;
+    vertical-align: middle;
+    margin-top: -3rem;
+}
+
+.customerdashboard-customerdashboard-index .slick-prev.slick-arrow,
+.customerdashboard-customerdashboard-index .slick-next.slick-arrow {
+    height: 4rem;
+    width: auto;
+    top: 55%;
+}
+
+.customerdashboard-customerdashboard-index .slick-prev.slick-arrow::before {
+    content: url("../images/drl-left.svg");
+}
+
+.customerdashboard-customerdashboard-index .slick-next.slick-arrow::before {
+    content: url("../images/drl-right.svg");
+}
+
+.customerdashboard-customerdashboard-index .slick-prev.slick-arrow {
+    left: -19px;
+}
+
+.customerdashboard-customerdashboard-index .slick-next.slick-arrow {
+    right: -19px;
+}
+
+.customerdashboard-customerdashboard-index div#drl-track-form {
+    box-shadow: unset;
+    height: auto;
+}
+
+.customerdashboard-customerdashboard-index .drl-track-slider {
+    box-shadow: 0px 10px 40px #5225b510;
+}
+
+.customerdashboard-customerdashboard-index div#drl-track-form p.drl-line-track {
+    padding: 20px 40px;
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-size: 18px;
+    font-family: "DRL Circular Book";
+}
+
+.customerdashboard-customerdashboard-index div#drl-track-form ul#drl-progress {
+    padding: 15px 10px;
+    overflow: unset;
+}
+
+.customerdashboard-customerdashboard-index div#drl-track-form p.drl-line-shipment {
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    padding: 10px 40px;
+    float: left;
+}
+
+.customerdashboard-customerdashboard-index div#drl-track-form span.drl-name-delivery {
+    font-size: 14px;
+    font-family: "DRL Circular Bold";
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+}
+
+.customerdashboard-customerdashboard-index div#drl-track-form ul#drl-progress li.drl-bub-track {
+    height: 60px;
+    width: 33%;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+    display: block;
+    margin: 0 auto;
+    width: 1134px;
+    box-shadow: 0px 10px 40px #5225b51a;
+    opacity: 1;
+    background: #ffffff 0% 0% no-repeat padding-box;
+}
+
+.customerdashboard-customerdashboard-index .drl-title-dashboard-tabel {
+    display: block;
+    margin: 0 auto;
+    width: 1134px;
+    padding-top: 20px;
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-tabel .block-title.order {
+    border-bottom: 1px dashed #dfe1e8;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.customerdashboard-customerdashboard-index .drl-title-dashboard-tabel strong {
+    font-weight: unset;
+    font-size: 24px;
+    letter-spacing: 0px;
+    color: #4f4f4f;
+    opacity: 1;
+    font-family: "DRL Circular Book";
+}
+
+.customerdashboard-customerdashboard-index .drl-dashboard-tabel .drl-block-content {
+    padding: 20px 30px;
+    overflow-x: auto;
+}
+
+.customerdashboard-customerdashboard-index table.drl-dashboard-recent-order thead tr th.col {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-family: "DRL Circular Light";
+    font-size: 12px;
+}
+
+.customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col {
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-family: "DRL Circular Bold";
+    font-size: 14px;
+}
+
+.customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col a.action.view span {
+    border: 1px solid #434861;
+    border-radius: 25px;
+    opacity: 1;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    letter-spacing: 0px;
+    color: #434861;
+    opacity: 1;
+    font-size: 14px;
+    font-family: "DRL Circular Book";
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: top;
+    cursor: pointer;
+    padding: 5px 10px 5px 10px;
+}
+
+.drl-dashboard-contact-us {
+    background: #522E91 0% 0% no-repeat padding-box;
+    border-radius: 7px;
+    opacity: 1;
+    height: 127px;
+    display: block;
+    margin: 0 auto;
+    width: 1134px;
+}
+
+table.drl-dashboard-recent-order tbody tr:nth-child(even) {
+    background: #EDEDED 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+}
+
+table.drl-dashboard-recent-order tbody tr:nth-child(odd) {
+    background: #FCFCFC 0% 0% no-repeat padding-box;
+    border-radius: 2px;
+    opacity: 1;
+}
+
+/* Mobile Screen Start */
+
+@media only screen and (max-width: 768px) {
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col a.action.view span {
+        height: auto;
+        width: auto;
+        padding: 5px 5px 5px 5px;
+    }
+
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+        width: 100%;
+    }
+
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel .drl-block-content {
+        border-top: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel table.drl-dashboard-recent-order {
+        border: none;
+        display: block;
+    }
+
+    .customerdashboard-customerdashboard-index .table:not(.totals):not(.cart):not(.table-comparison)>thead>tr>th {
+        display: none;
+    }
+
+    .customerdashboard-customerdashboard-index .table:not(.totals):not(.cart):not(.table-comparison)>tbody {
+        display: block;
+    }
+
+    .customerdashboard-customerdashboard-index table.data.table.table-order-items.recent tbody tr:nth-child(even),
+    .customerdashboard-customerdashboard-index table.data.table.table-order-items.recent tbody tr:nth-child(odd) {
+        height: auto;
+    }
+
+    .customerdashboard-customerdashboard-index .table:not(.totals):not(.cart):not(.table-comparison)>tbody>tr {
+        display: block;
+    }
+
+    .customerdashboard-customerdashboard-index .table:not(.totals):not(.cart):not(.table-comparison) tbody>tr>td:first-child {
+        padding-top: 15px;
+    }
+
+    .customerdashboard-customerdashboard-index .table-order-items.table tbody>tr>td.col {
+        padding-left: 0;
+    }
+
+    .customerdashboard-customerdashboard-index .table:not(.totals):not(.cart):not(.table-comparison)>tbody>tr td,
+    .customerdashboard-customerdashboard-index .table:not(.totals):not(.cart):not(.table-comparison)>tbody>tr th {
+        border-bottom: none;
+        display: block;
+        padding: 5px 10px;
+    }
+
+    .customerdashboard-customerdashboard-index .dashboard-drug {
+        padding: 10px;
+    }
+
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .dashboard-drug {
+        height: 100%;
+    }
+
+    .customerdashboard-customerdashboard-index .dashboard-drug .drl-dashboard-drug-f {
+        font-size: 16px;
+    }
+
+    .customerdashboard-customerdashboard-index .dashboard-drug .drl-dashboard-drug-s {
+        font-size: 14px;
+    }
+
+    .customerdashboard-customerdashboard-index .drl-btn-contact {
+        padding: 0px 0px 0px 0px;
+    }
+
+    .customerdashboard-customerdashboard-index .contact-us-dashboard {
+        width: auto;
+    }
+
+    .customerdashboard-customerdashboard-index .drl-track-slider {
+        margin-top: 0;
+    }
+
+    .customerdashboard-customerdashboard-index div#drl-track-form p.drl-line-track {
+        padding: 20px 20px;
+    }
+
+    .customerdashboard-customerdashboard-index div#drl-track-form ul#drl-progress {
+        padding: 0;
+    }
+
+    div#drl-track-form ul#drl-progress li.drl-bub-track.active {
+        font-size: 13px;
+    }
+
+    div#drl-track-form ul#drl-progress li.drl-bub-track {
+        font-size: 13px;
+    }
+
+    .customerdashboard-customerdashboard-index div#drl-track-form ul#drl-progress li.drl-bub-track {
+        height: auto;
+    }
+
+    .customerdashboard-customerdashboard-index div#drl-track-form p.drl-line-shipment {
+        padding: 10px 20px;
+    }
+
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order thead tr th.col {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        font-family: "DRL Circular Light";
+        font-size: 12px;
+        padding: 5px 30px;
+    }
+
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order table>tbody>tr>td {
+        padding: 11px 30px;
+    }
+
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col {
+        letter-spacing: 0px;
+        color: #434861;
+        opacity: 1;
+        font-family: "DRL Circular Bold";
+        font-size: 14px;
+        padding: 5px 30px;
+    }
+
+}
+
+/* Ipad Css */
+@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
+
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order thead tr th.col,
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col {
+        padding: 11px 10px;
+    }
+
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col {
+        text-align: center;
+    }
+
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel {
+        width: 100%;
+    }
+
+    .customerdashboard-customerdashboard-index .drl-btn-contact {
+        padding: 10px 25px 15px 100px;
+    }
+}
+
+/* ipad  css landscape */
+@media all and (width: 1024px) and (height: 768px) and (orientation:landscape) {
+    .customerdashboard-customerdashboard-index table.drl-dashboard-recent-order tbody tr td.col {
+
+        word-break: break-word;
+    }
+
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel {
+        width: 100%;
+    }
+}
+
+/* Ipad Pro Portrait */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel {
+        width: 100%;
+    }
+}
+
+/* Ipad Pro Landscape */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel {
+        width: 100%;
+    }
+}
+
+
+
+/* target google pixel*/
+
+
+@media (width: 823px) and (height: 411px) and (orientation: landscape) {
+
+
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+        width: 100%;
+    }
+
+
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel .drl-block-content {
+        border-top: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+
+}
+
+
+/* target iphone x */
+
+
+@media (width: 812px) and (height: 375px) and (orientation: landscape) {
+
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+        width: 100%;
+    }
+
+
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel .drl-block-content {
+        border-top: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+}
+
+
+/* target Nokia N9 */
+
+
+@media (width: 854px) and (height: 480px) and (orientation: landscape) {
+
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+        width: 100%;
+    }
+
+
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel .drl-block-content {
+        border-top: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+}
+
+/* target Nexus 7 */
+
+
+@media (width: 960px) and (height: 600px) and (orientation: landscape) {
+
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+        width: 100%;
+    }
+
+
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel .drl-block-content {
+        border-top: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+}
+
+/* target from 768-1023*/
+
+@media only screen and (min-width: 768px) and (max-width: 1023px){
+
+    .customerdashboard-customerdashboard-index .drl-track-slider,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel,
+    .drl-dashboard-contact-us,
+    .customerdashboard-customerdashboard-index .drl-title-dashboard-tabel,
+    .customerdashboard-customerdashboard-index .drl-dashboard-tabel {
+        width: 100%;
+    }
+}

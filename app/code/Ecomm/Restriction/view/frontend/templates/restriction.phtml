@@ -1,0 +1,285 @@
+<?php
+$customerId = $this->getCustomerlogged(); ?>
+<?php
+$customerAddressbillingid = $this->getDefaultShippingId();
+$customershippping = $this->getDefaultBillingId();
+?>
+
+<?php
+if (!empty($customerId)) {
+    $customerAddress = $this->getCustomerAddresses($customerId);
+    if (!empty($customerAddress)) {
+        $customerAddressdefault = $this->getShippingInfo(); ?>
+        <?php $addid = []; ?>
+<?php foreach ($customerAddress as $address => $data) { ?>
+           <?php
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $address_status_enable = false;
+            $customerRepository = $objectManager->get("\Magento\Customer\Api\CustomerRepositoryInterface");
+            $_eavConfig = $objectManager->get("\Magento\Eav\Model\Config");
+            $attribute = $_eavConfig->getAttribute("customer_address", "address_status");
+            $options = $attribute->getSource()->getAllOptions();
+            $application_statuses = [];
+            foreach ($options as $option) {
+                if ($option["value"] > 0) {
+                    $application_statuses[$option["value"]] = $option["label"];
+                }
+            }
+            $address_status = 0;
+            $approved_id = array_search("Approved", $application_statuses);
+            if ($data->getCustomAttribute("address_status")) {
+                $address_status = $data->getCustomAttribute("address_status")->getValue();
+            }
+            if ($approved_id == $address_status) {
+                $address_status_enable = true;
+            }
+?>
+     <?php if ($address_status_enable) {
+                $addid[] = $address_status_enable;
+            }
+        }
+    }
+}
+if (!empty($addid)) {
+    if (in_array("1", $addid)) {
+        $customerId = $this->getCustomerlogged();
+        $customerAddress = $this->getCustomerAddresses($customerId);
+        $customerAddressdefault = $this->getShippingInfo();
+?>
+<div id="popup-modal">
+    <div class="alert">
+ Change in Shipping location may lead to change in price and product availability. Your existing cart items may be affected. Kindly review your cart before checkout
+</div>
+
+    <h3> Select Delivery Address </h3>
+    <p>Note:   Shiping only with in the contiguos Unites States</p>
+<table class="data table" id="blog-data-table">
+        <caption class="table-caption">Customer Shipping Addresss</caption>
+ <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>Country</th>
+     <th>Company</th>
+    <th>Telephone</th>
+     <th>Address Status</th>
+
+
+  </tr>
+        <tbody>
+            <?php if ($customerAddressbillingid == $customershippping) { ?>
+<?php foreach ($customerAddress as $address => $data) { ?>
+           <?php
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $address_status_enable = false;
+                $customerRepository = $objectManager->get("\Magento\Customer\Api\CustomerRepositoryInterface");
+                $_eavConfig = $objectManager->get("\Magento\Eav\Model\Config");
+                $attribute = $_eavConfig->getAttribute("customer_address", "address_status");
+                $options = $attribute->getSource()->getAllOptions();
+                $application_statuses = [];
+                foreach ($options as $option) {
+                    if ($option["value"] > 0) {
+                        $application_statuses[$option["value"]] = $option["label"];
+                    }
+                }
+                $address_status = 0;
+                $approved_id = array_search("Approved", $application_statuses);
+                if ($data->getCustomAttribute("address_status")) {
+                    $address_status = $data->getCustomAttribute("address_status")->getValue();
+                }
+                if ($approved_id == $address_status) {
+                    $address_status_enable = true;
+                }
+?>
+     <?php if ($address_status_enable) { ?>
+
+                  <tr>
+                 
+                    <td data-th="Title" class="col title"><?php echo $data->getFirstName(); ?>  <?php echo $data->getLastName(); ?></td>
+
+                    <?php $datas = implode(" ", $data->getStreet()); ?>
+                   <td data-th="Title" class="col title"><?php echo $datas; ?></td>
+<?php
+                    $countrycode = $data->getCountryId();
+                    $region = $data->getRegionId();
+                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                    $country = $objectManager->create("\Magento\Directory\Model\Country")->load("$countrycode")->getName();
+                    $region = $objectManager->create("Magento\Directory\Model\Region")->load("$region")->getName();
+?>
+<td data-th="Title" class="col title"><?php echo $data->getCity(); ?> <?php echo $region; ?> <?php echo $data->getPostcode(); ?></td>
+                        <td data-th="Title" class="col title"><?php echo $country; ?></td>
+                          <td data-th="Title" class="col title"><?php echo $data->getCompany(); ?></td>
+                        <td data-th="Title" class="col title"><?php echo $data->getTelephone(); ?></td>
+<td data-th="Actions" class="col actions">
+                        <?php if ($customerAddressdefault == $data->getId()) { ?> 
+                              <span>This is Your Default Address set</span>
+                          
+                        <?php
+                    } else { ?>
+                        
+                        <form action="<?php echo $block->getBaseUrl() . "restriction/index/save/id/" . $data->getId(); ?>">
+                            <button type="submit" value="Click"onclick="demo();" id="click-me" title="Submit" class="action submit primary">
+                          <span>Ship Here</span>
+                           </button>
+                            
+                        </form>  </td>
+</tr>
+
+
+            <?php
+                    } ?>
+            
+        
+           <?php
+                }
+            }
+        } else {
+            foreach ($customerAddress as $address => $data) { ?>
+           <?php
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $address_status_enable = false;
+                $customerRepository = $objectManager->get("\Magento\Customer\Api\CustomerRepositoryInterface");
+                $_eavConfig = $objectManager->get("\Magento\Eav\Model\Config");
+                $attribute = $_eavConfig->getAttribute("customer_address", "address_status");
+                $options = $attribute->getSource()->getAllOptions();
+                $application_statuses = [];
+                foreach ($options as $option) {
+                    if ($option["value"] > 0) {
+                        $application_statuses[$option["value"]] = $option["label"];
+                    }
+                }
+                $address_status = 0;
+                $approved_id = array_search("Approved", $application_statuses);
+                if ($data->getCustomAttribute("address_status")) {
+                    $address_status = $data->getCustomAttribute("address_status")->getValue();
+                }
+                if ($approved_id == $address_status) {
+                    $address_status_enable = true;
+                }
+?>
+
+     <?php
+                $customershippping = $this->getDefaultBillingId();
+                if ($address_status_enable) {
+                    if ($data->getId() == $customershippping) {
+                    } else {
+?>
+
+                  <tr>
+                 
+                    <td data-th="Title" class="col title"><?php echo $data->getFirstName(); ?>  <?php echo $data->getLastName(); ?></td>
+
+                    <?php $datas = implode(" ", $data->getStreet()); ?>
+                   <td data-th="Title" class="col title"><?php echo $datas; ?></td>
+        
+<?php
+                        $countrycode = $data->getCountryId();
+                        $region = $data->getRegionId();
+                        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                        $country = $objectManager->create("\Magento\Directory\Model\Country")->load("$countrycode")->getName();
+                        $region = $objectManager->create("Magento\Directory\Model\Region")->load("$region")->getName();
+?>
+<td data-th="Title" class="col title"><?php echo $data->getCity(); ?> <?php echo $region; ?> <?php echo $data->getPostcode(); ?></td>
+                        <td data-th="Title" class="col title"><?php echo $country; ?></td>
+                          <td data-th="Title" class="col title"><?php echo $data->getCompany(); ?></td>
+                        <td data-th="Title" class="col title"><?php echo $data->getTelephone(); ?></td>
+<td data-th="Actions" class="col actions">
+                        <?php if ($customerAddressdefault == $data->getId()) { ?> 
+                              <span>This is Your Default Address set</span>
+                          
+                        <?php
+                        } else { ?>
+                        
+                        <form action="<?php echo $block->getBaseUrl() . "restriction/index/save/id/" . $data->getId(); ?>">
+                            <button type="submit" value="Click"onclick="demo();" id="click-me" title="Submit" class="action submit primary">
+                          <span>Ship Here</span>
+                           </button>
+                            
+                        </form>  </td>
+</tr>
+
+
+            <?php
+                        } ?>
+            
+        
+           <?php
+                    }
+                }
+            }
+        } ?></tbody></table> <?php
+    }
+} else {
+?>
+                <div id="popup-modal">
+    <div class="alert">
+ 
+ You do not have an Active address in DRD. Please contact admin.
+</div>
+
+<?php
+}
+?>
+
+<style>
+
+.modal-inner-wrap .alert {
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+}
+.modal-inner-wrap .closebtn {
+    margin-left: 15px;
+    color: #767676;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
+.modal-inner-wrap .closebtn:hover {
+    color: #5755b5;
+}
+</style>
+
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                clickableOverlay: false,
+                buttons: [{
+                   
+                    text: $.mage.__('Close '),
+                    class: 'address',
+click: function () {
+                        this.closeModal();
+                        document.location.href="/";
+                    }
+                }]
+            };
+ 
+            var popup = modal(options, $('#popup-modal'));
+ 
+            $('#popup-modal').modal('openModal');
+        }
+    );
+</script>
+<style type="text/css">
+    .modal-slide .action-close{
+        display: none;
+    }
+    .modals-wrapper .modal-popup .modal-inner-wrap {
+    width: 1200px;
+}
+</style>

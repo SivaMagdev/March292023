@@ -1,0 +1,143 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Address\Grid $block */
+$customerAddressView = $block->getData('customer_address');
+?>
+<?php //echo '<pre>'.print_r($block->getCustomAdditionalAddresses(), true).'</pre>'; ?>
+<?php $address_status = $block->getAddressStatus(); ?>
+<?php $getSlThreshold = $block->getSlThreshold(); ?>
+<?php $getDeaThreshold = $block->getDeaThreshold(); ?>
+<div class="block block-addresses-list drl-addres-list-block">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Additional Address Entries')) ?></strong></div>
+    <div class="block-content">
+        <?php //if ($_pAddsses = $block->getAdditionalAddresses()) : ?>
+        <?php if ($_pAddsses = $block->getCustomAdditionalAddresses()) : ?>
+
+            <div class="table-wrapper additional-addresses">
+                <table class="data table table-additional-addresses-items history" id="additional-addresses-table">
+                    <caption class="table-caption"><?= $block->escapeHtml(__('Additional addresses')) ?></caption>
+                    <thead>
+                    <tr>
+                        <!--<th scope="col" class="col firstname"><?= $block->escapeHtml(__('First Name')) ?></th>
+                        <th scope="col" class="col lastname"><?= $block->escapeHtml(__('Last Name')) ?></th>-->
+                        <th scope="col" class="col streetaddress"><?= $block->escapeHtml(__('Street Address')) ?></th>
+                        <th scope="col" class="col city"><?= $block->escapeHtml(__('City')) ?></th>
+                        <th scope="col" class="col country"><?= $block->escapeHtml(__('Country')) ?></th>
+                        <th scope="col" class="col state"><?= $block->escapeHtml(__('State')) ?></th>
+                        <th scope="col" class="col zip"><?= $block->escapeHtml(__('Zip/Postal Code')) ?></th>
+                        <th scope="col" class="col phone"><?= $block->escapeHtml(__('Phone')) ?></th>
+                        <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                        <th scope="col" class="col licence"><?= $block->escapeHtml(__('License')) ?></th>
+                        <th scope="col" class="col actions"><?= $block->escapeHtml(__('Actions')) ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($_pAddsses as $address) : ?>
+                        <tr>
+                            <!--<td data-th="<?= $block->escapeHtml(__('First Name')) ?>" class="col firstname"><?= $block->escapeHtml($address->getFirstname()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Last Name')) ?>" class="col lastname"><?= $block->escapeHtml($address->getLastname()) ?></td>-->
+                            <td data-th="<?= $block->escapeHtml(__('Street Address')) ?>" class="col streetaddress"><?= $block->escapeHtml(implode(", ", $address->getStreet())) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('City')) ?>" class="col city"><?= $block->escapeHtml($address->getCity()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Country')) ?>" class="col country"><?= $block->escapeHtml($block->getCountryByCode($address->getCountryId())) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('State')) ?>" class="col state"><?= $block->escapeHtml($address->getRegion()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Zip/Postal Code')) ?>" class="col zip"><?= $block->escapeHtml($address->getPostcode()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Phone')) ?>" class="col phone"><?= $block->escapeHtml($address->getTelephone()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status"><?php if (!empty($address->getCustomAttribute("address_status"))) { echo $address_status[$address->getCustomAttribute("address_status")->getValue()]; } ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('License')) ?>" class="col license">
+                                <?php if (!empty($address->getCustomAttribute("state_license_upload"))) { ?>
+                                    <a href="<?php echo $block->getBaseUrl(); ?><?php echo 'media/customer_address'.$address->getCustomAttribute("state_license_upload")->getValue(); ?>" download>State license
+                                        <?php //echo basename($address->getCustomAttribute("state_license_upload")->getValue()) ?>
+                                    </a>
+                                <?php } ?>
+                                <?php if (!empty($address->getCustomAttribute("dea_license_upload"))) { ?>
+                                    <a href="<?php echo $block->getBaseUrl(); ?><?php echo 'media/customer_address'.$address->getCustomAttribute("dea_license_upload")->getValue(); ?>" download>DEA license
+                                        <?php //echo basename($address->getCustomAttribute("dea_license_upload")->getValue()) ?>
+                                    </a>
+                                <?php } ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                            <?php
+                            //echo  $block->getApprovelPendingOprionId() .' - '.$address->getCustomAttribute("address_status")->getValue().'<br />';
+                            //echo $address->getCustomAttribute("state_license_expiry")->getValue();
+                            if($block->getApprovelPendingOprionId() != $address->getCustomAttribute("address_status")->getValue()){
+        
+                                $now = new DateTime();
+                                // state license expiry logic
+                                $diff_state_status = false;
+                                if(!empty($address->getCustomAttribute("state_license_expiry"))){
+                                    $state_license_expiry = new DateTime($address->getCustomAttribute("state_license_expiry")->getValue());
+                                    $diff_state = $state_license_expiry->diff($now);
+
+                                    if($diff_state->invert && $diff_state->days <= $getSlThreshold || $diff_state->invert == 0){
+                                        $diff_state_status = true;
+                                    }
+                                }
+
+                                // DEA license expiry logic
+                                $diff_dea_status = false;
+                                if(!empty($address->getCustomAttribute("dea_license_expiry"))){
+                                    $dea_license_expiry = new DateTime($address->getCustomAttribute("dea_license_expiry")->getValue());
+                                    $diff_dea = $dea_license_expiry->diff($now); 
+
+                                    if($diff_dea->invert && $diff_dea->days <= $getDeaThreshold || $diff_dea->invert == 0){
+                                        $diff_dea_status = true;
+                                    }                             
+                                }
+                                
+                                if($diff_state_status || $diff_dea_status){ 
+                                ?>
+                                    <a class="action edit primary" href="<?= $block->escapeUrl($block->getUrl('customer/address/edit', ['id' => $address->getId()])) ?>"><span><?= $block->escapeHtml(__('Upload')) ?></span></a>
+                                <?php  
+                                } else{
+                                ?>
+                                    <a class="action edit primary" disabled><span><?= $block->escapeHtml(__('Upload')) ?></span></a>
+                                <?php
+                                }
+                                ?>
+                            <?php 
+                            } else {
+                            ?>
+                                <a class="action edit primary" disabled><span><?= $block->escapeHtml(__('Upload')) ?></span></a>
+                            <?php
+                            } 
+                            ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php if ($block->getChildHtml('pager')) : ?>
+                <div class="customer-addresses-toolbar toolbar bottom"><?= $block->getChildHtml('pager') ?></div>
+            <?php endif ?>
+        <?php else : ?>
+            <p class="empty"><?= $block->escapeHtml(__('You have no other address entries in your address book.')) ?></p>
+        <?php endif ?>
+        <p class="empty"><?= $block->escapeHtml(__('Adding an additional Shipping address may take up to 72 hours.')) ?></p>
+    </div>
+</div>
+
+<div class="actions-toolbar drl-add-new-addres">
+    <div class="primary">
+        <button type="button" role="add-address" title="<?= $block->escapeHtmlAttr(__('Add New Address')) ?>" class="action primary add"><span><?= $block->escapeHtml(__('Add New Address')) ?></span></button>
+    </div>
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        ".page-main": {
+            "address": {
+                "deleteAddress": "td a[role='delete-address']",
+                "deleteUrlPrefix": "<?= $block->escapeJs($block->escapeUrl($block->getDeleteUrl())) ?>id/",
+                "addAddress": "button[role='add-address']",
+                "addAddressLocation": "<?= $block->escapeJs($block->escapeUrl($block->getAddAddressUrl())) ?>"
+            }
+        }
+    }
+</script>

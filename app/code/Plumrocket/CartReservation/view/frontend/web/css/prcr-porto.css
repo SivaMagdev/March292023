@@ -1,0 +1,25 @@
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_CartReservation
+ * @copyright   Copyright (c) 2020 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+
+.pl-thm-smartwave.catalog-category-view .product-item .prcr-timer{
+ 	white-space: normal;
+ 	max-width: 150px;
+ }
+
+.pl-thm-smartwave.catalog-category-view .prcr-product-reserved-wrapper span.prcr-product-reserved-text{
+	right: auto;
+	left: 0;
+}

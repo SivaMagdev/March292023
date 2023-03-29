@@ -1,0 +1,433 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php //echo '<pre>'.print_r($block->getSapInvoice(), true).'</pre>'; ?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$orderCollectionFactory = $objectManager->create('Magento\Sales\Model\ResourceModel\Order\CollectionFactory')->create();
+$orderRepository = $objectManager->create('Magento\Sales\Api\OrderRepositoryInterface');
+?>
+
+<?php if($block->getSapInvoice()){ ?>
+    <?php $invoice_data_array = $block->getSapInvoice(); ?>
+    <div class="sap-order-details sap-invoice">
+    <?php foreach($invoice_data_array as $invoice_informations) { ?>
+        <?php 
+        $orderCollection = $orderCollectionFactory->addFieldToFilter('sap_id', ['eq' => $invoice_informations['sap_id']]);
+        foreach ($orderCollection as $collection) {
+            $orderId = $collection->getEntityId();
+        }
+        $order = $orderRepository->get($orderId);
+    ?>
+    <?php //echo '<pre>'.print_r($invoice_informations['invoice_info'], true).'</pre>'; //exit(); ?>
+    <?php $invoice_data_json = json_decode($invoice_informations['invoice_info']); ?>
+    <?php //echo '<pre>'.print_r($invoice_data_json, true).'</pre>';  ?>
+        <?php $customer_account_number = ''; ?>
+        <?php foreach($invoice_data_json as $invoice_data) { ?>
+            <?php
+                $itempartnerinformation = $invoice_data->itempartnerinformation;
+                $customer_account_number = $itempartnerinformation->Partnernumber;
+                $shipped_from = '';
+                $remit_address = [];
+                $bill_address = [];
+                $shipp_address = [];
+                $shipping_cost = 0;
+                $shipping_waiver = 0;
+
+                if(isset($invoice_data->Documentheadergeneraldata->Shipping_Cost_Waiver)){
+                    $shipping_waiver = $invoice_data->Documentheadergeneraldata->Shipping_Cost_Waiver;
+                }
+
+                $rs_inc = 0;
+
+                foreach($invoice_data->DocumentHeaderPartnerInformation as $address_info) {
+
+                    if($address_info->Partnerfunction == 'RE') {
+                        $bill_address = $address_info;
+                    } else if($address_info->Partnerfunction == 'WE') {
+                        $shipp_address = $address_info;
+                    } else if($address_info->Partnerfunction == 'RG') {
+                        $shipped_from = $address_info->ShppiedFrom;
+                    } else if($address_info->Partnerfunction == 'RS') {
+                        $rs_inc++;
+                        if($rs_inc > 1){
+                            $remit_address = $address_info;
+                        }
+                    }
+
+                }
+
+                $shipping_cost = 0;
+
+                if(isset($invoice_data->DeliveryInformation->ShippingCost)){
+                    $shipping_cost = $invoice_data->DeliveryInformation->ShippingCost;
+                }
+            ?>
+             <p class="drl-invocie-document">Invoice Document</p>
+            <div class="header-info">
+           
+                <div class="col-left">
+                     <div class="remit-to-address">
+                        <h5>Remit To:</h5>
+                        <?php if($remit_address) { ?>
+                            <p class="strong"><?php echo $remit_address->Name1; ?></p>
+                            <?php $Postalcode_array = explode("-", $remit_address->Postalcode); ?>
+                            <p><?php echo $Postalcode_array[1]; ?></p>
+                            <p><?php echo $remit_address->Street; ?></p>
+                            <p><?php echo $remit_address->City; ?>, <?php echo $remit_address->State; ?> <?php echo $remit_address->Postalcode; ?></p>
+                        <?php } ?>
+                        <hr class="hr-drl-bold">
+                    </div>
+
+                    <?php if($bill_address) { ?>
+                        <?php //echo '<pre>'.print_r($address_info, true).'</pre>'; ?>
+                        <div class="sold-to-address">
+                            <p><?php echo $bill_address->Name1; ?></p>
+                            <p><?php echo $bill_address->Street; ?></p>
+                            <p><?php echo $bill_address->City; ?> <?php echo $bill_address->State; ?> <?php echo $bill_address->Postalcode; ?></p>
+                        </div>
+                    <?php }  ?>
+                    <?php if($shipp_address) { ?>
+                        <?php //echo '<pre>'.print_r($address_info, true).'</pre>'; ?>
+                        <div class="shipp-to-address">
+                            <h5>Ship-to Address</h5>
+                            <p><?php echo $shipp_address->Name1; ?></p>
+                            <p><?php echo $shipp_address->Street; ?></p>
+                            <p><?php echo $shipp_address->City; ?> <?php echo $shipp_address->State; ?> <?php echo $shipp_address->Postalcode; ?></p>
+                        </div>
+                    <?php }  ?>
+                </div>
+                <div class="col-right">
+                    <?php
+                    $invoice_number = '';
+                    $invoice_date = '';
+                    $credit_terms = '';
+                    $po_number = '';
+                    $po_date = '';
+                    $date_shipped = '';
+                    $drl_order_number = '';
+                    ?>
+                    <?php foreach($invoice_data->Documentheaderreferencedata as $reference_info) {
+                        //echo '<pre>'.print_r($reference_info, true).'</pre>';
+                        //echo '-'.$reference_info->InvoiceNumber;
+
+
+                        if($reference_info->InvoiceNumber == '009'){
+                            $invoice_number = $reference_info->CustomerPurchaseOrder;
+                            $invoice_date = date("m/d/Y", strtotime($reference_info->Date));
+                        } else if($reference_info->InvoiceNumber == '001') {
+                            $po_number = $reference_info->CustomerPurchaseOrder;
+                            $po_date = date("m/d/Y", strtotime($reference_info->Date));
+                        } else if($reference_info->InvoiceNumber == '002') {
+                            $drl_order_number = $reference_info->CustomerPurchaseOrder;
+                        } else if($reference_info->InvoiceNumber == '012') {
+                            $date_shipped = date("m/d/Y", strtotime($reference_info->Date));
+                        }
+
+                    }
+
+                    foreach($invoice_data->DocumentHeaderTermsofPayment as $reference_info) {
+                        if($reference_info->Termsofpayment == '005'){
+                            $credit_terms = $reference_info->Textline;
+                        }
+
+                    }?>
+                    <h5 class="invoice-drl-head">Invoice</h5>
+                    <div class="invoice-info">
+                        <dl>
+                            <dt>Invoice Number / Invoice Date</dt>
+                            <dd><?php echo $invoice_number; ?> / <?php echo $invoice_date; ?></dd>
+                        </dl>
+                        <dl>
+                            <dt>Credit terms</dt>
+                            <dd><?php echo $credit_terms; ?></dd>
+                        </dl>
+                        <dl>
+                            <dt>Purchase Order No. / Purchase Order Date</dt>
+                            <dd><?php echo $po_number; ?> / <?php echo $po_date; ?></dd>
+                        </dl>
+                        <dl>
+                            <dt>Date Shipped</dt>
+                            <dd><?php echo $date_shipped; ?></dd>
+                        </dl>
+                        <dl>
+                            <dt>DRL Order number</dt>
+                            <dd><?php echo (int)$drl_order_number; ?></dd>
+                        </dl>
+                        <dl>
+                            <dt>Customer Account No.</dt>
+                            <dd><?php echo (int)$customer_account_number; ?></dd>
+                        </dl>
+                        <dl>
+                            <dt>Shipped From</dt>
+                            <dd><?php echo $shipped_from; ?></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="info-msg">
+                <p>Shortage/damages must be reported within 10 working days after receipt of goods.</p>
+                <p> Claims made after that will not be honored.</p>
+            </div>
+            <br>
+            <div class="items-info">
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Item</th>
+                            <th rowspan="2">Product No.</th>
+                            <th rowspan="2">Qty Ordered</th>
+                            <th colspan="4" class="border-none">Product Description</th>
+                        </tr>
+                        <tr>
+                            <th class="item-qty">Qty Shipped</th>
+                            <th class="item-price">Price</th>
+                            <th class="item-price-type">Price Type</th>
+                            <th class="item-total" align="center">Value</th>
+                        </tr>
+                    </thead>
+                    <?php $total_invoice = 0;?>
+                    <?php $total_discount = 0;?>
+                    <tbody>
+
+                        <?php if(is_array($invoice_data->DocumentItemGeneralData)) { ?>
+                            <?php foreach($invoice_data->DocumentItemGeneralData as $item_info){ ?>
+
+                                <?php
+                                $rowspan = 2;
+                                if(isset($item_info->Fixedsurchargediscountontotalgross)){
+                                    $rowspan = 3;
+                                }
+
+                                ?>
+
+                            <tr class="drl-top">
+                                <td rowspan="<?= $rowspan ?>"><?php echo $item_info->Itemnumber ; ?></td>
+                                <td rowspan="2">
+                                    <?php echo $block->getProductSKU($item_info->MaterialID); ?><?php //echo $item_info->MaterialID; ?><br />
+                                    Batch <?php echo $item_info->BatchID ; ?>
+                                </td>
+                                <td rowspan="2"><span class="item-qty"><?php echo round($item_info->Quantity); ?> EA<?php //echo $item_info->Unitofmeasure; ?></span></td>
+                                <td colspan="4" class="border-none">
+                                    <span class="item-title"><?php if(isset($item_info->Shorttext)) { echo $item_info->Shorttext; } ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                    <td class="item-qty"><?php echo round($item_info->Quantity); ?> EA<?php //echo $item_info->Unitofmeasure; ?></td>
+                                    <td class="item-price"><?php echo number_format(abs($item_info->UnitPrice), 2,".", ","); ?></td>
+                                    <td class="item-price-type">
+                                        <?php foreach ($order->getAllVisibleItems() as $_item) { 
+                                            if ($_item['name'] == $item_info->Shorttext) { 
+                                                if ($_item->getPriceType() == "Price") {
+                                                    echo $priceTypeAlias = "Direct";
+                                                } elseif ($_item->getPriceType() == "340b(Sub-WAC Price)") {
+                                                    echo $priceTypeAlias = "WAC";
+                                                } elseif ($_item->getPriceType() == "340b(Phs Indirect Price)") {
+                                                    echo $priceTypeAlias = "PHS";
+                                                }
+                                            }
+                                        }?>                      
+                                    </td>
+                                    <td class="item-total" align="right"><?php echo number_format($item_info->TotalValue, 2,".", ","); ?></td>
+                            </tr>
+                            <?php if(isset($item_info->Fixedsurchargediscountontotalgross)){ ?>
+                                <tr>
+                                    <td>Discount Amount</td>
+                                    <td class="item-qty"></td>
+                                    <td></td>
+                                    <td class="item-price"><?php echo number_format((abs($item_info->Fixedsurchargediscountontotalgross)/round($item_info->Quantity)), 2,".", ","); ?>-</td>
+                                    <td class="item-price-type"></td>
+                                    <td class="item-total" align="right"><?php echo number_format(abs($item_info->Fixedsurchargediscountontotalgross), 2,".", ","); ?>-</td>
+                                </tr>
+                                <?php $total_discount += abs($item_info->Fixedsurchargediscountontotalgross); ?>
+                            <?php } ?>
+                                <?php $total_invoice += $item_info->TotalValue; ?>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <?php $item_info = $invoice_data->DocumentItemGeneralData;
+                                $rowspan = 2;
+                                if(isset($item_info->Fixedsurchargediscountontotalgross)){
+                                    $rowspan = 3;
+                                }
+                            ?>
+                            <tr class="drl-top">
+                                <td rowspan="<?= $rowspan ?>"><?php echo $item_info->Itemnumber ; ?></td>
+                                <td rowspan="2">
+                                    <?php echo $block->getProductSKU($item_info->MaterialID) ; ?><br />
+                                    Batch <?php echo $item_info->BatchID ; ?>
+                                </td>
+                                <td rowspan="2"><?php echo round($item_info->Quantity); ?> EA<?php //echo $item_info->Unitofmeasure; ?></td>
+                                <td colspan="4" class="border-none"><?php if(isset($item_info->Shorttext)) { echo $item_info->Shorttext; } ?></td>
+                            </tr>
+                            <tr>
+                                <td class="item-qty"><?php echo round($item_info->Quantity); ?> EA<?php //echo $item_info->Unitofmeasure; ?></td>
+                                <td class="item-price"><?php echo number_format(abs($item_info->UnitPrice), 2,".", ","); ?></td>
+                                <td class="item-price-type">
+                                    <?php foreach ($order->getAllVisibleItems() as $_item) { 
+                                        if ($_item['name'] == $item_info->Shorttext) { 
+                                            if ($_item->getPriceType() == "Price") {
+                                                echo $priceTypeAlias = "Direct";
+                                            } elseif ($_item->getPriceType() == "340b(Sub-WAC Price)") {
+                                                echo $priceTypeAlias = "WAC";
+                                            } elseif ($_item->getPriceType() == "340b(Phs Indirect Price)") {
+                                                echo $priceTypeAlias = "PHS";
+                                            }
+                                        }
+                                    }?>    
+                                </td>
+                                <td class="item-total" align="right"><?php echo number_format($item_info->TotalValue, 2,".", ","); ?></td>
+
+                            </tr>
+                            <?php if(isset($item_info->Fixedsurchargediscountontotalgross)){ ?>
+                                <tr>
+                                    <td>Discount Amount</td>
+                                    <td class="item-qty"></td>
+                                    <td></td>
+                                    <td class="item-price"><?php echo number_format((abs($item_info->Fixedsurchargediscountontotalgross)/round($item_info->Quantity)), 2,".", ","); ?>-</td>
+                                    <td class="item-price-type"></td>
+                                    <td class="item-total" align="right"><?php echo number_format(abs($item_info->Fixedsurchargediscountontotalgross), 2,".", ","); ?>-</td>
+                                </tr>
+                                <?php $total_discount += abs($item_info->Fixedsurchargediscountontotalgross); ?>
+                            <?php } ?>
+                            <tr class="drl-line"></tr>
+                            <?php $total_invoice += $item_info->TotalValue; ?>
+                        <?php } ?>
+
+                         <tr class="drl-top">
+                            <td>
+                                Total Items<br />
+                            </td>
+                            <td colspan="7" align="right"><?php echo number_format($total_invoice, 2,".", ","); ?></td>
+                        </tr>
+                        <?php if($total_discount > 0) { ?>
+                        <tr class="drl-top">
+                            <td>Total Discount</td>
+                            <td colspan="7" align="right"><?php echo number_format($total_discount, 2,".", ","); ?>-</td>
+                            <?php $total_invoice -= $total_discount; ?>
+                        </tr>
+                        <?php } ?>
+                        <tr class="drl-top">
+                            <td>Processing Fee</td>
+                            <td colspan="7" align="right"><?php echo number_format($shipping_cost, 2,".", ","); ?></td>
+                            <?php $total_invoice += $shipping_cost; ?>
+                        </tr>
+                        <?php if($shipping_waiver > 0) { ?>
+                        <tr class="drl-top">
+                            <td>Processing Fee Waiver</td>
+                            <td colspan="7" align="right"><?php echo number_format($shipping_waiver, 2,".", ","); ?>-</td>
+                            <?php $total_invoice -= $shipping_waiver; ?>
+                        </tr>
+                        <?php } ?>
+                        <tr class="drl-top drl-bottom-border">
+                            <td>Total Invoice</td>
+                            <td colspan="7" align="right"><?php echo number_format($total_invoice, 2,".", ","); ?></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
+            <div class="terms-and-conditions">
+                <h2>Terms and Conditions</h2>
+                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('invoice_terms_condition')->toHtml(); ?>
+            </div>
+
+        </div>
+    <?php } ?>
+
+<?php } else { ?>
+    <?php $_order = $block->getOrder() ?>
+    <?php $_invoice = $block->getInvoice() ?>
+    <?php if ($_invoice) : ?>
+        <?php $_invoices = [$_invoice]; ?>
+    <?php else : ?>
+        <?php $_invoices = $_order->getInvoiceCollection() ?>
+    <?php endif; ?>
+    <?php foreach ($_invoices as $_invoice) : ?>
+    <div class="order-details-items invoice">
+        <div class="order-title">
+            <strong><?= $block->escapeHtml(__('Invoice #')) ?><?= (int) $_invoice->getIncrementId() ?></strong>
+        </div>
+        <div class="table-wrapper table-order-items invoice">
+            <table class="data table table-order-items invoice" id="my-invoice-table-<?= (int) $_invoice->getId() ?>">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Items Invoiced')) ?></caption>
+                <thead>
+                <tr>
+                    <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
+                    <th class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+                    <th class="col price-type"><?= $block->escapeHtml(__('Price Type')) ?></th>
+                    <th class="col qty"><?= $block->escapeHtml(__('Qty Invoiced')) ?></th>
+                    <th class="col subtotal"><?= $block->escapeHtml(__('Subtotal')) ?></th>
+                    <th class="col discount"><?= $block->escapeHtml(__('Discount')) ?></th>
+                    <th class="col total"><?= $block->escapeHtml(__('Total')) ?></th>
+                </tr>
+                </thead>
+                <?php $_items = $_invoice->getItemsCollection(); ?>
+                <?php foreach ($_items as $_item) : ?>
+                    <?php if (!$_item->getOrderItem()->getParentItem()) : ?>
+                        <tbody>
+                            <?= $block->getItemHtml($_item) ?>
+                        </tbody>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                <tfoot>
+                    <?= $block->getInvoiceTotalsHtml($_invoice) ?>
+                </tfoot>
+            </table>
+        </div>
+        <div class="block block-order-details-view">
+            <div class="block-title">
+                <strong><?= $block->escapeHtml(__('Order Information')) ?></strong>
+            </div>
+            <div class="block-content">
+            <?php if (!$_order->getIsVirtual()) : ?>
+                <div class="box box-order-shipping-address">
+                    <div class="box-title">
+                        <strong><?= $block->escapeHtml(__('Shipping Address')) ?></strong>
+                    </div>
+                    <div class="box-content">
+                        <?php $_shipping = $_invoice->getShippingAddress() ?>
+                        <address><?= /* @noEscape */ $block->formatAddress($_shipping, 'html') ?></address>
+                    </div>
+                </div>
+
+                <div class="box box-order-shipping-method">
+                    <div class="box-title">
+                        <strong><?= $block->escapeHtml(__('Shipping Method')) ?></strong>
+                    </div>
+                    <div class="box-content">
+                        <?php if ($_order->getShippingDescription()) : ?>
+                            <?= $block->escapeHtml($_order->getShippingDescription()) ?>
+                        <?php else : ?>
+                            <?= $block->escapeHtml(__('No shipping information available')) ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+                <div class="box box-order-billing-address">
+                    <div class="box-title">
+                        <strong><?= $block->escapeHtml(__('Billing Address')) ?></strong>
+                    </div>
+                    <div class="box-content">
+                        <?php $_billing = $_invoice->getbillingAddress() ?>
+                        <address><?= /* @noEscape */ $block->formatAddress($_order->getBillingAddress(), 'html') ?></address>
+                    </div>
+                </div>
+
+                <div class="box box-order-billing-method">
+                    <div class="box-title">
+                        <strong><?= $block->escapeHtml(__('Payment Method')) ?></strong>
+                    </div>
+                    <div class="box-content">
+                        <?= $block->getPaymentInfoHtml() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+<?php } ?>

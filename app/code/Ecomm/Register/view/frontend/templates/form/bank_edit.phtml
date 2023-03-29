@@ -1,0 +1,154 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Customer\Block\Widget\Name;
+
+/** @var \Magento\Customer\Block\Form\Edit $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+  <div class="drl-badge"><span class="drl-need-mod-white">Need modification? <a class="drl-need-mod-hyp-white" href="<?php echo $this->getBaseUrl()."help-support";?>"> Click here</a></span></div>
+<form class="form form-edit-account account-drl-heading"
+      action="<?= $block->escapeUrl($block->getUrl('customer/bank/editPost')) ?>"
+      method="post" id="form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      autocomplete="off">
+    <fieldset class="fieldset info drl-info-account">
+        <?= $block->getBlockHtml('formkey') ?>
+        <legend class="legend drl-page-title"><span><?= $block->escapeHtml(__('Bank Information')) ?></span></legend><br>
+        <div class="drl-register">
+           <div class="field field-bank_name drl-width-input">
+              <label class="label drl-required-astr" for="bank_name"><span>Bank Name </span></label>
+              <div class="control">
+                 <input type="text" id="bank_name" name="bank_name" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_name"))) { echo $block->getCustomer()->getCustomAttribute("bank_name")->getValue(); } ?>" class="input-text drl-register-input required" placeholder="Enter Bank Name" disabled>
+              </div>
+           </div>
+           <div class="field field-bank_contactname drl-width-input">
+              <label class="label drl-required-astr" for="bank_contactname"><span>Contact Person Name</span></label>
+              <div class="control">
+                 <input type="text" id="bank_contactname" name="bank_contactname" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_contactname"))) { echo $block->getCustomer()->getCustomAttribute("bank_contactname")->getValue(); } ?>" class="input-text drl-register-input required" placeholder="Contact Person Name" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-bank_account drl-width-input">
+              <label class="label drl-required-astr" for="bank_account"><span>Account Number </span></label>
+              <div class="control">
+                 <input type="text" id="bank_account" name="bank_account" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_account"))) { echo $block->getCustomer()->getCustomAttribute("bank_account")->getValue(); } ?>" class="input-text validate-digits drl-register-input required" placeholder="Enter Account Number" disabled>
+              </div>
+           </div>
+           <div class="field field-bank_phone drl-width-input">
+              <label class="label drl-required-astr" for="bank_phone"><span>Phone Number </span></label>
+              <div class="control">
+                 <input type="text" id="bank_phone" name="bank_phone" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_phone"))) { echo $block->getCustomer()->getCustomAttribute("bank_phone")->getValue(); } ?>" class="drl-with-coun input-text validate-digits drl-register-input-number required" minlength="10" maxlength="10" placeholder="345 - 345 - 6545" disabled>
+              </div>
+           </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-bank_fax drl-width-input">
+              <label class="label" for="bank_fax"><span>Fax Number </span></label>
+              <div class="control">
+                 <input type="text" id="bank_fax" name="bank_fax" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_fax"))) { echo $block->getCustomer()->getCustomAttribute("bank_fax")->getValue(); } ?>" class="input-text validate-digits drl-register-input" placeholder="Enter Fax Number" disabled>
+              </div>
+           </div>
+           <div class="field field-bank_contact_email_address drl-width-input">
+              <label class="drl-required-astr label" for="bank_contact_email_address"><span>Email Address </span></label>
+              <div class="control">
+                 <input type="text" id="bank_contact_email_address" name="bank_contact_email_address" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_email"))) { echo $block->getCustomer()->getCustomAttribute("bank_email")->getValue(); } ?>" class="drl-register-input input-text validate-email required" placeholder="Enter Bank Email ID" disabled>
+              </div>
+           </div>
+        </div>
+    </fieldset><br />
+    <fieldset class="fieldset info drl-info-account">
+        <div class="drl-hr-line"></div>
+        <legend class="drl-legends-second"><span>
+           <?= $block->escapeHtml(__('Bank Address')) ?></span>
+        </legend>
+        <br>
+        <div class="drl-register">
+           <div class="field field-bank_address drl-width-input">
+              <label class="label drl-required-astr" for="bank_address"><span>Primary Street (No P. O. Boxes) </span></label>
+              <div class="control">
+                 <input type="text" id="bank_address" name="bank_address" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_address"))) { echo $block->getCustomer()->getCustomAttribute("bank_address")->getValue(); } ?>" class="input-text drl-register-input required" placeholder="Enter Primary Street" disabled>
+              </div>
+           </div>
+           <div class="field field-bank_city drl-width-input">
+                  <label class="label drl-required-astr" for="bank_city"><span>City </span></label>
+                  <div class="control">
+                    <input type="text" id="bank_city" name="bank_city" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_city"))) { echo $block->getCustomer()->getCustomAttribute("bank_city")->getValue(); } ?>" class="input-text drl-register-input required" placeholder="Enter City" disabled>
+               </div>
+            </div>
+        </div>
+        <div class="drl-register">
+           <div class="field field-bank_state drl-width-input">
+              <label class="label drl-required-astr" for="bank_state"><span>Select State </span></label>
+               <div class="control">
+                <?php if (!empty($block->getCustomer()->getCustomAttribute("bank_state"))) {
+                    $selected_company_region = $block->getCustomer()->getCustomAttribute("bank_state")->getValue(); 
+                } else {
+                    $selected_company_region = 0;
+                } ?>
+                 <select id="bank_state" name="bank_state" class="drl-register-input input-text required" disabled>
+                    <option value="">Please select a region, state or province.</option>
+                    <?php foreach($block->getRegionsOfCountry('US') as $idx=>$region){ ?>
+                        <?php if($idx > 0) { ?>
+                            <option value="<?php echo $region['value']; ?>" <?php if($selected_company_region == $region['value']){ ?> selected="selected"<?php } ?>><?php echo $region['label']; ?></option>
+                        <?php } ?>
+                    <?php } ?>
+                 </select>
+              </div>
+           </div>
+           <div class="field field-bank_country drl-width-input">
+              <label class="label drl-required-astr" for="bank_country"><span>Country</span></label>
+              <div class="control">
+                 <select id="bank_country" name="bank_country" class="drl-register-input input-text required" disabled>
+                     <option value="US" selected="">United States</option>
+                 </select>
+              </div>
+           </div>
+       </div>
+       <div class="drl-register">
+           <div class="field field-bank_zip drl-width-input-half">
+              <label class="label" for="bank_zip"><span>Zip / Postal Code </span></label>
+              <div class="control">
+                 <input type="text" id="bank_zip" name="bank_zip" value="<?php if (!empty($block->getCustomer()->getCustomAttribute("bank_zip"))) { echo $block->getCustomer()->getCustomAttribute("bank_zip")->getValue(); } ?>" class="input-text drl-register-input validate-zip-us required" placeholder="Enter Zip / Postal Code" disabled>
+              </div>
+           </div>
+        </div>
+    </fieldset>
+
+    <?= $block->getChildHtml('form_additional_info') ?>
+<!--     <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                <span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $block->escapeHtml(__('Go back')) ?></span>
+            </a>
+        </div>
+    </div> -->
+</form>
+<script>
+   require([
+       'jquery',
+       'mage/url',
+       'Magento_Ui/js/modal/modal',
+       'drlnumberjs'
+   ], function($, url, modal) {
+
+     $(document).ready(function(){
+        $(".drl-with-coun").intlTelInput({
+          initialDialCode: true,
+          americaMode: false,
+          onlyCountries: ["us"]
+
+        });
+      });
+    });
+</script>

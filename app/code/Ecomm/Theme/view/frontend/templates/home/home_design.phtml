@@ -1,0 +1,25 @@
+<?php
+//echo 'getIsLoggedIn:- '.$block->getIsLoggedIn();
+if($block->getIsLoggedIn()){
+    //echo $block->getStepNumber();
+    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('afterlogin')->toHtml();
+
+    if($block->getIsApproved()){
+        if($block->getOrderCount() > 0){
+    	   echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('recent_orders')->toHtml();
+        }
+    } else {
+    	echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('awards_section')->toHtml();
+	    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('drreddy_news')->toHtml();
+	    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('voiceofcustomer')->toHtml();
+    }
+} else {
+
+    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('beforelogin')->toHtml();
+    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('awards_section')->toHtml();
+    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('drreddy_news')->toHtml();
+    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('voiceofcustomer')->toHtml();
+    echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('Home-Videos-Before-Login')->toHtml();
+}
+?>
+

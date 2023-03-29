@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <head>
+        <css rel="stylesheet" src="css/plugins/fontawesome/css/all.min.css" media="all" />
+        <css rel='stylesheet' src="css/slick.css" media='all' />
+        <css rel='stylesheet' src="css/slick-theme.css" media='all' />
+        <css src="css/drl.css" rel="stylesheet" type="text/css" />
+        <css src="css/drl_landing.css" rel="stylesheet" type="text/css" />
+        <css src="css/custom-footer.css" rel="stylesheet" type="text/css" />
+        <css src="css/homepage-beforelogin.css" rel="stylesheet" type="text/css" />
+        <css src="css/homepage-three.css" rel="stylesheet" type="text/css" />
+        <css src="css/drl-myaccount.css" rel="stylesheet" type="text/css" />
+        <css src="css/drl-plp.css" rel="stylesheet" type="text/css" />
+        <css src="css/drl-pdp.css" rel="stylesheet" type="text/css" />
+        <css src="css/drl-view-cart.css" rel="stylesheet" type="text/css" />
+        <css src="css/drl-checkout.css" rel="stylesheet" type="text/css" />
+        <css src="css/ajaxsearch.css" rel="stylesheet" type="text/css" />
+        <css src="css/help_support.css" rel="stylesheet" type="text/css" />
+        <css src="css/invoice.css" rel="stylesheet" type="text/css" />
+        <css src="css/resources.css" rel="stylesheet" type="text/css" />
+        <css src="css/contact-us.css" rel="stylesheet" type="text/css" />
+        <css src="css/shipment.css" rel="stylesheet" type="text/css" />
+        <css src="css/quick-order.css" rel="stylesheet" type="text/css" />
+        <css src="css/customer-login.css" rel="stylesheet" type="text/css" />
+    </head>
+</page>

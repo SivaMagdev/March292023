@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * PwC India
+ *
+ * @category Magento
+ * @package  Ecomm_VideoList
+ * @author   PwC India
+ * @license  GNU General Public License ("GPL") v3.0
+ */
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/ecomm-videolist/get-video-details" method="POST">
+        <service class="Ecomm\VideoList\Api\GetVideoListInterface" method="getVideoDetails"/>
+         <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>
